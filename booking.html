@@ -7,7 +7,6 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     
     <title>احجز الآن | استراحة وهج</title>
-    <meta name="description" content="احجز استراحة وهج - تقويم ذكي، حساب تلقائي للسعر، دفع سهل">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,7 +16,7 @@
     <link rel="stylesheet" href="css/app.css">
     
     <style>
-        /* ─── Hero صفحة الحجز ─── */
+        /* ─── Hero ─── */
         .booking-header-hero {
             background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 60%, var(--navy-light) 100%);
             padding: 100px 20px 40px;
@@ -32,6 +31,7 @@
             position: absolute;
             inset: 0;
             background: radial-gradient(circle at 30% 40%, rgba(212, 175, 55, 0.2) 0%, transparent 50%);
+            pointer-events: none;
         }
         
         .booking-header-content {
@@ -95,6 +95,8 @@
             margin-bottom: 20px;
             box-shadow: var(--shadow-sm);
             border: 1px solid rgba(212, 175, 55, 0.1);
+            position: relative;
+            z-index: 1;
         }
         
         .booking-block-title {
@@ -118,6 +120,7 @@
             justify-content: center;
             font-size: 1rem;
             box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+            flex-shrink: 0;
         }
         
         /* ─── التقويم ─── */
@@ -125,6 +128,9 @@
             background: var(--gray-100);
             border-radius: var(--radius-sm);
             padding: 18px 15px;
+            position: relative;
+            z-index: 5;
+            pointer-events: auto;
         }
         
         .calendar-app-header {
@@ -148,6 +154,9 @@
             transition: all 0.2s;
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
             font-size: 1rem;
+            position: relative;
+            z-index: 10;
+            pointer-events: auto;
         }
         
         .calendar-app-nav:active {
@@ -181,6 +190,8 @@
             display: grid;
             grid-template-columns: repeat(7, 1fr);
             gap: 4px;
+            position: relative;
+            z-index: 10;
         }
         
         .calendar-app-day {
@@ -199,9 +210,10 @@
             user-select: none;
             -webkit-user-select: none;
             -webkit-tap-highlight-color: transparent;
-            pointer-events: auto;
             position: relative;
-            z-index: 1;
+            z-index: 10;
+            pointer-events: auto;
+            touch-action: manipulation;
         }
         
         .calendar-app-day:not(.empty):not(.disabled):active {
@@ -242,6 +254,7 @@
             color: var(--white) !important;
             box-shadow: 0 4px 15px rgba(212, 175, 55, 0.5);
             transform: scale(1.05);
+            border-color: var(--primary) !important;
         }
         
         .calendar-app-legend {
@@ -271,6 +284,8 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 10px;
+            position: relative;
+            z-index: 5;
         }
         
         .booking-type-app {
@@ -287,6 +302,10 @@
             gap: 6px;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
+            position: relative;
+            z-index: 5;
+            pointer-events: auto;
+            touch-action: manipulation;
         }
         
         .booking-type-app:active {
@@ -302,16 +321,19 @@
         
         .booking-type-app-icon {
             font-size: 1.5rem;
+            pointer-events: none;
         }
         
         .booking-type-app-name {
             font-size: 0.8rem;
             font-weight: 700;
+            pointer-events: none;
         }
         
         .booking-type-app-desc {
             font-size: 0.65rem;
             opacity: 0.7;
+            pointer-events: none;
         }
         
         .booking-type-app.selected .booking-type-app-desc {
@@ -324,6 +346,8 @@
             display: none;
             grid-template-columns: 1fr 1fr;
             gap: 8px;
+            position: relative;
+            z-index: 5;
         }
         
         .half-day-app.show {
@@ -340,6 +364,10 @@
             transition: all 0.2s;
             font-size: 0.8rem;
             user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            position: relative;
+            z-index: 5;
+            pointer-events: auto;
         }
         
         .half-day-option:active {
@@ -356,16 +384,20 @@
             color: var(--navy);
             margin-bottom: 3px;
             font-size: 0.85rem;
+            pointer-events: none;
         }
         
         .half-day-option span {
             color: var(--gray-600);
             font-size: 0.7rem;
+            pointer-events: none;
         }
         
         /* ─── النموذج ─── */
         .form-field {
             margin-bottom: 15px;
+            position: relative;
+            z-index: 5;
         }
         
         .form-field label {
@@ -392,6 +424,9 @@
             color: var(--navy);
             background: var(--white);
             transition: all 0.2s;
+            position: relative;
+            z-index: 5;
+            pointer-events: auto;
         }
         
         .form-field input:focus,
@@ -417,6 +452,8 @@
             transition: all 0.2s;
             background: var(--gray-100);
             position: relative;
+            z-index: 5;
+            pointer-events: auto;
         }
         
         .upload-app:active {
@@ -431,23 +468,27 @@
             cursor: pointer;
             width: 100%;
             height: 100%;
+            z-index: 10;
         }
         
         .upload-app-icon {
             font-size: 2.2rem;
             color: var(--primary);
             margin-bottom: 10px;
+            pointer-events: none;
         }
         
         .upload-app h4 {
             color: var(--navy);
             font-size: 0.95rem;
             margin-bottom: 5px;
+            pointer-events: none;
         }
         
         .upload-app p {
             color: var(--gray-600);
             font-size: 0.75rem;
+            pointer-events: none;
         }
         
         .upload-preview-app {
@@ -474,6 +515,8 @@
             border-radius: var(--radius-sm);
             margin-bottom: 15px;
             border: 2px solid var(--primary);
+            position: relative;
+            z-index: 5;
         }
         
         .bank-app h4 {
@@ -506,7 +549,7 @@
             direction: ltr;
         }
         
-        /* ─── الملخص ─── */
+        /* ─── الملخص (ثابت - غير طافي) ─── */
         .summary-app {
             background: var(--white);
             border-radius: var(--radius);
@@ -514,6 +557,8 @@
             margin-bottom: 20px;
             box-shadow: var(--shadow);
             border-top: 4px solid var(--primary);
+            position: relative;
+            z-index: 1;
         }
         
         .summary-app-title {
@@ -589,6 +634,9 @@
             gap: 8px;
             margin-top: 15px;
             font-family: 'Cairo', sans-serif;
+            position: relative;
+            z-index: 5;
+            pointer-events: auto;
         }
         
         .confirm-btn-app:active:not(:disabled) {
@@ -614,6 +662,15 @@
         
         .secure-note-app i {
             color: var(--success);
+        }
+        
+        /* ─── ضمانات إضافية ─── */
+        #calendarDays * {
+            pointer-events: auto;
+        }
+        
+        .booking-type-grid * {
+            pointer-events: auto;
         }
     </style>
 </head>
@@ -717,7 +774,7 @@
                 
                 <div class="calendar-app-legend">
                     <div class="legend-dot">
-                        <div class="legend-dot-color" style="background: var(--white); border: 1px solid var(--gray-200);"></div>
+                        <div class="legend-dot-color" style="background: #fff; border: 1px solid #E9ECEF;"></div>
                         <span>متاح</span>
                     </div>
                     <div class="legend-dot">
@@ -725,11 +782,11 @@
                         <span>ويكند</span>
                     </div>
                     <div class="legend-dot">
-                        <div class="legend-dot-color" style="background: var(--primary);"></div>
+                        <div class="legend-dot-color" style="background: #D4AF37;"></div>
                         <span>مختار</span>
                     </div>
                     <div class="legend-dot">
-                        <div class="legend-dot-color" style="background: var(--gray-300);"></div>
+                        <div class="legend-dot-color" style="background: #E9ECEF;"></div>
                         <span>محجوز</span>
                     </div>
                 </div>
@@ -884,20 +941,6 @@
 
 <!-- FOOTER -->
 <footer class="app-footer">
-    <svg class="app-footer-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="50" cy="50" r="45" fill="none" stroke="#D4AF37" stroke-width="2"/>
-        <g transform="translate(50, 42)">
-            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37"/>
-            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(45)"/>
-            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(90)"/>
-            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(135)"/>
-            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(180)"/>
-            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(225)"/>
-            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(270)"/>
-            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(315)"/>
-            <circle cx="0" cy="0" r="7" fill="#A88B2C"/>
-        </g>
-    </svg>
     <h3 class="app-footer-title">استراحة وهج</h3>
     <p class="app-footer-slogan">خصوصية .. راحة .. ذكريات لا تُنسى</p>
     <div class="app-footer-bottom">
@@ -937,19 +980,18 @@
 </a>
 
 <!-- ═══════════════════════════════════════════════════════ -->
-<!-- 🔧 SCRIPTS - كل الكود هنا مباشرة -->
+<!-- SCRIPTS -->
 <!-- ═══════════════════════════════════════════════════════ -->
 <script src="js/config.js"></script>
-<script src="js/app.js"></script>
 
 <script>
 /* ═══════════════════════════════════════════════════════
-   نظام الحجز - كل الكود هنا مباشرة
+   نظام الحجز - كامل مدمج
    ═══════════════════════════════════════════════════════ */
 
-console.log('🚀 بدء تحميل نظام الحجز...');
+console.log('🚀 بدء نظام الحجز...');
 
-// ─── إعدادات احتياطية إذا لم يُحمّل config.js ───
+// ─── إعدادات احتياطية ───
 const CONFIG = (typeof WAHAJ_CONFIG !== 'undefined') ? WAHAJ_CONFIG : {
     contact: { whatsapp: '96895566332' },
     payment: { depositPercent: 50, securityDeposit: 20 },
@@ -962,33 +1004,28 @@ const CONFIG = (typeof WAHAJ_CONFIG !== 'undefined') ? WAHAJ_CONFIG : {
         with_stay: { label: 'مع مبيت', icon: '🌙', description: '9ص - 7ص' },
         half_day: { label: 'نصف يوم', icon: '⏰', description: 'فترتان' }
     },
-    getPrice: function(dayType, bookingType) {
-        const prices = this.pricing[dayType];
-        if (!prices) return 0;
-        if (bookingType === 'without_stay') return prices.withoutStay;
-        if (bookingType === 'with_stay') return prices.withStay;
-        if (bookingType === 'half_day') return prices.halfDay;
-        return 0;
+    getPrice: function(dt, bt) {
+        const p = this.pricing[dt];
+        if (!p) return 0;
+        return bt === 'without_stay' ? p.withoutStay : bt === 'with_stay' ? p.withStay : p.halfDay;
     },
     getDayType: function(date) {
-        const day = new Date(date).getDay();
-        if (this.pricing.weekday.dayNumbers.includes(day)) return 'weekday';
-        if (this.pricing.weekend.dayNumbers.includes(day)) return 'weekend';
+        const d = new Date(date).getDay();
+        if (this.pricing.weekday.dayNumbers.includes(d)) return 'weekday';
+        if (this.pricing.weekend.dayNumbers.includes(d)) return 'weekend';
         return 'weekday';
     },
-    formatPrice: function(amount) { return amount + ' ر.ع'; },
-    calculateDeposit: function(total) { return Math.ceil(total * 50 / 100); },
+    formatPrice: function(a) { return a + ' ر.ع'; },
+    calculateDeposit: function(t) { return Math.ceil(t * 50 / 100); },
     generateBookingId: function() {
-        const t = Date.now().toString().slice(-6);
-        const r = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
-        return `WHJ-${t}${r}`;
+        return 'WHJ-' + Date.now().toString().slice(-6) + Math.floor(Math.random() * 1000).toString().padStart(3, '0');
     },
-    getWhatsAppLink: function(message) {
-        return `https://wa.me/${this.contact.whatsapp}?text=${encodeURIComponent(message)}`;
+    getWhatsAppLink: function(m) {
+        return 'https://wa.me/' + this.contact.whatsapp + '?text=' + encodeURIComponent(m);
     }
 };
 
-// ─── المتغيرات ───
+// ─── الحالة ───
 let selectedDate = null;
 let selectedBookingType = null;
 let selectedHalfDayPeriod = null;
@@ -999,32 +1036,23 @@ let blockedDates = [];
 // ─── دوال التاريخ ───
 function formatDate(date) {
     const d = new Date(date);
-    const y = d.getFullYear();
-    const m = String(d.getMonth() + 1).padStart(2, '0');
-    const day = String(d.getDate()).padStart(2, '0');
-    return `${y}-${m}-${day}`;
+    return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
 }
 
-function isSameDay(d1, d2) {
-    return formatDate(d1) === formatDate(d2);
-}
+function isSameDay(d1, d2) { return formatDate(d1) === formatDate(d2); }
 
 function isPast(date) {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    const d = new Date(date);
-    d.setHours(0, 0, 0, 0);
+    const today = new Date(); today.setHours(0,0,0,0);
+    const d = new Date(date); d.setHours(0,0,0,0);
     return d < today;
 }
 
-function getMonthName(month) {
-    const months = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
-    return months[month];
+function getMonthName(m) {
+    return ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'][m];
 }
 
 function formatArabicDate(date) {
-    const d = new Date(date);
-    return d.toLocaleDateString('ar-OM', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    return new Date(date).toLocaleDateString('ar-OM', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
 }
 
 // ─── تحميل التواريخ المحجوزة ───
@@ -1032,16 +1060,11 @@ function loadBlockedDates() {
     try {
         const blocked = JSON.parse(localStorage.getItem('wahaj_blocked_dates') || '[]');
         const bookings = JSON.parse(localStorage.getItem('wahaj_bookings') || '[]');
-        
-        const blockedList = blocked.map(item => item.date || item);
+        const blockedList = blocked.map(i => i.date || i);
         const confirmedList = bookings.filter(b => b.status === 'confirmed').map(b => b.date);
-        
         blockedDates = [...new Set([...blockedList, ...confirmedList])];
-        console.log('📅 تواريخ محجوزة:', blockedDates.length);
-    } catch (e) {
-        console.error('خطأ:', e);
-        blockedDates = [];
-    }
+        console.log('📅 محجوزة:', blockedDates.length);
+    } catch(e) { blockedDates = []; }
 }
 
 // ─── رسم التقويم ───
@@ -1049,16 +1072,10 @@ function renderCalendar() {
     const year = currentMonth.getFullYear();
     const month = currentMonth.getMonth();
     
-    const monthYearEl = document.getElementById('monthYear');
-    if (monthYearEl) {
-        monthYearEl.textContent = `${getMonthName(month)} ${year}`;
-    }
+    document.getElementById('monthYear').textContent = getMonthName(month) + ' ' + year;
     
     const daysEl = document.getElementById('calendarDays');
-    if (!daysEl) {
-        console.error('❌ calendarDays غير موجود');
-        return;
-    }
+    if (!daysEl) return;
     
     daysEl.innerHTML = '';
     
@@ -1067,20 +1084,17 @@ function renderCalendar() {
     const daysInMonth = lastDay.getDate();
     const startDay = firstDay.getDay();
     
-    // الأيام الفارغة
     for (let i = 0; i < startDay; i++) {
         const empty = document.createElement('div');
         empty.className = 'calendar-app-day empty';
         daysEl.appendChild(empty);
     }
     
-    // أيام الشهر
     for (let day = 1; day <= daysInMonth; day++) {
         const date = new Date(year, month, day);
         const dayEl = document.createElement('div');
         dayEl.className = 'calendar-app-day';
         dayEl.textContent = day;
-        dayEl.dataset.date = formatDate(date);
         
         const dow = date.getDay();
         const isWeekend = dow === 4 || dow === 5 || dow === 6;
@@ -1092,13 +1106,13 @@ function renderCalendar() {
         if (isPast(date) || blockedDates.includes(dateStr)) {
             dayEl.classList.add('disabled');
         } else {
-            // إضافة حدث الضغط بشكل مضمون
-            dayEl.onclick = function(e) {
-                e.preventDefault();
-                e.stopPropagation();
-                selectDate(date, dayEl);
-            };
-            dayEl.style.cursor = 'pointer';
+            // حدث الضغط المباشر
+            dayEl.onclick = (function(d, el) {
+                return function(e) {
+                    if (e) e.preventDefault();
+                    selectDate(d, el);
+                };
+            })(date, dayEl);
         }
         
         if (selectedDate && isSameDay(date, selectedDate)) {
@@ -1108,26 +1122,16 @@ function renderCalendar() {
         daysEl.appendChild(dayEl);
     }
     
-    console.log(`✅ تم رسم ${getMonthName(month)} ${year} - ${daysInMonth} يوم`);
+    console.log('✅ رسم ' + getMonthName(month) + ' ' + year);
 }
 
 // ─── اختيار تاريخ ───
 function selectDate(date, dayEl) {
-    // إزالة التحديد السابق
-    document.querySelectorAll('.calendar-app-day.selected').forEach(el => {
-        el.classList.remove('selected');
-    });
-    
+    document.querySelectorAll('.calendar-app-day.selected').forEach(el => el.classList.remove('selected'));
     selectedDate = date;
-    
-    if (dayEl) {
-        dayEl.classList.add('selected');
-    }
-    
+    if (dayEl) dayEl.classList.add('selected');
     if (navigator.vibrate) navigator.vibrate(10);
-    
-    console.log('📅 تم اختيار:', formatArabicDate(date));
-    
+    console.log('📅 اخترت:', formatArabicDate(date));
     updateSummary();
     updateSteps();
 }
@@ -1135,8 +1139,7 @@ function selectDate(date, dayEl) {
 // ─── حساب السعر ───
 function calculatePrice() {
     if (!selectedDate || !selectedBookingType) return 0;
-    const dayType = CONFIG.getDayType(selectedDate);
-    return CONFIG.getPrice(dayType, selectedBookingType);
+    return CONFIG.getPrice(CONFIG.getDayType(selectedDate), selectedBookingType);
 }
 
 // ─── تحديث الملخص ───
@@ -1144,136 +1147,81 @@ function updateSummary() {
     const content = document.getElementById('summaryContent');
     const confirmBtn = document.getElementById('confirmBooking');
     
-    if (!content) return;
-    
     if (!selectedDate || !selectedBookingType) {
-        content.innerHTML = `
-            <div class="summary-app-empty">
-                <i class="fas fa-calendar-plus"></i>
-                <p>اختر التاريخ ونوع الحجز لعرض الملخص</p>
-            </div>
-        `;
+        content.innerHTML = '<div class="summary-app-empty"><i class="fas fa-calendar-plus"></i><p>اختر التاريخ ونوع الحجز لعرض الملخص</p></div>';
         if (confirmBtn) confirmBtn.disabled = true;
         return;
     }
     
     const dayType = CONFIG.getDayType(selectedDate);
     const dayTypeName = dayType === 'weekday' ? 'يوم عادي' : 'ويكند';
-    
     const typeInfo = CONFIG.bookingTypes[selectedBookingType];
     const total = calculatePrice();
     const deposit = CONFIG.calculateDeposit(total);
     const security = CONFIG.payment.securityDeposit;
-    const remaining = total - deposit;
     
     let timeDesc = typeInfo.description;
     if (selectedBookingType === 'half_day' && selectedHalfDayPeriod) {
         timeDesc = selectedHalfDayPeriod === 'morning' ? '9:00 ص - 3:00 م' : '4:00 م - 10:00 م';
     }
     
-    // تحديث مبلغ البنك
     const bankDeposit = document.getElementById('bankDepositAmount');
     if (bankDeposit) bankDeposit.textContent = CONFIG.formatPrice(deposit);
     
     content.innerHTML = `
-        <div class="summary-app-row">
-            <span>📅 التاريخ:</span>
-            <strong>${formatArabicDate(selectedDate)}</strong>
-        </div>
-        <div class="summary-app-row">
-            <span>🏷️ نوع اليوم:</span>
-            <strong>${dayTypeName}</strong>
-        </div>
-        <div class="summary-app-row">
-            <span>⏰ نوع الحجز:</span>
-            <strong>${typeInfo.icon} ${typeInfo.label}</strong>
-        </div>
-        <div class="summary-app-row">
-            <span>🕐 التوقيت:</span>
-            <strong style="font-size:0.75rem;">${timeDesc}</strong>
-        </div>
-        <div class="summary-app-row">
-            <span>💰 الإجمالي:</span>
-            <strong>${CONFIG.formatPrice(total)}</strong>
-        </div>
-        <div class="summary-app-row">
-            <span>💵 العربون (50%):</span>
-            <strong>${CONFIG.formatPrice(deposit)}</strong>
-        </div>
-        <div class="summary-app-row">
-            <span>💳 الباقي:</span>
-            <strong>${CONFIG.formatPrice(remaining)}</strong>
-        </div>
-        <div class="summary-app-row total">
-            <span>✅ المطلوب الآن:</span>
-            <strong>${CONFIG.formatPrice(deposit)}</strong>
-        </div>
+        <div class="summary-app-row"><span>📅 التاريخ:</span><strong>${formatArabicDate(selectedDate)}</strong></div>
+        <div class="summary-app-row"><span>🏷️ نوع اليوم:</span><strong>${dayTypeName}</strong></div>
+        <div class="summary-app-row"><span>⏰ نوع الحجز:</span><strong>${typeInfo.icon} ${typeInfo.label}</strong></div>
+        <div class="summary-app-row"><span>🕐 التوقيت:</span><strong style="font-size:0.75rem;">${timeDesc}</strong></div>
+        <div class="summary-app-row"><span>💰 الإجمالي:</span><strong>${CONFIG.formatPrice(total)}</strong></div>
+        <div class="summary-app-row"><span>💵 العربون:</span><strong>${CONFIG.formatPrice(deposit)}</strong></div>
+        <div class="summary-app-row"><span>💳 الباقي:</span><strong>${CONFIG.formatPrice(total - deposit)}</strong></div>
+        <div class="summary-app-row total"><span>✅ المطلوب الآن:</span><strong>${CONFIG.formatPrice(deposit)}</strong></div>
     `;
     
     if (confirmBtn) confirmBtn.disabled = false;
 }
 
-// ─── تحديث الخطوات ───
+// ─── الخطوات ───
 function updateSteps() {
     const steps = document.querySelectorAll('.step-dot');
     steps.forEach(s => s.classList.remove('active'));
-    
     if (selectedDate) steps[0]?.classList.add('active');
     if (selectedBookingType) steps[1]?.classList.add('active');
-    
-    const fn = document.getElementById('fullName')?.value.trim();
-    const ph = document.getElementById('phone')?.value.trim();
-    if (fn && ph) steps[2]?.classList.add('active');
-    
+    if (document.getElementById('fullName')?.value.trim() && document.getElementById('phone')?.value.trim()) {
+        steps[2]?.classList.add('active');
+    }
     if (receiptFile) steps[3]?.classList.add('active');
 }
 
 // ─── Toast ───
-function showToast(message, type = 'info') {
-    const colors = { success: '#28A745', error: '#DC3545', warning: '#FFC107', info: '#0A1F44' };
-    const toast = document.createElement('div');
-    toast.style.cssText = `
-        position: fixed; top: 90px; left: 50%;
-        transform: translateX(-50%) translateY(-100px);
-        background: ${colors[type]}; color: white;
-        padding: 14px 28px; border-radius: 50px;
-        font-weight: 600; font-size: 0.9rem;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        z-index: 10000; transition: transform 0.3s;
-        font-family: Cairo, sans-serif; max-width: 90%; text-align: center;
-    `;
-    toast.textContent = message;
-    document.body.appendChild(toast);
-    
-    requestAnimationFrame(() => {
-        toast.style.transform = 'translateX(-50%) translateY(0)';
-    });
-    
+function showToast(message, type) {
+    const colors = { success:'#28A745', error:'#DC3545', warning:'#FFC107', info:'#0A1F44' };
+    const t = document.createElement('div');
+    t.style.cssText = 'position:fixed;top:90px;left:50%;transform:translateX(-50%) translateY(-100px);background:' + (colors[type]||colors.info) + ';color:white;padding:14px 28px;border-radius:50px;font-weight:600;font-size:0.9rem;box-shadow:0 10px 30px rgba(0,0,0,0.2);z-index:10000;transition:transform 0.3s;font-family:Cairo,sans-serif;max-width:90%;text-align:center;';
+    t.textContent = message;
+    document.body.appendChild(t);
+    requestAnimationFrame(() => { t.style.transform = 'translateX(-50%) translateY(0)'; });
     setTimeout(() => {
-        toast.style.transform = 'translateX(-50%) translateY(-100px)';
-        setTimeout(() => toast.remove(), 300);
+        t.style.transform = 'translateX(-50%) translateY(-100px)';
+        setTimeout(() => t.remove(), 300);
     }, 2500);
 }
 
 // ─── إرسال الحجز ───
 function submitBooking() {
-    if (!selectedDate) { showToast('⚠️ اختر التاريخ', 'warning'); return; }
-    if (!selectedBookingType) { showToast('⚠️ اختر نوع الحجز', 'warning'); return; }
-    if (selectedBookingType === 'half_day' && !selectedHalfDayPeriod) {
-        showToast('⚠️ اختر فترة نصف اليوم', 'warning'); return;
-    }
+    if (!selectedDate) return showToast('⚠️ اختر التاريخ', 'warning');
+    if (!selectedBookingType) return showToast('⚠️ اختر نوع الحجز', 'warning');
+    if (selectedBookingType === 'half_day' && !selectedHalfDayPeriod) return showToast('⚠️ اختر الفترة', 'warning');
     
     const fullName = document.getElementById('fullName')?.value.trim();
-    if (!fullName) { showToast('⚠️ أدخل الاسم', 'warning'); return; }
+    if (!fullName) return showToast('⚠️ أدخل الاسم', 'warning');
     
     const phone = document.getElementById('phone')?.value.trim();
-    if (!phone) { showToast('⚠️ أدخل الجوال', 'warning'); return; }
+    if (!phone) return showToast('⚠️ أدخل الجوال', 'warning');
+    if (!/^[79]\d{7}$/.test(phone.replace(/\s/g, ''))) return showToast('⚠️ رقم الجوال غير صحيح', 'warning');
     
-    if (!/^[79]\d{7}$/.test(phone.replace(/\s/g, ''))) {
-        showToast('⚠️ رقم الجوال غير صحيح', 'warning'); return;
-    }
-    
-    if (!receiptFile) { showToast('⚠️ ارفع الإيصال', 'warning'); return; }
+    if (!receiptFile) return showToast('⚠️ ارفع الإيصال', 'warning');
     
     const dayType = CONFIG.getDayType(selectedDate);
     const dayTypeName = dayType === 'weekday' ? 'يوم عادي' : 'ويكند';
@@ -1288,76 +1236,50 @@ function submitBooking() {
         timeDesc = selectedHalfDayPeriod === 'morning' ? '9ص-3م' : '4م-10م';
     }
     
-    const bookingData = {
-        bookingId,
-        date: formatDate(selectedDate),
-        dateFormatted: formatArabicDate(selectedDate),
-        dayType: dayTypeName,
-        bookingType: typeInfo.label,
-        bookingTypeDesc: timeDesc,
-        total, deposit, security,
-        remaining: total - deposit,
+    const data = {
+        bookingId, date: formatDate(selectedDate), dateFormatted: formatArabicDate(selectedDate),
+        dayType: dayTypeName, bookingType: typeInfo.label, bookingTypeDesc: timeDesc,
+        total, deposit, security, remaining: total - deposit,
         fullName, phone,
         guests: document.getElementById('guests')?.value || '1',
         notes: document.getElementById('notes')?.value.trim() || '',
         receiptFileName: receiptFile.name,
-        status: 'pending',
-        createdAt: new Date().toISOString()
+        status: 'pending', createdAt: new Date().toISOString()
     };
     
-    // حفظ
     try {
         const bookings = JSON.parse(localStorage.getItem('wahaj_bookings') || '[]');
-        bookings.push(bookingData);
+        bookings.push(data);
         localStorage.setItem('wahaj_bookings', JSON.stringify(bookings));
-        localStorage.setItem('wahaj_last_booking', JSON.stringify(bookingData));
-    } catch(e) { console.error(e); }
+        localStorage.setItem('wahaj_last_booking', JSON.stringify(data));
+    } catch(e) {}
     
-    // واتساب
-    const message = `🌟 *طلب حجز جديد - استراحة وهج*
-
-📋 *رقم:* ${bookingId}
-📅 *التاريخ:* ${bookingData.dateFormatted}
-⏰ *النوع:* ${typeInfo.label} (${timeDesc})
-👤 *الاسم:* ${fullName}
-📞 *الجوال:* ${phone}
-👥 *الضيوف:* ${bookingData.guests}
-💰 *الإجمالي:* ${total} ر.ع
-💵 *العربون:* ${deposit} ر.ع
-💳 *الباقي:* ${total - deposit} ر.ع
-
-⏳ بانتظار التأكيد
----
-استراحة وهج`;
+    const msg = '🌟 *طلب حجز جديد - استراحة وهج*\n\n📋 *رقم:* ' + bookingId + '\n📅 *التاريخ:* ' + data.dateFormatted + '\n⏰ *النوع:* ' + typeInfo.label + ' (' + timeDesc + ')\n👤 *الاسم:* ' + fullName + '\n📞 *الجوال:* ' + phone + '\n👥 *الضيوف:* ' + data.guests + '\n💰 *الإجمالي:* ' + total + ' ر.ع\n💵 *العربون:* ' + deposit + ' ر.ع\n💳 *الباقي:* ' + (total - deposit) + ' ر.ع\n\n⏳ بانتظار التأكيد\n---\nاستراحة وهج';
     
-    window.open(CONFIG.getWhatsAppLink(message), '_blank');
-    
+    window.open(CONFIG.getWhatsAppLink(msg), '_blank');
     showToast('✅ تم استلام الحجز!', 'success');
     
-    setTimeout(() => {
-        window.location.href = `confirmation.html?id=${bookingId}`;
-    }, 1500);
+    setTimeout(() => { window.location.href = 'confirmation.html?id=' + bookingId; }, 1500);
 }
 
 // ═══════════════════════════════════════════════════════
-// 🎯 التهيئة
+// التهيئة
 // ═══════════════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('🔧 تهيئة نظام الحجز...');
+    console.log('🔧 تهيئة...');
     
     loadBlockedDates();
     renderCalendar();
     
     // أزرار التنقل
-    document.getElementById('prevMonth')?.addEventListener('click', function() {
+    document.getElementById('prevMonth').onclick = function() {
         currentMonth.setMonth(currentMonth.getMonth() - 1);
         renderCalendar();
-    });
-    
-    document.getElementById('nextMonth')?.addEventListener('click', function() {
+    };
+    document.getElementById('nextMonth').onclick = function() {
         currentMonth.setMonth(currentMonth.getMonth() + 1);
         renderCalendar();
-    });
+    };
     
     // نوع الحجز
     document.querySelectorAll('.booking-type-app').forEach(el => {
@@ -1368,80 +1290,60 @@ document.addEventListener('DOMContentLoaded', function() {
             
             if (navigator.vibrate) navigator.vibrate(10);
             
-            const halfDay = document.getElementById('halfDayPeriods');
+            const hd = document.getElementById('halfDayPeriods');
             if (selectedBookingType === 'half_day') {
-                halfDay?.classList.add('show');
+                hd.classList.add('show');
             } else {
-                halfDay?.classList.remove('show');
+                hd.classList.remove('show');
                 selectedHalfDayPeriod = null;
                 document.querySelectorAll('.half-day-option').forEach(x => x.classList.remove('selected'));
             }
             
             updateSummary();
             updateSteps();
-            console.log('⏰ نوع الحجز:', selectedBookingType);
+            console.log('⏰ نوع:', selectedBookingType);
         };
     });
     
-    // فترة نصف اليوم
+    // فترات نصف اليوم
     document.querySelectorAll('.half-day-option').forEach(el => {
         el.onclick = function() {
             document.querySelectorAll('.half-day-option').forEach(x => x.classList.remove('selected'));
             this.classList.add('selected');
             selectedHalfDayPeriod = this.dataset.period;
-            
             if (navigator.vibrate) navigator.vibrate(10);
-            
             updateSummary();
             updateSteps();
         };
     });
     
     // رفع الإيصال
-    const receiptInput = document.getElementById('receiptInput');
-    const uploadPreview = document.getElementById('uploadPreview');
-    const previewImg = document.getElementById('previewImg');
-    
-    receiptInput?.addEventListener('change', function(e) {
+    document.getElementById('receiptInput').onchange = function(e) {
         const file = e.target.files[0];
         if (!file) return;
-        
-        if (file.size > 5 * 1024 * 1024) {
-            showToast('⚠️ حجم الصورة كبير', 'warning');
-            return;
-        }
-        
-        if (!file.type.startsWith('image/')) {
-            showToast('⚠️ اختر صورة', 'warning');
-            return;
-        }
+        if (file.size > 5 * 1024 * 1024) return showToast('⚠️ حجم الصورة كبير', 'warning');
+        if (!file.type.startsWith('image/')) return showToast('⚠️ اختر صورة', 'warning');
         
         receiptFile = file;
-        
         const reader = new FileReader();
         reader.onload = function(ev) {
-            if (previewImg) previewImg.src = ev.target.result;
-            if (uploadPreview) uploadPreview.classList.add('show');
-            
-            // حفظ في sessionStorage
+            document.getElementById('previewImg').src = ev.target.result;
+            document.getElementById('uploadPreview').classList.add('show');
             try { sessionStorage.setItem('wahaj_receipt_temp', ev.target.result); } catch(e) {}
-            
             updateSteps();
         };
         reader.readAsDataURL(file);
-        
-        console.log('📎 إيصال:', file.name);
-    });
+    };
     
     // زر التأكيد
-    document.getElementById('confirmBooking')?.addEventListener('click', submitBooking);
+    document.getElementById('confirmBooking').onclick = submitBooking;
     
     // مراقبة الحقول
     ['fullName', 'phone'].forEach(id => {
-        document.getElementById(id)?.addEventListener('input', updateSteps);
+        document.getElementById(id).oninput = updateSteps;
     });
     
-    console.log('✅ نظام الحجز جاهز!');
+    console.log('✅ جاهز!');
 });
 </script>
 
