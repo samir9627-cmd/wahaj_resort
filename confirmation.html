@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <link rel="stylesheet" href="css/app.css">
-    <link rel="icon" type="image/jpeg" href="images/logo.jpeg">
+    <link rel="icon" type="image/png" href="images/logo.jpeg">
     
     <style>
         .confirmation-page {
@@ -36,7 +36,7 @@
         .confirmation-card {
             background: var(--white);
             border-radius: var(--radius-lg);
-            padding: 40px 25px;
+            padding: 35px 22px;
             max-width: 550px;
             margin: 0 auto;
             box-shadow: 0 30px 80px rgba(0,0,0,0.4);
@@ -85,6 +85,8 @@
             font-size: 0.9rem;
         }
         
+        .status-badge-wrapper { text-align: center; }
+        
         .status-badge {
             display: inline-flex;
             align-items: center;
@@ -99,13 +101,7 @@
             border: 2px solid rgba(255, 193, 7, 0.3);
         }
         
-        .status-badge-wrapper {
-            text-align: center;
-        }
-        
-        .status-badge i {
-            animation: pulseIcon 2s infinite;
-        }
+        .status-badge i { animation: pulseIcon 2s infinite; }
         
         @keyframes pulseIcon {
             0%, 100% { transform: scale(1); }
@@ -138,7 +134,7 @@
         .details-grid {
             background: var(--gray-100);
             border-radius: var(--radius);
-            padding: 20px;
+            padding: 18px;
             margin-bottom: 20px;
         }
         
@@ -151,9 +147,7 @@
             font-size: 0.85rem;
         }
         
-        .detail-row:last-child {
-            border-bottom: none;
-        }
+        .detail-row:last-child { border-bottom: none; }
         
         .detail-label {
             color: var(--gray-600);
@@ -162,29 +156,72 @@
             gap: 6px;
         }
         
-        .detail-label i {
-            color: var(--primary);
-            width: 16px;
-        }
+        .detail-label i { color: var(--primary); width: 16px; }
+        .detail-value { color: var(--navy); font-weight: 700; text-align: left; }
         
-        .detail-value {
-            color: var(--navy);
-            font-weight: 700;
-            text-align: left;
-        }
-        
-        .detail-row.highlight {
-            background: rgba(212, 175, 55, 0.1);
-            padding: 12px 15px;
-            margin: 5px -10px;
+        /* ═══ الأقسام الملونة ═══ */
+        .payment-section {
+            margin: 15px 0;
+            padding: 14px 16px;
             border-radius: var(--radius-sm);
-            border-bottom: none;
         }
         
-        .detail-row.highlight .detail-value {
-            color: var(--primary-dark);
-            font-size: 1.1rem;
+        .payment-section-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
+        
+        .payment-section.now {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
+            border: 2px solid var(--primary);
+        }
+        
+        .payment-section.now .payment-section-title { color: var(--primary-dark); }
+        
+        .payment-section.later {
+            background: linear-gradient(135deg, rgba(10, 31, 68, 0.06), rgba(10, 31, 68, 0.02));
+            border: 2px solid rgba(10, 31, 68, 0.2);
+        }
+        
+        .payment-section.later .payment-section-title { color: var(--navy); }
+        
+        .payment-section.refund {
+            background: linear-gradient(135deg, rgba(40, 167, 69, 0.1), rgba(40, 167, 69, 0.03));
+            border: 2px solid rgba(40, 167, 69, 0.3);
+        }
+        
+        .payment-section.refund .payment-section-title { color: var(--success); }
+        
+        .payment-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            font-size: 0.85rem;
+            color: var(--navy);
+        }
+        
+        .payment-row:last-child { padding-bottom: 0; }
+        
+        .payment-section.now .payment-row:last-child {
+            border-top: 1px dashed var(--primary);
+            margin-top: 6px;
+            padding-top: 10px;
+            font-weight: 900;
+            font-size: 1rem;
+        }
+        
+        .payment-section.now .payment-row:last-child strong {
+            color: var(--primary-dark);
+            font-size: 1.15rem;
+        }
+        
+        .payment-section.refund .payment-row strong { color: var(--success); }
         
         .info-box {
             background: linear-gradient(135deg, rgba(10, 31, 68, 0.05), rgba(10, 31, 68, 0.02));
@@ -200,12 +237,10 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 1rem;
+            font-size: 0.95rem;
         }
         
-        .info-box h4 i {
-            color: var(--primary);
-        }
+        .info-box h4 i { color: var(--primary); }
         
         .info-box ol {
             padding-right: 20px;
@@ -214,13 +249,8 @@
             line-height: 1.8;
         }
         
-        .info-box li {
-            margin-bottom: 6px;
-        }
-        
-        .info-box strong {
-            color: var(--primary-dark);
-        }
+        .info-box li { margin-bottom: 6px; }
+        .info-box strong { color: var(--primary-dark); }
         
         .action-buttons {
             display: grid;
@@ -250,18 +280,14 @@
             box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
         }
         
-        .action-btn-app.whatsapp:active {
-            transform: scale(0.97);
-        }
+        .action-btn-app.whatsapp:active { transform: scale(0.97); }
         
         .action-btn-app.print {
             background: var(--navy);
             color: var(--white);
         }
         
-        .action-btn-app.print:active {
-            transform: scale(0.97);
-        }
+        .action-btn-app.print:active { transform: scale(0.97); }
         
         .back-link {
             text-align: center;
@@ -301,40 +327,21 @@
         }
         
         @media print {
-            .action-buttons,
-            .back-link,
-            .floating-whatsapp,
-            .bottom-nav,
-            .sticky-booking {
+            .action-buttons, .back-link, .floating-whatsapp, .bottom-nav, .sticky-booking, .app-header, .app-footer {
                 display: none !important;
             }
             
-            .confirmation-page {
-                background: var(--white);
-                padding: 20px;
-            }
-            
-            .confirmation-card {
-                box-shadow: none;
-                padding: 20px;
-            }
+            .confirmation-page { background: var(--white); padding: 20px; }
+            .confirmation-card { box-shadow: none; padding: 20px; }
         }
     </style>
 </head>
 <body>
 
-<!-- SPLASH SCREEN -->
-<div class="splash-screen">
-    <img src="images/logo.jpeg" alt="استراحة وهج" class="splash-logo">
-    <h1 class="splash-title">وهج</h1>
-    <p class="splash-subtitle">خصوصية .. راحة .. ذكريات لا تُنسى</p>
-    <div class="splash-loader"><div class="splash-loader-bar"></div></div>
-</div>
-
 <!-- HEADER -->
 <header class="app-header">
     <div class="app-header-logo">
-        <img src="images/logo.jpeg" alt="وهج" class="app-header-logo-svg">
+        <div class="app-header-logo-svg" id="headerLogo"></div>
         <span class="app-header-title">استراحة <span>وهج</span></span>
     </div>
     <a href="index.html" class="app-header-action" aria-label="الرئيسية">
@@ -342,7 +349,7 @@
     </a>
 </header>
 
-<!-- CONFIRMATION PAGE -->
+<!-- CONFIRMATION -->
 <section class="confirmation-page">
     <div class="confirmation-card" id="confirmationCard">
         <!-- يتم تعبئتها بـ JavaScript -->
@@ -377,160 +384,209 @@
     <i class="fab fa-whatsapp"></i>
 </a>
 
-<!-- Scripts -->
-<script src="js/config.js"></script>
-<script src="js/app.js"></script>
-<script src="js/brand.js"></script>
-
+<!-- ═══ Scripts ═══ -->
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const card = document.getElementById('confirmationCard');
+(function() {
+    'use strict';
     
-    let bookingData = null;
+    var LOGO_SVG = '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">' +
+    '<defs><linearGradient id="wg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#F4D77E"/><stop offset="50%" stop-color="#D4AF37"/><stop offset="100%" stop-color="#A88B2C"/></linearGradient></defs>' +
+    '<circle cx="100" cy="100" r="94" fill="none" stroke="url(#wg)" stroke-width="2.5"/>' +
+    '<g transform="translate(100, 62)">' +
+    '<ellipse cx="0" cy="-26" rx="6" ry="14" fill="url(#wg)"/>' +
+    '<ellipse cx="0" cy="-26" rx="6" ry="14" fill="url(#wg)" transform="rotate(60)"/>' +
+    '<ellipse cx="0" cy="-26" rx="6" ry="14" fill="url(#wg)" transform="rotate(120)"/>' +
+    '<ellipse cx="0" cy="-26" rx="6" ry="14" fill="url(#wg)" transform="rotate(180)"/>' +
+    '<ellipse cx="0" cy="-26" rx="6" ry="14" fill="url(#wg)" transform="rotate(240)"/>' +
+    '<ellipse cx="0" cy="-26" rx="6" ry="14" fill="url(#wg)" transform="rotate(300)"/>' +
+    '<circle cx="0" cy="0" r="14" fill="#A88B2C"/><circle cx="0" cy="0" r="7" fill="#0A1F44"/>' +
+    '<path d="M 0 14 Q -4 30 0 48" stroke="url(#wg)" stroke-width="2.5" fill="none"/>' +
+    '</g>' +
+    '<text x="100" y="135" font-size="16" text-anchor="middle" fill="url(#wg)" font-family="Amiri, serif" font-weight="bold">استراحة وهج</text>' +
+    '<text x="100" y="160" font-size="20" text-anchor="middle" fill="url(#wg)" font-family="Cairo, sans-serif" font-weight="900" letter-spacing="4">WAHAJ</text>' +
+    '<text x="100" y="178" font-size="10" text-anchor="middle" fill="url(#wg)" font-family="Cairo, sans-serif" letter-spacing="6">RESORT</text>' +
+    '</svg>';
     
+    document.getElementById('headerLogo').innerHTML = LOGO_SVG;
+    
+    var card = document.getElementById('confirmationCard');
+    
+    var bookingData = null;
     try {
-        const lastBooking = localStorage.getItem('wahaj_last_booking');
+        var lastBooking = localStorage.getItem('wahaj_last_booking');
         if (lastBooking) {
             bookingData = JSON.parse(lastBooking);
         }
-    } catch (e) {
+    } catch(e) {
         console.error('خطأ:', e);
     }
     
     if (!bookingData) {
-        card.innerHTML = `
-            <div class="no-booking">
-                <i class="fas fa-search"></i>
-                <h3>لا يوجد حجز</h3>
-                <p>لم نجد أي حجز حديث. الرجاء القيام بحجز جديد.</p>
-                <a href="booking.html" class="action-btn-app" style="background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: var(--navy);">
-                    <i class="fas fa-calendar-plus"></i>
-                    احجز الآن
-                </a>
-            </div>
-        `;
+        card.innerHTML = 
+            '<div class="no-booking">' +
+                '<i class="fas fa-search"></i>' +
+                '<h3>لا يوجد حجز</h3>' +
+                '<p>لم نجد أي حجز حديث. الرجاء القيام بحجز جديد.</p>' +
+                '<a href="booking.html" class="action-btn-app" style="background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: var(--navy); text-decoration: none;">' +
+                    '<i class="fas fa-calendar-plus"></i> احجز الآن' +
+                '</a>' +
+            '</div>';
         return;
     }
     
     renderBooking(bookingData);
     
     function renderBooking(data) {
-        const whatsappMessage = `السلام عليكم،
-أرغب في تأكيد الحجز التالي:
-
-📋 رقم الحجز: ${data.bookingId}
-📅 التاريخ: ${data.dateFormatted}
-⏰ نوع الحجز: ${data.bookingType}
-🕐 التوقيت: ${data.bookingTypeDesc}
-
-👤 الاسم: ${data.fullName}
-📞 الجوال: ${data.phone}
-👥 عدد الضيوف: ${data.guests}
-
-💰 السعر الإجمالي: ${data.total} ر.ع
-💵 العربون المدفوع: ${data.deposit} ر.ع
-💳 الباقي عند الدخول: ${data.remaining} ر.ع
-🛡️ التأمين: ${data.security} ر.ع
-
-أرفقت لكم صورة الإيصال.
-شكراً لكم 🌟`;
-
-        const whatsappUrl = 'https://wa.me/96895566332?text=' + encodeURIComponent(whatsappMessage);
+        // التأكد من القيم
+        var total = data.total || 0;
+        var deposit = data.deposit || 0;
+        var security = data.security || 20;
+        var remaining = data.remaining !== undefined ? data.remaining : (total - deposit);
+        var payNow = data.payNow || (deposit + security);
+        var isFullPayment = data.isFullPayment || false;
         
-        card.innerHTML = `
-            <div class="success-icon">
-                <i class="fas fa-check"></i>
-            </div>
+        // رسالة واتساب
+        var whatsappMessage = 'السلام عليكم،\n\n' +
+            'أرغب في تأكيد الحجز التالي:\n\n' +
+            '📋 *رقم الحجز:* ' + data.bookingId + '\n' +
+            '📅 *التاريخ:* ' + data.dateFormatted + '\n' +
+            '⏰ *نوع الحجز:* ' + data.bookingType + '\n' +
+            '🕐 *التوقيت:* ' + data.bookingTypeDesc + '\n\n' +
+            '👤 *الاسم:* ' + data.fullName + '\n' +
+            '📞 *الجوال:* ' + data.phone + '\n' +
+            '👥 *الضيوف:* ' + data.guests + '\n\n' +
+            '━━━━━━━━━━━━━━━\n' +
+            '💰 *تفاصيل الدفع*\n' +
+            '━━━━━━━━━━━━━━━\n\n' +
+            '*سعر الإيجار:*\n' +
+            '• الإجمالي: ' + total + ' ر.ع\n\n' +
+            '💳 *يُدفع الآن:*\n' +
+            '• العربون' + (isFullPayment ? ' (دفع كامل)' : '') + ': ' + deposit + ' ر.ع\n' +
+            '• التأمين: ' + security + ' ر.ع\n' +
+            '• *الإجمالي المطلوب: ' + payNow + ' ر.ع*\n\n' +
+            (remaining > 0 ?
+                '💵 *يُدفع عند الدخول:*\n' +
+                '• الباقي: ' + remaining + ' ر.ع\n\n'
+                : '✅ *لا يوجد باقي*\n\n'
+            ) +
+            '🛡️ *يُرد بعد الخروج:*\n' +
+            '• التأمين: ' + security + ' ر.ع\n\n' +
+            '📎 أرفقت لكم صورة الإيصال.\n\n' +
+            'شكراً لكم 🌟';
+        
+        var whatsappUrl = 'https://wa.me/96895566332?text=' + encodeURIComponent(whatsappMessage);
+        
+        var html = 
+            '<div class="success-icon"><i class="fas fa-check"></i></div>' +
             
-            <h1 class="confirmation-title">تم استلام طلبك!</h1>
-            <p class="confirmation-subtitle">بانتظار تأكيد الإدارة، سيتم التواصل معك قريباً</p>
+            '<h1 class="confirmation-title">تم استلام طلبك!</h1>' +
+            '<p class="confirmation-subtitle">بانتظار تأكيد الإدارة، سيتم التواصل معك قريباً</p>' +
             
-            <div class="status-badge-wrapper">
-                <div class="status-badge">
-                    <i class="fas fa-clock"></i>
-                    <span>بانتظار التأكيد</span>
-                </div>
-            </div>
+            '<div class="status-badge-wrapper">' +
+                '<div class="status-badge">' +
+                    '<i class="fas fa-clock"></i>' +
+                    '<span>بانتظار التأكيد</span>' +
+                '</div>' +
+            '</div>' +
             
-            <div class="booking-id-box">
-                <div class="booking-id-label">رقم الحجز</div>
-                <div class="booking-id-value">${data.bookingId}</div>
-            </div>
+            '<div class="booking-id-box">' +
+                '<div class="booking-id-label">رقم الحجز</div>' +
+                '<div class="booking-id-value">' + data.bookingId + '</div>' +
+            '</div>' +
             
-            <div class="details-grid">
-                <div class="detail-row">
-                    <span class="detail-label"><i class="fas fa-calendar-day"></i> التاريخ</span>
-                    <span class="detail-value">${data.dateFormatted}</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label"><i class="fas fa-tag"></i> نوع اليوم</span>
-                    <span class="detail-value">${data.dayType}</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label"><i class="fas fa-clock"></i> نوع الحجز</span>
-                    <span class="detail-value">${data.bookingType}</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label"><i class="fas fa-hourglass-half"></i> التوقيت</span>
-                    <span class="detail-value">${data.bookingTypeDesc}</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label"><i class="fas fa-user"></i> الاسم</span>
-                    <span class="detail-value">${data.fullName}</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label"><i class="fas fa-phone"></i> الجوال</span>
-                    <span class="detail-value">${data.phone}</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label"><i class="fas fa-users"></i> الضيوف</span>
-                    <span class="detail-value">${data.guests}</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label"><i class="fas fa-money-bill-wave"></i> الإجمالي</span>
-                    <span class="detail-value">${data.total} ر.ع</span>
-                </div>
-                <div class="detail-row">
-                    <span class="detail-label"><i class="fas fa-hand-holding-usd"></i> العربون</span>
-                    <span class="detail-value" style="color: var(--primary-dark);">${data.deposit} ر.ع</span>
-                </div>
-                <div class="detail-row highlight">
-                    <span class="detail-label"><i class="fas fa-money-check-alt"></i> الباقي عند الدخول</span>
-                    <span class="detail-value">${data.remaining} ر.ع</span>
-                </div>
-            </div>
+            // معلومات الحجز
+            '<div class="details-grid">' +
+                '<div class="detail-row">' +
+                    '<span class="detail-label"><i class="fas fa-calendar-day"></i> التاريخ</span>' +
+                    '<span class="detail-value">' + data.dateFormatted + '</span>' +
+                '</div>' +
+                '<div class="detail-row">' +
+                    '<span class="detail-label"><i class="fas fa-tag"></i> نوع اليوم</span>' +
+                    '<span class="detail-value">' + data.dayType + '</span>' +
+                '</div>' +
+                '<div class="detail-row">' +
+                    '<span class="detail-label"><i class="fas fa-clock"></i> نوع الحجز</span>' +
+                    '<span class="detail-value">' + data.bookingType + '</span>' +
+                '</div>' +
+                '<div class="detail-row">' +
+                    '<span class="detail-label"><i class="fas fa-hourglass-half"></i> التوقيت</span>' +
+                    '<span class="detail-value">' + data.bookingTypeDesc + '</span>' +
+                '</div>' +
+                '<div class="detail-row">' +
+                    '<span class="detail-label"><i class="fas fa-user"></i> الاسم</span>' +
+                    '<span class="detail-value">' + data.fullName + '</span>' +
+                '</div>' +
+                '<div class="detail-row">' +
+                    '<span class="detail-label"><i class="fas fa-phone"></i> الجوال</span>' +
+                    '<span class="detail-value">' + data.phone + '</span>' +
+                '</div>' +
+                '<div class="detail-row">' +
+                    '<span class="detail-label"><i class="fas fa-users"></i> الضيوف</span>' +
+                    '<span class="detail-value">' + data.guests + '</span>' +
+                '</div>' +
+            '</div>';
+        
+        // ═══ تفاصيل الدفع ═══
+        html += 
+            '<div class="payment-section now">' +
+                '<div class="payment-section-title"><i class="fas fa-credit-card"></i> يُدفع الآن (تحويل بنكي)</div>' +
+                '<div class="payment-row"><span>💵 العربون' + (isFullPayment ? ' (دفع كامل)' : '') + '</span><strong>' + deposit + ' ر.ع</strong></div>' +
+                '<div class="payment-row"><span>🛡️ التأمين (مسترد)</span><strong>' + security + ' ر.ع</strong></div>' +
+                '<div class="payment-row"><span>✅ الإجمالي المطلوب</span><strong>' + payNow + ' ر.ع</strong></div>' +
+            '</div>';
+        
+        if (remaining > 0) {
+            html += 
+                '<div class="payment-section later">' +
+                    '<div class="payment-section-title"><i class="fas fa-calendar-check"></i> يُدفع عند الدخول</div>' +
+                    '<div class="payment-row"><span>💳 الباقي</span><strong>' + remaining + ' ر.ع</strong></div>' +
+                '</div>';
+        } else {
+            html += 
+                '<div class="payment-section later">' +
+                    '<div class="payment-section-title"><i class="fas fa-check-circle"></i> تم الدفع كاملاً</div>' +
+                    '<div class="payment-row"><span>لا يوجد باقي ✅</span><strong>0 ر.ع</strong></div>' +
+                '</div>';
+        }
+        
+        html += 
+            '<div class="payment-section refund">' +
+                '<div class="payment-section-title"><i class="fas fa-undo"></i> يُرد بعد الخروج</div>' +
+                '<div class="payment-row"><span>🛡️ التأمين المسترد</span><strong>' + security + ' ر.ع</strong></div>' +
+            '</div>';
+        
+        // الخطوات القادمة
+        html += 
+            '<div class="info-box">' +
+                '<h4><i class="fas fa-info-circle"></i> الخطوات القادمة</h4>' +
+                '<ol>' +
+                    '<li>سيتم مراجعة طلبك والتأكد من الإيصال</li>' +
+                    '<li>سيتم التواصل معك عبر الواتساب لتأكيد الحجز</li>' +
+                    '<li>يرجى الاحتفاظ برقم الحجز <strong>' + data.bookingId + '</strong></li>' +
+                    (remaining > 0 ? '<li>الباقي (' + remaining + ' ر.ع) يُدفع عند الدخول</li>' : '<li>تم دفع المبلغ كاملاً ✅</li>') +
+                    '<li>التأمين (' + security + ' ر.ع) يُرد بعد الخروج</li>' +
+                '</ol>' +
+            '</div>' +
             
-            <div class="info-box">
-                <h4><i class="fas fa-info-circle"></i> الخطوات القادمة</h4>
-                <ol>
-                    <li>سيتم مراجعة طلبك والتأكد من الإيصال</li>
-                    <li>سيتم التواصل معك عبر الواتساب لتأكيد الحجز</li>
-                    <li>يرجى الاحتفاظ برقم الحجز <strong>${data.bookingId}</strong></li>
-                    <li>الباقي (${data.remaining} ر.ع) يُدفع قبل الدخول بيوم</li>
-                    <li>التأمين (${data.security} ر.ع) يُرد بعد الخروج</li>
-                </ol>
-            </div>
+            '<div class="action-buttons">' +
+                '<a href="' + whatsappUrl + '" target="_blank" class="action-btn-app whatsapp">' +
+                    '<i class="fab fa-whatsapp"></i> تأكيد عبر واتساب' +
+                '</a>' +
+                '<button onclick="window.print()" class="action-btn-app print">' +
+                    '<i class="fas fa-print"></i> طباعة الحجز' +
+                '</button>' +
+            '</div>' +
             
-            <div class="action-buttons">
-                <a href="${whatsappUrl}" target="_blank" class="action-btn-app whatsapp">
-                    <i class="fab fa-whatsapp"></i>
-                    تأكيد عبر واتساب
-                </a>
-                <button onclick="window.print()" class="action-btn-app print">
-                    <i class="fas fa-print"></i>
-                    طباعة الحجز
-                </button>
-            </div>
-            
-            <div class="back-link">
-                <a href="index.html">
-                    <i class="fas fa-arrow-right"></i>
-                    العودة للرئيسية
-                </a>
-            </div>
-        `;
+            '<div class="back-link">' +
+                '<a href="index.html">' +
+                    '<i class="fas fa-arrow-right"></i> العودة للرئيسية' +
+                '</a>' +
+            '</div>';
+        
+        card.innerHTML = html;
     }
-});
+    
+})();
 </script>
 
 </body>
