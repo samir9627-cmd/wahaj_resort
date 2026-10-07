@@ -154,21 +154,6 @@
         
         .admin-logo-icon { width: 36px; height: 36px; }
         
-        .cloud-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            background: rgba(255, 193, 7, 0.15);
-            color: var(--warning);
-            padding: 3px 8px;
-            border-radius: 50px;
-            font-size: 0.65rem;
-            margin-top: 3px;
-        }
-        
-        .cloud-status.online { background: rgba(40, 167, 69, 0.15); color: var(--success); }
-        .cloud-status.local { background: rgba(108, 117, 125, 0.15); color: var(--gray-600); }
-        
         .admin-header-btn {
             background: rgba(212, 175, 55, 0.15);
             color: var(--primary);
@@ -192,7 +177,7 @@
         
         .page-title {
             font-family: 'Amiri', serif;
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             color: var(--navy);
             margin-bottom: 20px;
             display: flex;
@@ -203,7 +188,7 @@
         .page-title::before {
             content: '';
             width: 5px;
-            height: 28px;
+            height: 26px;
             background: linear-gradient(180deg, var(--primary), var(--primary-dark));
             border-radius: 5px;
         }
@@ -443,16 +428,19 @@
         
         .block-form { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
         
-        .block-form input {
+        .block-form input,
+        .block-form select {
             width: 100%;
             padding: 12px;
             border: 2px solid var(--gray-200);
             border-radius: var(--radius-sm);
             font-family: 'Cairo', sans-serif;
             font-size: 0.85rem;
+            background: var(--white);
         }
         
-        .block-form input:focus { outline: none; border-color: var(--primary); }
+        .block-form input:focus,
+        .block-form select:focus { outline: none; border-color: var(--primary); }
         
         .block-form button {
             padding: 12px 20px;
@@ -531,6 +519,437 @@
         
         .btn-danger { background: var(--danger); color: var(--white); }
         
+        /* ═══ Messages Editor ═══ */
+        .message-editor {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 15px;
+        }
+        
+        .message-editor-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+            border-bottom: 2px dashed var(--gray-200);
+        }
+        
+        .message-editor-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+        
+        .message-editor-header h3 {
+            color: var(--navy);
+            font-size: 1rem;
+            font-weight: 700;
+        }
+        
+        .message-editor-header p {
+            color: var(--gray-600);
+            font-size: 0.75rem;
+            margin-top: 2px;
+        }
+        
+        .variables-hint {
+            background: rgba(212, 175, 55, 0.08);
+            border-right: 3px solid var(--primary);
+            border-radius: var(--radius-sm);
+            padding: 10px 14px;
+            margin-bottom: 12px;
+            font-size: 0.75rem;
+            color: var(--navy);
+            line-height: 1.7;
+        }
+        
+        .variables-hint code {
+            background: rgba(212, 175, 55, 0.2);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.7rem;
+            color: var(--primary-dark);
+            font-weight: 700;
+        }
+        
+        .message-editor textarea {
+            width: 100%;
+            min-height: 180px;
+            padding: 14px;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-sm);
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.85rem;
+            color: var(--navy);
+            line-height: 1.8;
+            resize: vertical;
+            background: var(--gray-100);
+        }
+        
+        .message-editor textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.15);
+            background: var(--white);
+        }
+        
+        .message-editor-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 12px;
+        }
+        
+        .message-editor-actions button {
+            flex: 1;
+            padding: 12px;
+            border-radius: 50px;
+            border: none;
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+        
+        .btn-save {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--navy);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.35);
+        }
+        
+        .btn-reset {
+            background: var(--gray-200);
+            color: var(--gray-600);
+        }
+        
+        /* ═══ Images ═══ */
+        .images-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 15px;
+        }
+        
+        .image-card {
+            background: var(--gray-100);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            position: relative;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .image-card img {
+            width: 100%;
+            aspect-ratio: 1;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .image-card-info {
+            padding: 10px;
+            background: var(--white);
+        }
+        
+        .image-card-info .name {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 4px;
+            word-break: break-all;
+        }
+        
+        .image-card-info .path {
+            font-size: 0.65rem;
+            color: var(--gray-600);
+            font-family: monospace;
+            word-break: break-all;
+        }
+        
+        .image-card-actions {
+            display: flex;
+            gap: 4px;
+            margin-top: 8px;
+        }
+        
+        .image-card-actions button {
+            flex: 1;
+            padding: 6px;
+            border: none;
+            border-radius: 6px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        
+        .image-card-actions .copy-btn {
+            background: var(--primary);
+            color: var(--navy);
+        }
+        
+        .image-card-actions .del-btn {
+            background: var(--danger);
+            color: var(--white);
+        }
+        
+        .image-add-form {
+            background: var(--gray-100);
+            border-radius: var(--radius-sm);
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .image-add-form input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-sm);
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+            background: var(--white);
+        }
+        
+        .image-add-form input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .image-add-form button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--navy);
+            border: none;
+            border-radius: var(--radius-sm);
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        
+        /* ═══ Offers ═══ */
+        .offer-form {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 15px;
+        }
+        
+        .offer-form input,
+        .offer-form textarea,
+        .offer-form select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-sm);
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.85rem;
+            margin-bottom: 10px;
+            background: var(--white);
+            color: var(--navy);
+        }
+        
+        .offer-form textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        .offer-form input:focus,
+        .offer-form textarea:focus,
+        .offer-form select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .offer-form button {
+            width: 100%;
+            padding: 13px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--navy);
+            border: none;
+            border-radius: 50px;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.35);
+        }
+        
+        .offers-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .offer-item {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 15px;
+            box-shadow: var(--shadow-sm);
+            border-right: 4px solid var(--primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .offer-item.inactive {
+            opacity: 0.6;
+            border-right-color: var(--gray-400);
+        }
+        
+        .offer-item-content { flex: 1; }
+        
+        .offer-item h4 {
+            color: var(--navy);
+            font-size: 0.95rem;
+            margin-bottom: 5px;
+        }
+        
+        .offer-item p {
+            color: var(--gray-600);
+            font-size: 0.8rem;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+        
+        .offer-item-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            font-size: 0.7rem;
+        }
+        
+        .offer-badge {
+            padding: 3px 10px;
+            border-radius: 50px;
+            font-weight: 700;
+        }
+        
+        .offer-badge.discount {
+            background: rgba(40, 167, 69, 0.15);
+            color: var(--success);
+        }
+        
+        .offer-badge.date {
+            background: rgba(10, 31, 68, 0.08);
+            color: var(--navy);
+        }
+        
+        .offer-item-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        
+        .offer-item-actions button {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .offer-item-actions .del-btn {
+            background: var(--danger);
+            color: var(--white);
+        }
+        
+        .offer-item-actions .toggle-btn {
+            background: var(--primary);
+            color: var(--navy);
+        }
+        
+        /* ═══ Prices ═══ */
+        .price-form {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 15px;
+        }
+        
+        .price-form h3 {
+            color: var(--navy);
+            font-size: 1rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding-bottom: 12px;
+            border-bottom: 2px dashed var(--gray-200);
+        }
+        
+        .price-form h3 i { color: var(--primary); }
+        
+        .price-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .price-field label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 5px;
+        }
+        
+        .price-field input {
+            width: 100%;
+            padding: 11px;
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-sm);
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.9rem;
+            background: var(--white);
+            color: var(--navy);
+            font-weight: 700;
+            text-align: center;
+        }
+        
+        .price-field input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.15);
+        }
+        
+        .price-form button {
+            width: 100%;
+            padding: 13px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--navy);
+            border: none;
+            border-radius: 50px;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.35);
+            margin-top: 15px;
+        }
+        
         /* ═══ Bottom Nav ═══ */
         .admin-bottom-nav {
             position: fixed;
@@ -547,7 +966,7 @@
             display: flex;
             align-items: center;
             justify-content: space-around;
-            padding: 0 8px;
+            padding: 0 5px;
         }
         
         .admin-nav-item {
@@ -556,10 +975,10 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 4px;
+            gap: 3px;
             color: var(--gray-600);
             text-decoration: none;
-            font-size: 0.65rem;
+            font-size: 0.55rem;
             font-weight: 600;
             padding: 8px 0;
             position: relative;
@@ -569,25 +988,25 @@
             font-family: 'Cairo', sans-serif;
         }
         
-        .admin-nav-item i { font-size: 1.2rem; transition: var(--transition); }
+        .admin-nav-item i { font-size: 1.1rem; transition: var(--transition); }
         .admin-nav-item.active { color: var(--primary); }
         .admin-nav-item.active i { transform: translateY(-3px); filter: drop-shadow(0 4px 10px rgba(212, 175, 55, 0.4)); }
         
         .admin-nav-item .badge {
             position: absolute;
             top: 4px;
-            right: calc(50% - 20px);
+            right: calc(50% - 18px);
             background: var(--danger);
             color: var(--white);
-            font-size: 0.6rem;
+            font-size: 0.55rem;
             font-weight: 700;
-            min-width: 18px;
-            height: 18px;
+            min-width: 16px;
+            height: 16px;
             border-radius: 50px;
             display: none;
             align-items: center;
             justify-content: center;
-            padding: 0 5px;
+            padding: 0 4px;
         }
         
         .admin-nav-item .badge.show { display: flex; }
@@ -787,12 +1206,7 @@
     <header class="admin-header">
         <div class="admin-logo">
             <div class="admin-logo-icon" id="headerLogoIcon"></div>
-            <div>
-                <div>لوحة التحكم</div>
-                <div class="cloud-status local" id="cloudStatus">
-                    <i class="fas fa-database"></i> <span id="cloudStatusText">محلي</span>
-                </div>
-            </div>
+            <span>لوحة التحكم</span>
         </div>
         <div style="display: flex; gap: 8px;">
             <button class="admin-header-btn" onclick="refreshData()"><i class="fas fa-sync-alt"></i></button>
@@ -803,7 +1217,7 @@
     
     <div class="admin-container">
         
-        <!-- Dashboard -->
+        <!-- ═══ Dashboard ═══ -->
         <div class="page active" id="page-dashboard">
             <h1 class="page-title">الرئيسية</h1>
             
@@ -849,7 +1263,7 @@
                 </div>
                 <div class="quick-action" onclick="switchPage('bookings')">
                     <div class="quick-action-icon"><i class="fas fa-list"></i></div>
-                    <div class="quick-action-label">كل الحجوزات</div>
+                    <div class="quick-action-label">الحجوزات</div>
                 </div>
                 <div class="quick-action" onclick="switchPage('settings')">
                     <div class="quick-action-icon"><i class="fas fa-cog"></i></div>
@@ -857,11 +1271,11 @@
                 </div>
             </div>
             
-            <h3 class="page-title" style="font-size: 1.2rem;">آخر الحجوزات</h3>
+            <h3 class="page-title" style="font-size: 1.1rem;">آخر الحجوزات</h3>
             <div id="dashboardBookings"></div>
         </div>
         
-        <!-- Bookings -->
+        <!-- ═══ Bookings ═══ -->
         <div class="page" id="page-bookings">
             <h1 class="page-title">الحجوزات</h1>
             
@@ -878,7 +1292,7 @@
             <div id="bookingsList"></div>
         </div>
         
-        <!-- Blocked -->
+        <!-- ═══ Blocked ═══ -->
         <div class="page" id="page-blocked">
             <h1 class="page-title">حجب التواريخ</h1>
             
@@ -886,7 +1300,13 @@
                 <h3><i class="fas fa-plus-circle"></i> إضافة تاريخ محجوب</h3>
                 <div class="block-form">
                     <input type="date" id="blockDate">
-                    <input type="text" id="blockReason" placeholder="السبب (اختياري)">
+                    <select id="blockType">
+                        <option value="maintenance">صيانة</option>
+                        <option value="personal">شخصي (معرفة)</option>
+                        <option value="reserved">محجوز يدوياً</option>
+                        <option value="other">أخرى</option>
+                    </select>
+                    <input type="text" id="blockReason" placeholder="ملاحظة (اختياري)">
                     <button onclick="addBlocked()"><i class="fas fa-plus"></i> إضافة</button>
                 </div>
                 <p style="color: var(--gray-600); font-size: 0.75rem;">
@@ -900,7 +1320,178 @@
             </div>
         </div>
         
-        <!-- Settings -->
+        <!-- ═══ Messages ═══ -->
+        <div class="page" id="page-messages">
+            <h1 class="page-title">تعديل الرسائل</h1>
+            
+            <div class="variables-hint">
+                <strong>💡 المتغيرات المتاحة:</strong><br>
+                <code>{{name}}</code> اسم العميل &nbsp;
+                <code>{{date}}</code> التاريخ &nbsp;
+                <code>{{bookingId}}</code> رقم الحجز<br>
+                <code>{{total}}</code> الإجمالي &nbsp;
+                <code>{{deposit}}</code> العربون &nbsp;
+                <code>{{remaining}}</code> الباقي<br>
+                <code>{{payNow}}</code> المطلوب الآن &nbsp;
+                <code>{{security}}</code> التأمين &nbsp;
+                <code>{{guests}}</code> الضيوف
+            </div>
+            
+            <div class="message-editor">
+                <div class="message-editor-header">
+                    <div class="message-editor-icon"><i class="fas fa-check-circle"></i></div>
+                    <div>
+                        <h3>رسالة التأكيد</h3>
+                        <p>تُرسل للعميل عند قبول الحجز</p>
+                    </div>
+                </div>
+                <textarea id="msgConfirm"></textarea>
+                <div class="message-editor-actions">
+                    <button class="btn-save" onclick="saveMessage('confirm')"><i class="fas fa-save"></i> حفظ</button>
+                    <button class="btn-reset" onclick="resetMessage('confirm')"><i class="fas fa-undo"></i> استرجاع</button>
+                </div>
+            </div>
+            
+            <div class="message-editor">
+                <div class="message-editor-header">
+                    <div class="message-editor-icon"><i class="fas fa-times-circle"></i></div>
+                    <div>
+                        <h3>رسالة الرفض</h3>
+                        <p>تُرسل للعميل عند رفض الحجز</p>
+                    </div>
+                </div>
+                <textarea id="msgReject"></textarea>
+                <div class="message-editor-actions">
+                    <button class="btn-save" onclick="saveMessage('reject')"><i class="fas fa-save"></i> حفظ</button>
+                    <button class="btn-reset" onclick="resetMessage('reject')"><i class="fas fa-undo"></i> استرجاع</button>
+                </div>
+            </div>
+            
+            <div class="message-editor">
+                <div class="message-editor-header">
+                    <div class="message-editor-icon"><i class="fas fa-bell"></i></div>
+                    <div>
+                        <h3>رسالة تذكير</h3>
+                        <p>تُرسل للعميل قبل الحجز بيوم</p>
+                    </div>
+                </div>
+                <textarea id="msgReminder"></textarea>
+                <div class="message-editor-actions">
+                    <button class="btn-save" onclick="saveMessage('reminder')"><i class="fas fa-save"></i> حفظ</button>
+                    <button class="btn-reset" onclick="resetMessage('reminder')"><i class="fas fa-undo"></i> استرجاع</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ═══ Images ═══ -->
+        <div class="page" id="page-images">
+            <h1 class="page-title">إدارة الصور</h1>
+            
+            <div class="image-add-form">
+                <h3 style="color: var(--navy); font-size: 0.95rem; margin-bottom: 12px;">
+                    <i class="fas fa-plus-circle" style="color: var(--primary);"></i>
+                    إضافة صورة
+                </h3>
+                <input type="text" id="imgName" placeholder="اسم الصورة (مثال: المسبح الرئيسي)">
+                <input type="text" id="imgPath" placeholder="مسار الصورة (مثال: images/gallery/pool.jpg)">
+                <p style="font-size: 0.7rem; color: var(--gray-600); margin-bottom: 10px;">
+                    💡 ارفع الصور يدوياً إلى <code style="background: rgba(212,175,55,0.2); padding: 2px 5px; border-radius: 3px;">images/gallery/</code> في GitHub، ثم أضف المسار هنا.
+                </p>
+                <button onclick="addImage()"><i class="fas fa-plus"></i> إضافة الصورة</button>
+            </div>
+            
+            <div class="block-section">
+                <h3><i class="fas fa-images"></i> الصور الحالية</h3>
+                <div class="images-grid" id="imagesGrid"></div>
+            </div>
+        </div>
+        
+        <!-- ═══ Offers ═══ -->
+        <div class="page" id="page-offers">
+            <h1 class="page-title">العروض والخصومات</h1>
+            
+            <div class="offer-form">
+                <h3 style="color: var(--navy); font-size: 0.95rem; margin-bottom: 12px;">
+                    <i class="fas fa-plus-circle" style="color: var(--primary);"></i>
+                    إضافة عرض جديد
+                </h3>
+                <input type="text" id="offerTitle" placeholder="عنوان العرض (مثال: خصم الويكند)">
+                <textarea id="offerDesc" placeholder="وصف العرض (مثال: خصم 20% على جميع حجوزات الويكند)"></textarea>
+                <input type="date" id="offerStart" placeholder="تاريخ البداية">
+                <input type="date" id="offerEnd" placeholder="تاريخ النهاية">
+                <input type="number" id="offerDiscount" placeholder="نسبة الخصم % (اختياري)">
+                <button onclick="addOffer()"><i class="fas fa-plus"></i> إضافة العرض</button>
+            </div>
+            
+            <div class="block-section">
+                <h3><i class="fas fa-gift"></i> العروض الحالية</h3>
+                <div class="offers-list" id="offersList"></div>
+            </div>
+        </div>
+        
+        <!-- ═══ Prices ═══ -->
+        <div class="page" id="page-prices">
+            <h1 class="page-title">تعديل الأسعار</h1>
+            
+            <div class="price-form">
+                <h3><i class="fas fa-sun"></i> أيام الأسبوع (الأحد - الأربعاء)</h3>
+                <div class="price-row">
+                    <div class="price-field">
+                        <label>بدون مبيت (ر.ع)</label>
+                        <input type="number" id="weekdayWithoutStay" min="0">
+                    </div>
+                    <div class="price-field">
+                        <label>مع مبيت (ر.ع)</label>
+                        <input type="number" id="weekdayWithStay" min="0">
+                    </div>
+                </div>
+                <div class="price-row">
+                    <div class="price-field">
+                        <label>نصف يوم (ر.ع)</label>
+                        <input type="number" id="weekdayHalfDay" min="0">
+                    </div>
+                    <div class="price-field"></div>
+                </div>
+            </div>
+            
+            <div class="price-form">
+                <h3><i class="fas fa-star"></i> الويكند (الخميس - السبت)</h3>
+                <div class="price-row">
+                    <div class="price-field">
+                        <label>بدون مبيت (ر.ع)</label>
+                        <input type="number" id="weekendWithoutStay" min="0">
+                    </div>
+                    <div class="price-field">
+                        <label>مع مبيت (ر.ع)</label>
+                        <input type="number" id="weekendWithStay" min="0">
+                    </div>
+                </div>
+                <div class="price-row">
+                    <div class="price-field">
+                        <label>نصف يوم (ر.ع)</label>
+                        <input type="number" id="weekendHalfDay" min="0">
+                    </div>
+                    <div class="price-field"></div>
+                </div>
+            </div>
+            
+            <div class="price-form">
+                <h3><i class="fas fa-shield-alt"></i> التأمين</h3>
+                <div class="price-row">
+                    <div class="price-field">
+                        <label>مبلغ التأمين (ر.ع)</label>
+                        <input type="number" id="securityDeposit" min="0">
+                    </div>
+                    <div class="price-field"></div>
+                </div>
+            </div>
+            
+            <button class="btn-full" style="background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: var(--navy);" onclick="savePrices()">
+                <i class="fas fa-save"></i> حفظ الأسعار
+            </button>
+        </div>
+        
+        <!-- ═══ Settings ═══ -->
         <div class="page" id="page-settings">
             <h1 class="page-title">الإعدادات</h1>
             
@@ -919,6 +1510,8 @@
                 <h3><i class="fas fa-database"></i> البيانات</h3>
                 <p>عدد الحجوزات: <strong id="settingsBookingsCount">0</strong></p>
                 <p>عدد التواريخ المحجوبة: <strong id="settingsBlockedCount">0</strong></p>
+                <p>عدد العروض: <strong id="settingsOffersCount">0</strong></p>
+                <p>عدد الصور: <strong id="settingsImagesCount">0</strong></p>
                 <button class="btn-full btn-danger" onclick="clearAllData()" style="margin-top: 10px;">
                     <i class="fas fa-trash"></i> مسح جميع البيانات
                 </button>
@@ -942,6 +1535,22 @@
             <i class="fas fa-ban"></i>
             <span>حجب</span>
         </button>
+        <button class="admin-nav-item" data-page="messages" onclick="switchPage('messages')">
+            <i class="fas fa-comment-dots"></i>
+            <span>الرسائل</span>
+        </button>
+        <button class="admin-nav-item" data-page="images" onclick="switchPage('images')">
+            <i class="fas fa-images"></i>
+            <span>الصور</span>
+        </button>
+        <button class="admin-nav-item" data-page="offers" onclick="switchPage('offers')">
+            <i class="fas fa-gift"></i>
+            <span>عروض</span>
+        </button>
+        <button class="admin-nav-item" data-page="prices" onclick="switchPage('prices')">
+            <i class="fas fa-money-bill"></i>
+            <span>أسعار</span>
+        </button>
         <button class="admin-nav-item" data-page="settings" onclick="switchPage('settings')">
             <i class="fas fa-cog"></i>
             <span>إعدادات</span>
@@ -957,604 +1566,7 @@
 <div class="toast" id="toast"></div>
 <div id="printArea" style="display: none;"></div>
 
-<script>
-(function() {
-    'use strict';
-    
-    var ADMIN_PASSWORD = 'wahaj2026';
-    
-    var LOGO_SVG = '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">' +
-    '<defs><linearGradient id="wg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#F4D77E"/><stop offset="50%" stop-color="#D4AF37"/><stop offset="100%" stop-color="#A88B2C"/></linearGradient></defs>' +
-    '<circle cx="100" cy="100" r="94" fill="none" stroke="url(#wg)" stroke-width="2.5"/>' +
-    '<g transform="translate(100, 62)">' +
-    '<ellipse cx="0" cy="-26" rx="6" ry="14" fill="url(#wg)"/>' +
-    '<ellipse cx="0" cy="-26" rx="6" ry="14" fill="url(#wg)" transform="rotate(60)"/>' +
-    '<ellipse cx="0" cy="-26" rx="6" ry="14" fill="url(#wg)" transform="rotate(120)"/>' +
-    '<ellipse cx="0" cy="-26" rx="6" ry="14" fill="url(#wg)" transform="rotate(180)"/>' +
-    '<ellipse cx="0" cy="-26" rx="6" ry="14" fill="url(#wg)" transform="rotate(240)"/>' +
-    '<ellipse cx="0" cy="-26" rx="6" ry="14" fill="url(#wg)" transform="rotate(300)"/>' +
-    '<circle cx="0" cy="0" r="14" fill="#A88B2C"/><circle cx="0" cy="0" r="7" fill="#0A1F44"/>' +
-    '<path d="M 0 14 Q -4 30 0 48" stroke="url(#wg)" stroke-width="2.5" fill="none"/>' +
-    '</g>' +
-    '<text x="100" y="135" font-size="16" text-anchor="middle" fill="url(#wg)" font-family="Amiri, serif" font-weight="bold">استراحة وهج</text>' +
-    '<text x="100" y="160" font-size="20" text-anchor="middle" fill="url(#wg)" font-family="Cairo, sans-serif" font-weight="900" letter-spacing="4">WAHAJ</text>' +
-    '<text x="100" y="178" font-size="10" text-anchor="middle" fill="url(#wg)" font-family="Cairo, sans-serif" letter-spacing="6">RESORT</text>' +
-    '</svg>';
-    
-    document.getElementById('headerLogoIcon').innerHTML = LOGO_SVG;
-    
-    var allBookings = [];
-    var filteredBookings = [];
-    var blockedDates = [];
-    var currentFilter = 'all';
-    var currentSearch = '';
-    
-    function showToast(msg, type) {
-        var t = document.getElementById('toast');
-        t.textContent = msg;
-        t.className = 'toast show ' + (type || '');
-        setTimeout(function() { t.classList.remove('show'); }, 2500);
-    }
-    
-    function handleLogin() {
-        var pwd = document.getElementById('passwordInput').value;
-        if (pwd === ADMIN_PASSWORD) {
-            sessionStorage.setItem('wahaj_admin', '1');
-            showAdmin();
-        } else {
-            document.getElementById('loginError').classList.add('show');
-            document.getElementById('passwordInput').value = '';
-            setTimeout(function() { document.getElementById('loginError').classList.remove('show'); }, 3000);
-        }
-    }
-    
-    function showAdmin() {
-        document.getElementById('loginScreen').style.display = 'none';
-        document.getElementById('adminPanel').classList.add('show');
-        loadData();
-    }
-    
-    window.switchPage = function(pageName) {
-        document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
-        document.querySelectorAll('.admin-nav-item').forEach(function(n) { n.classList.remove('active'); });
-        
-        var page = document.getElementById('page-' + pageName);
-        if (page) page.classList.add('active');
-        
-        var nav = document.querySelector('.admin-nav-item[data-page="' + pageName + '"]');
-        if (nav) nav.classList.add('active');
-        
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
-    
-    function loadData() {
-        try {
-            allBookings = JSON.parse(localStorage.getItem('wahaj_bookings') || '[]').reverse();
-            blockedDates = JSON.parse(localStorage.getItem('wahaj_blocked_dates') || '[]');
-        } catch(e) {
-            allBookings = [];
-            blockedDates = [];
-        }
-        updateStats();
-        applyFilters();
-        renderBlockedList();
-        updateSettingsCounts();
-        updateBadge();
-    }
-    
-    function updateStats() {
-        var total = allBookings.length;
-        var pending = allBookings.filter(function(b) { return (b.status || 'pending') === 'pending'; }).length;
-        var confirmed = allBookings.filter(function(b) { return b.status === 'confirmed'; }).length;
-        var revenue = allBookings.filter(function(b) { return b.status === 'confirmed'; })
-            .reduce(function(sum, b) { return sum + (b.total || 0); }, 0);
-        
-        document.getElementById('statTotal').textContent = total;
-        document.getElementById('statPending').textContent = pending;
-        document.getElementById('statConfirmed').textContent = confirmed;
-        document.getElementById('statRevenue').textContent = revenue;
-    }
-    
-    function updateBadge() {
-        var pending = allBookings.filter(function(b) { return (b.status || 'pending') === 'pending'; }).length;
-        var badge = document.getElementById('navBadge');
-        if (pending > 0) {
-            badge.textContent = pending;
-            badge.classList.add('show');
-        } else {
-            badge.classList.remove('show');
-        }
-    }
-    
-    function updateSettingsCounts() {
-        document.getElementById('settingsBookingsCount').textContent = allBookings.length;
-        document.getElementById('settingsBlockedCount').textContent = blockedDates.length;
-    }
-    
-    function applyFilters() {
-        filteredBookings = allBookings.filter(function(b) {
-            var status = b.status || 'pending';
-            if (currentFilter !== 'all' && status !== currentFilter) return false;
-            
-            if (currentSearch) {
-                var txt = ((b.bookingId || '') + ' ' + (b.fullName || '') + ' ' + (b.phone || '') + ' ' + (b.date || '')).toLowerCase();
-                if (txt.indexOf(currentSearch.toLowerCase()) === -1) return false;
-            }
-            return true;
-        });
-        renderBookings();
-        renderDashboardBookings();
-    }
-    
-    function renderBookings() {
-        var list = document.getElementById('bookingsList');
-        
-        if (filteredBookings.length === 0) {
-            list.innerHTML = '<div class="no-bookings"><i class="fas fa-inbox"></i><h3>لا توجد حجوزات</h3><p>' + (allBookings.length === 0 ? 'لم يتم استلام أي حجز بعد' : 'لا توجد نتائج مطابقة') + '</p></div>';
-            return;
-        }
-        
-        list.innerHTML = filteredBookings.map(bookingCardHTML).join('');
-    }
-    
-    function renderDashboardBookings() {
-        var list = document.getElementById('dashboardBookings');
-        var latest = allBookings.slice(0, 3);
-        
-        if (latest.length === 0) {
-            list.innerHTML = '<div class="no-bookings"><i class="fas fa-inbox"></i><h3>لا توجد حجوزات بعد</h3></div>';
-            return;
-        }
-        
-        list.innerHTML = latest.map(bookingCardHTML).join('');
-    }
-    
-    function bookingCardHTML(b) {
-        var status = b.status || 'pending';
-        var statusText = status === 'pending' ? 'بانتظار' : status === 'confirmed' ? 'مؤكد' : 'مرفوض';
-        var statusIcon = status === 'pending' ? 'fa-clock' : status === 'confirmed' ? 'fa-check' : 'fa-times';
-        
-        return '<div class="booking-card ' + status + '">' +
-            '<div class="booking-head">' +
-                '<span class="booking-id">' + b.bookingId + '</span>' +
-                '<span class="booking-status ' + status + '"><i class="fas ' + statusIcon + '"></i> ' + statusText + '</span>' +
-            '</div>' +
-            '<div class="booking-info-grid">' +
-                '<div class="booking-info-item"><span class="label">الاسم</span><span class="value">' + (b.fullName || '—') + '</span></div>' +
-                '<div class="booking-info-item"><span class="label">الجوال</span><span class="value">' + (b.phone || '—') + '</span></div>' +
-                '<div class="booking-info-item"><span class="label">التاريخ</span><span class="value">' + (b.dateFormatted || b.date || '—') + '</span></div>' +
-                '<div class="booking-info-item"><span class="label">النوع</span><span class="value">' + (b.bookingType || '—') + '</span></div>' +
-                '<div class="booking-info-item"><span class="label">الضيوف</span><span class="value">' + (b.guests || '—') + '</span></div>' +
-                '<div class="booking-info-item"><span class="label">المطلوب الآن</span><span class="value">' + (b.payNow || b.deposit || 0) + ' ر.ع</span></div>' +
-            '</div>' +
-            '<div class="booking-actions">' +
-                '<button class="action-btn view" onclick="viewBooking(\'' + b.bookingId + '\')"><i class="fas fa-eye"></i> تفاصيل</button>' +
-                (status === 'pending' ? 
-                    '<button class="action-btn confirm" onclick="confirmBooking(\'' + b.bookingId + '\')"><i class="fas fa-check"></i> تأكيد</button>' +
-                    '<button class="action-btn reject" onclick="rejectBooking(\'' + b.bookingId + '\')"><i class="fas fa-times"></i> رفض</button>'
-                    : '') +
-                '<button class="action-btn whatsapp" onclick="contactCustomer(\'' + b.bookingId + '\')"><i class="fab fa-whatsapp"></i></button>' +
-                '<button class="action-btn print" onclick="printBooking(\'' + b.bookingId + '\')"><i class="fas fa-print"></i></button>' +
-                '<button class="action-btn delete" onclick="deleteBooking(\'' + b.bookingId + '\')"><i class="fas fa-trash"></i></button>' +
-            '</div>' +
-        '</div>';
-    }
-    
-    window.viewBooking = function(bookingId) {
-        var b = allBookings.find(function(x) { return x.bookingId === bookingId; });
-        if (!b) return;
-        
-        var total = b.total || 0;
-        var deposit = b.deposit || 0;
-        var security = b.security || 20;
-        var remaining = b.remaining !== undefined ? b.remaining : (total - deposit);
-        var payNow = b.payNow || (deposit + security);
-        var isFullPayment = b.isFullPayment || false;
-        
-        var receiptImg = b.receiptURL || sessionStorage.getItem('receipt_' + bookingId);
-        var receiptHtml = receiptImg ? '<div class="modal-receipt"><img src="' + receiptImg + '" alt="الإيصال"></div>' : '<p style="text-align:center;color:var(--gray-600);font-size:0.85rem;margin-top:15px;">لا يوجد إيصال</p>';
-        
-        var html = 
-            '<button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>' +
-            '<h2>تفاصيل الحجز</h2>' +
-            '<div class="modal-row"><span class="label">رقم الحجز:</span><span class="value">' + b.bookingId + '</span></div>' +
-            '<div class="modal-row"><span class="label">الاسم:</span><span class="value">' + b.fullName + '</span></div>' +
-            '<div class="modal-row"><span class="label">الجوال:</span><span class="value">' + b.phone + '</span></div>' +
-            '<div class="modal-row"><span class="label">التاريخ:</span><span class="value">' + b.dateFormatted + '</span></div>' +
-            '<div class="modal-row"><span class="label">نوع اليوم:</span><span class="value">' + b.dayType + '</span></div>' +
-            '<div class="modal-row"><span class="label">نوع الحجز:</span><span class="value">' + b.bookingType + '</span></div>' +
-            '<div class="modal-row"><span class="label">التوقيت:</span><span class="value">' + b.bookingTypeDesc + '</span></div>' +
-            '<div class="modal-row"><span class="label">عدد الضيوف:</span><span class="value">' + b.guests + '</span></div>' +
-            '<div class="modal-row"><span class="label">ملاحظات:</span><span class="value">' + (b.notes || 'لا يوجد') + '</span></div>';
-        
-        // Payment sections
-        html += 
-            '<div class="modal-payment-section now">' +
-                '<div class="modal-payment-section-title"><i class="fas fa-credit-card"></i> يُدفع الآن</div>' +
-                '<div class="modal-payment-row"><span>💵 العربون' + (isFullPayment ? ' (دفع كامل)' : '') + '</span><strong>' + deposit + ' ر.ع</strong></div>' +
-                '<div class="modal-payment-row"><span>🛡️ التأمين (مسترد)</span><strong>' + security + ' ر.ع</strong></div>' +
-                '<div class="modal-payment-row"><span>✅ الإجمالي المطلوب</span><strong>' + payNow + ' ر.ع</strong></div>' +
-            '</div>';
-        
-        if (remaining > 0) {
-            html += 
-                '<div class="modal-payment-section later">' +
-                    '<div class="modal-payment-section-title"><i class="fas fa-calendar-check"></i> يُدفع عند الدخول</div>' +
-                    '<div class="modal-payment-row"><span>💳 الباقي</span><strong>' + remaining + ' ر.ع</strong></div>' +
-                '</div>';
-        } else {
-            html += 
-                '<div class="modal-payment-section later">' +
-                    '<div class="modal-payment-section-title"><i class="fas fa-check-circle"></i> تم الدفع كاملاً</div>' +
-                    '<div class="modal-payment-row"><span>لا يوجد باقي ✅</span><strong>0 ر.ع</strong></div>' +
-                '</div>';
-        }
-        
-        html += 
-            '<div class="modal-payment-section refund">' +
-                '<div class="modal-payment-section-title"><i class="fas fa-undo"></i> يُرد بعد الخروج</div>' +
-                '<div class="modal-payment-row"><span>🛡️ التأمين المسترد</span><strong>' + security + ' ر.ع</strong></div>' +
-            '</div>';
-        
-        html += receiptHtml;
-        
-        document.getElementById('modalContent').innerHTML = html;
-        document.getElementById('detailsModal').classList.add('show');
-    };
-    
-    window.closeModal = function() {
-        document.getElementById('detailsModal').classList.remove('show');
-    };
-    
-    window.confirmBooking = function(bookingId) {
-        var b = allBookings.find(function(x) { return x.bookingId === bookingId; });
-        if (!b) return;
-        if (!confirm('تأكيد الحجز؟ سيتم فتح واتساب للتواصل مع العميل')) return;
-        
-        updateStatus(bookingId, 'confirmed');
-        
-        var total = b.total || 0;
-        var deposit = b.deposit || 0;
-        var security = b.security || 20;
-        var remaining = b.remaining !== undefined ? b.remaining : (total - deposit);
-        var payNow = b.payNow || (deposit + security);
-        var isFullPayment = b.isFullPayment || false;
-        
-        var msg = '✅ *تم تأكيد حجزك - استراحة وهج*\n\n' +
-            'مرحباً ' + b.fullName + '،\n\n' +
-            '📋 *رقم الحجز:* ' + b.bookingId + '\n' +
-            '📅 *التاريخ:* ' + b.dateFormatted + '\n' +
-            '⏰ *التوقيت:* ' + b.bookingTypeDesc + '\n' +
-            '👥 *الضيوف:* ' + b.guests + ' أشخاص\n\n' +
-            '━━━━━━━━━━━━━━━\n' +
-            '💰 *تفاصيل الدفع*\n' +
-            '━━━━━━━━━━━━━━━\n\n' +
-            '💳 *يُدفع الآن (تحويل بنكي):*\n' +
-            '• العربون' + (isFullPayment ? ' (دفع كامل)' : '') + ': ' + deposit + ' ر.ع\n' +
-            '• التأمين المسترد: ' + security + ' ر.ع\n' +
-            '• *الإجمالي المطلوب: ' + payNow + ' ر.ع*\n\n' +
-            (remaining > 0 ?
-                '💵 *يُدفع عند الدخول:*\n' +
-                '• الباقي: ' + remaining + ' ر.ع\n\n'
-                : '✅ *لا يوجد باقي*\n\n'
-            ) +
-            '🛡️ *يُرد بعد الخروج:*\n' +
-            '• التأمين: ' + security + ' ر.ع\n\n' +
-            '🔔 *تذكير مهم:*\n' +
-            '⏰ موعد الحجز: ' + b.dateFormatted + '\n' +
-            '📍 العنوان: ولاية بركاء - منطقة العقدة\n\n' +
-            '📋 *سياسات مهمة:*\n' +
-            '• الالتزام بأوقات الدخول والخروج\n' +
-            '• يُمنع الأكل والشرب في المسابح\n' +
-            '• يُمنع دخول الغرف بالملابس المبللة\n' +
-            '• تسليم الاستراحة نظيفة\n' +
-            '• التأمين يُرد بعد التأكد من النظافة\n\n' +
-            '📞 للتواصل: +968 9556 6332\n\n' +
-            'نتشرف بخدمتك 🌟\n---\nاستراحة وهج';
-        
-        var phone = b.phone.replace(/[^0-9]/g, '');
-        var phoneFull = phone.indexOf('968') === 0 ? phone : '968' + phone;
-        
-        setTimeout(function() {
-            window.open('https://wa.me/' + phoneFull + '?text=' + encodeURIComponent(msg), '_blank');
-        }, 500);
-        
-        showToast('✅ تم تأكيد الحجز', 'success');
-    };
-    
-    window.rejectBooking = function(bookingId) {
-        var b = allBookings.find(function(x) { return x.bookingId === bookingId; });
-        if (!b) return;
-        
-        var reason = prompt('سبب الرفض (اختياري):', '');
-        if (reason === null) return;
-        
-        updateStatus(bookingId, 'rejected');
-        
-        var msg = 'عذراً ' + b.fullName + '،\n\n' +
-            'نأسف لإبلاغك بأنه لم يتم تأكيد حجزك.\n\n' +
-            '📋 *رقم الحجز:* ' + b.bookingId + '\n' +
-            '📅 *التاريخ:* ' + b.dateFormatted + '\n\n' +
-            (reason ? '📝 *السبب:* ' + reason + '\n\n' : '') +
-            'نرجو التواصل معنا لحجز موعد آخر.\n\n' +
-            '📞 +968 9556 6332\n---\nاستراحة وهج';
-        
-        var phone = b.phone.replace(/[^0-9]/g, '');
-        var phoneFull = phone.indexOf('968') === 0 ? phone : '968' + phone;
-        
-        setTimeout(function() {
-            window.open('https://wa.me/' + phoneFull + '?text=' + encodeURIComponent(msg), '_blank');
-        }, 500);
-        
-        showToast('تم رفض الحجز', 'warning');
-    };
-    
-    function updateStatus(bookingId, newStatus) {
-        try {
-            var bookings = JSON.parse(localStorage.getItem('wahaj_bookings') || '[]');
-            for (var i = 0; i < bookings.length; i++) {
-                if (bookings[i].bookingId === bookingId) {
-                    bookings[i].status = newStatus;
-                    bookings[i].updatedAt = new Date().toISOString();
-                    break;
-                }
-            }
-            localStorage.setItem('wahaj_bookings', JSON.stringify(bookings));
-            loadData();
-        } catch(e) {}
-    }
-    
-    window.printBooking = function(bookingId) {
-        var b = allBookings.find(function(x) { return x.bookingId === bookingId; });
-        if (!b) return;
-        
-        var total = b.total || 0;
-        var deposit = b.deposit || 0;
-        var security = b.security || 20;
-        var remaining = b.remaining !== undefined ? b.remaining : (total - deposit);
-        var payNow = b.payNow || (deposit + security);
-        var isFullPayment = b.isFullPayment || false;
-        
-        var content = 
-            '<div style="font-family: Cairo, sans-serif; direction: rtl; padding: 30px; max-width: 700px; margin: 0 auto;">' +
-            '<div style="text-align: center; margin-bottom: 20px; border-bottom: 3px solid #D4AF37; padding-bottom: 20px;">' +
-            '<h1 style="font-family: Amiri, serif; color: #D4AF37; font-size: 28px; margin: 0;">استراحة وهج</h1>' +
-            '<p style="color: #6C757D; margin: 5px 0 0;">Wahaj Resort - خصوصية .. راحة .. ذكريات لا تُنسى</p>' +
-            '</div>' +
-            '<h2 style="color: #0A1F44; text-align: center; margin-bottom: 20px;">فاتورة حجز</h2>' +
-            '<div style="background: #FBF8F1; border: 2px dashed #D4AF37; border-radius: 12px; padding: 20px; text-align: center; margin-bottom: 20px;">' +
-            '<div style="color: #6C757D; font-size: 14px;">رقم الحجز</div>' +
-            '<div style="font-family: monospace; font-size: 24px; font-weight: bold; color: #A88B2C;">' + b.bookingId + '</div>' +
-            '</div>' +
-            '<table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">' +
-            '<tr><td style="padding: 10px; border-bottom: 1px solid #E9ECEF; color: #6C757D;">الاسم:</td><td style="padding: 10px; border-bottom: 1px solid #E9ECEF; font-weight: bold; text-align: left;">' + b.fullName + '</td></tr>' +
-            '<tr><td style="padding: 10px; border-bottom: 1px solid #E9ECEF; color: #6C757D;">الجوال:</td><td style="padding: 10px; border-bottom: 1px solid #E9ECEF; font-weight: bold; text-align: left;">' + b.phone + '</td></tr>' +
-            '<tr><td style="padding: 10px; border-bottom: 1px solid #E9ECEF; color: #6C757D;">التاريخ:</td><td style="padding: 10px; border-bottom: 1px solid #E9ECEF; font-weight: bold; text-align: left;">' + b.dateFormatted + '</td></tr>' +
-            '<tr><td style="padding: 10px; border-bottom: 1px solid #E9ECEF; color: #6C757D;">نوع الحجز:</td><td style="padding: 10px; border-bottom: 1px solid #E9ECEF; font-weight: bold; text-align: left;">' + b.bookingType + ' (' + b.bookingTypeDesc + ')</td></tr>' +
-            '<tr><td style="padding: 10px; border-bottom: 1px solid #E9ECEF; color: #6C757D;">عدد الضيوف:</td><td style="padding: 10px; border-bottom: 1px solid #E9ECEF; font-weight: bold; text-align: left;">' + b.guests + ' أشخاص</td></tr>' +
-            '</table>' +
-            
-            '<div style="background: #FBF8F1; border: 2px solid #D4AF37; border-radius: 12px; padding: 15px; margin-bottom: 15px;">' +
-            '<div style="color: #A88B2C; font-weight: bold; margin-bottom: 10px; font-size: 14px;">💳 يُدفع الآن (تحويل بنكي)</div>' +
-            '<table style="width: 100%;">' +
-            '<tr><td style="padding: 5px 0;">💵 العربون' + (isFullPayment ? ' (دفع كامل)' : '') + '</td><td style="text-align: left; font-weight: bold;">' + deposit + ' ر.ع</td></tr>' +
-            '<tr><td style="padding: 5px 0;">🛡️ التأمين المسترد</td><td style="text-align: left; font-weight: bold;">' + security + ' ر.ع</td></tr>' +
-            '<tr style="border-top: 1px dashed #D4AF37;"><td style="padding: 10px 0 0;">✅ الإجمالي المطلوب</td><td style="text-align: left; font-weight: bold; color: #A88B2C; font-size: 18px;">' + payNow + ' ر.ع</td></tr>' +
-            '</table>' +
-            '</div>';
-        
-        if (remaining > 0) {
-            content += 
-                '<div style="background: #F8F9FA; border: 2px solid rgba(10, 31, 68, 0.2); border-radius: 12px; padding: 15px; margin-bottom: 15px;">' +
-                '<div style="color: #0A1F44; font-weight: bold; margin-bottom: 10px; font-size: 14px;">📅 يُدفع عند الدخول</div>' +
-                '<table style="width: 100%;">' +
-                '<tr><td style="padding: 5px 0;">💳 الباقي</td><td style="text-align: left; font-weight: bold;">' + remaining + ' ر.ع</td></tr>' +
-                '</table>' +
-                '</div>';
-        } else {
-            content += 
-                '<div style="background: #F8F9FA; border: 2px solid rgba(40, 167, 69, 0.3); border-radius: 12px; padding: 15px; margin-bottom: 15px;">' +
-                '<div style="color: #28A745; font-weight: bold; font-size: 14px;">✅ تم الدفع كاملاً</div>' +
-                '</div>';
-        }
-        
-        content += 
-            '<div style="background: rgba(40, 167, 69, 0.08); border: 2px solid rgba(40, 167, 69, 0.3); border-radius: 12px; padding: 15px; margin-bottom: 15px;">' +
-            '<div style="color: #28A745; font-weight: bold; margin-bottom: 10px; font-size: 14px;">♻️ يُرد بعد الخروج</div>' +
-            '<table style="width: 100%;">' +
-            '<tr><td style="padding: 5px 0;">🛡️ التأمين المسترد</td><td style="text-align: left; font-weight: bold; color: #28A745;">' + security + ' ر.ع</td></tr>' +
-            '</table>' +
-            '</div>' +
-            
-            '<div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #D4AF37; text-align: center; color: #6C757D; font-size: 12px;">' +
-            '<p>📍 ولاية بركاء - منطقة العقدة - جنوب الباطنة</p>' +
-            '<p>📞 +968 9556 6332</p>' +
-            '<p style="margin-top: 15px;">شكراً لثقتكم بنا 🌟</p>' +
-            '</div>' +
-            '</div>';
-        
-        var printArea = document.getElementById('printArea');
-        printArea.innerHTML = content;
-        printArea.style.display = 'block';
-        
-        setTimeout(function() {
-            window.print();
-            setTimeout(function() { printArea.style.display = 'none'; }, 1000);
-        }, 200);
-    };
-    
-    window.contactCustomer = function(bookingId) {
-        var b = allBookings.find(function(x) { return x.bookingId === bookingId; });
-        if (!b) return;
-        
-        var msg = 'السلام عليكم ' + b.fullName + '،\n\n' +
-            'بخصوص حجزك في استراحة وهج:\n\n' +
-            '📋 رقم الحجز: ' + b.bookingId + '\n' +
-            '📅 التاريخ: ' + b.dateFormatted + '\n\n' +
-            'كيف يمكننا مساعدتك؟';
-        
-        var phone = b.phone.replace(/[^0-9]/g, '');
-        var phoneFull = phone.indexOf('968') === 0 ? phone : '968' + phone;
-        
-        window.open('https://wa.me/' + phoneFull + '?text=' + encodeURIComponent(msg), '_blank');
-    };
-    
-    window.deleteBooking = function(bookingId) {
-        if (!confirm('حذف الحجز نهائياً؟')) return;
-        
-        try {
-            var bookings = JSON.parse(localStorage.getItem('wahaj_bookings') || '[]');
-            bookings = bookings.filter(function(x) { return x.bookingId !== bookingId; });
-            localStorage.setItem('wahaj_bookings', JSON.stringify(bookings));
-            loadData();
-            showToast('تم حذف الحجز', 'success');
-        } catch(e) {}
-    };
-    
-    function renderBlockedList() {
-        var list = document.getElementById('blockedList');
-        
-        if (blockedDates.length === 0) {
-            list.innerHTML = '<div class="no-blocked"><i class="fas fa-check-circle" style="font-size: 2rem; color: #28A745; display: block; margin-bottom: 10px;"></i>لا توجد تواريخ محجوبة</div>';
-            return;
-        }
-        
-        list.innerHTML = blockedDates.map(function(item, index) {
-            var date = item.date || item;
-            var reason = item.reason || '';
-            return '<div class="blocked-item">' +
-                '<div>' +
-                    '<div class="date">📅 ' + date + '</div>' +
-                    (reason ? '<div class="reason">📝 ' + reason + '</div>' : '') +
-                '</div>' +
-                '<button onclick="removeBlocked(' + index + ')"><i class="fas fa-times"></i></button>' +
-            '</div>';
-        }).join('');
-    }
-    
-    window.removeBlocked = function(index) {
-        if (!confirm('إزالة الحجب؟')) return;
-        blockedDates.splice(index, 1);
-        localStorage.setItem('wahaj_blocked_dates', JSON.stringify(blockedDates));
-        renderBlockedList();
-        updateSettingsCounts();
-        showToast('تم إزالة الحجب', 'success');
-    };
-    
-    window.addBlocked = function() {
-        var date = document.getElementById('blockDate').value;
-        var reason = document.getElementById('blockReason').value.trim();
-        
-        if (!date) {
-            showToast('اختر التاريخ', 'warning');
-            return;
-        }
-        
-        var exists = blockedDates.some(function(item) {
-            return (item.date || item) === date;
-        });
-        
-        if (exists) {
-            showToast('التاريخ محجوب مسبقاً', 'warning');
-            return;
-        }
-        
-        blockedDates.push({ date: date, reason: reason });
-        localStorage.setItem('wahaj_blocked_dates', JSON.stringify(blockedDates));
-        
-        document.getElementById('blockDate').value = '';
-        document.getElementById('blockReason').value = '';
-        
-        renderBlockedList();
-        updateSettingsCounts();
-        showToast('✅ تم إضافة الحجب', 'success');
-    };
-    
-    window.exportData = function() {
-        if (allBookings.length === 0) {
-            showToast('لا توجد حجوزات', 'warning');
-            return;
-        }
-        
-        var csv = '\uFEFF';
-        csv += 'رقم الحجز,التاريخ,الاسم,الجوال,النوع,الضيوف,الإجمالي,العربون,التأمين,المطلوب الآن,الباقي,الحالة\n';
-        
-        allBookings.forEach(function(b) {
-            var total = b.total || 0;
-            var deposit = b.deposit || 0;
-            var security = b.security || 20;
-            var remaining = b.remaining !== undefined ? b.remaining : (total - deposit);
-            var payNow = b.payNow || (deposit + security);
-            
-            csv += '"' + (b.bookingId || '') + '",' +
-                   '"' + (b.dateFormatted || b.date || '') + '",' +
-                   '"' + (b.fullName || '') + '",' +
-                   '"' + (b.phone || '') + '",' +
-                   '"' + (b.bookingType || '') + '",' +
-                   '"' + (b.guests || '') + '",' +
-                   '"' + total + '",' +
-                   '"' + deposit + '",' +
-                   '"' + security + '",' +
-                   '"' + payNow + '",' +
-                   '"' + remaining + '",' +
-                   '"' + (b.status === 'confirmed' ? 'مؤكد' : b.status === 'rejected' ? 'مرفوض' : 'بانتظار') + '"\n';
-        });
-        
-        var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-        var link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = 'wahaj-bookings-' + new Date().toISOString().slice(0,10) + '.csv';
-        link.click();
-        
-        showToast('✅ تم التصدير', 'success');
-    };
-    
-    window.refreshData = function() {
-        loadData();
-        showToast('✅ تم التحديث', 'success');
-    };
-    
-    window.logout = function() {
-        if (confirm('تسجيل الخروج؟')) {
-            sessionStorage.removeItem('wahaj_admin');
-            location.reload();
-        }
-    };
-    
-    window.clearAllData = function() {
-        if (!confirm('⚠️ سيتم مسح جميع البيانات!\n\nهل أنت متأكد؟')) return;
-        if (!confirm('تأكيد أخير')) return;
-        
-        localStorage.removeItem('wahaj_bookings');
-        localStorage.removeItem('wahaj_blocked_dates');
-        localStorage.removeItem('wahaj_last_booking');
-        loadData();
-        showToast('✅ تم مسح البيانات', 'success');
-    };
-    
-    document.getElementById('loginBtn').onclick = handleLogin;
-    document.getElementById('passwordInput').onkeypress = function(e) {
-        if (e.key === 'Enter') handleLogin();
-    };
-    
-    document.getElementById('statusFilter').onchange = function() {
-        currentFilter = this.value;
-        applyFilters();
-    };
-    
-    document.getElementById('searchInput').oninput = function() {
-        currentSearch = this.value;
-        applyFilters();
-    };
-    
-    if (sessionStorage.getItem('wahaj_admin') === '1') {
-        showAdmin();
-    }
-    
-    console.log('✅ لوحة التحكم جاهزة');
-    
-})();
-</script>
+<script src="js/admin.js"></script>
 
 </body>
 </html>
