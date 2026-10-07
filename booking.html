@@ -375,9 +375,7 @@
             display: block;
         }
         
-        .deposit-option.selected .deposit-option-label {
-            opacity: 0.95;
-        }
+        .deposit-option.selected .deposit-option-label { opacity: 0.95; }
         
         .deposit-option.full {
             grid-column: span 3;
@@ -385,9 +383,7 @@
             border-color: var(--success);
         }
         
-        .deposit-option.full .deposit-option-amount {
-            color: var(--success);
-        }
+        .deposit-option.full .deposit-option-amount { color: var(--success); }
         
         .deposit-option.full.selected {
             background: linear-gradient(135deg, var(--success), #218838);
@@ -396,9 +392,7 @@
             box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
         }
         
-        .deposit-option.full.selected .deposit-option-amount {
-            color: var(--white);
-        }
+        .deposit-option.full.selected .deposit-option-amount { color: var(--white); }
         
         .deposit-hint {
             font-size: 0.75rem;
@@ -414,6 +408,32 @@
         }
         
         .deposit-hint i { color: var(--primary); }
+        
+        /* ═══ تنبيه التأمين ═══ */
+        .insurance-note {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.12), rgba(212, 175, 55, 0.04));
+            border: 2px solid var(--primary);
+            border-radius: var(--radius-sm);
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.8rem;
+            color: var(--navy);
+            line-height: 1.6;
+        }
+        
+        .insurance-note i {
+            color: var(--primary);
+            font-size: 1.1rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        
+        .insurance-note strong {
+            color: var(--primary-dark);
+        }
         
         .upload-app {
             border: 2px dashed var(--gray-400);
@@ -470,6 +490,7 @@
         .bank-app-row span:first-child { color: rgba(255, 255, 255, 0.7); }
         .bank-app-row strong { color: var(--primary); direction: ltr; }
         
+        /* ═══ الملخص الجديد ═══ */
         .summary-app {
             background: var(--white);
             border-radius: var(--radius);
@@ -505,14 +526,89 @@
         
         .summary-app-row strong { color: var(--navy); font-weight: 700; }
         
-        .summary-app-row.total {
-            border-top: 2px solid var(--primary);
-            margin-top: 10px;
-            padding-top: 12px;
+        /* ═══ قسم في الملخص ═══ */
+        .summary-section {
+            margin: 15px 0;
+            padding: 12px 15px;
+            border-radius: var(--radius-sm);
+        }
+        
+        .summary-section-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .summary-section.now {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
+            border: 2px solid var(--primary);
+        }
+        
+        .summary-section.now .summary-section-title {
+            color: var(--primary-dark);
+        }
+        
+        .summary-section.now .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            font-size: 0.85rem;
+            color: var(--navy);
+        }
+        
+        .summary-section.now .summary-row:last-child {
+            border-top: 1px dashed var(--primary);
+            margin-top: 6px;
+            padding-top: 10px;
+            font-weight: 900;
             font-size: 1rem;
         }
         
-        .summary-app-row.total strong { color: var(--primary-dark); font-size: 1.3rem; }
+        .summary-section.now .summary-row:last-child strong {
+            color: var(--primary-dark);
+            font-size: 1.2rem;
+        }
+        
+        .summary-section.later {
+            background: linear-gradient(135deg, rgba(10, 31, 68, 0.06), rgba(10, 31, 68, 0.02));
+            border: 2px solid rgba(10, 31, 68, 0.2);
+        }
+        
+        .summary-section.later .summary-section-title {
+            color: var(--navy);
+        }
+        
+        .summary-section.later .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            font-size: 0.85rem;
+        }
+        
+        .summary-section.refund {
+            background: linear-gradient(135deg, rgba(40, 167, 69, 0.1), rgba(40, 167, 69, 0.03));
+            border: 2px solid rgba(40, 167, 69, 0.3);
+        }
+        
+        .summary-section.refund .summary-section-title {
+            color: var(--success);
+        }
+        
+        .summary-section.refund .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            font-size: 0.85rem;
+        }
+        
+        .summary-section.refund strong {
+            color: var(--success);
+        }
         
         .summary-app-empty { text-align: center; padding: 20px 10px; color: var(--gray-600); font-size: 0.85rem; }
         .summary-app-empty i { font-size: 2rem; color: var(--gray-200); display: block; margin-bottom: 10px; }
@@ -552,6 +648,21 @@
         }
         
         .secure-note-app i { color: var(--success); }
+        
+        .warning-row {
+            background: rgba(255, 193, 7, 0.1);
+            padding: 10px 12px;
+            margin-top: 10px;
+            border-radius: 8px;
+            border-right: 3px solid var(--warning);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            color: #856404;
+        }
+        
+        .warning-row i { color: var(--warning); }
     </style>
 </head>
 <body>
@@ -744,12 +855,21 @@
                 </div>
             </div>
             
+            <!-- تنبيه التأمين -->
+            <div class="insurance-note">
+                <i class="fas fa-shield-alt"></i>
+                <div>
+                    <strong>ملاحظة التأمين:</strong><br>
+                    يُدفع مبلغ <strong>20 ر.ع</strong> كتأمين مسترد <strong>مع العربون</strong>، ويُعاد كاملاً بعد الخروج والتأكد من نظافة المكان.
+                </div>
+            </div>
+            
             <!-- اختيار العربون -->
             <div class="form-field">
                 <label>اختر مبلغ العربون <span class="req">*</span></label>
                 <div class="deposit-hint">
                     <i class="fas fa-info-circle"></i>
-                    <span>الحد الأدنى 10 ر.ع - التأمين (20 ر.ع) يُضاف منفصل</span>
+                    <span>الحد الأدنى 10 ر.ع — التأمين (20 ر.ع) يُضاف منفصل ويُرد</span>
                 </div>
                 <div class="deposit-grid" id="depositGrid">
                     <!-- يتم تعبئتها بالجافاسكربت -->
@@ -763,6 +883,9 @@
                     <div class="upload-app-icon"><i class="fas fa-cloud-upload-alt"></i></div>
                     <h4>اضغط لاختيار صورة</h4>
                     <p>PNG أو JPG - حد أقصى 5MB</p>
+                    <p style="margin-top: 8px; color: var(--primary-dark); font-weight: 700;">
+                        💰 مبلغ التحويل: <span id="transferAmount">0</span> ر.ع
+                    </p>
                 </div>
                 <div class="upload-preview-app" id="uploadPreview">
                     <img id="previewImg" src="" alt="الإيصال">
@@ -962,14 +1085,12 @@
         }
     }
     
-    // ─── رسم خيارات العربون ───
     function renderDepositOptions() {
         var grid = document.getElementById('depositGrid');
         if (!grid) return;
         
         var html = '';
         
-        // الخيارات الثابتة
         CONFIG.depositOptions.forEach(function(amount) {
             html += '<div class="deposit-option" data-deposit="' + amount + '">' +
                 '<span class="deposit-option-amount">' + amount + '</span>' +
@@ -977,7 +1098,6 @@
             '</div>';
         });
         
-        // خيار الدفع الكامل
         html += '<div class="deposit-option full" data-deposit="full">' +
             '<span class="deposit-option-amount"><i class="fas fa-check-circle"></i> دفع كامل</span>' +
             '<span class="deposit-option-label">ادفع المبلغ كاملاً الآن</span>' +
@@ -985,7 +1105,6 @@
         
         grid.innerHTML = html;
         
-        // إضافة الأحداث
         grid.querySelectorAll('.deposit-option').forEach(function(el) {
             el.onclick = function() {
                 grid.querySelectorAll('.deposit-option').forEach(function(x) {
@@ -1041,10 +1160,12 @@
     function updateSummary() {
         var content = document.getElementById('summaryContent');
         var confirmBtn = document.getElementById('confirmBooking');
+        var transferEl = document.getElementById('transferAmount');
         
         if (!selectedDate || !selectedBookingType) {
             content.innerHTML = '<div class="summary-app-empty"><i class="fas fa-calendar-plus"></i><p>اختر التاريخ ونوع الحجز لعرض الملخص</p></div>';
             if (confirmBtn) confirmBtn.disabled = true;
+            if (transferEl) transferEl.textContent = '0';
             return;
         }
         
@@ -1061,7 +1182,6 @@
                        selectedBookingType === 'with_stay' ? '9ص - 7ص' :
                        (selectedHalfDayPeriod === 'morning' ? '9ص - 3م' : '4م - 10م');
         
-        // ملخص أساسي
         var html = 
             '<div class="summary-app-row"><span>📅 التاريخ:</span><strong>' + formatArabicDate(selectedDate) + '</strong></div>' +
             '<div class="summary-app-row"><span>🏷️ نوع اليوم:</span><strong>' + dayTypeName + '</strong></div>' +
@@ -1069,14 +1189,11 @@
             '<div class="summary-app-row"><span>🕐 التوقيت:</span><strong style="font-size:0.75rem;">' + timeDesc + '</strong></div>' +
             '<div class="summary-app-row"><span>💰 الإجمالي:</span><strong>' + total + ' ر.ع</strong></div>';
         
-        // إذا لم يُختر العربون
         if (selectedDeposit === null) {
-            html += '<div class="summary-app-row" style="background: rgba(255,193,7,0.1); padding: 10px; margin-top: 10px; border-radius: 8px;">' +
-                '<span style="color: var(--warning);">⚠️ اختر مبلغ العربون</span>' +
-            '</div>';
-            
+            html += '<div class="warning-row"><i class="fas fa-exclamation-triangle"></i><span>اختر مبلغ العربون لعرض التفاصيل</span></div>';
             content.innerHTML = html;
             if (confirmBtn) confirmBtn.disabled = true;
+            if (transferEl) transferEl.textContent = '0';
             return;
         }
         
@@ -1086,19 +1203,36 @@
         var payNow = deposit + security;
         var isFullPayment = (selectedDeposit === 'full');
         
-        html += '<div class="summary-app-row"><span>💵 العربون' + (isFullPayment ? ' (دفع كامل)' : '') + ':</span><strong>' + deposit + ' ر.ع</strong></div>';
-        html += '<div class="summary-app-row"><span>🛡️ التأمين (مسترد):</span><strong>' + security + ' ر.ع</strong></div>';
+        // ═══ قسم "يُدفع الآن" ═══
+        html += '<div class="summary-section now">' +
+            '<div class="summary-section-title"><i class="fas fa-credit-card"></i> يُدفع الآن (تحويل بنكي)</div>' +
+            '<div class="summary-row"><span>💵 العربون' + (isFullPayment ? ' (دفع كامل)' : '') + ':</span><strong>' + deposit + ' ر.ع</strong></div>' +
+            '<div class="summary-row"><span>🛡️ التأمين (مسترد):</span><strong>' + security + ' ر.ع</strong></div>' +
+            '<div class="summary-row"><span>✅ الإجمالي المطلوب:</span><strong>' + payNow + ' ر.ع</strong></div>' +
+        '</div>';
         
+        // ═══ قسم "يُدفع عند الدخول" ═══
         if (remaining > 0) {
-            html += '<div class="summary-app-row"><span>💳 الباقي عند الدخول:</span><strong>' + remaining + ' ر.ع</strong></div>';
+            html += '<div class="summary-section later">' +
+                '<div class="summary-section-title"><i class="fas fa-calendar-check"></i> يُدفع عند الدخول</div>' +
+                '<div class="summary-row"><span>💳 الباقي:</span><strong>' + remaining + ' ر.ع</strong></div>' +
+            '</div>';
         } else {
-            html += '<div class="summary-app-row"><span style="color: var(--success);"><i class="fas fa-check-circle"></i> لا يوجد باقي</span><strong style="color: var(--success);">0 ر.ع</strong></div>';
+            html += '<div class="summary-section later">' +
+                '<div class="summary-section-title"><i class="fas fa-check-circle"></i> لا يوجد باقي</div>' +
+                '<div class="summary-row"><span>تم الدفع كاملاً ✅</span><strong>0 ر.ع</strong></div>' +
+            '</div>';
         }
         
-        html += '<div class="summary-app-row total"><span>✅ المطلوب الآن:</span><strong>' + payNow + ' ر.ع</strong></div>';
+        // ═══ قسم "يُرد بعد الخروج" ═══
+        html += '<div class="summary-section refund">' +
+            '<div class="summary-section-title"><i class="fas fa-undo"></i> يُرد بعد الخروج</div>' +
+            '<div class="summary-row"><span>🛡️ التأمين المسترد:</span><strong>' + security + ' ر.ع</strong></div>' +
+        '</div>';
         
         content.innerHTML = html;
         
+        if (transferEl) transferEl.textContent = payNow;
         if (confirmBtn) confirmBtn.disabled = false;
     }
     
@@ -1188,7 +1322,6 @@
             createdAt: new Date().toISOString()
         };
         
-        // حفظ محلي
         try {
             var bookings = JSON.parse(localStorage.getItem('wahaj_bookings') || '[]');
             bookings.push(data);
@@ -1199,21 +1332,36 @@
             }
         } catch(e) { console.warn(e); }
         
-        // واتساب
-        var msg = '🌟 *طلب حجز جديد - استراحة وهج*\n\n' +
+        // ═══ رسالة واتساب واضحة ومقسمة ═══
+        var msg = '🌟 *طلب حجز جديد - استراحة وهج* 🌟\n\n' +
             '📋 *رقم:* ' + bookingId + '\n' +
             '📅 *التاريخ:* ' + data.dateFormatted + '\n' +
             '⏰ *النوع:* ' + typeName + ' (' + timeDesc + ')\n' +
             '👤 *الاسم:* ' + fullName + '\n' +
             '📞 *الجوال:* ' + phone + '\n' +
             '👥 *الضيوف:* ' + guestsCount + '\n\n' +
-            '💰 *تفاصيل الدفع:*\n' +
-            '• الإجمالي: ' + total + ' ر.ع\n' +
+            '━━━━━━━━━━━━━━━\n' +
+            '💰 *تفاصيل الدفع*\n' +
+            '━━━━━━━━━━━━━━━\n\n' +
+            '*سعر الإيجار:*\n' +
+            '• الإجمالي: ' + total + ' ر.ع\n\n' +
+            '💳 *يُدفع الآن (تحويل بنكي):*\n' +
             '• العربون' + (isFullPayment ? ' (دفع كامل)' : '') + ': ' + deposit + ' ر.ع\n' +
-            '• التأمين: ' + security + ' ر.ع\n' +
-            '• *المطلوب الآن: ' + payNow + ' ر.ع*\n' +
-            (remaining > 0 ? '• الباقي عند الدخول: ' + remaining + ' ر.ع\n' : '') +
-            '\n⏳ بانتظار التأكيد\n---\nاستراحة وهج';
+            '• التأمين المسترد: ' + security + ' ر.ع\n' +
+            '• *الإجمالي المطلوب: ' + payNow + ' ر.ع*\n\n' +
+            (remaining > 0 ? 
+                '💵 *يُدفع عند الدخول:*\n' +
+                '• الباقي: ' + remaining + ' ر.ع\n\n' 
+                : '✅ *لا يوجد باقي - تم الدفع كاملاً*\n\n'
+            ) +
+            '🛡️ *يُرد بعد الخروج:*\n' +
+            '• التأمين: ' + security + ' ر.ع\n\n' +
+            '━━━━━━━━━━━━━━━\n\n' +
+            '📎 سيتم إرسال صورة الإيصال الآن\n' +
+            '⏳ بانتظار التأكيد\n\n' +
+            '---\n' +
+            'استراحة وهج\n' +
+            'خصوصية .. راحة .. ذكريات لا تُنسى';
         
         window.open('https://wa.me/' + CONFIG.whatsapp + '?text=' + encodeURIComponent(msg), '_blank');
         
@@ -1296,7 +1444,7 @@
             document.getElementById(id).oninput = updateSteps;
         });
         
-        console.log('✅ صفحة الحجز جاهزة (مع اختيار العربون)');
+        console.log('✅ صفحة الحجز جاهزة (رسالة واضحة)');
     }
     
     if (document.readyState === 'loading') {
