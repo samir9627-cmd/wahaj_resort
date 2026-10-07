@@ -39,60 +39,17 @@
 .calendar-app-day.weekend{background:rgba(212,175,55,0.15);color:var(--primary-dark)}
 .calendar-app-day.today{border-color:var(--navy);font-weight:900}
 .calendar-app-day.selected{background:linear-gradient(135deg,var(--primary),var(--primary-dark)) !important;color:var(--white) !important;box-shadow:0 4px 15px rgba(212,175,55,0.5);transform:scale(1.05);border-color:var(--primary) !important}
-
-/* ═══ التاريخ المحجوز - أحمر بارز ═══ */
-.calendar-app-day.blocked {
-    background: linear-gradient(135deg, #FFE5E5, #FFCCCC) !important;
-    color: #DC3545 !important;
-    border: 2px solid #DC3545 !important;
-    position: relative;
-    font-weight: 900;
-    cursor: not-allowed !important;
-    text-decoration: line-through;
-    opacity: 1 !important;
-}
-.calendar-app-day.blocked .blocked-mark {
-    position: absolute;
-    top: -6px;
-    right: -6px;
-    background: #DC3545;
-    color: white;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    font-size: 0.7rem;
-    font-weight: 900;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 8px rgba(220, 53, 69, 0.5);
-    animation: blockedPulse 1.5s infinite;
-    z-index: 20;
-}
-@keyframes blockedPulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.15); }
-}
-.calendar-app-day.blocked::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(45deg, rgba(220, 53, 69, 0.08), rgba(220, 53, 69, 0.08) 5px, transparent 5px, transparent 10px);
-    border-radius: 8px;
-    pointer-events: none;
-}
-.calendar-app-day.past {
-    background: var(--gray-100) !important;
-    color: var(--gray-400) !important;
-    opacity: 0.5;
-    cursor: not-allowed !important;
-    text-decoration: line-through;
-}
-
+.calendar-app-day.blocked{background:linear-gradient(135deg,#FFE5E5,#FFCCCC) !important;color:#DC3545 !important;border:2px solid #DC3545 !important;position:relative;font-weight:900;cursor:not-allowed !important;text-decoration:line-through;opacity:1 !important}
+.calendar-app-day.blocked .blocked-mark{position:absolute;top:-6px;right:-6px;background:#DC3545;color:white;width:18px;height:18px;border-radius:50%;font-size:0.7rem;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(220,53,69,0.5);animation:blockedPulse 1.5s infinite;z-index:20}
+@keyframes blockedPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.calendar-app-day.blocked::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,rgba(220,53,69,0.08),rgba(220,53,69,0.08) 5px,transparent 5px,transparent 10px);border-radius:8px;pointer-events:none}
+.calendar-app-day.past{background:var(--gray-100) !important;color:var(--gray-400) !important;opacity:0.5;cursor:not-allowed !important;text-decoration:line-through}
+.calendar-app-day.discount-day{position:relative}
+.calendar-app-day.discount-day::after{content:'🎁';position:absolute;top:-5px;left:-5px;font-size:0.75rem;animation:discountPulse 1.5s infinite}
+@keyframes discountPulse{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(1.2) rotate(15deg)}}
 .calendar-app-legend{display:flex;gap:12px;justify-content:center;margin-top:15px;flex-wrap:wrap;font-size:0.7rem}
 .legend-dot{display:flex;align-items:center;gap:5px;color:var(--gray-600)}
 .legend-dot-color{width:12px;height:12px;border-radius:3px}
-
 .booking-type-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;position:relative;z-index:5}
 .booking-type-app{background:var(--gray-100);border:2px solid transparent;border-radius:var(--radius-sm);padding:15px 8px;text-align:center;cursor:pointer;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;gap:6px;user-select:none;position:relative;z-index:5}
 .booking-type-app:active{transform:scale(0.95)}
@@ -163,6 +120,11 @@
 .summary-section.refund .summary-section-title{color:var(--success)}
 .summary-section.refund .summary-row{display:flex;justify-content:space-between;padding:6px 0;font-size:0.85rem}
 .summary-section.refund strong{color:var(--success)}
+.summary-section.discount{background:linear-gradient(135deg,rgba(40,167,69,0.15),rgba(40,167,69,0.05));border:2px dashed var(--success);animation:discountGlow 2s infinite}
+@keyframes discountGlow{0%,100%{box-shadow:0 0 0 rgba(40,167,69,0.3)}50%{box-shadow:0 0 20px rgba(40,167,69,0.5)}}
+.summary-section.discount .summary-section-title{color:var(--success)}
+.summary-section.discount .summary-row{display:flex;justify-content:space-between;padding:6px 0;font-size:0.9rem;font-weight:700}
+.summary-section.discount .summary-row strong{color:var(--success);font-size:1rem}
 .summary-app-empty{text-align:center;padding:20px 10px;color:var(--gray-600);font-size:0.85rem}
 .summary-app-empty i{font-size:2rem;color:var(--gray-200);display:block;margin-bottom:10px}
 .confirm-btn-app{width:100%;padding:16px;border-radius:50px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:var(--navy);font-weight:900;font-size:1rem;border:none;cursor:pointer;transition:all 0.2s;box-shadow:0 10px 30px rgba(212,175,55,0.4);display:flex;align-items:center;justify-content:center;gap:8px;margin-top:15px;font-family:'Cairo',sans-serif}
@@ -172,12 +134,13 @@
 .secure-note-app i{color:var(--success)}
 .warning-row{background:rgba(255,193,7,0.1);padding:10px 12px;margin-top:10px;border-radius:8px;border-right:3px solid var(--warning);display:flex;align-items:center;gap:8px;font-size:0.8rem;color:#856404}
 .warning-row i{color:var(--warning)}
-/* Blocked alert */
-.blocked-alert{background:linear-gradient(135deg,#FFE5E5,#FFCCCC);border:2px solid #DC3545;border-radius:var(--radius-sm);padding:15px;margin-bottom:15px;display:flex;align-items:center;gap:12px;animation:blockedShake 0.5s ease}
-.blocked-alert i{color:#DC3545;font-size:1.5rem;flex-shrink:0}
-.blocked-alert strong{color:#DC3545;display:block;font-size:0.95rem;margin-bottom:3px}
-.blocked-alert p{color:#721c24;font-size:0.8rem;margin:0}
-@keyframes blockedShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+/* شارة العرض النشط */
+.active-offer-badge{background:linear-gradient(135deg,rgba(40,167,69,0.15),rgba(40,167,69,0.05));border:2px solid var(--success);border-radius:var(--radius-sm);padding:12px 15px;margin-bottom:15px;display:flex;align-items:center;gap:10px;animation:offerGlow 2s infinite}
+@keyframes offerGlow{0%,100%{box-shadow:0 0 0 rgba(40,167,69,0.3)}50%{box-shadow:0 0 20px rgba(40,167,69,0.5)}}
+.active-offer-badge i{color:var(--success);font-size:1.5rem}
+.active-offer-badge .offer-info{flex:1}
+.active-offer-badge strong{color:var(--success);display:block;font-size:0.9rem;margin-bottom:2px}
+.active-offer-badge p{color:#155724;font-size:0.75rem;margin:0}
 </style>
 </head>
 <body>
@@ -206,6 +169,9 @@
 <section class="booking-main">
 <div style="max-width:600px;margin:0 auto;">
 
+<!-- شارة العرض النشط -->
+<div id="activeOfferBadge" style="display:none;"></div>
+
 <div class="booking-block">
 <div class="booking-block-title"><div class="booking-block-title-icon"><i class="fas fa-calendar-alt"></i></div><span>اختر التاريخ</span></div>
 <div class="calendar-app">
@@ -223,6 +189,7 @@
 <div class="legend-dot"><div class="legend-dot-color" style="background:rgba(212,175,55,0.3);"></div><span>ويكند</span></div>
 <div class="legend-dot"><div class="legend-dot-color" style="background:#D4AF37;"></div><span>مختار</span></div>
 <div class="legend-dot"><div class="legend-dot-color" style="background:linear-gradient(135deg,#FFE5E5,#FFCCCC);border:2px solid #DC3545;"></div><span>محجوز ✕</span></div>
+<div class="legend-dot"><div class="legend-dot-color" style="background:rgba(40,167,69,0.2);border:1px solid #28A745;"></div><span>🎁 عرض</span></div>
 </div>
 </div>
 </div>
@@ -355,6 +322,7 @@
     var receiptFile = null;
     var receiptDataUrl = null;
     var blockedDates = [];
+    var offers = [];
     var firebaseLoaded = false;
     
     function formatDate(date) {
@@ -374,6 +342,91 @@
         return new Date(date).toLocaleDateString('ar-OM', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
     }
     
+    // ═══════════════════════════════════════════════════════
+    // 🎁 دوال العروض
+    // ═══════════════════════════════════════════════════════
+    
+    function isDateInActiveOffer(dateStr) {
+        var targetDate = new Date(dateStr);
+        targetDate.setHours(0,0,0,0);
+        
+        for (var i = 0; i < offers.length; i++) {
+            var offer = offers[i];
+            if (offer.active === false) continue;
+            
+            var hasStart = offer.start && offer.start.length > 0;
+            var hasEnd = offer.end && offer.end.length > 0;
+            
+            var startOk = true;
+            var endOk = true;
+            
+            if (hasStart) {
+                var startDate = new Date(offer.start);
+                startDate.setHours(0,0,0,0);
+                startOk = targetDate >= startDate;
+            }
+            
+            if (hasEnd) {
+                var endDate = new Date(offer.end);
+                endDate.setHours(0,0,0,0);
+                endOk = targetDate <= endDate;
+            }
+            
+            if (startOk && endOk) return offer;
+        }
+        return null;
+    }
+    
+    function getActiveOffer() {
+        if (!selectedDate) return null;
+        var dateStr = formatDate(selectedDate);
+        return isDateInActiveOffer(dateStr);
+    }
+    
+    function calculateDiscount(price, offer) {
+        if (!offer || !offer.discount || offer.discount <= 0) {
+            return { original: price, discount: 0, final: price };
+        }
+        
+        var discountAmount = Math.round(price * offer.discount / 100);
+        var final = price - discountAmount;
+        
+        return { original: price, discount: discountAmount, final: final };
+    }
+    
+    function showActiveOfferBadge() {
+        var badge = document.getElementById('activeOfferBadge');
+        if (!badge) return;
+        
+        var activeOffers = offers.filter(function(o) {
+            if (o.active === false) return false;
+            var today = new Date(); today.setHours(0,0,0,0);
+            if (o.start) { var s = new Date(o.start); s.setHours(0,0,0,0); if (today < s) return false; }
+            if (o.end) { var e = new Date(o.end); e.setHours(0,0,0,0); if (today > e) return false; }
+            return true;
+        });
+        
+        if (activeOffers.length === 0) {
+            badge.style.display = 'none';
+            return;
+        }
+        
+        var offer = activeOffers[0];
+        badge.style.display = 'block';
+        badge.innerHTML = 
+            '<div class="active-offer-badge">' +
+                '<i class="fas fa-gift"></i>' +
+                '<div class="offer-info">' +
+                    '<strong>🎁 ' + offer.title + '</strong>' +
+                    '<p>' + (offer.desc || '') + (offer.discount ? ' (خصم ' + offer.discount + '%)' : '') + '</p>' +
+                '</div>' +
+            '</div>';
+    }
+    
+    // ═══════════════════════════════════════════════════════
+    // 🔥 تحميل البيانات
+    // ═══════════════════════════════════════════════════════
+    
     function loadBlocked() {
         try {
             var localBlocked = JSON.parse(localStorage.getItem('wahaj_blocked_dates') || '[]');
@@ -384,7 +437,6 @@
         } catch(e) { blockedDates = []; }
         
         blockedDates = blockedDates.filter(function(v, i, self) { return self.indexOf(v) === i; });
-        console.log('📅 محلي:', blockedDates.length);
         renderCalendar();
         
         if (window.WahajFirebase) {
@@ -395,7 +447,6 @@
                 window.WahajFirebase.getAllBlockedDates().then(function(cloudBlocked) {
                     var cloudDates = cloudBlocked.map(function(i) { return i.date || i; });
                     blockedDates = blockedDates.concat(cloudDates).filter(function(v, i, self) { return self.indexOf(v) === i; });
-                    console.log('☁️ محجوب من السحابة:', cloudDates.length, '| الإجمالي:', blockedDates.length);
                     renderCalendar();
                 });
                 
@@ -407,6 +458,41 @@
             }, 5000);
         }
     }
+    
+    function loadOffers() {
+        var localOffers = [];
+        try {
+            localOffers = JSON.parse(localStorage.getItem('wahaj_offers') || '[]');
+        } catch(e) {}
+        
+        if (window.WahajFirebase) {
+            window.WahajFirebase.waitForFirebase(function(ready) {
+                if (!ready) { 
+                    offers = localOffers; 
+                    showActiveOfferBadge();
+                    renderCalendar();
+                    return;
+                }
+                window.WahajFirebase.getAllOffers().then(function(cloudOffers) {
+                    offers = cloudOffers.length > 0 ? cloudOffers : localOffers;
+                    console.log('🎁 تم تحميل', offers.length, 'عرض');
+                    showActiveOfferBadge();
+                    renderCalendar();
+                }).catch(function() {
+                    offers = localOffers;
+                    showActiveOfferBadge();
+                    renderCalendar();
+                });
+            }, 5000);
+        } else {
+            offers = localOffers;
+            showActiveOfferBadge();
+        }
+    }
+    
+    // ═══════════════════════════════════════════════════════
+    // التقويم
+    // ═══════════════════════════════════════════════════════
     
     function renderCalendar() {
         var year = currentMonth.getFullYear();
@@ -444,14 +530,19 @@
             
             var isBlocked = blockedDates.indexOf(dateStr) !== -1;
             var isPastDate = isPast(date);
+            var activeOffer = isDateInActiveOffer(dateStr);
             
             if (isPastDate) {
                 dayEl.classList.add('disabled', 'past');
             } else if (isBlocked) {
                 dayEl.classList.add('disabled', 'blocked');
                 dayEl.innerHTML = day + '<span class="blocked-mark">✕</span>';
-                dayEl.title = '🚫 محجوز - غير متاح';
+                dayEl.title = '🚫 محجوز';
             } else {
+                if (activeOffer && activeOffer.discount > 0) {
+                    dayEl.classList.add('discount-day');
+                    dayEl.title = '🎁 ' + activeOffer.title;
+                }
                 (function(d, el) {
                     el.onclick = function(e) {
                         if (e) e.preventDefault();
@@ -519,9 +610,9 @@
         return 0;
     }
     
-    function getDepositAmount() {
-        var total = calculatePrice();
-        if (selectedDeposit === 'full') return total;
+    function getDepositAmount(price) {
+        price = price || calculatePrice();
+        if (selectedDeposit === 'full') return price;
         if (typeof selectedDeposit === 'number') return selectedDeposit;
         return 0;
     }
@@ -540,7 +631,11 @@
         
         var dayType = getDayType(selectedDate);
         var dayTypeName = dayType === 'weekday' ? 'يوم عادي' : 'ويكند';
-        var total = calculatePrice();
+        var originalPrice = calculatePrice();
+        
+        var activeOffer = getActiveOffer();
+        var discountData = calculateDiscount(originalPrice, activeOffer);
+        var finalPrice = discountData.final;
         
         var typeName = selectedBookingType === 'without_stay' ? 'بدون مبيت' : selectedBookingType === 'with_stay' ? 'مع مبيت' : 'نصف يوم';
         var typeIcon = selectedBookingType === 'without_stay' ? '☀️' : selectedBookingType === 'with_stay' ? '🌙' : '⏰';
@@ -549,8 +644,22 @@
         var html = '<div class="summary-app-row"><span>📅 التاريخ:</span><strong>' + formatArabicDate(selectedDate) + '</strong></div>' +
             '<div class="summary-app-row"><span>🏷️ نوع اليوم:</span><strong>' + dayTypeName + '</strong></div>' +
             '<div class="summary-app-row"><span>⏰ نوع الحجز:</span><strong>' + typeIcon + ' ' + typeName + '</strong></div>' +
-            '<div class="summary-app-row"><span>🕐 التوقيت:</span><strong style="font-size:0.75rem;">' + timeDesc + '</strong></div>' +
-            '<div class="summary-app-row"><span>💰 الإجمالي:</span><strong>' + total + ' ر.ع</strong></div>';
+            '<div class="summary-app-row"><span>🕐 التوقيت:</span><strong style="font-size:0.75rem;">' + timeDesc + '</strong></div>';
+        
+        // السعر الأصلي + الخصم
+        if (discountData.discount > 0) {
+            html += '<div class="summary-app-row" style="opacity:0.6;text-decoration:line-through;"><span>💰 السعر الأصلي:</span><strong>' + originalPrice + ' ر.ع</strong></div>';
+        }
+        
+        html += '<div class="summary-app-row"><span>💰 الإجمالي:</span><strong>' + finalPrice + ' ر.ع</strong></div>';
+        
+        // قسم العرض النشط
+        if (activeOffer && discountData.discount > 0) {
+            html += '<div class="summary-section discount">' +
+                '<div class="summary-section-title"><i class="fas fa-gift"></i> 🎁 ' + activeOffer.title + '</div>' +
+                '<div class="summary-row"><span>• خصم ' + activeOffer.discount + '%</span><strong>- ' + discountData.discount + ' ر.ع</strong></div>' +
+            '</div>';
+        }
         
         if (selectedDeposit === null) {
             html += '<div class="warning-row"><i class="fas fa-exclamation-triangle"></i><span>اختر مبلغ العربون</span></div>';
@@ -560,9 +669,9 @@
             return;
         }
         
-        var deposit = getDepositAmount();
+        var deposit = getDepositAmount(finalPrice);
         var security = CONFIG.securityDeposit;
-        var remaining = total - deposit;
+        var remaining = finalPrice - deposit;
         var payNow = deposit + security;
         var isFullPayment = (selectedDeposit === 'full');
         
@@ -618,7 +727,7 @@
         
         var dateStr = formatDate(selectedDate);
         if (blockedDates.indexOf(dateStr) !== -1) {
-            return showToast('⚠️ التاريخ محجوز - اختر تاريخاً آخر', 'error');
+            return showToast('⚠️ التاريخ محجوز', 'error');
         }
         
         var fullName = document.getElementById('fullName').value.trim();
@@ -639,8 +748,13 @@
         
         var dayType = getDayType(selectedDate);
         var dayTypeName = dayType === 'weekday' ? 'يوم عادي' : 'ويكند';
-        var total = calculatePrice();
-        var deposit = getDepositAmount();
+        var originalPrice = calculatePrice();
+        
+        var activeOffer = getActiveOffer();
+        var discountData = calculateDiscount(originalPrice, activeOffer);
+        var total = discountData.final;
+        
+        var deposit = getDepositAmount(total);
         var security = CONFIG.securityDeposit;
         var remaining = total - deposit;
         var payNow = deposit + security;
@@ -653,6 +767,11 @@
         var data = {
             bookingId: bookingId, date: formatDate(selectedDate), dateFormatted: formatArabicDate(selectedDate),
             dayType: dayTypeName, bookingType: typeName, bookingTypeDesc: timeDesc,
+            originalPrice: originalPrice,
+            discount: discountData.discount,
+            discountPercent: activeOffer ? activeOffer.discount : 0,
+            offerTitle: activeOffer ? activeOffer.title : '',
+            hasOffer: !!(activeOffer && discountData.discount > 0),
             total: total, deposit: deposit, security: security, remaining: remaining, payNow: payNow,
             isFullPayment: isFullPayment, fullName: fullName, phone: phone, guests: guestsCount,
             notes: document.getElementById('notes').value.trim() || '',
@@ -669,6 +788,7 @@
             }
         } catch(e) {}
         
+        // رسالة واتساب
         var msg = '🌟 *طلب حجز جديد - استراحة وهج* 🌟\n\n' +
             '📋 *رقم:* ' + bookingId + '\n' +
             '📅 *التاريخ:* ' + data.dateFormatted + '\n' +
@@ -676,8 +796,18 @@
             '👤 *الاسم:* ' + fullName + '\n' +
             '📞 *الجوال:* ' + phone + '\n' +
             '👥 *الضيوف:* ' + guestsCount + '\n\n' +
-            '━━━━━━━━━━━━━━━\n💰 *تفاصيل الدفع*\n━━━━━━━━━━━━━━━\n\n' +
-            '💳 *يُدفع الآن:*\n' +
+            '━━━━━━━━━━━━━━━\n💰 *تفاصيل الدفع*\n━━━━━━━━━━━━━━━\n\n';
+        
+        if (data.hasOffer) {
+            msg += '🎁 *عرض:* ' + data.offerTitle + '\n' +
+                '• السعر الأصلي: ' + originalPrice + ' ر.ع\n' +
+                '• *خصم ' + data.discountPercent + '%:* -' + data.discount + ' ر.ع\n' +
+                '• *السعر النهائي:* ' + total + ' ر.ع\n\n';
+        } else {
+            msg += '• *الإجمالي:* ' + total + ' ر.ع\n\n';
+        }
+        
+        msg += '💳 *يُدفع الآن:*\n' +
             '• العربون' + (isFullPayment ? ' (دفع كامل)' : '') + ': ' + deposit + ' ر.ع\n' +
             '• التأمين: ' + security + ' ر.ع\n' +
             '• *الإجمالي: ' + payNow + ' ر.ع*\n\n' +
@@ -700,7 +830,7 @@
         window.WahajFirebase.waitForFirebase(function(ready) {
             if (!ready) return;
             window.WahajFirebase.saveBooking(data).then(function(result) {
-                if (result.success) console.log('☁️ محفوظ سحابياً:', result.id);
+                if (result.success) console.log('☁️ محفوظ:', result.id);
             });
         }, 3000);
     }
@@ -711,6 +841,7 @@
         });
         
         loadBlocked();
+        loadOffers();
         renderDepositOptions();
         
         document.getElementById('prevMonth').onclick = function() {
@@ -730,9 +861,8 @@
                 if (navigator.vibrate) navigator.vibrate(10);
                 
                 var hd = document.getElementById('halfDayPeriods');
-                if (selectedBookingType === 'half_day') {
-                    hd.classList.add('show');
-                } else {
+                if (selectedBookingType === 'half_day') hd.classList.add('show');
+                else {
                     hd.classList.remove('show');
                     selectedHalfDayPeriod = null;
                     document.querySelectorAll('.half-day-option').forEach(function(x) { x.classList.remove('selected'); });
@@ -789,7 +919,7 @@
             }
         }, 30000);
         
-        console.log('✅ صفحة الحجز جاهزة');
+        console.log('✅ صفحة الحجز جاهزة (Firebase + Offers)');
     }
     
     if (document.readyState === 'loading') {
