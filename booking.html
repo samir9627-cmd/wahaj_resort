@@ -1,965 +1,260 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <meta name="theme-color" content="#0A1F44">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    
-    <title>احجز الآن | استراحة وهج</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <link rel="stylesheet" href="css/app.css">
-    <link rel="icon" type="image/png" href="images/logo.jpeg">
-    
-    <style>
-        .booking-header-hero {
-            background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 60%, var(--navy-light) 100%);
-            padding: 100px 20px 40px;
-            color: var(--white);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .booking-header-hero::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at 30% 40%, rgba(212, 175, 55, 0.2) 0%, transparent 50%);
-            pointer-events: none;
-        }
-        
-        .booking-header-content { position: relative; z-index: 2; }
-        
-        .booking-header-hero h1 {
-            font-family: 'Amiri', serif;
-            font-size: clamp(1.8rem, 6vw, 2.5rem);
-            color: var(--primary);
-            margin-bottom: 10px;
-            text-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
-        }
-        
-        .booking-header-hero p { font-size: 0.95rem; opacity: 0.9; }
-        
-        .booking-steps-bar {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 25px;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .step-dot {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.85rem;
-            font-weight: 700;
-            transition: all 0.3s;
-            color: var(--white);
-        }
-        
-        .step-dot.active {
-            background: var(--primary);
-            color: var(--navy);
-            border-color: var(--primary);
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
-        }
-        
-        .booking-main { padding: 30px 20px 100px; }
-        
-        .booking-block {
-            background: var(--white);
-            border-radius: var(--radius);
-            padding: 25px 20px;
-            margin-bottom: 20px;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid rgba(212, 175, 55, 0.1);
-            position: relative;
-            z-index: 1;
-        }
-        
-        .booking-block-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--navy);
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .booking-block-title-icon {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: var(--white);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
-            flex-shrink: 0;
-        }
-        
-        .calendar-app {
-            background: var(--gray-100);
-            border-radius: var(--radius-sm);
-            padding: 18px 15px;
-            position: relative;
-            z-index: 5;
-        }
-        
-        .calendar-app-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        
-        .calendar-app-nav {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: var(--white);
-            color: var(--navy);
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-            font-size: 1rem;
-            position: relative;
-            z-index: 10;
-        }
-        
-        .calendar-app-nav:active { transform: scale(0.9); background: var(--primary); color: var(--white); }
-        
-        .calendar-app-month { font-weight: 700; color: var(--navy); font-size: 1rem; }
-        
-        .calendar-app-weekdays {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 4px;
-            margin-bottom: 8px;
-        }
-        
-        .calendar-app-weekday {
-            text-align: center;
-            font-size: 0.7rem;
-            font-weight: 700;
-            color: var(--gray-600);
-            padding: 8px 2px;
-        }
-        
-        .calendar-app-days {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 4px;
-            position: relative;
-            z-index: 10;
-        }
-        
-        .calendar-app-day {
-            aspect-ratio: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: transform 0.15s, background 0.15s, color 0.15s;
-            font-weight: 600;
-            background: var(--white);
-            color: var(--navy);
-            font-size: 0.85rem;
-            border: 2px solid transparent;
-            user-select: none;
-            -webkit-user-select: none;
-            -webkit-tap-highlight-color: transparent;
-            position: relative;
-            z-index: 10;
-        }
-        
-        .calendar-app-day:not(.empty):not(.disabled):active { transform: scale(0.85); }
-        .calendar-app-day.empty { background: transparent; cursor: default; pointer-events: none; }
-        .calendar-app-day.disabled { background: var(--gray-200); color: var(--gray-400); cursor: not-allowed; text-decoration: line-through; pointer-events: none; }
-        .calendar-app-day.weekend { background: rgba(212, 175, 55, 0.15); color: var(--primary-dark); }
-        .calendar-app-day.today { border-color: var(--navy); font-weight: 900; }
-        .calendar-app-day.selected {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark)) !important;
-            color: var(--white) !important;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.5);
-            transform: scale(1.05);
-            border-color: var(--primary) !important;
-        }
-        
-        .calendar-app-legend {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            margin-top: 15px;
-            flex-wrap: wrap;
-            font-size: 0.7rem;
-        }
-        
-        .legend-dot { display: flex; align-items: center; gap: 5px; color: var(--gray-600); }
-        .legend-dot-color { width: 12px; height: 12px; border-radius: 3px; }
-        
-        .booking-type-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            position: relative;
-            z-index: 5;
-        }
-        
-        .booking-type-app {
-            background: var(--gray-100);
-            border: 2px solid transparent;
-            border-radius: var(--radius-sm);
-            padding: 15px 8px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            user-select: none;
-            position: relative;
-            z-index: 5;
-        }
-        
-        .booking-type-app:active { transform: scale(0.95); }
-        
-        .booking-type-app.selected {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: var(--white);
-            border-color: var(--primary);
-            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
-        }
-        
-        .booking-type-app-icon { font-size: 1.5rem; pointer-events: none; }
-        .booking-type-app-name { font-size: 0.8rem; font-weight: 700; pointer-events: none; }
-        .booking-type-app-desc { font-size: 0.65rem; opacity: 0.7; pointer-events: none; }
-        .booking-type-app.selected .booking-type-app-desc { opacity: 0.95; }
-        
-        .half-day-app {
-            margin-top: 12px;
-            display: none;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            position: relative;
-            z-index: 5;
-        }
-        
-        .half-day-app.show { display: grid; }
-        
-        .half-day-option {
-            background: var(--white);
-            border: 2px solid var(--gray-200);
-            border-radius: var(--radius-sm);
-            padding: 12px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            font-size: 0.8rem;
-            user-select: none;
-            position: relative;
-            z-index: 5;
-        }
-        
-        .half-day-option.selected {
-            background: rgba(212, 175, 55, 0.1);
-            border-color: var(--primary);
-        }
-        
-        .half-day-option strong { display: block; color: var(--navy); margin-bottom: 3px; font-size: 0.85rem; }
-        .half-day-option span { color: var(--gray-600); font-size: 0.7rem; }
-        
-        .form-field { margin-bottom: 15px; position: relative; z-index: 5; }
-        .form-field label { display: block; font-size: 0.85rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
-        .form-field label .req { color: var(--danger); }
-        
-        .form-field input,
-        .form-field select,
-        .form-field textarea {
-            width: 100%;
-            padding: 13px 15px;
-            border: 2px solid var(--gray-200);
-            border-radius: var(--radius-sm);
-            font-family: 'Cairo', sans-serif;
-            font-size: 0.9rem;
-            color: var(--navy);
-            background: var(--white);
-            transition: all 0.2s;
-            position: relative;
-            z-index: 5;
-        }
-        
-        .form-field input:focus,
-        .form-field select:focus,
-        .form-field textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.15);
-        }
-        
-        .form-field textarea { resize: vertical; min-height: 80px; }
-        
-        .guests-hint {
-            font-size: 0.75rem;
-            color: var(--gray-600);
-            margin-top: 5px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .guests-hint i { color: var(--primary); }
-        
-        /* ═══ العربون ═══ */
-        .deposit-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin-bottom: 15px;
-            position: relative;
-            z-index: 5;
-        }
-        
-        .deposit-option {
-            background: var(--white);
-            border: 2px solid var(--gray-200);
-            border-radius: var(--radius-sm);
-            padding: 14px 8px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            user-select: none;
-            position: relative;
-        }
-        
-        .deposit-option:active { transform: scale(0.95); }
-        
-        .deposit-option.selected {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: var(--white);
-            border-color: var(--primary);
-            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
-        }
-        
-        .deposit-option-amount {
-            font-size: 1.1rem;
-            font-weight: 900;
-            display: block;
-        }
-        
-        .deposit-option-label {
-            font-size: 0.7rem;
-            opacity: 0.8;
-            margin-top: 2px;
-            display: block;
-        }
-        
-        .deposit-option.selected .deposit-option-label { opacity: 0.95; }
-        
-        .deposit-option.full {
-            grid-column: span 3;
-            background: linear-gradient(135deg, rgba(40,167,69,0.1), rgba(40,167,69,0.05));
-            border-color: var(--success);
-        }
-        
-        .deposit-option.full .deposit-option-amount { color: var(--success); }
-        
-        .deposit-option.full.selected {
-            background: linear-gradient(135deg, var(--success), #218838);
-            color: var(--white);
-            border-color: var(--success);
-            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
-        }
-        
-        .deposit-option.full.selected .deposit-option-amount { color: var(--white); }
-        
-        .deposit-hint {
-            font-size: 0.75rem;
-            color: var(--gray-600);
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 10px 12px;
-            background: rgba(212, 175, 55, 0.08);
-            border-radius: var(--radius-sm);
-            border-right: 3px solid var(--primary);
-        }
-        
-        .deposit-hint i { color: var(--primary); }
-        
-        /* ═══ تنبيه التأمين ═══ */
-        .insurance-note {
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.12), rgba(212, 175, 55, 0.04));
-            border: 2px solid var(--primary);
-            border-radius: var(--radius-sm);
-            padding: 12px 15px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            font-size: 0.8rem;
-            color: var(--navy);
-            line-height: 1.6;
-        }
-        
-        .insurance-note i {
-            color: var(--primary);
-            font-size: 1.1rem;
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-        
-        .insurance-note strong {
-            color: var(--primary-dark);
-        }
-        
-        .upload-app {
-            border: 2px dashed var(--gray-400);
-            border-radius: var(--radius-sm);
-            padding: 30px 15px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s;
-            background: var(--gray-100);
-            position: relative;
-            z-index: 5;
-        }
-        
-        .upload-app input[type="file"] {
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-            cursor: pointer;
-            width: 100%;
-            height: 100%;
-            z-index: 10;
-        }
-        
-        .upload-app-icon { font-size: 2.2rem; color: var(--primary); margin-bottom: 10px; pointer-events: none; }
-        .upload-app h4 { color: var(--navy); font-size: 0.95rem; margin-bottom: 5px; pointer-events: none; }
-        .upload-app p { color: var(--gray-600); font-size: 0.75rem; pointer-events: none; }
-        
-        .upload-preview-app { margin-top: 12px; display: none; }
-        .upload-preview-app.show { display: block; }
-        .upload-preview-app img { max-width: 150px; border-radius: var(--radius-sm); box-shadow: var(--shadow); margin: 0 auto; }
-        
-        .bank-app {
-            background: linear-gradient(135deg, var(--navy), var(--navy-light));
-            color: var(--white);
-            padding: 18px;
-            border-radius: var(--radius-sm);
-            margin-bottom: 15px;
-            border: 2px solid var(--primary);
-            position: relative;
-            z-index: 5;
-        }
-        
-        .bank-app h4 { color: var(--primary); font-size: 0.95rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-        
-        .bank-app-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 0.8rem;
-        }
-        
-        .bank-app-row:last-child { border-bottom: none; }
-        .bank-app-row span:first-child { color: rgba(255, 255, 255, 0.7); }
-        .bank-app-row strong { color: var(--primary); direction: ltr; }
-        
-        /* ═══ الملخص الجديد ═══ */
-        .summary-app {
-            background: var(--white);
-            border-radius: var(--radius);
-            padding: 22px 20px;
-            margin-bottom: 20px;
-            box-shadow: var(--shadow);
-            border-top: 4px solid var(--primary);
-            position: relative;
-            z-index: 1;
-        }
-        
-        .summary-app-title {
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--navy);
-            margin-bottom: 15px;
-            padding-bottom: 12px;
-            border-bottom: 1px dashed var(--gray-200);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .summary-app-title i { color: var(--primary); }
-        
-        .summary-app-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            font-size: 0.85rem;
-            color: var(--gray-800);
-        }
-        
-        .summary-app-row strong { color: var(--navy); font-weight: 700; }
-        
-        /* ═══ قسم في الملخص ═══ */
-        .summary-section {
-            margin: 15px 0;
-            padding: 12px 15px;
-            border-radius: var(--radius-sm);
-        }
-        
-        .summary-section-title {
-            font-size: 0.75rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        
-        .summary-section.now {
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
-            border: 2px solid var(--primary);
-        }
-        
-        .summary-section.now .summary-section-title {
-            color: var(--primary-dark);
-        }
-        
-        .summary-section.now .summary-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 6px 0;
-            font-size: 0.85rem;
-            color: var(--navy);
-        }
-        
-        .summary-section.now .summary-row:last-child {
-            border-top: 1px dashed var(--primary);
-            margin-top: 6px;
-            padding-top: 10px;
-            font-weight: 900;
-            font-size: 1rem;
-        }
-        
-        .summary-section.now .summary-row:last-child strong {
-            color: var(--primary-dark);
-            font-size: 1.2rem;
-        }
-        
-        .summary-section.later {
-            background: linear-gradient(135deg, rgba(10, 31, 68, 0.06), rgba(10, 31, 68, 0.02));
-            border: 2px solid rgba(10, 31, 68, 0.2);
-        }
-        
-        .summary-section.later .summary-section-title {
-            color: var(--navy);
-        }
-        
-        .summary-section.later .summary-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 6px 0;
-            font-size: 0.85rem;
-        }
-        
-        .summary-section.refund {
-            background: linear-gradient(135deg, rgba(40, 167, 69, 0.1), rgba(40, 167, 69, 0.03));
-            border: 2px solid rgba(40, 167, 69, 0.3);
-        }
-        
-        .summary-section.refund .summary-section-title {
-            color: var(--success);
-        }
-        
-        .summary-section.refund .summary-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 6px 0;
-            font-size: 0.85rem;
-        }
-        
-        .summary-section.refund strong {
-            color: var(--success);
-        }
-        
-        .summary-app-empty { text-align: center; padding: 20px 10px; color: var(--gray-600); font-size: 0.85rem; }
-        .summary-app-empty i { font-size: 2rem; color: var(--gray-200); display: block; margin-bottom: 10px; }
-        
-        .confirm-btn-app {
-            width: 100%;
-            padding: 16px;
-            border-radius: 50px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: var(--navy);
-            font-weight: 900;
-            font-size: 1rem;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s;
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 15px;
-            font-family: 'Cairo', sans-serif;
-        }
-        
-        .confirm-btn-app:active:not(:disabled) { transform: scale(0.97); }
-        .confirm-btn-app:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
-        
-        .secure-note-app {
-            text-align: center;
-            margin-top: 10px;
-            color: var(--gray-600);
-            font-size: 0.75rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-        }
-        
-        .secure-note-app i { color: var(--success); }
-        
-        .warning-row {
-            background: rgba(255, 193, 7, 0.1);
-            padding: 10px 12px;
-            margin-top: 10px;
-            border-radius: 8px;
-            border-right: 3px solid var(--warning);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.8rem;
-            color: #856404;
-        }
-        
-        .warning-row i { color: var(--warning); }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="theme-color" content="#0A1F44">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>احجز الآن | استراحة وهج</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="css/app.css">
+<link rel="icon" type="image/png" href="images/logo.jpeg">
+<style>
+.booking-header-hero{background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy) 60%,var(--navy-light) 100%);padding:100px 20px 40px;color:var(--white);text-align:center;position:relative;overflow:hidden}
+.booking-header-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 40%,rgba(212,175,55,0.2) 0%,transparent 50%);pointer-events:none}
+.booking-header-content{position:relative;z-index:2}
+.booking-header-hero h1{font-family:'Amiri',serif;font-size:clamp(1.8rem,6vw,2.5rem);color:var(--primary);margin-bottom:10px;text-shadow:0 0 30px rgba(212,175,55,0.5)}
+.booking-header-hero p{font-size:0.95rem;opacity:0.9}
+.booking-steps-bar{display:flex;justify-content:center;gap:8px;margin-top:25px;position:relative;z-index:2}
+.step-dot{width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,0.1);border:2px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:0.85rem;font-weight:700;transition:all 0.3s;color:var(--white)}
+.step-dot.active{background:var(--primary);color:var(--navy);border-color:var(--primary);box-shadow:0 0 20px rgba(212,175,55,0.6)}
+.booking-main{padding:30px 20px 100px}
+.booking-block{background:var(--white);border-radius:var(--radius);padding:25px 20px;margin-bottom:20px;box-shadow:var(--shadow-sm);border:1px solid rgba(212,175,55,0.1);position:relative;z-index:1}
+.booking-block-title{font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.booking-block-title-icon{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:var(--white);display:flex;align-items:center;justify-content:center;font-size:1rem;box-shadow:0 4px 12px rgba(212,175,55,0.3);flex-shrink:0}
+.calendar-app{background:var(--gray-100);border-radius:var(--radius-sm);padding:18px 15px;position:relative;z-index:5}
+.calendar-app-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}
+.calendar-app-nav{width:38px;height:38px;border-radius:50%;background:var(--white);color:var(--navy);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,0.06);font-size:1rem;position:relative;z-index:10}
+.calendar-app-nav:active{transform:scale(0.9);background:var(--primary);color:var(--white)}
+.calendar-app-month{font-weight:700;color:var(--navy);font-size:1rem}
+.calendar-app-weekdays{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:8px}
+.calendar-app-weekday{text-align:center;font-size:0.7rem;font-weight:700;color:var(--gray-600);padding:8px 2px}
+.calendar-app-days{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;position:relative;z-index:10}
+.calendar-app-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:10px;cursor:pointer;transition:transform 0.15s,background 0.15s,color 0.15s;font-weight:600;background:var(--white);color:var(--navy);font-size:0.85rem;border:2px solid transparent;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;position:relative;z-index:10}
+.calendar-app-day:not(.empty):not(.disabled):active{transform:scale(0.85)}
+.calendar-app-day.empty{background:transparent;cursor:default;pointer-events:none}
+.calendar-app-day.disabled{background:#FFE5E5;color:#DC3545;cursor:not-allowed;text-decoration:line-through;pointer-events:none;font-weight:900}
+.calendar-app-day.weekend{background:rgba(212,175,55,0.15);color:var(--primary-dark)}
+.calendar-app-day.today{border-color:var(--navy);font-weight:900}
+.calendar-app-day.selected{background:linear-gradient(135deg,var(--primary),var(--primary-dark)) !important;color:var(--white) !important;box-shadow:0 4px 15px rgba(212,175,55,0.5);transform:scale(1.05);border-color:var(--primary) !important}
+.calendar-app-legend{display:flex;gap:12px;justify-content:center;margin-top:15px;flex-wrap:wrap;font-size:0.7rem}
+.legend-dot{display:flex;align-items:center;gap:5px;color:var(--gray-600)}
+.legend-dot-color{width:12px;height:12px;border-radius:3px}
+.booking-type-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;position:relative;z-index:5}
+.booking-type-app{background:var(--gray-100);border:2px solid transparent;border-radius:var(--radius-sm);padding:15px 8px;text-align:center;cursor:pointer;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;gap:6px;user-select:none;position:relative;z-index:5}
+.booking-type-app:active{transform:scale(0.95)}
+.booking-type-app.selected{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:var(--white);border-color:var(--primary);box-shadow:0 6px 20px rgba(212,175,55,0.4)}
+.booking-type-app-icon{font-size:1.5rem;pointer-events:none}
+.booking-type-app-name{font-size:0.8rem;font-weight:700;pointer-events:none}
+.booking-type-app-desc{font-size:0.65rem;opacity:0.7;pointer-events:none}
+.booking-type-app.selected .booking-type-app-desc{opacity:0.95}
+.half-day-app{margin-top:12px;display:none;grid-template-columns:1fr 1fr;gap:8px;position:relative;z-index:5}
+.half-day-app.show{display:grid}
+.half-day-option{background:var(--white);border:2px solid var(--gray-200);border-radius:var(--radius-sm);padding:12px;text-align:center;cursor:pointer;transition:all 0.2s;font-size:0.8rem;user-select:none;position:relative;z-index:5}
+.half-day-option.selected{background:rgba(212,175,55,0.1);border-color:var(--primary)}
+.half-day-option strong{display:block;color:var(--navy);margin-bottom:3px;font-size:0.85rem}
+.half-day-option span{color:var(--gray-600);font-size:0.7rem}
+.form-field{margin-bottom:15px;position:relative;z-index:5}
+.form-field label{display:block;font-size:0.85rem;font-weight:700;color:var(--navy);margin-bottom:6px}
+.form-field label .req{color:var(--danger)}
+.form-field input,.form-field select,.form-field textarea{width:100%;padding:13px 15px;border:2px solid var(--gray-200);border-radius:var(--radius-sm);font-family:'Cairo',sans-serif;font-size:0.9rem;color:var(--navy);background:var(--white);transition:all 0.2s;position:relative;z-index:5}
+.form-field input:focus,.form-field select:focus,.form-field textarea:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 4px rgba(212,175,55,0.15)}
+.form-field textarea{resize:vertical;min-height:80px}
+.guests-hint{font-size:0.75rem;color:var(--gray-600);margin-top:5px;display:flex;align-items:center;gap:5px}
+.guests-hint i{color:var(--primary)}
+.deposit-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:15px;position:relative;z-index:5}
+.deposit-option{background:var(--white);border:2px solid var(--gray-200);border-radius:var(--radius-sm);padding:14px 8px;text-align:center;cursor:pointer;transition:all 0.2s;user-select:none;position:relative}
+.deposit-option:active{transform:scale(0.95)}
+.deposit-option.selected{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:var(--white);border-color:var(--primary);box-shadow:0 6px 20px rgba(212,175,55,0.4)}
+.deposit-option-amount{font-size:1.1rem;font-weight:900;display:block}
+.deposit-option-label{font-size:0.7rem;opacity:0.8;margin-top:2px;display:block}
+.deposit-option.full{grid-column:span 3;background:linear-gradient(135deg,rgba(40,167,69,0.1),rgba(40,167,69,0.05));border-color:var(--success)}
+.deposit-option.full .deposit-option-amount{color:var(--success)}
+.deposit-option.full.selected{background:linear-gradient(135deg,var(--success),#218838);color:var(--white);border-color:var(--success)}
+.deposit-option.full.selected .deposit-option-amount{color:var(--white)}
+.deposit-hint{font-size:0.75rem;color:var(--gray-600);margin-bottom:15px;display:flex;align-items:center;gap:6px;padding:10px 12px;background:rgba(212,175,55,0.08);border-radius:var(--radius-sm);border-right:3px solid var(--primary)}
+.deposit-hint i{color:var(--primary)}
+.insurance-note{background:linear-gradient(135deg,rgba(212,175,55,0.12),rgba(212,175,55,0.04));border:2px solid var(--primary);border-radius:var(--radius-sm);padding:12px 15px;margin-bottom:15px;display:flex;align-items:flex-start;gap:10px;font-size:0.8rem;color:var(--navy);line-height:1.6}
+.insurance-note i{color:var(--primary);font-size:1.1rem;flex-shrink:0;margin-top:2px}
+.insurance-note strong{color:var(--primary-dark)}
+.upload-app{border:2px dashed var(--gray-400);border-radius:var(--radius-sm);padding:30px 15px;text-align:center;cursor:pointer;transition:all 0.2s;background:var(--gray-100);position:relative;z-index:5}
+.upload-app input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;z-index:10}
+.upload-app-icon{font-size:2.2rem;color:var(--primary);margin-bottom:10px;pointer-events:none}
+.upload-app h4{color:var(--navy);font-size:0.95rem;margin-bottom:5px;pointer-events:none}
+.upload-app p{color:var(--gray-600);font-size:0.75rem;pointer-events:none}
+.upload-preview-app{margin-top:12px;display:none}
+.upload-preview-app.show{display:block}
+.upload-preview-app img{max-width:150px;border-radius:var(--radius-sm);box-shadow:var(--shadow);margin:0 auto}
+.bank-app{background:linear-gradient(135deg,var(--navy),var(--navy-light));color:var(--white);padding:18px;border-radius:var(--radius-sm);margin-bottom:15px;border:2px solid var(--primary);position:relative;z-index:5}
+.bank-app h4{color:var(--primary);font-size:0.95rem;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.bank-app-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.1);font-size:0.8rem}
+.bank-app-row:last-child{border-bottom:none}
+.bank-app-row span:first-child{color:rgba(255,255,255,0.7)}
+.bank-app-row strong{color:var(--primary);direction:ltr}
+.summary-app{background:var(--white);border-radius:var(--radius);padding:22px 20px;margin-bottom:20px;box-shadow:var(--shadow);border-top:4px solid var(--primary);position:relative;z-index:1}
+.summary-app-title{font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:15px;padding-bottom:12px;border-bottom:1px dashed var(--gray-200);display:flex;align-items:center;gap:8px}
+.summary-app-title i{color:var(--primary)}
+.summary-app-row{display:flex;justify-content:space-between;padding:8px 0;font-size:0.85rem;color:var(--gray-800)}
+.summary-app-row strong{color:var(--navy);font-weight:700}
+.summary-section{margin:15px 0;padding:12px 15px;border-radius:var(--radius-sm)}
+.summary-section-title{font-size:0.75rem;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px;text-transform:uppercase;letter-spacing:0.5px}
+.summary-section.now{background:linear-gradient(135deg,rgba(212,175,55,0.15),rgba(212,175,55,0.05));border:2px solid var(--primary)}
+.summary-section.now .summary-section-title{color:var(--primary-dark)}
+.summary-section.now .summary-row{display:flex;justify-content:space-between;padding:6px 0;font-size:0.85rem;color:var(--navy)}
+.summary-section.now .summary-row:last-child{border-top:1px dashed var(--primary);margin-top:6px;padding-top:10px;font-weight:900;font-size:1rem}
+.summary-section.now .summary-row:last-child strong{color:var(--primary-dark);font-size:1.2rem}
+.summary-section.later{background:linear-gradient(135deg,rgba(10,31,68,0.06),rgba(10,31,68,0.02));border:2px solid rgba(10,31,68,0.2)}
+.summary-section.later .summary-section-title{color:var(--navy)}
+.summary-section.later .summary-row{display:flex;justify-content:space-between;padding:6px 0;font-size:0.85rem}
+.summary-section.refund{background:linear-gradient(135deg,rgba(40,167,69,0.1),rgba(40,167,69,0.03));border:2px solid rgba(40,167,69,0.3)}
+.summary-section.refund .summary-section-title{color:var(--success)}
+.summary-section.refund .summary-row{display:flex;justify-content:space-between;padding:6px 0;font-size:0.85rem}
+.summary-section.refund strong{color:var(--success)}
+.summary-app-empty{text-align:center;padding:20px 10px;color:var(--gray-600);font-size:0.85rem}
+.summary-app-empty i{font-size:2rem;color:var(--gray-200);display:block;margin-bottom:10px}
+.confirm-btn-app{width:100%;padding:16px;border-radius:50px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:var(--navy);font-weight:900;font-size:1rem;border:none;cursor:pointer;transition:all 0.2s;box-shadow:0 10px 30px rgba(212,175,55,0.4);display:flex;align-items:center;justify-content:center;gap:8px;margin-top:15px;font-family:'Cairo',sans-serif}
+.confirm-btn-app:active:not(:disabled){transform:scale(0.97)}
+.confirm-btn-app:disabled{opacity:0.5;cursor:not-allowed;box-shadow:none}
+.secure-note-app{text-align:center;margin-top:10px;color:var(--gray-600);font-size:0.75rem;display:flex;align-items:center;justify-content:center;gap:5px}
+.secure-note-app i{color:var(--success)}
+.warning-row{background:rgba(255,193,7,0.1);padding:10px 12px;margin-top:10px;border-radius:8px;border-right:3px solid var(--warning);display:flex;align-items:center;gap:8px;font-size:0.8rem;color:#856404}
+.warning-row i{color:var(--warning)}
+</style>
 </head>
 <body>
 
-<!-- HEADER -->
 <header class="app-header">
-    <div class="app-header-logo">
-        <div class="app-header-logo-svg" id="headerLogo"></div>
-        <span class="app-header-title">استراحة <span>وهج</span></span>
-    </div>
-    <a href="index.html" class="app-header-action" aria-label="الرئيسية">
-        <i class="fas fa-home"></i>
-    </a>
+<div class="app-header-logo">
+<div class="app-header-logo-svg" id="headerLogo"></div>
+<span class="app-header-title">استراحة <span>وهج</span></span>
+</div>
+<a href="index.html" class="app-header-action" aria-label="الرئيسية"><i class="fas fa-home"></i></a>
 </header>
 
-<!-- HERO -->
 <section class="booking-header-hero">
-    <div class="booking-header-content">
-        <h1>احجز استراحتك</h1>
-        <p>اختر التاريخ ونوع الحجز وأكمل بياناتك</p>
-        
-        <div class="booking-steps-bar">
-            <div class="step-dot active" data-step="1">1</div>
-            <div class="step-dot" data-step="2">2</div>
-            <div class="step-dot" data-step="3">3</div>
-            <div class="step-dot" data-step="4">4</div>
-        </div>
-    </div>
+<div class="booking-header-content">
+<h1>احجز استراحتك</h1>
+<p>اختر التاريخ ونوع الحجز وأكمل بياناتك</p>
+<div class="booking-steps-bar">
+<div class="step-dot active" data-step="1">1</div>
+<div class="step-dot" data-step="2">2</div>
+<div class="step-dot" data-step="3">3</div>
+<div class="step-dot" data-step="4">4</div>
+</div>
+</div>
 </section>
 
-<!-- CONTENT -->
 <section class="booking-main">
-    <div style="max-width: 600px; margin: 0 auto;">
-        
-        <!-- 1. التاريخ -->
-        <div class="booking-block">
-            <div class="booking-block-title">
-                <div class="booking-block-title-icon"><i class="fas fa-calendar-alt"></i></div>
-                <span>اختر التاريخ</span>
-            </div>
-            
-            <div class="calendar-app">
-                <div class="calendar-app-header">
-                    <button class="calendar-app-nav" id="prevMonth" type="button">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                    <div class="calendar-app-month" id="monthYear">...</div>
-                    <button class="calendar-app-nav" id="nextMonth" type="button">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-                </div>
-                
-                <div class="calendar-app-weekdays">
-                    <div class="calendar-app-weekday">أحد</div>
-                    <div class="calendar-app-weekday">اثن</div>
-                    <div class="calendar-app-weekday">ثلا</div>
-                    <div class="calendar-app-weekday">أرب</div>
-                    <div class="calendar-app-weekday">خمي</div>
-                    <div class="calendar-app-weekday">جمع</div>
-                    <div class="calendar-app-weekday">سبت</div>
-                </div>
-                
-                <div class="calendar-app-days" id="calendarDays"></div>
-                
-                <div class="calendar-app-legend">
-                    <div class="legend-dot">
-                        <div class="legend-dot-color" style="background: #fff; border: 1px solid #E9ECEF;"></div>
-                        <span>متاح</span>
-                    </div>
-                    <div class="legend-dot">
-                        <div class="legend-dot-color" style="background: rgba(212, 175, 55, 0.3);"></div>
-                        <span>ويكند</span>
-                    </div>
-                    <div class="legend-dot">
-                        <div class="legend-dot-color" style="background: #D4AF37;"></div>
-                        <span>مختار</span>
-                    </div>
-                    <div class="legend-dot">
-                        <div class="legend-dot-color" style="background: #E9ECEF;"></div>
-                        <span>محجوز</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- 2. نوع الحجز -->
-        <div class="booking-block">
-            <div class="booking-block-title">
-                <div class="booking-block-title-icon"><i class="fas fa-clock"></i></div>
-                <span>نوع الحجز</span>
-            </div>
-            
-            <div class="booking-type-grid">
-                <div class="booking-type-app" data-type="without_stay">
-                    <div class="booking-type-app-icon">☀️</div>
-                    <div class="booking-type-app-name">بدون مبيت</div>
-                    <div class="booking-type-app-desc">9ص - 10م</div>
-                </div>
-                <div class="booking-type-app" data-type="with_stay">
-                    <div class="booking-type-app-icon">🌙</div>
-                    <div class="booking-type-app-name">مع مبيت</div>
-                    <div class="booking-type-app-desc">9ص - 7ص</div>
-                </div>
-                <div class="booking-type-app" data-type="half_day">
-                    <div class="booking-type-app-icon">⏰</div>
-                    <div class="booking-type-app-name">نصف يوم</div>
-                    <div class="booking-type-app-desc">فترتان</div>
-                </div>
-            </div>
-            
-            <div class="half-day-app" id="halfDayPeriods">
-                <div class="half-day-option" data-period="morning">
-                    <strong>صباحية</strong>
-                    <span>9ص - 3م</span>
-                </div>
-                <div class="half-day-option" data-period="evening">
-                    <strong>مسائية</strong>
-                    <span>4م - 10م</span>
-                </div>
-            </div>
-        </div>
-        
-        <!-- 3. البيانات -->
-        <div class="booking-block">
-            <div class="booking-block-title">
-                <div class="booking-block-title-icon"><i class="fas fa-user"></i></div>
-                <span>بياناتك</span>
-            </div>
-            
-            <div class="form-field">
-                <label>الاسم الكامل <span class="req">*</span></label>
-                <input type="text" id="fullName" placeholder="أدخل اسمك الكامل">
-            </div>
-            
-            <div class="form-field">
-                <label>رقم الجوال <span class="req">*</span></label>
-                <input type="tel" id="phone" placeholder="9xxxxxxx" inputmode="numeric">
-            </div>
-            
-            <div class="form-field">
-                <label>عدد الضيوف <span class="req">*</span></label>
-                <select id="guests">
-                    <option value="1">1 شخص</option>
-                    <option value="2">2 أشخاص</option>
-                    <option value="3">3 أشخاص</option>
-                    <option value="4">4 أشخاص</option>
-                    <option value="5">5 أشخاص</option>
-                    <option value="6">6 أشخاص</option>
-                    <option value="7">7 أشخاص</option>
-                    <option value="8">8 أشخاص</option>
-                    <option value="9">9 أشخاص</option>
-                    <option value="10">10 أشخاص</option>
-                    <option value="12">12 شخص</option>
-                    <option value="15">15 شخص</option>
-                    <option value="18">18 شخص</option>
-                    <option value="20" selected>20 شخص (الحد الأقصى)</option>
-                </select>
-                <div class="guests-hint">
-                    <i class="fas fa-info-circle"></i>
-                    <span>الحد الأقصى 20 شخص</span>
-                </div>
-            </div>
-            
-            <div class="form-field">
-                <label>ملاحظات (اختياري)</label>
-                <textarea id="notes" placeholder="أي طلبات خاصة..."></textarea>
-            </div>
-        </div>
-        
-        <!-- 4. الدفع -->
-        <div class="booking-block">
-            <div class="booking-block-title">
-                <div class="booking-block-title-icon"><i class="fas fa-credit-card"></i></div>
-                <span>الدفع</span>
-            </div>
-            
-            <div class="bank-app">
-                <h4><i class="fas fa-university"></i> بيانات التحويل</h4>
-                <div class="bank-app-row">
-                    <span>البنك:</span>
-                    <strong>بنك مسقط</strong>
-                </div>
-                <div class="bank-app-row">
-                    <span>رقم الحساب:</span>
-                    <strong>99591653</strong>
-                </div>
-                <div class="bank-app-row">
-                    <span>الاسم:</span>
-                    <strong>Samir Alowaisi</strong>
-                </div>
-            </div>
-            
-            <!-- تنبيه التأمين -->
-            <div class="insurance-note">
-                <i class="fas fa-shield-alt"></i>
-                <div>
-                    <strong>ملاحظة التأمين:</strong><br>
-                    يُدفع مبلغ <strong>20 ر.ع</strong> كتأمين مسترد <strong>مع العربون</strong>، ويُعاد كاملاً بعد الخروج والتأكد من نظافة المكان.
-                </div>
-            </div>
-            
-            <!-- اختيار العربون -->
-            <div class="form-field">
-                <label>اختر مبلغ العربون <span class="req">*</span></label>
-                <div class="deposit-hint">
-                    <i class="fas fa-info-circle"></i>
-                    <span>الحد الأدنى 10 ر.ع — التأمين (20 ر.ع) يُضاف منفصل ويُرد</span>
-                </div>
-                <div class="deposit-grid" id="depositGrid">
-                    <!-- يتم تعبئتها بالجافاسكربت -->
-                </div>
-            </div>
-            
-            <div class="form-field">
-                <label>ارفع إيصال التحويل <span class="req">*</span></label>
-                <div class="upload-app" id="uploadArea">
-                    <input type="file" id="receiptInput" accept="image/*">
-                    <div class="upload-app-icon"><i class="fas fa-cloud-upload-alt"></i></div>
-                    <h4>اضغط لاختيار صورة</h4>
-                    <p>PNG أو JPG - حد أقصى 5MB</p>
-                    <p style="margin-top: 8px; color: var(--primary-dark); font-weight: 700;">
-                        💰 مبلغ التحويل: <span id="transferAmount">0</span> ر.ع
-                    </p>
-                </div>
-                <div class="upload-preview-app" id="uploadPreview">
-                    <img id="previewImg" src="" alt="الإيصال">
-                </div>
-            </div>
-        </div>
-        
-        <!-- الملخص -->
-        <div class="summary-app">
-            <div class="summary-app-title">
-                <i class="fas fa-file-invoice"></i>
-                <span>ملخص الحجز</span>
-            </div>
-            
-            <div id="summaryContent">
-                <div class="summary-app-empty">
-                    <i class="fas fa-calendar-plus"></i>
-                    <p>اختر التاريخ ونوع الحجز لعرض الملخص</p>
-                </div>
-            </div>
-            
-            <button class="confirm-btn-app" id="confirmBooking" disabled type="button">
-                <i class="fas fa-check-circle"></i>
-                تأكيد الحجز
-            </button>
-            
-            <div class="secure-note-app">
-                <i class="fas fa-lock"></i>
-                <span>بياناتك محفوظة وآمنة</span>
-            </div>
-        </div>
-        
-    </div>
+<div style="max-width:600px;margin:0 auto;">
+
+<div class="booking-block">
+<div class="booking-block-title"><div class="booking-block-title-icon"><i class="fas fa-calendar-alt"></i></div><span>اختر التاريخ</span></div>
+<div class="calendar-app">
+<div class="calendar-app-header">
+<button class="calendar-app-nav" id="prevMonth" type="button"><i class="fas fa-chevron-right"></i></button>
+<div class="calendar-app-month" id="monthYear">...</div>
+<button class="calendar-app-nav" id="nextMonth" type="button"><i class="fas fa-chevron-left"></i></button>
+</div>
+<div class="calendar-app-weekdays">
+<div class="calendar-app-weekday">أحد</div><div class="calendar-app-weekday">اثن</div><div class="calendar-app-weekday">ثلا</div><div class="calendar-app-weekday">أرب</div><div class="calendar-app-weekday">خمي</div><div class="calendar-app-weekday">جمع</div><div class="calendar-app-weekday">سبت</div>
+</div>
+<div class="calendar-app-days" id="calendarDays"></div>
+<div class="calendar-app-legend">
+<div class="legend-dot"><div class="legend-dot-color" style="background:#fff;border:1px solid #E9ECEF;"></div><span>متاح</span></div>
+<div class="legend-dot"><div class="legend-dot-color" style="background:rgba(212,175,55,0.3);"></div><span>ويكند</span></div>
+<div class="legend-dot"><div class="legend-dot-color" style="background:#D4AF37;"></div><span>مختار</span></div>
+<div class="legend-dot"><div class="legend-dot-color" style="background:#FFE5E5;border:1px solid #DC3545;"></div><span>محجوز</span></div>
+</div>
+</div>
+</div>
+
+<div class="booking-block">
+<div class="booking-block-title"><div class="booking-block-title-icon"><i class="fas fa-clock"></i></div><span>نوع الحجز</span></div>
+<div class="booking-type-grid">
+<div class="booking-type-app" data-type="without_stay"><div class="booking-type-app-icon">☀️</div><div class="booking-type-app-name">بدون مبيت</div><div class="booking-type-app-desc">9ص - 10م</div></div>
+<div class="booking-type-app" data-type="with_stay"><div class="booking-type-app-icon">🌙</div><div class="booking-type-app-name">مع مبيت</div><div class="booking-type-app-desc">9ص - 7ص</div></div>
+<div class="booking-type-app" data-type="half_day"><div class="booking-type-app-icon">⏰</div><div class="booking-type-app-name">نصف يوم</div><div class="booking-type-app-desc">فترتان</div></div>
+</div>
+<div class="half-day-app" id="halfDayPeriods">
+<div class="half-day-option" data-period="morning"><strong>صباحية</strong><span>9ص - 3م</span></div>
+<div class="half-day-option" data-period="evening"><strong>مسائية</strong><span>4م - 10م</span></div>
+</div>
+</div>
+
+<div class="booking-block">
+<div class="booking-block-title"><div class="booking-block-title-icon"><i class="fas fa-user"></i></div><span>بياناتك</span></div>
+<div class="form-field"><label>الاسم الكامل <span class="req">*</span></label><input type="text" id="fullName" placeholder="أدخل اسمك الكامل"></div>
+<div class="form-field"><label>رقم الجوال <span class="req">*</span></label><input type="tel" id="phone" placeholder="9xxxxxxx" inputmode="numeric"></div>
+<div class="form-field">
+<label>عدد الضيوف <span class="req">*</span></label>
+<select id="guests">
+<option value="1">1 شخص</option><option value="2">2 أشخاص</option><option value="3">3 أشخاص</option><option value="4">4 أشخاص</option><option value="5">5 أشخاص</option><option value="6">6 أشخاص</option><option value="7">7 أشخاص</option><option value="8">8 أشخاص</option><option value="9">9 أشخاص</option><option value="10">10 أشخاص</option><option value="12">12 شخص</option><option value="15">15 شخص</option><option value="18">18 شخص</option><option value="20" selected>20 شخص (الحد الأقصى)</option>
+</select>
+<div class="guests-hint"><i class="fas fa-info-circle"></i><span>الحد الأقصى 20 شخص</span></div>
+</div>
+<div class="form-field"><label>ملاحظات (اختياري)</label><textarea id="notes" placeholder="أي طلبات خاصة..."></textarea></div>
+</div>
+
+<div class="booking-block">
+<div class="booking-block-title"><div class="booking-block-title-icon"><i class="fas fa-credit-card"></i></div><span>الدفع</span></div>
+<div class="bank-app">
+<h4><i class="fas fa-university"></i> بيانات التحويل</h4>
+<div class="bank-app-row"><span>البنك:</span><strong>بنك مسقط</strong></div>
+<div class="bank-app-row"><span>رقم الحساب:</span><strong>99591653</strong></div>
+<div class="bank-app-row"><span>الاسم:</span><strong>Samir Alowaisi</strong></div>
+</div>
+<div class="insurance-note"><i class="fas fa-shield-alt"></i><div><strong>ملاحظة التأمين:</strong><br>يُدفع مبلغ <strong>20 ر.ع</strong> كتأمين مسترد <strong>مع العربون</strong>، ويُعاد كاملاً بعد الخروج والتأكد من نظافة المكان.</div></div>
+<div class="form-field">
+<label>اختر مبلغ العربون <span class="req">*</span></label>
+<div class="deposit-hint"><i class="fas fa-info-circle"></i><span>الحد الأدنى 10 ر.ع — التأمين (20 ر.ع) يُضاف منفصل ويُرد</span></div>
+<div class="deposit-grid" id="depositGrid"></div>
+</div>
+<div class="form-field">
+<label>ارفع إيصال التحويل <span class="req">*</span></label>
+<div class="upload-app" id="uploadArea">
+<input type="file" id="receiptInput" accept="image/*">
+<div class="upload-app-icon"><i class="fas fa-cloud-upload-alt"></i></div>
+<h4>اضغط لاختيار صورة</h4>
+<p>PNG أو JPG - حد أقصى 5MB</p>
+<p style="margin-top:8px;color:var(--primary-dark);font-weight:700;">💰 مبلغ التحويل: <span id="transferAmount">0</span> ر.ع</p>
+</div>
+<div class="upload-preview-app" id="uploadPreview"><img id="previewImg" src="" alt="الإيصال"></div>
+</div>
+</div>
+
+<div class="summary-app">
+<div class="summary-app-title"><i class="fas fa-file-invoice"></i><span>ملخص الحجز</span></div>
+<div id="summaryContent"><div class="summary-app-empty"><i class="fas fa-calendar-plus"></i><p>اختر التاريخ ونوع الحجز لعرض الملخص</p></div></div>
+<button class="confirm-btn-app" id="confirmBooking" disabled type="button"><i class="fas fa-check-circle"></i> تأكيد الحجز</button>
+<div class="secure-note-app"><i class="fas fa-lock"></i><span>بياناتك محفوظة وآمنة</span></div>
+</div>
+
+</div>
 </section>
 
-<!-- FOOTER -->
 <footer class="app-footer">
-    <div class="app-footer-logo" id="footerLogo"></div>
-    <h3 class="app-footer-title">استراحة وهج</h3>
-    <p class="app-footer-slogan">خصوصية .. راحة .. ذكريات لا تُنسى</p>
-    <div class="app-footer-bottom">
-        <p>© <span class="current-year">2026</span> استراحة وهج</p>
-    </div>
+<div class="app-footer-logo" id="footerLogo"></div>
+<h3 class="app-footer-title">استراحة وهج</h3>
+<p class="app-footer-slogan">خصوصية .. راحة .. ذكريات لا تُنسى</p>
+<div class="app-footer-bottom"><p>© <span class="current-year">2026</span> استراحة وهج</p></div>
 </footer>
 
-<!-- BOTTOM NAV -->
 <nav class="bottom-nav">
-    <a href="index.html" class="bottom-nav-item">
-        <i class="fas fa-home"></i>
-        <span>الرئيسية</span>
-    </a>
-    <a href="details.html" class="bottom-nav-item">
-        <i class="fas fa-images"></i>
-        <span>المعرض</span>
-    </a>
-    <a href="booking.html" class="bottom-nav-item cta-item active">
-        <div class="cta-circle"><i class="fas fa-calendar-plus"></i></div>
-        <span>احجز</span>
-    </a>
-    <a href="policies.html" class="bottom-nav-item">
-        <i class="fas fa-file-contract"></i>
-        <span>السياسات</span>
-    </a>
-    <a href="https://wa.me/96895566332" target="_blank" class="bottom-nav-item">
-        <i class="fab fa-whatsapp"></i>
-        <span>تواصل</span>
-    </a>
+<a href="index.html" class="bottom-nav-item"><i class="fas fa-home"></i><span>الرئيسية</span></a>
+<a href="details.html" class="bottom-nav-item"><i class="fas fa-images"></i><span>المعرض</span></a>
+<a href="booking.html" class="bottom-nav-item cta-item active"><div class="cta-circle"><i class="fas fa-calendar-plus"></i></div><span>احجز</span></a>
+<a href="policies.html" class="bottom-nav-item"><i class="fas fa-file-contract"></i><span>السياسات</span></a>
+<a href="https://wa.me/96895566332" target="_blank" class="bottom-nav-item"><i class="fab fa-whatsapp"></i><span>تواصل</span></a>
 </nav>
 
-<a href="https://wa.me/96895566332?text=مرحباً" target="_blank" class="floating-whatsapp">
-    <i class="fab fa-whatsapp"></i>
-</a>
+<a href="https://wa.me/96895566332?text=مرحباً" target="_blank" class="floating-whatsapp"><i class="fab fa-whatsapp"></i></a>
 
-<!-- ═══ Scripts ═══ -->
+<script src="js/firebase.js"></script>
+<script src="js/firebase-helper.js"></script>
+
 <script>
 (function() {
     'use strict';
@@ -1004,6 +299,7 @@
     var receiptFile = null;
     var receiptDataUrl = null;
     var blockedDates = [];
+    var firebaseLoaded = false;
     
     function formatDate(date) {
         var d = new Date(date);
@@ -1022,7 +318,12 @@
         return new Date(date).toLocaleDateString('ar-OM', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
     }
     
+    // ═══════════════════════════════════════════════════════
+    // 🔥 تحميل الحجب من Firebase + localStorage
+    // ═══════════════════════════════════════════════════════
+    
     function loadBlocked() {
+        // 1. من localStorage (سريع)
         try {
             var localBlocked = JSON.parse(localStorage.getItem('wahaj_blocked_dates') || '[]');
             var localBookings = JSON.parse(localStorage.getItem('wahaj_bookings') || '[]');
@@ -1030,7 +331,50 @@
             var b2 = localBookings.filter(function(b){ return b.status === 'confirmed'; }).map(function(b){ return b.date; });
             blockedDates = b1.concat(b2);
         } catch(e) { blockedDates = []; }
+        
+        blockedDates = blockedDates.filter(function(v, i, self) { return self.indexOf(v) === i; });
+        console.log('📅 محلي:', blockedDates.length, 'تاريخ محجوب');
+        renderCalendar();
+        
+        // 2. من Firebase (يحدث لاحقاً)
+        if (window.WahajFirebase) {
+            window.WahajFirebase.waitForFirebase(function(ready) {
+                if (!ready) {
+                    console.log('ℹ️ Firebase غير متصل');
+                    return;
+                }
+                
+                firebaseLoaded = true;
+                
+                // الحجب
+                window.WahajFirebase.getAllBlockedDates().then(function(cloudBlocked) {
+                    var cloudDates = cloudBlocked.map(function(i) { return i.date || i; });
+                    blockedDates = blockedDates.concat(cloudDates);
+                    blockedDates = blockedDates.filter(function(v, i, self) { return self.indexOf(v) === i; });
+                    console.log('☁️ تم تحميل', cloudDates.length, 'تاريخ محجوب من السحابة');
+                    console.log('📅 الإجمالي:', blockedDates.length);
+                    renderCalendar();
+                });
+                
+                // الحجوزات المؤكدة (لحجب أيامها)
+                window.WahajFirebase.getAllBookings().then(function(cloudBookings) {
+                    var confirmedDates = cloudBookings
+                        .filter(function(b) { return b.status === 'confirmed'; })
+                        .map(function(b) { return b.date; });
+                    
+                    blockedDates = blockedDates.concat(confirmedDates);
+                    blockedDates = blockedDates.filter(function(v, i, self) { return self.indexOf(v) === i; });
+                    console.log('☁️ تم تحميل', confirmedDates.length, 'حجز مؤكد');
+                    renderCalendar();
+                });
+                
+            }, 5000);
+        }
     }
+    
+    // ═══════════════════════════════════════════════════════
+    // التقويم
+    // ═══════════════════════════════════════════════════════
     
     function renderCalendar() {
         var year = currentMonth.getFullYear();
@@ -1066,8 +410,12 @@
             if (isSameDay(date, new Date())) dayEl.classList.add('today');
             if (isWeekend) dayEl.classList.add('weekend');
             
+            // ⚠️ التحقق من الحجب والماضي
             if (isPast(date) || blockedDates.indexOf(dateStr) !== -1) {
                 dayEl.classList.add('disabled');
+                if (blockedDates.indexOf(dateStr) !== -1 && !isPast(date)) {
+                    dayEl.title = 'محجوز';
+                }
             } else {
                 (function(d, el) {
                     el.onclick = function(e) {
@@ -1090,14 +438,12 @@
         if (!grid) return;
         
         var html = '';
-        
         CONFIG.depositOptions.forEach(function(amount) {
             html += '<div class="deposit-option" data-deposit="' + amount + '">' +
                 '<span class="deposit-option-amount">' + amount + '</span>' +
                 '<span class="deposit-option-label">ر.ع</span>' +
             '</div>';
         });
-        
         html += '<div class="deposit-option full" data-deposit="full">' +
             '<span class="deposit-option-amount"><i class="fas fa-check-circle"></i> دفع كامل</span>' +
             '<span class="deposit-option-label">ادفع المبلغ كاملاً الآن</span>' +
@@ -1107,14 +453,10 @@
         
         grid.querySelectorAll('.deposit-option').forEach(function(el) {
             el.onclick = function() {
-                grid.querySelectorAll('.deposit-option').forEach(function(x) {
-                    x.classList.remove('selected');
-                });
+                grid.querySelectorAll('.deposit-option').forEach(function(x) { x.classList.remove('selected'); });
                 this.classList.add('selected');
-                
                 var val = this.dataset.deposit;
                 selectedDeposit = val === 'full' ? 'full' : parseInt(val);
-                
                 if (navigator.vibrate) navigator.vibrate(10);
                 updateSummary();
                 updateSteps();
@@ -1123,9 +465,7 @@
     }
     
     function selectDate(date, dayEl) {
-        document.querySelectorAll('.calendar-app-day.selected').forEach(function(el) {
-            el.classList.remove('selected');
-        });
+        document.querySelectorAll('.calendar-app-day.selected').forEach(function(el) { el.classList.remove('selected'); });
         selectedDate = date;
         if (dayEl) dayEl.classList.add('selected');
         if (navigator.vibrate) navigator.vibrate(10);
@@ -1177,7 +517,6 @@
                        selectedBookingType === 'with_stay' ? 'مع مبيت' : 'نصف يوم';
         var typeIcon = selectedBookingType === 'without_stay' ? '☀️' :
                        selectedBookingType === 'with_stay' ? '🌙' : '⏰';
-        
         var timeDesc = selectedBookingType === 'without_stay' ? '9ص - 10م' :
                        selectedBookingType === 'with_stay' ? '9ص - 7ص' :
                        (selectedHalfDayPeriod === 'morning' ? '9ص - 3م' : '4م - 10م');
@@ -1190,7 +529,7 @@
             '<div class="summary-app-row"><span>💰 الإجمالي:</span><strong>' + total + ' ر.ع</strong></div>';
         
         if (selectedDeposit === null) {
-            html += '<div class="warning-row"><i class="fas fa-exclamation-triangle"></i><span>اختر مبلغ العربون لعرض التفاصيل</span></div>';
+            html += '<div class="warning-row"><i class="fas fa-exclamation-triangle"></i><span>اختر مبلغ العربون</span></div>';
             content.innerHTML = html;
             if (confirmBtn) confirmBtn.disabled = true;
             if (transferEl) transferEl.textContent = '0';
@@ -1203,15 +542,13 @@
         var payNow = deposit + security;
         var isFullPayment = (selectedDeposit === 'full');
         
-        // ═══ قسم "يُدفع الآن" ═══
         html += '<div class="summary-section now">' +
-            '<div class="summary-section-title"><i class="fas fa-credit-card"></i> يُدفع الآن (تحويل بنكي)</div>' +
+            '<div class="summary-section-title"><i class="fas fa-credit-card"></i> يُدفع الآن</div>' +
             '<div class="summary-row"><span>💵 العربون' + (isFullPayment ? ' (دفع كامل)' : '') + ':</span><strong>' + deposit + ' ر.ع</strong></div>' +
-            '<div class="summary-row"><span>🛡️ التأمين (مسترد):</span><strong>' + security + ' ر.ع</strong></div>' +
-            '<div class="summary-row"><span>✅ الإجمالي المطلوب:</span><strong>' + payNow + ' ر.ع</strong></div>' +
+            '<div class="summary-row"><span>🛡️ التأمين:</span><strong>' + security + ' ر.ع</strong></div>' +
+            '<div class="summary-row"><span>✅ الإجمالي:</span><strong>' + payNow + ' ر.ع</strong></div>' +
         '</div>';
         
-        // ═══ قسم "يُدفع عند الدخول" ═══
         if (remaining > 0) {
             html += '<div class="summary-section later">' +
                 '<div class="summary-section-title"><i class="fas fa-calendar-check"></i> يُدفع عند الدخول</div>' +
@@ -1219,26 +556,24 @@
             '</div>';
         } else {
             html += '<div class="summary-section later">' +
-                '<div class="summary-section-title"><i class="fas fa-check-circle"></i> لا يوجد باقي</div>' +
-                '<div class="summary-row"><span>تم الدفع كاملاً ✅</span><strong>0 ر.ع</strong></div>' +
+                '<div class="summary-section-title"><i class="fas fa-check-circle"></i> تم الدفع كاملاً</div>' +
+                '<div class="summary-row"><span>لا يوجد باقي ✅</span><strong>0 ر.ع</strong></div>' +
             '</div>';
         }
         
-        // ═══ قسم "يُرد بعد الخروج" ═══
         html += '<div class="summary-section refund">' +
             '<div class="summary-section-title"><i class="fas fa-undo"></i> يُرد بعد الخروج</div>' +
-            '<div class="summary-row"><span>🛡️ التأمين المسترد:</span><strong>' + security + ' ر.ع</strong></div>' +
+            '<div class="summary-row"><span>🛡️ التأمين:</span><strong>' + security + ' ر.ع</strong></div>' +
         '</div>';
         
         content.innerHTML = html;
-        
         if (transferEl) transferEl.textContent = payNow;
         if (confirmBtn) confirmBtn.disabled = false;
     }
     
     function updateSteps() {
         var steps = document.querySelectorAll('.step-dot');
-        steps.forEach(function(s){ s.classList.remove('active'); });
+        steps.forEach(function(s) { s.classList.remove('active'); });
         if (selectedDate) steps[0] && steps[0].classList.add('active');
         if (selectedBookingType) steps[1] && steps[1].classList.add('active');
         if (document.getElementById('fullName').value.trim() && document.getElementById('phone').value.trim()) {
@@ -1255,10 +590,10 @@
         t.style.cssText = 'position:fixed;top:90px;left:50%;transform:translateX(-50%) translateY(-100px);background:' + (colors[type]||colors.info) + ';color:white;padding:14px 28px;border-radius:50px;font-weight:600;font-size:0.9rem;box-shadow:0 10px 30px rgba(0,0,0,0.2);z-index:10000;transition:transform 0.3s;font-family:Cairo,sans-serif;max-width:90%;text-align:center;';
         t.textContent = msg;
         document.body.appendChild(t);
-        requestAnimationFrame(function(){ t.style.transform = 'translateX(-50%) translateY(0)'; });
+        requestAnimationFrame(function() { t.style.transform = 'translateX(-50%) translateY(0)'; });
         setTimeout(function() {
             t.style.transform = 'translateX(-50%) translateY(-100px)';
-            setTimeout(function(){ t.remove(); }, 300);
+            setTimeout(function() { t.remove(); }, 300);
         }, 2500);
     }
     
@@ -1267,6 +602,12 @@
         if (!selectedBookingType) return showToast('⚠️ اختر نوع الحجز', 'warning');
         if (selectedBookingType === 'half_day' && !selectedHalfDayPeriod) return showToast('⚠️ اختر الفترة', 'warning');
         if (selectedDeposit === null) return showToast('⚠️ اختر مبلغ العربون', 'warning');
+        
+        // ⚠️ تحقق إضافي من الحجب
+        var dateStr = formatDate(selectedDate);
+        if (blockedDates.indexOf(dateStr) !== -1) {
+            return showToast('⚠️ التاريخ محجوز - اختر تاريخاً آخر', 'error');
+        }
         
         var fullName = document.getElementById('fullName').value.trim();
         if (!fullName) return showToast('⚠️ أدخل الاسم', 'warning');
@@ -1301,27 +642,15 @@
                        (selectedHalfDayPeriod === 'morning' ? '9ص-3م' : '4م-10م');
         
         var data = {
-            bookingId: bookingId,
-            date: formatDate(selectedDate),
-            dateFormatted: formatArabicDate(selectedDate),
-            dayType: dayTypeName,
-            bookingType: typeName,
-            bookingTypeDesc: timeDesc,
-            total: total,
-            deposit: deposit,
-            security: security,
-            remaining: remaining,
-            payNow: payNow,
-            isFullPayment: isFullPayment,
-            fullName: fullName,
-            phone: phone,
-            guests: guestsCount,
+            bookingId: bookingId, date: formatDate(selectedDate), dateFormatted: formatArabicDate(selectedDate),
+            dayType: dayTypeName, bookingType: typeName, bookingTypeDesc: timeDesc,
+            total: total, deposit: deposit, security: security, remaining: remaining, payNow: payNow,
+            isFullPayment: isFullPayment, fullName: fullName, phone: phone, guests: guestsCount,
             notes: document.getElementById('notes').value.trim() || '',
-            receiptFileName: receiptFile.name,
-            status: 'pending',
-            createdAt: new Date().toISOString()
+            receiptFileName: receiptFile.name, status: 'pending', createdAt: new Date().toISOString()
         };
         
+        // حفظ محلي
         try {
             var bookings = JSON.parse(localStorage.getItem('wahaj_bookings') || '[]');
             bookings.push(data);
@@ -1330,9 +659,9 @@
             if (receiptDataUrl) {
                 try { sessionStorage.setItem('receipt_' + bookingId, receiptDataUrl); } catch(e) {}
             }
-        } catch(e) { console.warn(e); }
+        } catch(e) {}
         
-        // ═══ رسالة واتساب واضحة ومقسمة ═══
+        // فتح واتساب فوراً
         var msg = '🌟 *طلب حجز جديد - استراحة وهج* 🌟\n\n' +
             '📋 *رقم:* ' + bookingId + '\n' +
             '📅 *التاريخ:* ' + data.dateFormatted + '\n' +
@@ -1340,36 +669,43 @@
             '👤 *الاسم:* ' + fullName + '\n' +
             '📞 *الجوال:* ' + phone + '\n' +
             '👥 *الضيوف:* ' + guestsCount + '\n\n' +
-            '━━━━━━━━━━━━━━━\n' +
-            '💰 *تفاصيل الدفع*\n' +
-            '━━━━━━━━━━━━━━━\n\n' +
-            '*سعر الإيجار:*\n' +
-            '• الإجمالي: ' + total + ' ر.ع\n\n' +
-            '💳 *يُدفع الآن (تحويل بنكي):*\n' +
+            '━━━━━━━━━━━━━━━\n💰 *تفاصيل الدفع*\n━━━━━━━━━━━━━━━\n\n' +
+            '💳 *يُدفع الآن:*\n' +
             '• العربون' + (isFullPayment ? ' (دفع كامل)' : '') + ': ' + deposit + ' ر.ع\n' +
-            '• التأمين المسترد: ' + security + ' ر.ع\n' +
-            '• *الإجمالي المطلوب: ' + payNow + ' ر.ع*\n\n' +
-            (remaining > 0 ? 
-                '💵 *يُدفع عند الدخول:*\n' +
-                '• الباقي: ' + remaining + ' ر.ع\n\n' 
-                : '✅ *لا يوجد باقي - تم الدفع كاملاً*\n\n'
-            ) +
-            '🛡️ *يُرد بعد الخروج:*\n' +
-            '• التأمين: ' + security + ' ر.ع\n\n' +
-            '━━━━━━━━━━━━━━━\n\n' +
-            '📎 سيتم إرسال صورة الإيصال الآن\n' +
-            '⏳ بانتظار التأكيد\n\n' +
-            '---\n' +
-            'استراحة وهج\n' +
-            'خصوصية .. راحة .. ذكريات لا تُنسى';
+            '• التأمين: ' + security + ' ر.ع\n' +
+            '• *الإجمالي: ' + payNow + ' ر.ع*\n\n' +
+            (remaining > 0 ? '💵 *يُدفع عند الدخول:* ' + remaining + ' ر.ع\n\n' : '✅ *تم الدفع كاملاً*\n\n') +
+            '🛡️ *يُرد بعد الخروج:* ' + security + ' ر.ع\n\n' +
+            '⏳ بانتظار التأكيد\n---\nاستراحة وهج';
         
         window.open('https://wa.me/' + CONFIG.whatsapp + '?text=' + encodeURIComponent(msg), '_blank');
-        
         showToast('✅ تم استلام الحجز!', 'success');
+        
+        // حفظ سحابي في الخلفية
+        saveToCloud(data);
         
         setTimeout(function() {
             window.location.href = 'confirmation.html?id=' + bookingId;
         }, 1200);
+    }
+    
+    function saveToCloud(data) {
+        if (!window.WahajFirebase) {
+            console.log('ℹ️ Firebase غير متاح');
+            return;
+        }
+        
+        window.WahajFirebase.waitForFirebase(function(ready) {
+            if (!ready) return;
+            
+            window.WahajFirebase.saveBooking(data).then(function(result) {
+                if (result.success) {
+                    console.log('☁️ تم الحفظ السحابي:', result.id);
+                } else {
+                    console.warn('⚠️ فشل السحابي:', result.error);
+                }
+            });
+        }, 3000);
     }
     
     function init() {
@@ -1378,7 +714,6 @@
         });
         
         loadBlocked();
-        renderCalendar();
         renderDepositOptions();
         
         document.getElementById('prevMonth').onclick = function() {
@@ -1392,7 +727,7 @@
         
         document.querySelectorAll('.booking-type-app').forEach(function(el) {
             el.onclick = function() {
-                document.querySelectorAll('.booking-type-app').forEach(function(x){ x.classList.remove('selected'); });
+                document.querySelectorAll('.booking-type-app').forEach(function(x) { x.classList.remove('selected'); });
                 this.classList.add('selected');
                 selectedBookingType = this.dataset.type;
                 if (navigator.vibrate) navigator.vibrate(10);
@@ -1403,7 +738,7 @@
                 } else {
                     hd.classList.remove('show');
                     selectedHalfDayPeriod = null;
-                    document.querySelectorAll('.half-day-option').forEach(function(x){ x.classList.remove('selected'); });
+                    document.querySelectorAll('.half-day-option').forEach(function(x) { x.classList.remove('selected'); });
                 }
                 updateSummary();
                 updateSteps();
@@ -1412,7 +747,7 @@
         
         document.querySelectorAll('.half-day-option').forEach(function(el) {
             el.onclick = function() {
-                document.querySelectorAll('.half-day-option').forEach(function(x){ x.classList.remove('selected'); });
+                document.querySelectorAll('.half-day-option').forEach(function(x) { x.classList.remove('selected'); });
                 this.classList.add('selected');
                 selectedHalfDayPeriod = this.dataset.period;
                 if (navigator.vibrate) navigator.vibrate(10);
@@ -1444,7 +779,21 @@
             document.getElementById(id).oninput = updateSteps;
         });
         
-        console.log('✅ صفحة الحجز جاهزة (رسالة واضحة)');
+        // تحديث الحجب من Firebase كل 30 ثانية
+        setInterval(function() {
+            if (window.WahajFirebase && firebaseLoaded) {
+                window.WahajFirebase.getAllBlockedDates().then(function(cloudBlocked) {
+                    var cloudDates = cloudBlocked.map(function(i) { return i.date || i; });
+                    var newBlocked = blockedDates.concat(cloudDates).filter(function(v, i, self) { return self.indexOf(v) === i; });
+                    if (newBlocked.length !== blockedDates.length) {
+                        blockedDates = newBlocked;
+                        renderCalendar();
+                    }
+                });
+            }
+        }, 30000);
+        
+        console.log('✅ صفحة الحجز جاهزة (Firebase)');
     }
     
     if (document.readyState === 'loading') {
@@ -1454,10 +803,6 @@
     }
 })();
 </script>
-
-<!-- ═══ Firebase ═══ -->
-<script src="js/firebase.js"></script>
-<script src="js/firebase-helper.js"></script>
 
 </body>
 </html>
