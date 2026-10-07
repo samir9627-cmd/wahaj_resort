@@ -2,99 +2,38 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <meta name="theme-color" content="#0A1F44">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     
     <title>استراحة وهج | Wahaj Resort - بركاء</title>
-    <meta name="description" content="استراحة وهج - استراحة عائلية فاخرة في ولاية بركاء. حوضان للسباحة، غرف نوم، صالات، مطابخ، منطقة أطفال. احجز الآن!">
+    <meta name="description" content="استراحة وهج - استراحة عائلية فاخرة في ولاية بركاء. حوضان للسباحة، غرف نوم، صالات، مطابخ، منطقة أطفال.">
     
-    <!-- Open Graph -->
-    <meta property="og:title" content="استراحة وهج | Wahaj Resort">
-    <meta property="og:description" content="خصوصية .. راحة .. ذكريات لا تُنسى">
-    <meta property="og:type" content="website">
-    
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
-    
-    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Styles -->
     <link rel="stylesheet" href="css/app.css">
     
-    <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='45' fill='%230A1F44' stroke='%23D4AF37' stroke-width='3'/><text x='50' y='65' font-size='50' text-anchor='middle' fill='%23D4AF37' font-family='serif'>و</text></svg>">
+    <link rel="icon" type="image/jpeg" href="images/logo.jpeg">
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!-- 🎬 SPLASH SCREEN -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- SPLASH SCREEN -->
 <div class="splash-screen">
-    <svg class="splash-logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <!-- الدائرة الخارجية -->
-        <circle cx="100" cy="100" r="90" fill="none" stroke="#D4AF37" stroke-width="3"/>
-        <circle cx="100" cy="100" r="85" fill="none" stroke="#D4AF37" stroke-width="1" opacity="0.5"/>
-        
-        <!-- الزهرة (Sunflower) -->
-        <g transform="translate(100, 85)">
-            <!-- البتلات -->
-            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37"/>
-            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37" transform="rotate(45)"/>
-            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37" transform="rotate(90)"/>
-            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37" transform="rotate(135)"/>
-            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37" transform="rotate(180)"/>
-            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37" transform="rotate(225)"/>
-            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37" transform="rotate(270)"/>
-            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37" transform="rotate(315)"/>
-            
-            <!-- المركز -->
-            <circle cx="0" cy="0" r="14" fill="#A88B2C"/>
-            <circle cx="0" cy="0" r="8" fill="#0A1F44"/>
-        </g>
-        
-        <!-- الساق -->
-        <path d="M 100 105 Q 95 130 100 150" stroke="#D4AF37" stroke-width="3" fill="none"/>
-        <ellipse cx="92" cy="135" rx="8" ry="4" fill="#D4AF37" transform="rotate(-30 92 135)"/>
-        
-        <!-- النص -->
-        <text x="100" y="175" font-size="16" text-anchor="middle" fill="#D4AF37" font-family="Amiri, serif" font-weight="bold">استراحة وهج</text>
-    </svg>
-    
+    <img src="images/logo.jpeg" alt="استراحة وهج" class="splash-logo">
     <h1 class="splash-title">وهج</h1>
     <p class="splash-subtitle">خصوصية .. راحة .. ذكريات لا تُنسى</p>
-    
-    <div class="splash-loader">
-        <div class="splash-loader-bar"></div>
-    </div>
+    <div class="splash-loader"><div class="splash-loader-bar"></div></div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!-- 🧭 HEADER -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- HEADER -->
 <header class="app-header">
     <div class="app-header-logo">
-        <svg class="app-header-logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="50" cy="50" r="45" fill="none" stroke="#D4AF37" stroke-width="2"/>
-            <g transform="translate(50, 42)">
-                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37"/>
-                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(45)"/>
-                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(90)"/>
-                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(135)"/>
-                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(180)"/>
-                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(225)"/>
-                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(270)"/>
-                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(315)"/>
-                <circle cx="0" cy="0" r="7" fill="#A88B2C"/>
-            </g>
-        </svg>
+        <img src="images/logo.jpeg" alt="وهج" class="app-header-logo-svg">
         <span class="app-header-title">استراحة <span>وهج</span></span>
     </div>
-    
     <a href="https://wa.me/96895566332?text=مرحباً،%20أرغب%20في%20الاستفسار" 
        target="_blank" 
        class="app-header-action" 
@@ -103,9 +42,7 @@
     </a>
 </header>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!-- 🌟 HERO SECTION -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- HERO -->
 <section class="app-hero">
     <div class="hero-content">
         <div class="hero-badge-app">
@@ -144,9 +81,7 @@
     </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!-- ✨ المزايا -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- المزايا -->
 <section class="app-section">
     <div class="app-section-header">
         <h2 class="app-section-title">لماذا وهج؟</h2>
@@ -154,42 +89,32 @@
     
     <div class="app-cards-grid">
         <div class="app-card reveal">
-            <div class="app-card-icon">
-                <i class="fas fa-swimming-pool"></i>
-            </div>
+            <div class="app-card-icon"><i class="fas fa-swimming-pool"></i></div>
             <h3 class="app-card-title">حوضان للسباحة</h3>
             <p class="app-card-desc">حوض للرجال وحوض مغطى للنساء والأطفال</p>
         </div>
         
         <div class="app-card reveal reveal-delay-1">
-            <div class="app-card-icon">
-                <i class="fas fa-bed"></i>
-            </div>
+            <div class="app-card-icon"><i class="fas fa-bed"></i></div>
             <h3 class="app-card-title">غرفتان فاخرتان</h3>
             <p class="app-card-desc">غرف نوم مكيفة ومفروشة بأثاث عصري</p>
         </div>
         
         <div class="app-card reveal reveal-delay-2">
-            <div class="app-card-icon">
-                <i class="fas fa-utensils"></i>
-            </div>
+            <div class="app-card-icon"><i class="fas fa-utensils"></i></div>
             <h3 class="app-card-title">مطبخان مجهزان</h3>
             <p class="app-card-desc">مطبخ داخلي ومطبخ خارجي كامل</p>
         </div>
         
         <div class="app-card reveal reveal-delay-3">
-            <div class="app-card-icon">
-                <i class="fas fa-gamepad"></i>
-            </div>
+            <div class="app-card-icon"><i class="fas fa-gamepad"></i></div>
             <h3 class="app-card-title">ترفيه متكامل</h3>
             <p class="app-card-desc">بلياردو، تنس طاولة، وألعاب أطفال</p>
         </div>
     </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!-- 💰 الأسعار -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- الأسعار -->
 <section class="app-section">
     <div class="app-section-header">
         <h2 class="app-section-title">الأسعار</h2>
@@ -199,12 +124,9 @@
     </div>
     
     <div class="pricing-cards">
-        <!-- أيام الأسبوع -->
         <div class="pricing-card-app reveal">
             <div class="pricing-card-header-app">
-                <div class="pricing-card-icon">
-                    <i class="fas fa-sun"></i>
-                </div>
+                <div class="pricing-card-icon"><i class="fas fa-sun"></i></div>
                 <div>
                     <h3 class="pricing-card-title">أيام الأسبوع</h3>
                     <p class="pricing-card-subtitle">الأحد - الأربعاء</p>
@@ -213,32 +135,23 @@
             
             <div class="pricing-rows">
                 <div class="pricing-row">
-                    <span class="pricing-row-label">
-                        <i class="fas fa-sun"></i> بدون مبيت
-                    </span>
+                    <span class="pricing-row-label"><i class="fas fa-sun"></i> بدون مبيت</span>
                     <span class="pricing-row-value">40 <small>ر.ع</small></span>
                 </div>
                 <div class="pricing-row">
-                    <span class="pricing-row-label">
-                        <i class="fas fa-moon"></i> مع مبيت
-                    </span>
+                    <span class="pricing-row-label"><i class="fas fa-moon"></i> مع مبيت</span>
                     <span class="pricing-row-value">50 <small>ر.ع</small></span>
                 </div>
                 <div class="pricing-row">
-                    <span class="pricing-row-label">
-                        <i class="fas fa-clock"></i> نصف يوم
-                    </span>
+                    <span class="pricing-row-label"><i class="fas fa-clock"></i> نصف يوم</span>
                     <span class="pricing-row-value">25 <small>ر.ع</small></span>
                 </div>
             </div>
         </div>
         
-        <!-- الويكند -->
         <div class="pricing-card-app featured reveal reveal-delay-1">
             <div class="pricing-card-header-app">
-                <div class="pricing-card-icon">
-                    <i class="fas fa-star"></i>
-                </div>
+                <div class="pricing-card-icon"><i class="fas fa-star"></i></div>
                 <div>
                     <h3 class="pricing-card-title">الويكند</h3>
                     <p class="pricing-card-subtitle">الخميس - السبت</p>
@@ -247,21 +160,15 @@
             
             <div class="pricing-rows">
                 <div class="pricing-row">
-                    <span class="pricing-row-label">
-                        <i class="fas fa-sun"></i> بدون مبيت
-                    </span>
+                    <span class="pricing-row-label"><i class="fas fa-sun"></i> بدون مبيت</span>
                     <span class="pricing-row-value">50 <small>ر.ع</small></span>
                 </div>
                 <div class="pricing-row">
-                    <span class="pricing-row-label">
-                        <i class="fas fa-moon"></i> مع مبيت
-                    </span>
+                    <span class="pricing-row-label"><i class="fas fa-moon"></i> مع مبيت</span>
                     <span class="pricing-row-value">65 <small>ر.ع</small></span>
                 </div>
                 <div class="pricing-row">
-                    <span class="pricing-row-label">
-                        <i class="fas fa-clock"></i> نصف يوم
-                    </span>
+                    <span class="pricing-row-label"><i class="fas fa-clock"></i> نصف يوم</span>
                     <span class="pricing-row-value">30 <small>ر.ع</small></span>
                 </div>
             </div>
@@ -269,9 +176,7 @@
     </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!-- 📸 المعرض -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- المعرض -->
 <section class="app-section">
     <div class="app-section-header">
         <h2 class="app-section-title">جولة في الاستراحة</h2>
@@ -282,9 +187,7 @@
     
     <div class="gallery-scroll">
         <div class="gallery-scroll-item">
-            <img src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=600" 
-                 alt="المسبح" 
-                 loading="lazy">
+            <img src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=600" alt="المسبح" loading="lazy">
             <div class="gallery-scroll-label">
                 <span>المسبح</span>
                 <i class="fas fa-swimming-pool"></i>
@@ -292,9 +195,7 @@
         </div>
         
         <div class="gallery-scroll-item">
-            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600" 
-                 alt="المجلس" 
-                 loading="lazy">
+            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600" alt="المجلس" loading="lazy">
             <div class="gallery-scroll-label">
                 <span>المجلس</span>
                 <i class="fas fa-couch"></i>
@@ -302,9 +203,7 @@
         </div>
         
         <div class="gallery-scroll-item">
-            <img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=600" 
-                 alt="غرفة النوم" 
-                 loading="lazy">
+            <img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=600" alt="غرفة النوم" loading="lazy">
             <div class="gallery-scroll-label">
                 <span>غرفة النوم</span>
                 <i class="fas fa-bed"></i>
@@ -312,9 +211,7 @@
         </div>
         
         <div class="gallery-scroll-item">
-            <img src="https://images.unsplash.com/photo-1556909212-d5b604d0c90d?w=600" 
-                 alt="المطبخ" 
-                 loading="lazy">
+            <img src="https://images.unsplash.com/photo-1556909212-d5b604d0c90d?w=600" alt="المطبخ" loading="lazy">
             <div class="gallery-scroll-label">
                 <span>المطبخ</span>
                 <i class="fas fa-utensils"></i>
@@ -322,9 +219,7 @@
         </div>
         
         <div class="gallery-scroll-item">
-            <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=600" 
-                 alt="منطقة الأطفال" 
-                 loading="lazy">
+            <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=600" alt="منطقة الأطفال" loading="lazy">
             <div class="gallery-scroll-label">
                 <span>منطقة الأطفال</span>
                 <i class="fas fa-child"></i>
@@ -333,9 +228,7 @@
     </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!-- ⭐ آراء العملاء -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- آراء العملاء -->
 <section class="app-section">
     <div class="app-section-header">
         <h2 class="app-section-title">ماذا قالوا عنّا؟</h2>
@@ -344,9 +237,7 @@
     <div class="testimonials-scroll">
         <div class="testimonial-card-app">
             <div class="testimonial-stars">★★★★★</div>
-            <p class="testimonial-text">
-                مكان رائع ونظيف، والأطفال استمتعوا كثير بالمسبح المغطى. سنعود قريباً بإذن الله.
-            </p>
+            <p class="testimonial-text">مكان رائع ونظيف، والأطفال استمتعوا كثير بالمسبح المغطى. سنعود قريباً بإذن الله.</p>
             <div class="testimonial-author-app">
                 <div class="testimonial-avatar">أ</div>
                 <div class="testimonial-info">
@@ -358,9 +249,7 @@
         
         <div class="testimonial-card-app">
             <div class="testimonial-stars">★★★★★</div>
-            <p class="testimonial-text">
-                خصوصية تامة ومرافق ممتازة. المسبح المغطى للنساء فكرة رائعة جداً.
-            </p>
+            <p class="testimonial-text">خصوصية تامة ومرافق ممتازة. المسبح المغطى للنساء فكرة رائعة جداً.</p>
             <div class="testimonial-author-app">
                 <div class="testimonial-avatar">خ</div>
                 <div class="testimonial-info">
@@ -372,9 +261,7 @@
         
         <div class="testimonial-card-app">
             <div class="testimonial-stars">★★★★★</div>
-            <p class="testimonial-text">
-                التعامل راقي والأسعار مناسبة. أنصح الجميع بتجربتها.
-            </p>
+            <p class="testimonial-text">التعامل راقي والأسعار مناسبة. أنصح الجميع بتجربتها.</p>
             <div class="testimonial-author-app">
                 <div class="testimonial-avatar">س</div>
                 <div class="testimonial-info">
@@ -386,68 +273,41 @@
     </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!-- 📞 التواصل -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- التواصل -->
 <section class="contact-app">
     <h2 class="contact-app-title">جاهز للحجز؟</h2>
     <p class="contact-app-subtitle">تواصل معنا مباشرة أو احجز عبر الموقع</p>
     
     <div class="contact-app-grid">
         <a href="https://wa.me/96895566332" target="_blank" class="contact-app-item">
-            <div class="contact-app-icon whatsapp">
-                <i class="fab fa-whatsapp"></i>
-            </div>
+            <div class="contact-app-icon whatsapp"><i class="fab fa-whatsapp"></i></div>
             <span class="contact-app-label">واتساب</span>
         </a>
         
         <a href="https://instagram.com/Wahaj_Resort" target="_blank" class="contact-app-item">
-            <div class="contact-app-icon instagram">
-                <i class="fab fa-instagram"></i>
-            </div>
+            <div class="contact-app-icon instagram"><i class="fab fa-instagram"></i></div>
             <span class="contact-app-label">انستقرام</span>
         </a>
         
         <a href="booking.html" class="contact-app-item">
-            <div class="contact-app-icon location">
-                <i class="fas fa-calendar-check"></i>
-            </div>
+            <div class="contact-app-icon location"><i class="fas fa-calendar-check"></i></div>
             <span class="contact-app-label">احجز</span>
         </a>
     </div>
 </section>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!-- 📜 FOOTER -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- FOOTER -->
 <footer class="app-footer">
-    <svg class="app-footer-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="50" cy="50" r="45" fill="none" stroke="#D4AF37" stroke-width="2"/>
-        <g transform="translate(50, 42)">
-            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37"/>
-            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(45)"/>
-            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(90)"/>
-            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(135)"/>
-            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(180)"/>
-            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(225)"/>
-            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(270)"/>
-            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(315)"/>
-            <circle cx="0" cy="0" r="7" fill="#A88B2C"/>
-        </g>
-    </svg>
-    
+    <img src="images/logo.jpeg" alt="وهج" class="app-footer-logo">
     <h3 class="app-footer-title">استراحة وهج</h3>
     <p class="app-footer-slogan">خصوصية .. راحة .. ذكريات لا تُنسى</p>
-    
     <div class="app-footer-bottom">
         <p>© <span class="current-year">2026</span> استراحة وهج - جميع الحقوق محفوظة</p>
         <p style="margin-top: 5px;">صُنع بـ ❤️ في سلطنة عمان 🇴🇲</p>
     </div>
 </footer>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!-- 🔥 STICKY BOOKING -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- STICKY BOOKING -->
 <a href="booking.html" class="sticky-booking">
     <div class="sticky-booking-info">
         <span class="sticky-booking-label">احجز الآن</span>
@@ -459,53 +319,39 @@
     </div>
 </a>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!-- 📱 BOTTOM NAVIGATION -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- BOTTOM NAV -->
 <nav class="bottom-nav">
     <a href="index.html" class="bottom-nav-item active">
         <i class="fas fa-home"></i>
         <span>الرئيسية</span>
     </a>
-    
     <a href="details.html" class="bottom-nav-item">
         <i class="fas fa-images"></i>
         <span>المعرض</span>
     </a>
-    
     <a href="booking.html" class="bottom-nav-item cta-item">
-        <div class="cta-circle">
-            <i class="fas fa-calendar-plus"></i>
-        </div>
+        <div class="cta-circle"><i class="fas fa-calendar-plus"></i></div>
         <span>احجز</span>
     </a>
-    
     <a href="policies.html" class="bottom-nav-item">
         <i class="fas fa-file-contract"></i>
         <span>السياسات</span>
     </a>
-    
     <a href="https://wa.me/96895566332" target="_blank" class="bottom-nav-item">
         <i class="fab fa-whatsapp"></i>
         <span>تواصل</span>
     </a>
 </nav>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!-- 💬 Floating WhatsApp -->
-<!-- ═══════════════════════════════════════════════════════ -->
-<a href="https://wa.me/96895566332?text=مرحباً،%20أرغب%20في%20الاستفسار%20عن%20حجز" 
-   target="_blank" 
-   class="floating-whatsapp"
-   aria-label="واتساب">
+<!-- Floating WhatsApp -->
+<a href="https://wa.me/96895566332?text=مرحباً" target="_blank" class="floating-whatsapp">
     <i class="fab fa-whatsapp"></i>
 </a>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!-- 📜 Scripts -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- Scripts -->
 <script src="js/config.js"></script>
 <script src="js/app.js"></script>
+<script src="js/brand.js"></script>
 
 </body>
 </html>
