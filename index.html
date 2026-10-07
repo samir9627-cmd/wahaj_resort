@@ -6,8 +6,7 @@
     <meta name="theme-color" content="#0A1F44">
     <meta name="apple-mobile-web-app-capable" content="yes">
     
-    <title>استراحة وهج | Wahaj Resort - بركاء</title>
-    <meta name="description" content="استراحة وهج - استراحة عائلية فاخرة في ولاية بركاء. حوضان للسباحة، غرف نوم، صالات، مطابخ، منطقة أطفال.">
+    <title>استراحة وهج | Wahaj Resort</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,29 +14,72 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <link rel="stylesheet" href="css/app.css">
+    <link rel="icon" type="image/png" href="images/logo.png">
     
-    <link rel="icon" type="image/jpeg" href="images/logo.jpeg">
+    <!-- ⚡ كود إخفاء Splash فوراً - داخل الـ head -->
+    <style>
+        .splash-screen { 
+            transition: opacity 0.6s ease, visibility 0.6s ease; 
+        }
+        .splash-screen.hide { 
+            opacity: 0 !important; 
+            visibility: hidden !important; 
+            pointer-events: none !important;
+        }
+    </style>
 </head>
 <body>
 
 <!-- SPLASH SCREEN -->
-<div class="splash-screen">
-    <img src="images/logo.jpeg" alt="استراحة وهج" class="splash-logo">
+<div class="splash-screen" id="splashScreen">
+    <img src="images/logo.png" alt="وهج" class="splash-logo" onerror="this.style.display='none'">
     <h1 class="splash-title">وهج</h1>
     <p class="splash-subtitle">خصوصية .. راحة .. ذكريات لا تُنسى</p>
     <div class="splash-loader"><div class="splash-loader-bar"></div></div>
 </div>
 
+<!-- ⚡ كود إخفاء Splash - مضمون 100% -->
+<script>
+(function() {
+    function hideSplash() {
+        var splash = document.getElementById('splashScreen');
+        if (splash) {
+            splash.classList.add('hide');
+            setTimeout(function() {
+                splash.style.display = 'none';
+            }, 700);
+        }
+    }
+    
+    // 3 محاولات لضمان الإخفاء
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(hideSplash, 1500);
+        });
+    } else {
+        setTimeout(hideSplash, 1500);
+    }
+    
+    // احتياطي 1: عند التحميل الكامل
+    window.addEventListener('load', function() {
+        setTimeout(hideSplash, 800);
+    });
+    
+    // احتياطي 2: بعد 3 ثواني
+    setTimeout(hideSplash, 3000);
+    
+    // احتياطي 3: بعد 5 ثواني
+    setTimeout(hideSplash, 5000);
+})();
+</script>
+
 <!-- HEADER -->
 <header class="app-header">
     <div class="app-header-logo">
-        <img src="images/logo.jpeg" alt="وهج" class="app-header-logo-svg">
+        <img src="images/logo.png" alt="وهج" class="app-header-logo-svg" onerror="this.style.display='none'">
         <span class="app-header-title">استراحة <span>وهج</span></span>
     </div>
-    <a href="https://wa.me/96895566332?text=مرحباً،%20أرغب%20في%20الاستفسار" 
-       target="_blank" 
-       class="app-header-action" 
-       aria-label="واتساب">
+    <a href="https://wa.me/96895566332" target="_blank" class="app-header-action" aria-label="واتساب">
         <i class="fab fa-whatsapp"></i>
     </a>
 </header>
@@ -56,7 +98,7 @@
         
         <p class="hero-subtitle-app">
             خصوصية .. راحة .. ذكريات لا تُنسى<br>
-            استمتع بأجواء عائلية فاخرة مع كل المرافق
+            استمتع بأجواء عائلية فاخرة
         </p>
         
         <a href="booking.html" class="hero-cta-app">
@@ -71,11 +113,11 @@
             </div>
             <div class="hero-stat">
                 <span class="hero-stat-value">4.9</span>
-                <span class="hero-stat-label">تقييم العملاء</span>
+                <span class="hero-stat-label">تقييم</span>
             </div>
             <div class="hero-stat">
                 <span class="hero-stat-value">24/7</span>
-                <span class="hero-stat-label">خدمة العملاء</span>
+                <span class="hero-stat-label">خدمة</span>
             </div>
         </div>
     </div>
@@ -97,19 +139,19 @@
         <div class="app-card reveal reveal-delay-1">
             <div class="app-card-icon"><i class="fas fa-bed"></i></div>
             <h3 class="app-card-title">غرفتان فاخرتان</h3>
-            <p class="app-card-desc">غرف نوم مكيفة ومفروشة بأثاث عصري</p>
+            <p class="app-card-desc">غرف نوم مكيفة ومفروشة</p>
         </div>
         
         <div class="app-card reveal reveal-delay-2">
             <div class="app-card-icon"><i class="fas fa-utensils"></i></div>
-            <h3 class="app-card-title">مطبخان مجهزان</h3>
-            <p class="app-card-desc">مطبخ داخلي ومطبخ خارجي كامل</p>
+            <h3 class="app-card-title">مطبخان</h3>
+            <p class="app-card-desc">مطبخ داخلي ومطبخ خارجي</p>
         </div>
         
         <div class="app-card reveal reveal-delay-3">
             <div class="app-card-icon"><i class="fas fa-gamepad"></i></div>
             <h3 class="app-card-title">ترفيه متكامل</h3>
-            <p class="app-card-desc">بلياردو، تنس طاولة، وألعاب أطفال</p>
+            <p class="app-card-desc">بلياردو، تنس طاولة، ألعاب أطفال</p>
         </div>
     </div>
 </section>
@@ -176,107 +218,10 @@
     </div>
 </section>
 
-<!-- المعرض -->
-<section class="app-section">
-    <div class="app-section-header">
-        <h2 class="app-section-title">جولة في الاستراحة</h2>
-        <a href="details.html" class="app-section-more">
-            الكل <i class="fas fa-arrow-left"></i>
-        </a>
-    </div>
-    
-    <div class="gallery-scroll">
-        <div class="gallery-scroll-item">
-            <img src="https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=600" alt="المسبح" loading="lazy">
-            <div class="gallery-scroll-label">
-                <span>المسبح</span>
-                <i class="fas fa-swimming-pool"></i>
-            </div>
-        </div>
-        
-        <div class="gallery-scroll-item">
-            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600" alt="المجلس" loading="lazy">
-            <div class="gallery-scroll-label">
-                <span>المجلس</span>
-                <i class="fas fa-couch"></i>
-            </div>
-        </div>
-        
-        <div class="gallery-scroll-item">
-            <img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?w=600" alt="غرفة النوم" loading="lazy">
-            <div class="gallery-scroll-label">
-                <span>غرفة النوم</span>
-                <i class="fas fa-bed"></i>
-            </div>
-        </div>
-        
-        <div class="gallery-scroll-item">
-            <img src="https://images.unsplash.com/photo-1556909212-d5b604d0c90d?w=600" alt="المطبخ" loading="lazy">
-            <div class="gallery-scroll-label">
-                <span>المطبخ</span>
-                <i class="fas fa-utensils"></i>
-            </div>
-        </div>
-        
-        <div class="gallery-scroll-item">
-            <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=600" alt="منطقة الأطفال" loading="lazy">
-            <div class="gallery-scroll-label">
-                <span>منطقة الأطفال</span>
-                <i class="fas fa-child"></i>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- آراء العملاء -->
-<section class="app-section">
-    <div class="app-section-header">
-        <h2 class="app-section-title">ماذا قالوا عنّا؟</h2>
-    </div>
-    
-    <div class="testimonials-scroll">
-        <div class="testimonial-card-app">
-            <div class="testimonial-stars">★★★★★</div>
-            <p class="testimonial-text">مكان رائع ونظيف، والأطفال استمتعوا كثير بالمسبح المغطى. سنعود قريباً بإذن الله.</p>
-            <div class="testimonial-author-app">
-                <div class="testimonial-avatar">أ</div>
-                <div class="testimonial-info">
-                    <strong>أبو محمد</strong>
-                    <span>مسقط</span>
-                </div>
-            </div>
-        </div>
-        
-        <div class="testimonial-card-app">
-            <div class="testimonial-stars">★★★★★</div>
-            <p class="testimonial-text">خصوصية تامة ومرافق ممتازة. المسبح المغطى للنساء فكرة رائعة جداً.</p>
-            <div class="testimonial-author-app">
-                <div class="testimonial-avatar">خ</div>
-                <div class="testimonial-info">
-                    <strong>أم خالد</strong>
-                    <span>السيب</span>
-                </div>
-            </div>
-        </div>
-        
-        <div class="testimonial-card-app">
-            <div class="testimonial-stars">★★★★★</div>
-            <p class="testimonial-text">التعامل راقي والأسعار مناسبة. أنصح الجميع بتجربتها.</p>
-            <div class="testimonial-author-app">
-                <div class="testimonial-avatar">س</div>
-                <div class="testimonial-info">
-                    <strong>أبو سعيد</strong>
-                    <span>بركاء</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
 <!-- التواصل -->
 <section class="contact-app">
     <h2 class="contact-app-title">جاهز للحجز؟</h2>
-    <p class="contact-app-subtitle">تواصل معنا مباشرة أو احجز عبر الموقع</p>
+    <p class="contact-app-subtitle">تواصل معنا مباشرة</p>
     
     <div class="contact-app-grid">
         <a href="https://wa.me/96895566332" target="_blank" class="contact-app-item">
@@ -298,12 +243,11 @@
 
 <!-- FOOTER -->
 <footer class="app-footer">
-    <img src="images/logo.jpeg" alt="وهج" class="app-footer-logo">
+    <img src="images/logo.png" alt="وهج" class="app-footer-logo" onerror="this.style.display='none'">
     <h3 class="app-footer-title">استراحة وهج</h3>
     <p class="app-footer-slogan">خصوصية .. راحة .. ذكريات لا تُنسى</p>
     <div class="app-footer-bottom">
-        <p>© <span class="current-year">2026</span> استراحة وهج - جميع الحقوق محفوظة</p>
-        <p style="margin-top: 5px;">صُنع بـ ❤️ في سلطنة عمان 🇴🇲</p>
+        <p>© <span class="current-year">2026</span> استراحة وهج</p>
     </div>
 </footer>
 
@@ -343,15 +287,67 @@
     </a>
 </nav>
 
-<!-- Floating WhatsApp -->
-<a href="https://wa.me/96895566332?text=مرحباً" target="_blank" class="floating-whatsapp">
+<a href="https://wa.me/96895566332" target="_blank" class="floating-whatsapp">
     <i class="fab fa-whatsapp"></i>
 </a>
 
-<!-- Scripts -->
-<script src="js/config.js"></script>
-<script src="js/app.js"></script>
-<script src="js/brand.js"></script>
+<!-- ⚡ سكربتات مضمنة (لا نحتاج ملفات خارجية) -->
+<script>
+// Footer Year
+document.addEventListener('DOMContentLoaded', function() {
+    var year = new Date().getFullYear();
+    document.querySelectorAll('.current-year').forEach(function(el) {
+        el.textContent = year;
+    });
+    
+    // Header Scroll
+    var header = document.querySelector('.app-header');
+    if (header) {
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        }, { passive: true });
+    }
+    
+    // Scroll Reveal
+    var reveals = document.querySelectorAll('.reveal');
+    if (reveals.length && 'IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+        
+        reveals.forEach(function(el) { observer.observe(el); });
+    } else {
+        reveals.forEach(function(el) { el.classList.add('visible'); });
+    }
+    
+    // Sticky Booking
+    var sticky = document.querySelector('.sticky-booking');
+    if (sticky) {
+        window.addEventListener('scroll', function() {
+            var cs = window.scrollY;
+            var wh = window.innerHeight;
+            var dh = document.documentElement.scrollHeight;
+            
+            if (cs > 300 && (cs + wh) < dh - 200) {
+                sticky.classList.add('show');
+            } else {
+                sticky.classList.remove('show');
+            }
+        }, { passive: true });
+    }
+    
+    console.log('✅ index.html ready');
+});
+</script>
 
 </body>
 </html>
