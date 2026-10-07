@@ -1,12 +1,11 @@
 /* ═══════════════════════════════════════════════════════
    استراحة وهج - Firebase Helper
-   دوال التعامل مع Firestore (CRUD)
+   دوال التعامل مع Firestore + Storage
    ═══════════════════════════════════════════════════════ */
 
 (function() {
     'use strict';
     
-    // ─── Collections ───
     var COL = {
         bookings: 'bookings',
         blockedDates: 'blockedDates',
@@ -32,7 +31,7 @@
     }
     
     // ═══════════════════════════════════════════════════════
-    // 📅 BOOKINGS - الحجوزات
+    // 📅 BOOKINGS
     // ═══════════════════════════════════════════════════════
     
     function saveBooking(bookingData) {
@@ -43,18 +42,85 @@
                     return;
                 }
                 
-                window.db.collection(COL.bookings).doc(bookingData.bookingId).set(
-                    Object.assign({}, bookingData, {
-                        serverCreatedAt: firebase.firestore.FieldValue.serverTimestamp()
-                    })
-                ).then(function() {
-                    console.log('✅ حجز محفوظ سحابياً:', bookingData.bookingId);
-                    resolve({ success: true, id: bookingData.bookingId });
+                // محاولة حفظ الإيصال في Storage إذا حجمه صغير
+                var saveWithReceipt = function(receiptURL) {
+                    var dataToSave = Object.assign({}, bookingData);
+                    
+                    if (receiptURL) {
+                        dataToSave.receiptURL = receiptURL;
+                    }
+                    
+                    window.db.collection(COL.bookings).doc(bookingData.bookingId).set(
+                        Object.assign(dataToSave, {
+                            serverCreatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                        })
+                    ).then(function() {
+                        console.log('✅ حجز محفوظ:', bookingData.bookingId);
+                        resolve({ success: true, id: bookingData.bookingId });
+                    }).catch(function(error) {
+                        console.error('❌ فشل حفظ الحجز:', error);
+                        resolve({ success: false, error: error.message });
+                    });
+                };
+                
+                // إذا فيه إيصال base64 - نرفعه لـ Storage
+                if (bookingData.receiptBase64) {
+                    uploadReceiptToStorage(bookingData.bookingId, bookingData.receiptBase64)
+                        .then(function(result) {
+                            if (result.success) {
+                                saveWithReceipt(result.url);
+                            } else {
+                                // احفظه base64 في Firestore (لو صغير)
+                                saveWithReceipt(null);
+                            }
+                        });
+                } else {
+                    saveWithReceipt(null);
+                }
+            });
+        });
+    }
+    
+    // ─── رفع الإيصال إلى Storage ───
+    function uploadReceiptToStorage(bookingId, base64Data) {
+        return new Promise(function(resolve) {
+            // تحقق من Storage
+            if (!window.firebase || !firebase.storage) {
+                resolve({ success: false });
+                return;
+            }
+            
+            try {
+                // تحويل base64 إلى Blob
+                var base64Clean = base64Data.split(',')[1] || base64Data;
+                var byteCharacters = atob(base64Clean);
+                var byteNumbers = new Array(byteCharacters.length);
+                
+                for (var i = 0; i < byteCharacters.length; i++) {
+                    byteNumbers[i] = byteCharacters.charCodeAt(i);
+                }
+                
+                var byteArray = new Uint8Array(byteNumbers);
+                var blob = new Blob([byteArray], { type: 'image/jpeg' });
+                
+                // رفع
+                var storage = firebase.storage();
+                var ref = storage.ref('receipts/' + bookingId + '.jpg');
+                
+                ref.put(blob).then(function(snapshot) {
+                    return snapshot.ref.getDownloadURL();
+                }).then(function(url) {
+                    console.log('✅ تم رفع الإيصال:', url);
+                    resolve({ success: true, url: url });
                 }).catch(function(error) {
-                    console.error('❌ فشل حفظ الحجز:', error);
+                    console.warn('⚠️ فشل رفع الإيصال:', error.message);
                     resolve({ success: false, error: error.message });
                 });
-            });
+                
+            } catch(e) {
+                console.warn('⚠️ خطأ معالجة الإيصال:', e);
+                resolve({ success: false, error: e.message });
+            }
         });
     }
     
@@ -76,7 +142,6 @@
                             bookings.push(data);
                         });
                         
-                        // ترتيب حسب التاريخ
                         bookings.sort(function(a, b) {
                             return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
                         });
@@ -124,6 +189,13 @@
                 
                 window.db.collection(COL.bookings).doc(bookingId).delete()
                     .then(function() {
+                        // حذف الإيصال من Storage
+                        if (window.firebase && firebase.storage) {
+                            try {
+                                firebase.storage().ref('receipts/' + bookingId + '.jpg').delete()
+                                    .catch(function() {});
+                            } catch(e) {}
+                        }
                         resolve({ success: true });
                     })
                     .catch(function(error) {
@@ -134,7 +206,7 @@
     }
     
     // ═══════════════════════════════════════════════════════
-    // 🚫 BLOCKED DATES - حجب التواريخ
+    // 🚫 BLOCKED DATES
     // ═══════════════════════════════════════════════════════
     
     function addBlockedDate(date, type, reason) {
@@ -204,7 +276,7 @@
     }
     
     // ═══════════════════════════════════════════════════════
-    // 🎁 OFFERS - العروض
+    // 🎁 OFFERS
     // ═══════════════════════════════════════════════════════
     
     function addOffer(offerData) {
@@ -293,7 +365,7 @@
     }
     
     // ═══════════════════════════════════════════════════════
-    // 🖼️ IMAGES - الصور
+    // 🖼️ IMAGES
     // ═══════════════════════════════════════════════════════
     
     function addImage(imageData) {
@@ -362,7 +434,7 @@
     }
     
     // ═══════════════════════════════════════════════════════
-    // ⚙️ SETTINGS - الأسعار والرسائل
+    // ⚙️ SETTINGS
     // ═══════════════════════════════════════════════════════
     
     function saveSetting(key, value) {
@@ -439,9 +511,12 @@
         
         // Settings
         saveSetting: saveSetting,
-        getSetting: getSetting
+        getSetting: getSetting,
+        
+        // Storage
+        uploadReceiptToStorage: uploadReceiptToStorage
     };
     
-    console.log('✅ WahajFirebase Helper جاهز');
+    console.log('✅ WahajFirebase Helper جاهز (مع دعم الإيصالات)');
     
 })();
