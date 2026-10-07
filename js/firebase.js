@@ -3,21 +3,20 @@
    الاتصال بقاعدة البيانات السحابية
    ═══════════════════════════════════════════════════════ */
 
-// ─── إعدادات Firebase ───
+// ─── إعدادات Firebase (المشروع الجديد) ───
 const FIREBASE_CONFIG = {
-    apiKey: "AIzaSyAqWXIb_uq1iEnuPsiV8bObeBIeWUxU7UE",
-    authDomain: "wahaj-resort.firebaseapp.com",
-    projectId: "wahaj-resort",
-    storageBucket: "wahaj-resort.firebasestorage.app",
-    messagingSenderId: "811417967302",
-    appId: "1:811417967302:web:96459b1ab684f15e4fd5c7"
+    apiKey: "AIzaSyBj3Y_d0iwKkROBP6Y6xO49Gsqk0tsn8ow",
+    authDomain: "wahaj-resort-22623.firebaseapp.com",
+    projectId: "wahaj-resort-22623",
+    storageBucket: "wahaj-resort-22623.firebasestorage.app",
+    messagingSenderId: "474970844460",
+    appId: "1:474970844460:web:c4db96820005d8d8d11089"
 };
 
 // ─── تحميل Firebase SDK ───
 (function() {
     'use strict';
     
-    // تحميل SDK من CDN (بدون npm)
     var scripts = [
         'https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js',
         'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js',
@@ -40,12 +39,10 @@ const FIREBASE_CONFIG = {
     
     function initFirebase() {
         try {
-            // تهيئة Firebase
             if (!firebase.apps.length) {
                 firebase.initializeApp(FIREBASE_CONFIG);
             }
             
-            // المراجع العامة
             window.db = firebase.firestore();
             window.storage = firebase.storage();
             window.firebaseReady = true;
@@ -54,15 +51,16 @@ const FIREBASE_CONFIG = {
             
             // اختبار الاتصال
             window.db.collection('_test').doc('ping').set({
-                timestamp: new Date().toISOString()
+                timestamp: new Date().toISOString(),
+                status: 'active'
             }).then(function() {
                 console.log('✅ Firestore جاهز');
             }).catch(function(err) {
-                console.warn('⚠️ تحذير Firestore:', err.message);
+                console.warn('⚠️ Firestore:', err.message);
             });
             
         } catch (error) {
-            console.error('❌ خطأ Firebase:', error);
+            console.error('❌ Firebase:', error);
             window.firebaseReady = false;
         }
     }
