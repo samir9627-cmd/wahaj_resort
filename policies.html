@@ -2,8 +2,11 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سياسات الحجز | استراحة وهج</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="theme-color" content="#0A1F44">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    
+    <title>السياسات | استراحة وهج</title>
     <meta name="description" content="شروط الاستئجار وسياسات الحجز في استراحة وهج">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,480 +14,469 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/logo3d.css">
-    <link rel="icon" type="image/png" href="images/logo.png">
+    <link rel="stylesheet" href="css/app.css">
     
     <style>
-        /* ─── Hero صفحة السياسات ─── */
-        .page-hero {
-            background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 50%, var(--navy-light) 100%);
-            padding: 140px 20px 80px;
-            text-align: center;
+        /* ─── Hero ─── */
+        .page-hero-app {
+            background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 60%, var(--navy-light) 100%);
+            padding: 100px 20px 50px;
             color: var(--white);
+            text-align: center;
             position: relative;
             overflow: hidden;
         }
         
-        .page-hero::before {
+        .page-hero-app::before {
             content: '';
             position: absolute;
             inset: 0;
-            background-image: 
-                radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
+            background: radial-gradient(circle at 30% 40%, rgba(212, 175, 55, 0.2) 0%, transparent 50%);
         }
         
-        .page-hero-content {
+        .page-hero-app-content {
             position: relative;
             z-index: 2;
-            max-width: 800px;
-            margin: 0 auto;
         }
         
-        .page-hero h1 {
+        .page-hero-app h1 {
             font-family: 'Amiri', serif;
-            font-size: clamp(2rem, 5vw, 3.5rem);
-            color: var(--gold);
-            margin-bottom: 20px;
+            font-size: clamp(1.8rem, 6vw, 2.5rem);
+            color: var(--primary);
+            margin-bottom: 10px;
             text-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
         }
         
-        .page-hero p {
-            font-size: clamp(1rem, 2vw, 1.2rem);
+        .page-hero-app p {
+            font-size: 0.95rem;
             opacity: 0.9;
-            max-width: 600px;
-            margin: 0 auto;
         }
         
-        /* ─── محتوى السياسات ─── */
-        .policies-content {
-            padding: 80px 0;
-            background: var(--off-white);
-        }
-        
-        .policies-intro {
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.05));
-            border-right: 4px solid var(--gold);
-            padding: 25px 30px;
+        /* ─── مقدمة ─── */
+        .intro-card-app {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.03));
+            border-right: 4px solid var(--primary);
             border-radius: var(--radius);
-            margin-bottom: 50px;
+            padding: 20px;
+            margin-bottom: 20px;
             display: flex;
-            align-items: center;
-            gap: 20px;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
+            gap: 15px;
+            align-items: flex-start;
         }
         
-        .policies-intro i {
-            font-size: 2.5rem;
-            color: var(--gold);
+        .intro-card-app i {
+            font-size: 1.8rem;
+            color: var(--primary);
             flex-shrink: 0;
+            margin-top: 3px;
         }
         
-        .policies-intro p {
+        .intro-card-app p {
             color: var(--navy);
-            font-size: 1rem;
-            line-height: 1.8;
+            font-size: 0.9rem;
+            line-height: 1.7;
         }
         
-        .policies-grid {
-            display: grid;
-            gap: 25px;
-            max-width: 900px;
-            margin: 0 auto;
+        .intro-card-app strong {
+            color: var(--primary-dark);
         }
         
-        .policy-card {
+        /* ─── بطاقات السياسات ─── */
+        .policy-card-app {
             background: var(--white);
             border-radius: var(--radius);
-            padding: 30px 35px;
+            padding: 22px 20px;
+            margin-bottom: 15px;
             box-shadow: var(--shadow-sm);
-            border-right: 5px solid var(--gold);
+            border-right: 4px solid var(--primary);
             transition: var(--transition);
-            position: relative;
-            overflow: hidden;
         }
         
-        .policy-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.03) 0%, transparent 100%);
-            pointer-events: none;
+        .policy-card-app:active {
+            transform: translateX(-3px);
+            box-shadow: var(--shadow);
         }
         
-        .policy-card:hover {
-            transform: translateX(-5px);
-            box-shadow: var(--shadow-md);
-            border-right-color: var(--gold-dark);
-        }
-        
-        .policy-header {
+        .policy-card-header-app {
             display: flex;
             align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px dashed var(--gray-light);
+            gap: 12px;
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed var(--gray-200);
         }
         
-        .policy-icon {
-            width: 55px;
-            height: 55px;
+        .policy-card-icon-app {
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: var(--white);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.4rem;
+            font-size: 1.1rem;
             flex-shrink: 0;
-            box-shadow: var(--shadow-gold);
+            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
         }
         
-        .policy-header h3 {
+        .policy-card-header-app h3 {
             color: var(--navy);
-            font-size: 1.3rem;
+            font-size: 1rem;
             font-weight: 700;
         }
         
-        .policy-list {
+        .policy-list-app {
             list-style: none;
+            padding: 0;
         }
         
-        .policy-list li {
-            padding: 12px 0;
+        .policy-list-app li {
+            padding: 9px 0;
             display: flex;
             align-items: flex-start;
-            gap: 12px;
+            gap: 10px;
             color: var(--navy);
-            font-size: 0.98rem;
+            font-size: 0.85rem;
             line-height: 1.7;
-            border-bottom: 1px solid var(--gray-light);
+            border-bottom: 1px solid var(--gray-100);
         }
         
-        .policy-list li:last-child {
+        .policy-list-app li:last-child {
             border-bottom: none;
+            padding-bottom: 0;
         }
         
-        .policy-list li i {
-            color: var(--gold);
-            font-size: 0.9rem;
-            margin-top: 6px;
+        .policy-list-app li i {
+            color: var(--primary);
+            font-size: 0.6rem;
+            margin-top: 8px;
             flex-shrink: 0;
         }
         
+        .policy-list-app li strong {
+            color: var(--primary-dark);
+        }
+        
         /* ─── ملاحظات مهمة ─── */
-        .important-notes {
-            max-width: 900px;
-            margin: 50px auto 0;
+        .important-app {
             background: linear-gradient(135deg, var(--navy), var(--navy-light));
             color: var(--white);
-            padding: 40px;
             border-radius: var(--radius);
-            box-shadow: var(--shadow-lg);
+            padding: 25px 20px;
+            margin-top: 25px;
         }
         
-        .important-notes h3 {
-            color: var(--gold);
-            font-size: 1.4rem;
-            margin-bottom: 25px;
+        .important-app h3 {
+            color: var(--primary);
+            font-size: 1.1rem;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
         
-        .important-notes h3 i {
-            animation: pulse 2s infinite;
+        .important-app h3 i {
+            animation: pulseIcon 2s infinite;
         }
         
-        @keyframes pulse {
+        @keyframes pulseIcon {
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.15); }
         }
         
-        .notes-grid {
+        .important-grid-app {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
         }
         
-        .note-item {
+        .important-item-app {
             background: rgba(255, 255, 255, 0.05);
-            padding: 20px;
-            border-radius: var(--radius-sm);
             border: 1px solid rgba(212, 175, 55, 0.2);
-            transition: var(--transition);
-        }
-        
-        .note-item:hover {
-            background: rgba(212, 175, 55, 0.1);
-            border-color: var(--gold);
-        }
-        
-        .note-item i {
-            color: var(--gold);
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            display: block;
-        }
-        
-        .note-item strong {
-            display: block;
-            color: var(--gold);
-            margin-bottom: 5px;
-            font-size: 1rem;
-        }
-        
-        .note-item p {
-            font-size: 0.9rem;
-            opacity: 0.85;
-            line-height: 1.6;
-        }
-        
-        /* ─── زر الموافقة ─── */
-        .policy-agreement {
-            max-width: 900px;
-            margin: 50px auto 0;
-            background: var(--white);
-            padding: 30px;
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-md);
+            border-radius: var(--radius-sm);
+            padding: 15px 12px;
             text-align: center;
-            border-top: 4px solid var(--gold);
         }
         
-        .policy-agreement p {
+        .important-item-app i {
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+        
+        .important-item-app strong {
+            display: block;
+            color: var(--primary);
+            margin-bottom: 4px;
+            font-size: 0.85rem;
+        }
+        
+        .important-item-app span {
+            font-size: 0.75rem;
+            opacity: 0.85;
+            line-height: 1.5;
+            display: block;
+        }
+        
+        /* ─── موافقة ─── */
+        .agreement-app {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 25px 20px;
+            text-align: center;
+            border-top: 4px solid var(--primary);
+            box-shadow: var(--shadow);
+            margin-top: 25px;
+        }
+        
+        .agreement-app p {
             color: var(--navy);
             margin-bottom: 20px;
-            font-size: 1rem;
+            font-size: 0.9rem;
             line-height: 1.8;
         }
         
-        .policy-agreement p strong {
-            color: var(--gold-dark);
+        .agreement-app p i {
+            color: var(--primary);
         }
         
-        .agreement-buttons {
+        .agreement-app p strong {
+            color: var(--primary-dark);
+        }
+        
+        .agreement-buttons-app {
+            display: grid;
+            gap: 10px;
+        }
+        
+        .agreement-btn-app {
+            padding: 14px;
+            border-radius: 50px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
             display: flex;
-            gap: 15px;
+            align-items: center;
             justify-content: center;
-            flex-wrap: wrap;
+            gap: 8px;
+            transition: var(--transition);
+            border: none;
         }
         
-        /* ─── Responsive ─── */
-        @media (max-width: 768px) {
-            .page-hero {
-                padding: 120px 20px 60px;
-            }
-            
-            .policy-card {
-                padding: 25px 20px;
-                border-right-width: 4px;
-            }
-            
-            .policy-icon {
-                width: 45px;
-                height: 45px;
-                font-size: 1.1rem;
-            }
-            
-            .policy-header h3 {
-                font-size: 1.1rem;
-            }
-            
-            .important-notes {
-                padding: 25px 20px;
-            }
-            
-            .policies-intro {
-                flex-direction: column;
-                text-align: center;
-                padding: 25px 20px;
-            }
-            
-            .agreement-buttons .btn {
-                width: 100%;
-            }
+        .agreement-btn-app.primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--navy);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        }
+        
+        .agreement-btn-app.primary:active {
+            transform: scale(0.97);
+        }
+        
+        .agreement-btn-app.whatsapp {
+            background: #25D366;
+            color: var(--white);
+        }
+        
+        .agreement-btn-app.whatsapp:active {
+            transform: scale(0.97);
         }
     </style>
 </head>
 <body>
 
-<!-- ═══ شريط التنقل ═══ -->
-<nav class="navbar" id="navbar">
-    <div class="nav-container">
-        <a href="index.html" class="nav-logo">
-            <img src="images/logo.png" alt="استراحة وهج" class="nav-logo-img">
-            <span class="nav-logo-text">وهج</span>
-        </a>
-        
-        <ul class="nav-menu" id="navMenu">
-            <li><a href="index.html">الرئيسية</a></li>
-            <li><a href="details.html">التفاصيل</a></li>
-            <li><a href="policies.html" class="active">السياسات</a></li>
-            <li><a href="booking.html" class="nav-cta">
-                <i class="fas fa-calendar-check"></i> احجز الآن
-            </a></li>
-        </ul>
-        
-        <div class="nav-toggle" id="navToggle">
-            <i class="fas fa-bars"></i>
-        </div>
-    </div>
-</nav>
+<!-- ═══ SPLASH SCREEN ═══ -->
+<div class="splash-screen">
+    <svg class="splash-logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="100" cy="100" r="90" fill="none" stroke="#D4AF37" stroke-width="3"/>
+        <g transform="translate(100, 85)">
+            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37"/>
+            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37" transform="rotate(45)"/>
+            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37" transform="rotate(90)"/>
+            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37" transform="rotate(135)"/>
+            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37" transform="rotate(180)"/>
+            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37" transform="rotate(225)"/>
+            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37" transform="rotate(270)"/>
+            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37" transform="rotate(315)"/>
+            <circle cx="0" cy="0" r="14" fill="#A88B2C"/>
+            <circle cx="0" cy="0" r="8" fill="#0A1F44"/>
+        </g>
+        <text x="100" y="175" font-size="16" text-anchor="middle" fill="#D4AF37" font-family="Amiri, serif" font-weight="bold">استراحة وهج</text>
+    </svg>
+    <h1 class="splash-title">وهج</h1>
+    <p class="splash-subtitle">خصوصية .. راحة .. ذكريات لا تُنسى</p>
+    <div class="splash-loader"><div class="splash-loader-bar"></div></div>
+</div>
 
-<!-- ═══ Hero صفحة السياسات ═══ -->
-<section class="page-hero">
-    <div class="page-hero-content">
+<!-- ═══ HEADER ═══ -->
+<header class="app-header">
+    <div class="app-header-logo">
+        <svg class="app-header-logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="45" fill="none" stroke="#D4AF37" stroke-width="2"/>
+            <g transform="translate(50, 42)">
+                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37"/>
+                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(45)"/>
+                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(90)"/>
+                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(135)"/>
+                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(180)"/>
+                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(225)"/>
+                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(270)"/>
+                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(315)"/>
+                <circle cx="0" cy="0" r="7" fill="#A88B2C"/>
+            </g>
+        </svg>
+        <span class="app-header-title">استراحة <span>وهج</span></span>
+    </div>
+    <a href="booking.html" class="app-header-action" aria-label="احجز">
+        <i class="fas fa-calendar-check"></i>
+    </a>
+</header>
+
+<!-- ═══ HERO ═══ -->
+<section class="page-hero-app">
+    <div class="page-hero-app-content">
         <h1>سياسات الحجز</h1>
-        <p>شروط الاستئجار والقواعد المنظمة لإقامتك في استراحة وهج</p>
+        <p>شروط الاستئجار والقواعد المنظمة</p>
     </div>
 </section>
 
 <!-- ═══ المحتوى ═══ -->
-<section class="policies-content">
-    <div class="container">
+<section class="app-section" style="padding-top: 20px;">
+    <div class="container" style="max-width: 600px; margin: 0 auto;">
         
         <!-- مقدمة -->
-        <div class="policies-intro">
+        <div class="intro-card-app reveal">
             <i class="fas fa-handshake"></i>
             <p>
                 نرحب بكم في <strong>استراحة وهج</strong>، ونتمنى لكم إقامة ممتعة وآمنة.
-                نرجو منكم الاطلاع على الشروط التالية قبل الحجز، حيث أن الحجز يعني الموافقة عليها.
+                نرجو الاطلاع على الشروط قبل الحجز، حيث أن الحجز يعني الموافقة عليها.
             </p>
         </div>
         
-        <!-- السياسات -->
-        <div class="policies-grid">
-            
-            <!-- الحجز والدفع -->
-            <div class="policy-card">
-                <div class="policy-header">
-                    <div class="policy-icon"><i class="fas fa-money-bill-wave"></i></div>
-                    <h3>💰 الحجز والدفع</h3>
-                </div>
-                <ul class="policy-list">
-                    <li><i class="fas fa-circle"></i> دفع مبلغ الحجز أو عربون لتأكيد الحجز وباقي المبلغ قبل الدخول بيوم.</li>
-                    <li><i class="fas fa-circle"></i> في حالة الإلغاء لا يُسترد المبلغ، لكن يمكن تأجيل الحجز ليوم آخر.</li>
-                    <li><i class="fas fa-circle"></i> يُدفع مبلغ تأمين <strong>20 ريال عماني</strong> يُسترد بعد الخروج والتأكد من سلامة ونظافة المكان.</li>
-                </ul>
+        <!-- الحجز والدفع -->
+        <div class="policy-card-app reveal">
+            <div class="policy-card-header-app">
+                <div class="policy-card-icon-app"><i class="fas fa-money-bill-wave"></i></div>
+                <h3>الحجز والدفع</h3>
             </div>
-            
-            <!-- الوقت -->
-            <div class="policy-card">
-                <div class="policy-header">
-                    <div class="policy-icon"><i class="fas fa-clock"></i></div>
-                    <h3>⏰ الوقت</h3>
-                </div>
-                <ul class="policy-list">
-                    <li><i class="fas fa-circle"></i> الالتزام بأوقات الدخول والخروج.</li>
-                    <li><i class="fas fa-circle"></i> <strong>بدون مبيت:</strong> من 9 صباحاً إلى 10 مساءً.</li>
-                    <li><i class="fas fa-circle"></i> <strong>مع مبيت:</strong> من 9 صباحاً إلى 7 صباحاً.</li>
-                    <li><i class="fas fa-circle"></i> أي تأخير في الخروج يترتب عليه رسوم إضافية.</li>
-                </ul>
+            <ul class="policy-list-app">
+                <li><i class="fas fa-circle"></i> دفع مبلغ الحجز أو عربون لتأكيد الحجز وباقي المبلغ قبل الدخول بيوم.</li>
+                <li><i class="fas fa-circle"></i> في حالة الإلغاء لا يُسترد المبلغ، لكن يمكن تأجيل الحجز ليوم آخر.</li>
+                <li><i class="fas fa-circle"></i> يُدفع تأمين <strong>20 ريال عماني</strong> يُسترد بعد الخروج والتأكد من سلامة ونظافة المكان.</li>
+            </ul>
+        </div>
+        
+        <!-- الوقت -->
+        <div class="policy-card-app reveal">
+            <div class="policy-card-header-app">
+                <div class="policy-card-icon-app"><i class="fas fa-clock"></i></div>
+                <h3>الوقت</h3>
             </div>
-            
-            <!-- الاستخدام -->
-            <div class="policy-card">
-                <div class="policy-header">
-                    <div class="policy-icon"><i class="fas fa-swimming-pool"></i></div>
-                    <h3>🚫 قواعد الاستخدام</h3>
-                </div>
-                <ul class="policy-list">
-                    <li><i class="fas fa-circle"></i> يُمنع الأكل والشرب في أحواض السباحة.</li>
-                    <li><i class="fas fa-circle"></i> يُمنع دخول الغرف والصالات بالملابس المبللة.</li>
-                </ul>
+            <ul class="policy-list-app">
+                <li><i class="fas fa-circle"></i> الالتزام بأوقات الدخول والخروج.</li>
+                <li><i class="fas fa-circle"></i> <strong>بدون مبيت:</strong> من 9 صباحاً إلى 10 مساءً.</li>
+                <li><i class="fas fa-circle"></i> <strong>مع مبيت:</strong> من 9 صباحاً إلى 7 صباحاً.</li>
+                <li><i class="fas fa-circle"></i> أي تأخير في الخروج يترتب عليه رسوم إضافية.</li>
+            </ul>
+        </div>
+        
+        <!-- الاستخدام -->
+        <div class="policy-card-app reveal">
+            <div class="policy-card-header-app">
+                <div class="policy-card-icon-app"><i class="fas fa-swimming-pool"></i></div>
+                <h3>قواعد الاستخدام</h3>
             </div>
-            
-            <!-- الممتلكات -->
-            <div class="policy-card">
-                <div class="policy-header">
-                    <div class="policy-icon"><i class="fas fa-home"></i></div>
-                    <h3>🏠 الممتلكات</h3>
-                </div>
-                <ul class="policy-list">
-                    <li><i class="fas fa-circle"></i> المحافظة على المرافق وعدم تحريك أو أخذ أي من أغراض الاستراحة.</li>
-                    <li><i class="fas fa-circle"></i> تعويض أي تلفيات تحدث في الممتلكات.</li>
-                    <li><i class="fas fa-circle"></i> تنظيف وتجميع جميع المخلفات والقمامة.</li>
-                    <li><i class="fas fa-circle"></i> تسليم الاستراحة نظيفة كما استلمتها.</li>
-                </ul>
+            <ul class="policy-list-app">
+                <li><i class="fas fa-circle"></i> يُمنع الأكل والشرب في أحواض السباحة.</li>
+                <li><i class="fas fa-circle"></i> يُمنع دخول الغرف والصالات بالملابس المبللة.</li>
+            </ul>
+        </div>
+        
+        <!-- الممتلكات -->
+        <div class="policy-card-app reveal">
+            <div class="policy-card-header-app">
+                <div class="policy-card-icon-app"><i class="fas fa-home"></i></div>
+                <h3>الممتلكات</h3>
             </div>
-            
-            <!-- السلامة -->
-            <div class="policy-card">
-                <div class="policy-header">
-                    <div class="policy-icon"><i class="fas fa-shield-alt"></i></div>
-                    <h3>⚠️ السلامة</h3>
-                </div>
-                <ul class="policy-list">
-                    <li><i class="fas fa-circle"></i> عدم ترك الأطفال بدون مراقبة، خاصة عند أحواض السباحة.</li>
-                    <li><i class="fas fa-circle"></i> إشعال النار في أماكن الشواء المخصصة فقط.</li>
-                </ul>
+            <ul class="policy-list-app">
+                <li><i class="fas fa-circle"></i> المحافظة على المرافق وعدم تحريك أو أخذ أي من أغراض الاستراحة.</li>
+                <li><i class="fas fa-circle"></i> تعويض أي تلفيات تحدث في الممتلكات.</li>
+                <li><i class="fas fa-circle"></i> تنظيف وتجميع جميع المخلفات والقمامة.</li>
+                <li><i class="fas fa-circle"></i> تسليم الاستراحة نظيفة كما استلمتها.</li>
+            </ul>
+        </div>
+        
+        <!-- السلامة -->
+        <div class="policy-card-app reveal">
+            <div class="policy-card-header-app">
+                <div class="policy-card-icon-app"><i class="fas fa-shield-alt"></i></div>
+                <h3>السلامة</h3>
             </div>
-            
-            <!-- المسؤولية -->
-            <div class="policy-card">
-                <div class="policy-header">
-                    <div class="policy-icon"><i class="fas fa-user-shield"></i></div>
-                    <h3>📌 المسؤولية</h3>
-                </div>
-                <ul class="policy-list">
-                    <li><i class="fas fa-circle"></i> المستأجر مسؤول عن ضيوفه.</li>
-                    <li><i class="fas fa-circle"></i> الإدارة غير مسؤولة عن المفقودات أو الإصابات.</li>
-                </ul>
+            <ul class="policy-list-app">
+                <li><i class="fas fa-circle"></i> عدم ترك الأطفال بدون مراقبة، خاصة عند أحواض السباحة.</li>
+                <li><i class="fas fa-circle"></i> إشعال النار في أماكن الشواء المخصصة فقط.</li>
+            </ul>
+        </div>
+        
+        <!-- المسؤولية -->
+        <div class="policy-card-app reveal">
+            <div class="policy-card-header-app">
+                <div class="policy-card-icon-app"><i class="fas fa-user-shield"></i></div>
+                <h3>المسؤولية</h3>
             </div>
-            
+            <ul class="policy-list-app">
+                <li><i class="fas fa-circle"></i> المستأجر مسؤول عن ضيوفه.</li>
+                <li><i class="fas fa-circle"></i> الإدارة غير مسؤولة عن المفقودات أو الإصابات.</li>
+            </ul>
         </div>
         
         <!-- ملاحظات مهمة -->
-        <div class="important-notes">
+        <div class="important-app reveal">
             <h3><i class="fas fa-exclamation-triangle"></i> ملاحظات مهمة</h3>
-            <div class="notes-grid">
-                <div class="note-item">
+            <div class="important-grid-app">
+                <div class="important-item-app">
                     <i class="fas fa-hand-holding-usd"></i>
                     <strong>العربون</strong>
-                    <p>50% من المبلغ لتأكيد الحجز، والباقي قبل الدخول بيوم</p>
+                    <span>50% لتأكيد الحجز</span>
                 </div>
-                <div class="note-item">
+                <div class="important-item-app">
                     <i class="fas fa-shield-alt"></i>
                     <strong>التأمين</strong>
-                    <p>20 ر.ع يُرد بعد الخروج والتأكد من نظافة المكان</p>
+                    <span>20 ر.ع يُرد بعد الخروج</span>
                 </div>
-                <div class="note-item">
+                <div class="important-item-app">
                     <i class="fas fa-calendar-times"></i>
                     <strong>الإلغاء</strong>
-                    <p>لا يُسترد المبلغ، لكن يمكن تأجيل الحجز</p>
+                    <span>لا استرداد، يمكن التأجيل</span>
                 </div>
-                <div class="note-item">
+                <div class="important-item-app">
                     <i class="fas fa-clock"></i>
                     <strong>التأخير</strong>
-                    <p>يترتب على التأخير في الخروج رسوم إضافية</p>
+                    <span>رسوم إضافية</span>
                 </div>
             </div>
         </div>
         
-        <!-- الموافقة على السياسات -->
-        <div class="policy-agreement">
+        <!-- الموافقة -->
+        <div class="agreement-app reveal">
             <p>
-                <i class="fas fa-info-circle" style="color: var(--gold);"></i>
+                <i class="fas fa-info-circle"></i>
                 بالحجز في <strong>استراحة وهج</strong>، أنت توافق على جميع الشروط والسياسات المذكورة أعلاه.
             </p>
-            <div class="agreement-buttons">
-                <a href="booking.html" class="btn btn-primary btn-large">
+            <div class="agreement-buttons-app">
+                <a href="booking.html" class="agreement-btn-app primary">
                     <i class="fas fa-check-circle"></i>
                     موافق، احجز الآن
                 </a>
-                <a href="https://wa.me/96895566332?text=مرحباً،%20لدي%20استفسار%20حول%20سياسات%20الحجز" 
+                <a href="https://wa.me/96895566332?text=مرحباً،%20لدي%20استفسار%20حول%20السياسات" 
                    target="_blank" 
-                   class="btn btn-outline">
+                   class="agreement-btn-app whatsapp">
                     <i class="fab fa-whatsapp"></i>
-                    استفسار
+                    استفسار عبر واتساب
                 </a>
             </div>
         </div>
@@ -492,61 +484,75 @@
     </div>
 </section>
 
-<!-- ═══ الفوتر ═══ -->
-<footer class="footer">
-    <div class="container">
-        <div class="footer-grid">
-            <div class="footer-brand">
-                <img src="images/logo.png" alt="وهج" class="footer-logo">
-                <h3>استراحة وهج</h3>
-                <p>خصوصية .. راحة .. ذكريات لا تُنسى</p>
-            </div>
-            
-            <div class="footer-links">
-                <h4>روابط سريعة</h4>
-                <ul>
-                    <li><a href="index.html">الرئيسية</a></li>
-                    <li><a href="details.html">التفاصيل</a></li>
-                    <li><a href="policies.html">السياسات</a></li>
-                    <li><a href="booking.html">الحجز</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-contact">
-                <h4>تواصل معنا</h4>
-                <p><i class="fas fa-phone"></i> +968 9556 6332</p>
-                <p><i class="fas fa-map-marker-alt"></i> بركاء - العقدة</p>
-                <div class="social-links">
-                    <a href="https://wa.me/96895566332" target="_blank"><i class="fab fa-whatsapp"></i></a>
-                    <a href="https://instagram.com/Wahaj_Resort" target="_blank"><i class="fab fa-instagram"></i></a>
-                    <a href="#" target="_blank"><i class="fab fa-tiktok"></i></a>
-                </div>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <p>© 2026 استراحة وهج - جميع الحقوق محفوظة</p>
-            <p>صُنع بـ <i class="fas fa-heart" style="color: #D4AF37;"></i> في سلطنة عمان</p>
-        </div>
+<!-- ═══ FOOTER ═══ -->
+<footer class="app-footer">
+    <svg class="app-footer-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="50" cy="50" r="45" fill="none" stroke="#D4AF37" stroke-width="2"/>
+        <g transform="translate(50, 42)">
+            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37"/>
+            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(45)"/>
+            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(90)"/>
+            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(135)"/>
+            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(180)"/>
+            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(225)"/>
+            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(270)"/>
+            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(315)"/>
+            <circle cx="0" cy="0" r="7" fill="#A88B2C"/>
+        </g>
+    </svg>
+    <h3 class="app-footer-title">استراحة وهج</h3>
+    <p class="app-footer-slogan">خصوصية .. راحة .. ذكريات لا تُنسى</p>
+    <div class="app-footer-bottom">
+        <p>© <span class="current-year">2026</span> استراحة وهج</p>
     </div>
 </footer>
 
-<!-- ═══ زر العودة للأعلى ═══ -->
-<button class="scroll-top" id="scrollTop">
-    <i class="fas fa-arrow-up"></i>
-</button>
+<!-- ═══ STICKY BOOKING ═══ -->
+<a href="booking.html" class="sticky-booking">
+    <div class="sticky-booking-info">
+        <span class="sticky-booking-label">احجز الآن</span>
+        <span class="sticky-booking-price">40 <small>ر.ع</small></span>
+    </div>
+    <div class="sticky-booking-btn">
+        <i class="fas fa-calendar-check"></i>
+        احجز
+    </div>
+</a>
 
-<!-- ═══ زر واتساب عائم ═══ -->
-<a href="https://wa.me/96895566332?text=مرحباً،%20أرغب%20في%20الاستفسار%20عن%20استراحة%20وهج" 
-   target="_blank" 
-   class="whatsapp-float" 
-   title="تواصل عبر واتساب">
+<!-- ═══ BOTTOM NAV ═══ -->
+<nav class="bottom-nav">
+    <a href="index.html" class="bottom-nav-item">
+        <i class="fas fa-home"></i>
+        <span>الرئيسية</span>
+    </a>
+    <a href="details.html" class="bottom-nav-item">
+        <i class="fas fa-images"></i>
+        <span>المعرض</span>
+    </a>
+    <a href="booking.html" class="bottom-nav-item cta-item">
+        <div class="cta-circle">
+            <i class="fas fa-calendar-plus"></i>
+        </div>
+        <span>احجز</span>
+    </a>
+    <a href="policies.html" class="bottom-nav-item active">
+        <i class="fas fa-file-contract"></i>
+        <span>السياسات</span>
+    </a>
+    <a href="https://wa.me/96895566332" target="_blank" class="bottom-nav-item">
+        <i class="fab fa-whatsapp"></i>
+        <span>تواصل</span>
+    </a>
+</nav>
+
+<!-- ═══ Floating WhatsApp ═══ -->
+<a href="https://wa.me/96895566332?text=مرحباً" target="_blank" class="floating-whatsapp">
     <i class="fab fa-whatsapp"></i>
 </a>
 
-<!-- ═══ السكربتات ═══ -->
+<!-- ═══ Scripts ═══ -->
 <script src="js/config.js"></script>
-<script src="js/main.js"></script>
+<script src="js/app.js"></script>
 
 </body>
 </html>
