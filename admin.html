@@ -1,1572 +1,399 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <meta name="theme-color" content="#0A1F44">
-    <meta name="robots" content="noindex, nofollow">
-    
-    <title>لوحة التحكم | استراحة وهج</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <link rel="icon" type="image/png" href="images/logo.jpeg">
-    
-    <style>
-        :root {
-            --primary: #D4AF37;
-            --primary-dark: #A88B2C;
-            --primary-light: #F4D77E;
-            --navy: #0A1F44;
-            --navy-light: #1A3A6B;
-            --navy-dark: #051530;
-            --cream: #FBF8F1;
-            --white: #FFFFFF;
-            --gray-100: #F8F9FA;
-            --gray-200: #E9ECEF;
-            --gray-400: #ADB5BD;
-            --gray-600: #6C757D;
-            --success: #28A745;
-            --danger: #DC3545;
-            --warning: #FFC107;
-            --info: #17A2B8;
-            --radius-sm: 12px;
-            --radius: 20px;
-            --radius-lg: 28px;
-            --shadow-sm: 0 2px 12px rgba(10, 31, 68, 0.06);
-            --shadow: 0 8px 30px rgba(10, 31, 68, 0.1);
-            --shadow-lg: 0 20px 60px rgba(10, 31, 68, 0.15);
-            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        
-        body {
-            font-family: 'Cairo', -apple-system, sans-serif;
-            background: var(--cream);
-            color: var(--navy);
-            line-height: 1.6;
-            direction: rtl;
-            padding-bottom: 90px;
-            -webkit-font-smoothing: antialiased;
-        }
-        
-        /* ═══ Login ═══ */
-        .login-screen {
-            min-height: 100vh;
-            background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 50%, var(--navy-light) 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-        }
-        
-        .login-card {
-            background: var(--white);
-            border-radius: var(--radius-lg);
-            padding: 40px 30px;
-            max-width: 400px;
-            width: 100%;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.4);
-            text-align: center;
-            border-top: 5px solid var(--primary);
-        }
-        
-        .login-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 20px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            font-size: 2rem;
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
-        }
-        
-        .login-card h1 { font-family: 'Amiri', serif; font-size: 1.6rem; color: var(--navy); margin-bottom: 8px; }
-        .login-card p { color: var(--gray-600); margin-bottom: 25px; font-size: 0.9rem; }
-        
-        .login-input {
-            width: 100%;
-            padding: 15px 20px;
-            border: 2px solid var(--gray-200);
-            border-radius: var(--radius-sm);
-            font-family: 'Cairo', sans-serif;
-            font-size: 1rem;
-            text-align: center;
-            letter-spacing: 3px;
-            margin-bottom: 15px;
-        }
-        
-        .login-input:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.15); }
-        
-        .login-error { color: var(--danger); font-size: 0.85rem; margin-bottom: 15px; display: none; }
-        .login-error.show { display: block; }
-        
-        .login-btn {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: var(--navy);
-            border: none;
-            border-radius: 50px;
-            font-family: 'Cairo', sans-serif;
-            font-size: 1rem;
-            font-weight: 700;
-            cursor: pointer;
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
-        }
-        
-        /* ═══ Admin Panel ═══ */
-        .admin-panel { display: none; min-height: 100vh; }
-        .admin-panel.show { display: block; }
-        
-        .admin-header {
-            background: linear-gradient(135deg, var(--navy-dark), var(--navy));
-            color: var(--white);
-            padding: 15px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: var(--shadow);
-        }
-        
-        .admin-logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: var(--primary);
-            font-weight: 700;
-            font-size: 0.95rem;
-        }
-        
-        .admin-logo-icon { width: 36px; height: 36px; }
-        
-        .admin-header-btn {
-            background: rgba(212, 175, 55, 0.15);
-            color: var(--primary);
-            border: 1px solid rgba(212, 175, 55, 0.4);
-            padding: 8px 12px;
-            border-radius: 50px;
-            font-family: 'Cairo', sans-serif;
-            font-size: 0.8rem;
-            font-weight: 600;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .admin-container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 20px 15px 40px;
-        }
-        
-        .page-title {
-            font-family: 'Amiri', serif;
-            font-size: 1.5rem;
-            color: var(--navy);
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .page-title::before {
-            content: '';
-            width: 5px;
-            height: 26px;
-            background: linear-gradient(180deg, var(--primary), var(--primary-dark));
-            border-radius: 5px;
-        }
-        
-        /* ═══ Stats ═══ */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-        
-        .stat-card {
-            background: var(--white);
-            border-radius: var(--radius);
-            padding: 18px 15px;
-            box-shadow: var(--shadow-sm);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 4px;
-            height: 100%;
-            background: var(--primary);
-        }
-        
-        .stat-card.pending::before { background: var(--warning); }
-        .stat-card.confirmed::before { background: var(--success); }
-        .stat-card.rejected::before { background: var(--danger); }
-        .stat-card.revenue::before { background: linear-gradient(180deg, var(--primary), var(--primary-dark)); }
-        
-        .stat-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
-        
-        .stat-icon-sm {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            background: rgba(212, 175, 55, 0.15);
-            color: var(--primary-dark);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1rem;
-        }
-        
-        .stat-card.pending .stat-icon-sm { background: rgba(255,193,7,0.15); color: #856404; }
-        .stat-card.confirmed .stat-icon-sm { background: rgba(40,167,69,0.15); color: var(--success); }
-        .stat-card.rejected .stat-icon-sm { background: rgba(220,53,69,0.15); color: var(--danger); }
-        
-        .stat-value { font-size: 1.8rem; font-weight: 900; color: var(--navy); line-height: 1; }
-        .stat-label { font-size: 0.75rem; color: var(--gray-600); margin-top: 5px; font-weight: 600; }
-        
-        /* ═══ Quick Actions ═══ */
-        .quick-actions {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-            margin-bottom: 25px;
-        }
-        
-        .quick-action {
-            background: var(--white);
-            border-radius: var(--radius-sm);
-            padding: 15px 8px;
-            text-align: center;
-            box-shadow: var(--shadow-sm);
-            cursor: pointer;
-            transition: var(--transition);
-            text-decoration: none;
-            color: var(--navy);
-            border: 2px solid transparent;
-        }
-        
-        .quick-action:active { transform: scale(0.95); border-color: var(--primary); }
-        
-        .quick-action-icon {
-            width: 45px;
-            height: 45px;
-            margin: 0 auto 8px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
-            color: var(--primary-dark);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-        }
-        
-        .quick-action-label { font-size: 0.7rem; font-weight: 700; }
-        
-        /* ═══ Filter ═══ */
-        .filter-bar {
-            background: var(--white);
-            border-radius: var(--radius);
-            padding: 15px;
-            margin-bottom: 15px;
-            box-shadow: var(--shadow-sm);
-        }
-        
-        .filter-bar select,
-        .filter-bar input {
-            width: 100%;
-            padding: 11px 14px;
-            border: 2px solid var(--gray-200);
-            border-radius: var(--radius-sm);
-            font-family: 'Cairo', sans-serif;
-            font-size: 0.85rem;
-            background: var(--white);
-            color: var(--navy);
-            margin-bottom: 8px;
-        }
-        
-        .filter-bar select:last-child,
-        .filter-bar input:last-child { margin-bottom: 0; }
-        
-        .filter-bar select:focus,
-        .filter-bar input:focus { outline: none; border-color: var(--primary); }
-        
-        /* ═══ Booking Card ═══ */
-        .booking-card {
-            background: var(--white);
-            border-radius: var(--radius);
-            padding: 18px;
-            margin-bottom: 12px;
-            box-shadow: var(--shadow-sm);
-            border-right: 5px solid var(--gray-400);
-        }
-        
-        .booking-card.pending { border-right-color: var(--warning); }
-        .booking-card.confirmed { border-right-color: var(--success); }
-        .booking-card.rejected { border-right-color: var(--danger); }
-        
-        .booking-head {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
-            padding-bottom: 12px;
-            border-bottom: 1px dashed var(--gray-200);
-        }
-        
-        .booking-id {
-            font-family: 'Courier New', monospace;
-            font-weight: 900;
-            color: var(--primary-dark);
-            font-size: 0.9rem;
-        }
-        
-        .booking-status {
-            padding: 4px 12px;
-            border-radius: 50px;
-            font-size: 0.7rem;
-            font-weight: 700;
-        }
-        
-        .booking-status.pending { background: rgba(255,193,7,0.2); color: #856404; }
-        .booking-status.confirmed { background: rgba(40,167,69,0.2); color: #155724; }
-        .booking-status.rejected { background: rgba(220,53,69,0.2); color: #721c24; }
-        
-        .booking-info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            margin-bottom: 12px;
-        }
-        
-        .booking-info-item .label { color: var(--gray-600); font-size: 0.7rem; display: block; margin-bottom: 2px; }
-        .booking-info-item .value { color: var(--navy); font-weight: 700; font-size: 0.85rem; }
-        
-        .booking-actions {
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-            padding-top: 12px;
-            border-top: 1px dashed var(--gray-200);
-        }
-        
-        .action-btn {
-            padding: 9px 14px;
-            border-radius: 50px;
-            border: none;
-            font-family: 'Cairo', sans-serif;
-            font-size: 0.75rem;
-            font-weight: 700;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            flex: 1;
-            justify-content: center;
-            min-width: 80px;
-        }
-        
-        .action-btn:active { transform: scale(0.95); }
-        .action-btn.confirm { background: var(--success); color: var(--white); }
-        .action-btn.reject { background: var(--danger); color: var(--white); }
-        .action-btn.whatsapp { background: #25D366; color: var(--white); }
-        .action-btn.view { background: var(--navy); color: var(--white); }
-        .action-btn.print { background: var(--info); color: var(--white); }
-        .action-btn.delete { background: var(--gray-200); color: var(--gray-600); flex: 0; min-width: auto; padding: 9px 12px; }
-        
-        .no-bookings {
-            background: var(--white);
-            border-radius: var(--radius);
-            padding: 50px 20px;
-            text-align: center;
-            color: var(--gray-600);
-            box-shadow: var(--shadow-sm);
-        }
-        
-        .no-bookings i { font-size: 3rem; color: var(--gray-200); margin-bottom: 15px; display: block; }
-        
-        /* ═══ Block Section ═══ */
-        .block-section {
-            background: var(--white);
-            border-radius: var(--radius);
-            padding: 20px;
-            box-shadow: var(--shadow-sm);
-            margin-bottom: 15px;
-        }
-        
-        .block-section h3 {
-            color: var(--navy);
-            font-size: 1rem;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .block-section h3 i { color: var(--primary); }
-        
-        .block-form { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
-        
-        .block-form input,
-        .block-form select {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid var(--gray-200);
-            border-radius: var(--radius-sm);
-            font-family: 'Cairo', sans-serif;
-            font-size: 0.85rem;
-            background: var(--white);
-        }
-        
-        .block-form input:focus,
-        .block-form select:focus { outline: none; border-color: var(--primary); }
-        
-        .block-form button {
-            padding: 12px 20px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: var(--navy);
-            border: none;
-            border-radius: var(--radius-sm);
-            font-family: 'Cairo', sans-serif;
-            font-weight: 700;
-            font-size: 0.9rem;
-            cursor: pointer;
-        }
-        
-        .blocked-list { display: flex; flex-direction: column; gap: 8px; }
-        
-        .blocked-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 15px;
-            background: var(--gray-100);
-            border-radius: var(--radius-sm);
-        }
-        
-        .blocked-item .date { font-weight: 700; color: var(--navy); font-size: 0.9rem; }
-        .blocked-item .reason { color: var(--gray-600); font-size: 0.75rem; margin-top: 2px; }
-        
-        .blocked-item button {
-            background: var(--danger);
-            color: var(--white);
-            border: none;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-        
-        .no-blocked { text-align: center; color: var(--gray-600); padding: 20px; font-size: 0.85rem; }
-        
-        /* ═══ Settings Card ═══ */
-        .settings-card {
-            background: var(--white);
-            border-radius: var(--radius);
-            padding: 20px;
-            margin-bottom: 15px;
-            box-shadow: var(--shadow-sm);
-        }
-        
-        .settings-card h3 {
-            color: var(--navy);
-            font-size: 1rem;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .settings-card h3 i { color: var(--primary); }
-        .settings-card p { color: var(--gray-600); font-size: 0.85rem; line-height: 1.8; margin-bottom: 10px; }
-        .settings-card strong { color: var(--primary-dark); }
-        
-        .btn-full {
-            width: 100%;
-            padding: 13px;
-            border-radius: 50px;
-            border: none;
-            font-family: 'Cairo', sans-serif;
-            font-size: 0.9rem;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        
-        .btn-danger { background: var(--danger); color: var(--white); }
-        
-        /* ═══ Messages Editor ═══ */
-        .message-editor {
-            background: var(--white);
-            border-radius: var(--radius);
-            padding: 20px;
-            box-shadow: var(--shadow-sm);
-            margin-bottom: 15px;
-        }
-        
-        .message-editor-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
-            padding-bottom: 12px;
-            border-bottom: 2px dashed var(--gray-200);
-        }
-        
-        .message-editor-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: var(--white);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.1rem;
-            flex-shrink: 0;
-        }
-        
-        .message-editor-header h3 {
-            color: var(--navy);
-            font-size: 1rem;
-            font-weight: 700;
-        }
-        
-        .message-editor-header p {
-            color: var(--gray-600);
-            font-size: 0.75rem;
-            margin-top: 2px;
-        }
-        
-        .variables-hint {
-            background: rgba(212, 175, 55, 0.08);
-            border-right: 3px solid var(--primary);
-            border-radius: var(--radius-sm);
-            padding: 10px 14px;
-            margin-bottom: 12px;
-            font-size: 0.75rem;
-            color: var(--navy);
-            line-height: 1.7;
-        }
-        
-        .variables-hint code {
-            background: rgba(212, 175, 55, 0.2);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.7rem;
-            color: var(--primary-dark);
-            font-weight: 700;
-        }
-        
-        .message-editor textarea {
-            width: 100%;
-            min-height: 180px;
-            padding: 14px;
-            border: 2px solid var(--gray-200);
-            border-radius: var(--radius-sm);
-            font-family: 'Cairo', sans-serif;
-            font-size: 0.85rem;
-            color: var(--navy);
-            line-height: 1.8;
-            resize: vertical;
-            background: var(--gray-100);
-        }
-        
-        .message-editor textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.15);
-            background: var(--white);
-        }
-        
-        .message-editor-actions {
-            display: flex;
-            gap: 8px;
-            margin-top: 12px;
-        }
-        
-        .message-editor-actions button {
-            flex: 1;
-            padding: 12px;
-            border-radius: 50px;
-            border: none;
-            font-family: 'Cairo', sans-serif;
-            font-size: 0.85rem;
-            font-weight: 700;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-        }
-        
-        .btn-save {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: var(--navy);
-            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.35);
-        }
-        
-        .btn-reset {
-            background: var(--gray-200);
-            color: var(--gray-600);
-        }
-        
-        /* ═══ Images ═══ */
-        .images-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-top: 15px;
-        }
-        
-        .image-card {
-            background: var(--gray-100);
-            border-radius: var(--radius-sm);
-            overflow: hidden;
-            position: relative;
-            box-shadow: var(--shadow-sm);
-        }
-        
-        .image-card img {
-            width: 100%;
-            aspect-ratio: 1;
-            object-fit: cover;
-            display: block;
-        }
-        
-        .image-card-info {
-            padding: 10px;
-            background: var(--white);
-        }
-        
-        .image-card-info .name {
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--navy);
-            margin-bottom: 4px;
-            word-break: break-all;
-        }
-        
-        .image-card-info .path {
-            font-size: 0.65rem;
-            color: var(--gray-600);
-            font-family: monospace;
-            word-break: break-all;
-        }
-        
-        .image-card-actions {
-            display: flex;
-            gap: 4px;
-            margin-top: 8px;
-        }
-        
-        .image-card-actions button {
-            flex: 1;
-            padding: 6px;
-            border: none;
-            border-radius: 6px;
-            font-family: 'Cairo', sans-serif;
-            font-size: 0.7rem;
-            font-weight: 700;
-            cursor: pointer;
-        }
-        
-        .image-card-actions .copy-btn {
-            background: var(--primary);
-            color: var(--navy);
-        }
-        
-        .image-card-actions .del-btn {
-            background: var(--danger);
-            color: var(--white);
-        }
-        
-        .image-add-form {
-            background: var(--gray-100);
-            border-radius: var(--radius-sm);
-            padding: 15px;
-            margin-bottom: 15px;
-        }
-        
-        .image-add-form input {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid var(--gray-200);
-            border-radius: var(--radius-sm);
-            font-family: 'Cairo', sans-serif;
-            font-size: 0.85rem;
-            margin-bottom: 10px;
-            background: var(--white);
-        }
-        
-        .image-add-form input:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-        
-        .image-add-form button {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: var(--navy);
-            border: none;
-            border-radius: var(--radius-sm);
-            font-family: 'Cairo', sans-serif;
-            font-weight: 700;
-            font-size: 0.9rem;
-            cursor: pointer;
-        }
-        
-        /* ═══ Offers ═══ */
-        .offer-form {
-            background: var(--white);
-            border-radius: var(--radius);
-            padding: 20px;
-            box-shadow: var(--shadow-sm);
-            margin-bottom: 15px;
-        }
-        
-        .offer-form input,
-        .offer-form textarea,
-        .offer-form select {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid var(--gray-200);
-            border-radius: var(--radius-sm);
-            font-family: 'Cairo', sans-serif;
-            font-size: 0.85rem;
-            margin-bottom: 10px;
-            background: var(--white);
-            color: var(--navy);
-        }
-        
-        .offer-form textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-        
-        .offer-form input:focus,
-        .offer-form textarea:focus,
-        .offer-form select:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-        
-        .offer-form button {
-            width: 100%;
-            padding: 13px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: var(--navy);
-            border: none;
-            border-radius: 50px;
-            font-family: 'Cairo', sans-serif;
-            font-weight: 700;
-            font-size: 0.9rem;
-            cursor: pointer;
-            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.35);
-        }
-        
-        .offers-list {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        
-        .offer-item {
-            background: var(--white);
-            border-radius: var(--radius);
-            padding: 15px;
-            box-shadow: var(--shadow-sm);
-            border-right: 4px solid var(--primary);
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 10px;
-        }
-        
-        .offer-item.inactive {
-            opacity: 0.6;
-            border-right-color: var(--gray-400);
-        }
-        
-        .offer-item-content { flex: 1; }
-        
-        .offer-item h4 {
-            color: var(--navy);
-            font-size: 0.95rem;
-            margin-bottom: 5px;
-        }
-        
-        .offer-item p {
-            color: var(--gray-600);
-            font-size: 0.8rem;
-            line-height: 1.6;
-            margin-bottom: 8px;
-        }
-        
-        .offer-item-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            font-size: 0.7rem;
-        }
-        
-        .offer-badge {
-            padding: 3px 10px;
-            border-radius: 50px;
-            font-weight: 700;
-        }
-        
-        .offer-badge.discount {
-            background: rgba(40, 167, 69, 0.15);
-            color: var(--success);
-        }
-        
-        .offer-badge.date {
-            background: rgba(10, 31, 68, 0.08);
-            color: var(--navy);
-        }
-        
-        .offer-item-actions {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-        
-        .offer-item-actions button {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .offer-item-actions .del-btn {
-            background: var(--danger);
-            color: var(--white);
-        }
-        
-        .offer-item-actions .toggle-btn {
-            background: var(--primary);
-            color: var(--navy);
-        }
-        
-        /* ═══ Prices ═══ */
-        .price-form {
-            background: var(--white);
-            border-radius: var(--radius);
-            padding: 20px;
-            box-shadow: var(--shadow-sm);
-            margin-bottom: 15px;
-        }
-        
-        .price-form h3 {
-            color: var(--navy);
-            font-size: 1rem;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding-bottom: 12px;
-            border-bottom: 2px dashed var(--gray-200);
-        }
-        
-        .price-form h3 i { color: var(--primary); }
-        
-        .price-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-        
-        .price-field label {
-            display: block;
-            font-size: 0.75rem;
-            font-weight: 700;
-            color: var(--navy);
-            margin-bottom: 5px;
-        }
-        
-        .price-field input {
-            width: 100%;
-            padding: 11px;
-            border: 2px solid var(--gray-200);
-            border-radius: var(--radius-sm);
-            font-family: 'Cairo', sans-serif;
-            font-size: 0.9rem;
-            background: var(--white);
-            color: var(--navy);
-            font-weight: 700;
-            text-align: center;
-        }
-        
-        .price-field input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.15);
-        }
-        
-        .price-form button {
-            width: 100%;
-            padding: 13px;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: var(--navy);
-            border: none;
-            border-radius: 50px;
-            font-family: 'Cairo', sans-serif;
-            font-weight: 700;
-            font-size: 0.9rem;
-            cursor: pointer;
-            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.35);
-            margin-top: 15px;
-        }
-        
-        /* ═══ Bottom Nav ═══ */
-        .admin-bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 80px;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            border-top: 1px solid rgba(212, 175, 55, 0.15);
-            box-shadow: 0 -8px 30px rgba(10, 31, 68, 0.08);
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-            padding: 0 5px;
-        }
-        
-        .admin-nav-item {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 3px;
-            color: var(--gray-600);
-            text-decoration: none;
-            font-size: 0.55rem;
-            font-weight: 600;
-            padding: 8px 0;
-            position: relative;
-            cursor: pointer;
-            border: none;
-            background: transparent;
-            font-family: 'Cairo', sans-serif;
-        }
-        
-        .admin-nav-item i { font-size: 1.1rem; transition: var(--transition); }
-        .admin-nav-item.active { color: var(--primary); }
-        .admin-nav-item.active i { transform: translateY(-3px); filter: drop-shadow(0 4px 10px rgba(212, 175, 55, 0.4)); }
-        
-        .admin-nav-item .badge {
-            position: absolute;
-            top: 4px;
-            right: calc(50% - 18px);
-            background: var(--danger);
-            color: var(--white);
-            font-size: 0.55rem;
-            font-weight: 700;
-            min-width: 16px;
-            height: 16px;
-            border-radius: 50px;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 0 4px;
-        }
-        
-        .admin-nav-item .badge.show { display: flex; }
-        
-        .page { display: none; }
-        .page.active { display: block; animation: fadeIn 0.3s ease; }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        /* ═══ Modal ═══ */
-        .modal {
-            position: fixed;
-            inset: 0;
-            background: rgba(5, 21, 48, 0.9);
-            z-index: 2000;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            overflow-y: auto;
-        }
-        
-        .modal.show { display: flex; }
-        
-        .modal-content {
-            background: var(--white);
-            border-radius: var(--radius);
-            max-width: 500px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            padding: 25px;
-            position: relative;
-        }
-        
-        .modal-close {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            background: var(--gray-200);
-            color: var(--navy);
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .modal-content h2 {
-            color: var(--navy);
-            font-size: 1.2rem;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px dashed var(--gray-200);
-            font-family: 'Amiri', serif;
-        }
-        
-        .modal-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid var(--gray-100);
-            font-size: 0.85rem;
-        }
-        
-        .modal-row .label { color: var(--gray-600); }
-        .modal-row .value { color: var(--navy); font-weight: 700; }
-        
-        .modal-receipt { margin-top: 15px; text-align: center; }
-        .modal-receipt img { max-width: 100%; max-height: 300px; border-radius: var(--radius-sm); border: 2px solid var(--primary); }
-        
-        /* ═══ Modal Payment Sections ═══ */
-        .modal-payment-section {
-            margin: 12px 0;
-            padding: 12px 14px;
-            border-radius: var(--radius-sm);
-        }
-        
-        .modal-payment-section-title {
-            font-size: 0.7rem;
-            font-weight: 700;
-            margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            text-transform: uppercase;
-        }
-        
-        .modal-payment-section.now {
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
-            border: 2px solid var(--primary);
-        }
-        
-        .modal-payment-section.now .modal-payment-section-title { color: var(--primary-dark); }
-        
-        .modal-payment-section.later {
-            background: linear-gradient(135deg, rgba(10, 31, 68, 0.06), rgba(10, 31, 68, 0.02));
-            border: 2px solid rgba(10, 31, 68, 0.2);
-        }
-        
-        .modal-payment-section.later .modal-payment-section-title { color: var(--navy); }
-        
-        .modal-payment-section.refund {
-            background: linear-gradient(135deg, rgba(40, 167, 69, 0.1), rgba(40, 167, 69, 0.03));
-            border: 2px solid rgba(40, 167, 69, 0.3);
-        }
-        
-        .modal-payment-section.refund .modal-payment-section-title { color: var(--success); }
-        
-        .modal-payment-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 5px 0;
-            font-size: 0.8rem;
-        }
-        
-        .modal-payment-section.now .modal-payment-row:last-child {
-            border-top: 1px dashed var(--primary);
-            margin-top: 5px;
-            padding-top: 8px;
-            font-weight: 900;
-        }
-        
-        .modal-payment-section.now .modal-payment-row:last-child strong {
-            color: var(--primary-dark);
-        }
-        
-        .modal-payment-section.refund .modal-payment-row strong { color: var(--success); }
-        
-        /* ═══ Toast ═══ */
-        .toast {
-            position: fixed;
-            top: 90px;
-            left: 50%;
-            transform: translateX(-50%) translateY(-100px);
-            background: var(--navy);
-            color: var(--white);
-            padding: 14px 28px;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.85rem;
-            box-shadow: var(--shadow-lg);
-            z-index: 9999;
-            transition: transform 0.3s;
-            font-family: 'Cairo', sans-serif;
-            max-width: 90%;
-            text-align: center;
-        }
-        
-        .toast.show { transform: translateX(-50%) translateY(0); }
-        .toast.success { background: var(--success); }
-        .toast.error { background: var(--danger); }
-        .toast.warning { background: var(--warning); color: var(--navy); }
-        
-        /* ═══ Print ═══ */
-        @media print {
-            body * { visibility: hidden; }
-            #printArea, #printArea * { visibility: visible; }
-            #printArea { position: absolute; left: 0; top: 0; width: 100%; padding: 20px; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="theme-color" content="#0A1F44">
+<meta name="robots" content="noindex, nofollow">
+<title>لوحة التحكم | استراحة وهج</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="icon" type="image/png" href="images/logo.jpeg">
+<style>
+:root{--primary:#D4AF37;--primary-dark:#A88B2C;--primary-light:#F4D77E;--navy:#0A1F44;--navy-light:#1A3A6B;--navy-dark:#051530;--cream:#FBF8F1;--white:#FFFFFF;--gray-100:#F8F9FA;--gray-200:#E9ECEF;--gray-400:#ADB5BD;--gray-600:#6C757D;--success:#28A745;--danger:#DC3545;--warning:#FFC107;--info:#17A2B8;--radius-sm:12px;--radius:20px;--radius-lg:28px;--shadow-sm:0 2px 12px rgba(10,31,68,0.06);--shadow:0 8px 30px rgba(10,31,68,0.1);--shadow-lg:0 20px 60px rgba(10,31,68,0.15);--transition:0.3s cubic-bezier(0.4,0,0.2,1)}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:'Cairo',-apple-system,sans-serif;background:var(--cream);color:var(--navy);line-height:1.6;direction:rtl;padding-bottom:90px;-webkit-font-smoothing:antialiased}
+.login-screen{min-height:100vh;background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy) 50%,var(--navy-light) 100%);display:flex;align-items:center;justify-content:center;padding:20px;position:fixed;inset:0;z-index:9999}
+.login-card{background:var(--white);border-radius:var(--radius-lg);padding:40px 30px;max-width:400px;width:100%;box-shadow:0 30px 80px rgba(0,0,0,0.4);text-align:center;border-top:5px solid var(--primary)}
+.login-icon{width:80px;height:80px;margin:0 auto 20px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--white);font-size:2rem;box-shadow:0 10px 30px rgba(212,175,55,0.4)}
+.login-card h1{font-family:'Amiri',serif;font-size:1.6rem;color:var(--navy);margin-bottom:8px}
+.login-card p{color:var(--gray-600);margin-bottom:25px;font-size:0.9rem}
+.login-input{width:100%;padding:15px 20px;border:2px solid var(--gray-200);border-radius:var(--radius-sm);font-family:'Cairo',sans-serif;font-size:1rem;text-align:center;letter-spacing:3px;margin-bottom:15px}
+.login-input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 4px rgba(212,175,55,0.15)}
+.login-error{color:var(--danger);font-size:0.85rem;margin-bottom:15px;display:none}
+.login-error.show{display:block}
+.login-btn{width:100%;padding:15px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:var(--navy);border:none;border-radius:50px;font-family:'Cairo',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;box-shadow:0 10px 30px rgba(212,175,55,0.4)}
+.admin-panel{display:none;min-height:100vh}
+.admin-panel.show{display:block}
+.admin-header{background:linear-gradient(135deg,var(--navy-dark),var(--navy));color:var(--white);padding:15px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:var(--shadow)}
+.admin-logo{display:flex;align-items:center;gap:10px;color:var(--primary);font-weight:700;font-size:0.95rem}
+.admin-logo-icon{width:36px;height:36px}
+.admin-header-btn{background:rgba(212,175,55,0.15);color:var(--primary);border:1px solid rgba(212,175,55,0.4);padding:8px 12px;border-radius:50px;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:5px}
+.admin-container{max-width:900px;margin:0 auto;padding:20px 15px 40px}
+.page-title{font-family:'Amiri',serif;font-size:1.5rem;color:var(--navy);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.page-title::before{content:'';width:5px;height:26px;background:linear-gradient(180deg,var(--primary),var(--primary-dark));border-radius:5px}
+.stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:20px}
+.stat-card{background:var(--white);border-radius:var(--radius);padding:18px 15px;box-shadow:var(--shadow-sm);position:relative;overflow:hidden}
+.stat-card::before{content:'';position:absolute;top:0;right:0;width:4px;height:100%;background:var(--primary)}
+.stat-card.pending::before{background:var(--warning)}
+.stat-card.confirmed::before{background:var(--success)}
+.stat-card.rejected::before{background:var(--danger)}
+.stat-card.revenue::before{background:linear-gradient(180deg,var(--primary),var(--primary-dark))}
+.stat-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.stat-icon-sm{width:36px;height:36px;border-radius:50%;background:rgba(212,175,55,0.15);color:var(--primary-dark);display:flex;align-items:center;justify-content:center;font-size:1rem}
+.stat-value{font-size:1.8rem;font-weight:900;color:var(--navy);line-height:1}
+.stat-label{font-size:0.75rem;color:var(--gray-600);margin-top:5px;font-weight:600}
+.quick-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:25px}
+.quick-action{background:var(--white);border-radius:var(--radius-sm);padding:15px 8px;text-align:center;box-shadow:var(--shadow-sm);cursor:pointer;transition:var(--transition);text-decoration:none;color:var(--navy);border:2px solid transparent}
+.quick-action:active{transform:scale(0.95);border-color:var(--primary)}
+.quick-action-icon{width:45px;height:45px;margin:0 auto 8px;border-radius:50%;background:linear-gradient(135deg,rgba(212,175,55,0.15),rgba(212,175,55,0.05));color:var(--primary-dark);display:flex;align-items:center;justify-content:center;font-size:1.2rem}
+.quick-action-label{font-size:0.7rem;font-weight:700}
+.filter-bar{background:var(--white);border-radius:var(--radius);padding:15px;margin-bottom:15px;box-shadow:var(--shadow-sm)}
+.filter-bar select,.filter-bar input{width:100%;padding:11px 14px;border:2px solid var(--gray-200);border-radius:var(--radius-sm);font-family:'Cairo',sans-serif;font-size:0.85rem;background:var(--white);color:var(--navy);margin-bottom:8px}
+.filter-bar select:last-child,.filter-bar input:last-child{margin-bottom:0}
+.filter-bar select:focus,.filter-bar input:focus{outline:none;border-color:var(--primary)}
+.booking-card{background:var(--white);border-radius:var(--radius);padding:18px;margin-bottom:12px;box-shadow:var(--shadow-sm);border-right:5px solid var(--gray-400)}
+.booking-card.pending{border-right-color:var(--warning)}
+.booking-card.confirmed{border-right-color:var(--success)}
+.booking-card.rejected{border-right-color:var(--danger)}
+.booking-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;padding-bottom:12px;border-bottom:1px dashed var(--gray-200)}
+.booking-id{font-family:'Courier New',monospace;font-weight:900;color:var(--primary-dark);font-size:0.9rem}
+.booking-status{padding:4px 12px;border-radius:50px;font-size:0.7rem;font-weight:700}
+.booking-status.pending{background:rgba(255,193,7,0.2);color:#856404}
+.booking-status.confirmed{background:rgba(40,167,69,0.2);color:#155724}
+.booking-status.rejected{background:rgba(220,53,69,0.2);color:#721c24}
+.booking-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}
+.booking-info-item .label{color:var(--gray-600);font-size:0.7rem;display:block;margin-bottom:2px}
+.booking-info-item .value{color:var(--navy);font-weight:700;font-size:0.85rem}
+.booking-actions{display:flex;gap:6px;flex-wrap:wrap;padding-top:12px;border-top:1px dashed var(--gray-200)}
+.action-btn{padding:9px 14px;border-radius:50px;border:none;font-family:'Cairo',sans-serif;font-size:0.75rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:5px;flex:1;justify-content:center;min-width:80px}
+.action-btn:active{transform:scale(0.95)}
+.action-btn.confirm{background:var(--success);color:var(--white)}
+.action-btn.reject{background:var(--danger);color:var(--white)}
+.action-btn.whatsapp{background:#25D366;color:var(--white)}
+.action-btn.view{background:var(--navy);color:var(--white)}
+.action-btn.print{background:var(--info);color:var(--white)}
+.action-btn.delete{background:var(--gray-200);color:var(--gray-600);flex:0;min-width:auto;padding:9px 12px}
+.no-bookings{background:var(--white);border-radius:var(--radius);padding:50px 20px;text-align:center;color:var(--gray-600);box-shadow:var(--shadow-sm)}
+.no-bookings i{font-size:3rem;color:var(--gray-200);margin-bottom:15px;display:block}
+.block-section{background:var(--white);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm);margin-bottom:15px}
+.block-section h3{color:var(--navy);font-size:1rem;margin-bottom:15px;display:flex;align-items:center;gap:8px}
+.block-section h3 i{color:var(--primary)}
+.block-form{display:flex;flex-direction:column;gap:10px;margin-bottom:15px}
+.block-form input,.block-form select{width:100%;padding:12px;border:2px solid var(--gray-200);border-radius:var(--radius-sm);font-family:'Cairo',sans-serif;font-size:0.85rem;background:var(--white)}
+.block-form input:focus,.block-form select:focus{outline:none;border-color:var(--primary)}
+.block-form button{padding:12px 20px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:var(--navy);border:none;border-radius:var(--radius-sm);font-family:'Cairo',sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer}
+.blocked-list{display:flex;flex-direction:column;gap:8px}
+.blocked-item{display:flex;justify-content:space-between;align-items:center;padding:12px 15px;background:var(--gray-100);border-radius:var(--radius-sm)}
+.blocked-item .date{font-weight:700;color:var(--navy);font-size:0.9rem}
+.blocked-item .reason{color:var(--gray-600);font-size:0.75rem;margin-top:2px}
+.blocked-item button{background:var(--danger);color:var(--white);border:none;width:32px;height:32px;border-radius:50%;cursor:pointer}
+.no-blocked{text-align:center;color:var(--gray-600);padding:20px;font-size:0.85rem}
+.settings-card{background:var(--white);border-radius:var(--radius);padding:20px;margin-bottom:15px;box-shadow:var(--shadow-sm)}
+.settings-card h3{color:var(--navy);font-size:1rem;margin-bottom:15px;display:flex;align-items:center;gap:8px}
+.settings-card h3 i{color:var(--primary)}
+.settings-card p{color:var(--gray-600);font-size:0.85rem;line-height:1.8;margin-bottom:10px}
+.settings-card strong{color:var(--primary-dark)}
+.btn-full{width:100%;padding:13px;border-radius:50px;border:none;font-family:'Cairo',sans-serif;font-size:0.9rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-danger{background:var(--danger);color:var(--white)}
+.message-editor{background:var(--white);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm);margin-bottom:15px}
+.message-editor-header{display:flex;align-items:center;gap:10px;margin-bottom:15px;padding-bottom:12px;border-bottom:2px dashed var(--gray-200)}
+.message-editor-icon{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:var(--white);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.message-editor-header h3{color:var(--navy);font-size:1rem;font-weight:700}
+.message-editor-header p{color:var(--gray-600);font-size:0.75rem;margin-top:2px}
+.variables-hint{background:rgba(212,175,55,0.08);border-right:3px solid var(--primary);border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:12px;font-size:0.75rem;color:var(--navy);line-height:1.8}
+.variables-hint code{background:rgba(212,175,55,0.2);padding:2px 6px;border-radius:4px;font-family:'Courier New',monospace;font-size:0.7rem;color:var(--primary-dark);font-weight:700}
+.message-editor textarea{width:100%;min-height:200px;padding:14px;border:2px solid var(--gray-200);border-radius:var(--radius-sm);font-family:'Cairo',sans-serif;font-size:0.85rem;color:var(--navy);line-height:1.8;resize:vertical;background:var(--gray-100)}
+.message-editor textarea:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 4px rgba(212,175,55,0.15);background:var(--white)}
+.message-editor-actions{display:flex;gap:8px;margin-top:12px}
+.message-editor-actions button{flex:1;padding:12px;border-radius:50px;border:none;font-family:'Cairo',sans-serif;font-size:0.85rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
+.btn-save{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:var(--navy);box-shadow:0 6px 20px rgba(212,175,55,0.35)}
+.btn-reset{background:var(--gray-200);color:var(--gray-600)}
+.image-add-form{background:var(--white);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm);margin-bottom:15px}
+.image-add-form h3{color:var(--navy);font-size:0.95rem;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.image-add-form h3 i{color:var(--primary)}
+.image-add-form input{width:100%;padding:12px;border:2px solid var(--gray-200);border-radius:var(--radius-sm);font-family:'Cairo',sans-serif;font-size:0.85rem;margin-bottom:10px;background:var(--white)}
+.image-add-form input:focus{outline:none;border-color:var(--primary)}
+.image-add-form .hint{font-size:0.7rem;color:var(--gray-600);margin-bottom:10px;line-height:1.6}
+.image-add-form .hint code{background:rgba(212,175,55,0.2);padding:2px 5px;border-radius:3px;font-family:monospace;color:var(--primary-dark)}
+.image-add-form button{width:100%;padding:12px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:var(--navy);border:none;border-radius:var(--radius-sm);font-family:'Cairo',sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer}
+.images-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.image-card{background:var(--white);border-radius:var(--radius-sm);overflow:hidden;box-shadow:var(--shadow-sm)}
+.image-card img{width:100%;aspect-ratio:1;object-fit:cover;display:block;background:var(--gray-100)}
+.image-card-info{padding:10px}
+.image-card-info .name{font-size:0.75rem;font-weight:700;color:var(--navy);margin-bottom:4px;word-break:break-all}
+.image-card-info .path{font-size:0.65rem;color:var(--gray-600);font-family:monospace;word-break:break-all;margin-bottom:8px}
+.image-card-actions{display:flex;gap:4px}
+.image-card-actions button{flex:1;padding:6px;border:none;border-radius:6px;font-family:'Cairo',sans-serif;font-size:0.7rem;font-weight:700;cursor:pointer}
+.image-card-actions .copy-btn{background:var(--primary);color:var(--navy)}
+.image-card-actions .del-btn{background:var(--danger);color:var(--white)}
+.offer-form{background:var(--white);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm);margin-bottom:15px}
+.offer-form h3{color:var(--navy);font-size:0.95rem;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.offer-form h3 i{color:var(--primary)}
+.offer-form input,.offer-form textarea{width:100%;padding:12px;border:2px solid var(--gray-200);border-radius:var(--radius-sm);font-family:'Cairo',sans-serif;font-size:0.85rem;margin-bottom:10px;background:var(--white);color:var(--navy)}
+.offer-form textarea{resize:vertical;min-height:70px}
+.offer-form input:focus,.offer-form textarea:focus{outline:none;border-color:var(--primary)}
+.offer-form button{width:100%;padding:13px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:var(--navy);border:none;border-radius:50px;font-family:'Cairo',sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;box-shadow:0 6px 20px rgba(212,175,55,0.35)}
+.offers-list{display:flex;flex-direction:column;gap:10px}
+.offer-item{background:var(--white);border-radius:var(--radius);padding:15px;box-shadow:var(--shadow-sm);border-right:4px solid var(--primary);display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.offer-item.inactive{opacity:0.6;border-right-color:var(--gray-400)}
+.offer-item-content{flex:1}
+.offer-item h4{color:var(--navy);font-size:0.95rem;margin-bottom:5px}
+.offer-item p{color:var(--gray-600);font-size:0.8rem;line-height:1.6;margin-bottom:8px}
+.offer-item-meta{display:flex;flex-wrap:wrap;gap:8px;font-size:0.7rem}
+.offer-badge{padding:3px 10px;border-radius:50px;font-weight:700}
+.offer-badge.discount{background:rgba(40,167,69,0.15);color:var(--success)}
+.offer-badge.date{background:rgba(10,31,68,0.08);color:var(--navy)}
+.offer-item-actions{display:flex;flex-direction:column;gap:6px}
+.offer-item-actions button{width:36px;height:36px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.offer-item-actions .del-btn{background:var(--danger);color:var(--white)}
+.offer-item-actions .toggle-btn{background:var(--primary);color:var(--navy)}
+.price-form{background:var(--white);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm);margin-bottom:15px}
+.price-form h3{color:var(--navy);font-size:1rem;margin-bottom:15px;display:flex;align-items:center;gap:8px;padding-bottom:12px;border-bottom:2px dashed var(--gray-200)}
+.price-form h3 i{color:var(--primary)}
+.price-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.price-field label{display:block;font-size:0.75rem;font-weight:700;color:var(--navy);margin-bottom:5px}
+.price-field input{width:100%;padding:11px;border:2px solid var(--gray-200);border-radius:var(--radius-sm);font-family:'Cairo',sans-serif;font-size:0.9rem;background:var(--white);color:var(--navy);font-weight:700;text-align:center}
+.price-field input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 4px rgba(212,175,55,0.15)}
+.save-prices-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:var(--navy);border:none;border-radius:50px;font-family:'Cairo',sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;box-shadow:0 6px 20px rgba(212,175,55,0.35)}
+.admin-bottom-nav{position:fixed;bottom:0;left:0;right:0;height:80px;background:rgba(255,255,255,0.98);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border-top:1px solid rgba(212,175,55,0.15);box-shadow:0 -8px 30px rgba(10,31,68,0.08);z-index:100;display:flex;align-items:center;padding:0 5px;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.admin-bottom-nav::-webkit-scrollbar{display:none}
+.admin-nav-item{flex:0 0 70px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--gray-600);text-decoration:none;font-size:0.55rem;font-weight:600;padding:8px 0;position:relative;cursor:pointer;border:none;background:transparent;font-family:'Cairo',sans-serif}
+.admin-nav-item i{font-size:1.1rem;transition:var(--transition)}
+.admin-nav-item.active{color:var(--primary)}
+.admin-nav-item.active i{transform:translateY(-3px);filter:drop-shadow(0 4px 10px rgba(212,175,55,0.4))}
+.admin-nav-item .badge{position:absolute;top:4px;right:calc(50% - 18px);background:var(--danger);color:var(--white);font-size:0.55rem;font-weight:700;min-width:16px;height:16px;border-radius:50px;display:none;align-items:center;justify-content:center;padding:0 4px}
+.admin-nav-item .badge.show{display:flex}
+.page{display:none}
+.page.active{display:block;animation:fadeIn 0.3s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.modal{position:fixed;inset:0;background:rgba(5,21,48,0.9);z-index:2000;display:none;align-items:center;justify-content:center;padding:20px;overflow-y:auto}
+.modal.show{display:flex}
+.modal-content{background:var(--white);border-radius:var(--radius);max-width:500px;width:100%;max-height:90vh;overflow-y:auto;padding:25px;position:relative}
+.modal-close{position:absolute;top:15px;left:15px;width:35px;height:35px;border-radius:50%;background:var(--gray-200);color:var(--navy);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.modal-content h2{color:var(--navy);font-size:1.2rem;margin-bottom:20px;padding-bottom:15px;border-bottom:2px dashed var(--gray-200);font-family:'Amiri',serif}
+.modal-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--gray-100);font-size:0.85rem}
+.modal-row .label{color:var(--gray-600)}
+.modal-row .value{color:var(--navy);font-weight:700}
+.modal-receipt{margin-top:15px;text-align:center}
+.modal-receipt img{max-width:100%;max-height:300px;border-radius:var(--radius-sm);border:2px solid var(--primary)}
+.modal-payment-section{margin:12px 0;padding:12px 14px;border-radius:var(--radius-sm)}
+.modal-payment-section-title{font-size:0.7rem;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:5px;text-transform:uppercase}
+.modal-payment-section.now{background:linear-gradient(135deg,rgba(212,175,55,0.15),rgba(212,175,55,0.05));border:2px solid var(--primary)}
+.modal-payment-section.now .modal-payment-section-title{color:var(--primary-dark)}
+.modal-payment-section.later{background:linear-gradient(135deg,rgba(10,31,68,0.06),rgba(10,31,68,0.02));border:2px solid rgba(10,31,68,0.2)}
+.modal-payment-section.later .modal-payment-section-title{color:var(--navy)}
+.modal-payment-section.refund{background:linear-gradient(135deg,rgba(40,167,69,0.1),rgba(40,167,69,0.03));border:2px solid rgba(40,167,69,0.3)}
+.modal-payment-section.refund .modal-payment-section-title{color:var(--success)}
+.modal-payment-row{display:flex;justify-content:space-between;padding:5px 0;font-size:0.8rem}
+.modal-payment-section.now .modal-payment-row:last-child{border-top:1px dashed var(--primary);margin-top:5px;padding-top:8px;font-weight:900}
+.modal-payment-section.now .modal-payment-row:last-child strong{color:var(--primary-dark)}
+.modal-payment-section.refund .modal-payment-row strong{color:var(--success)}
+.toast{position:fixed;top:90px;left:50%;transform:translateX(-50%) translateY(-100px);background:var(--navy);color:var(--white);padding:14px 28px;border-radius:50px;font-weight:600;font-size:0.85rem;box-shadow:var(--shadow-lg);z-index:9999;transition:transform 0.3s;font-family:'Cairo',sans-serif;max-width:90%;text-align:center}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.success{background:var(--success)}
+.toast.error{background:var(--danger)}
+.toast.warning{background:var(--warning);color:var(--navy)}
+@media print{body *{visibility:hidden}#printArea,#printArea *{visibility:visible}#printArea{position:absolute;left:0;top:0;width:100%;padding:20px}}
+</style>
 </head>
 <body>
 
-<!-- Login -->
 <div class="login-screen" id="loginScreen">
-    <div class="login-card">
-        <div class="login-icon"><i class="fas fa-lock"></i></div>
-        <h1>لوحة التحكم</h1>
-        <p>استراحة وهج</p>
-        
-        <div class="login-error" id="loginError">
-            <i class="fas fa-exclamation-circle"></i> كلمة السر غير صحيحة
-        </div>
-        
-        <input type="password" id="passwordInput" class="login-input" placeholder="••••••••" autocomplete="off">
-        
-        <button class="login-btn" id="loginBtn">
-            <i class="fas fa-sign-in-alt"></i> دخول
-        </button>
-        
-        <a href="index.html" style="display: inline-block; margin-top: 15px; color: var(--gray-600); font-size: 0.85rem; text-decoration: none;">
-            <i class="fas fa-arrow-right"></i> العودة للرئيسية
-        </a>
-    </div>
+<div class="login-card">
+<div class="login-icon"><i class="fas fa-lock"></i></div>
+<h1>لوحة التحكم</h1>
+<p>استراحة وهج</p>
+<div class="login-error" id="loginError"><i class="fas fa-exclamation-circle"></i> كلمة السر غير صحيحة</div>
+<input type="password" id="passwordInput" class="login-input" placeholder="••••••••" autocomplete="off">
+<button class="login-btn" id="loginBtn"><i class="fas fa-sign-in-alt"></i> دخول</button>
+<a href="index.html" style="display:inline-block;margin-top:15px;color:var(--gray-600);font-size:0.85rem;text-decoration:none;"><i class="fas fa-arrow-right"></i> العودة للرئيسية</a>
+</div>
 </div>
 
-<!-- Admin Panel -->
 <div class="admin-panel" id="adminPanel">
-    
-    <header class="admin-header">
-        <div class="admin-logo">
-            <div class="admin-logo-icon" id="headerLogoIcon"></div>
-            <span>لوحة التحكم</span>
-        </div>
-        <div style="display: flex; gap: 8px;">
-            <button class="admin-header-btn" onclick="refreshData()"><i class="fas fa-sync-alt"></i></button>
-            <button class="admin-header-btn" onclick="exportData()"><i class="fas fa-download"></i></button>
-            <button class="admin-header-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i></button>
-        </div>
-    </header>
-    
-    <div class="admin-container">
-        
-        <!-- ═══ Dashboard ═══ -->
-        <div class="page active" id="page-dashboard">
-            <h1 class="page-title">الرئيسية</h1>
-            
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <div class="stat-icon-sm"><i class="fas fa-calendar-check"></i></div>
-                    </div>
-                    <div class="stat-value" id="statTotal">0</div>
-                    <div class="stat-label">إجمالي الحجوزات</div>
-                </div>
-                <div class="stat-card pending">
-                    <div class="stat-header">
-                        <div class="stat-icon-sm"><i class="fas fa-clock"></i></div>
-                    </div>
-                    <div class="stat-value" id="statPending">0</div>
-                    <div class="stat-label">بانتظار التأكيد</div>
-                </div>
-                <div class="stat-card confirmed">
-                    <div class="stat-header">
-                        <div class="stat-icon-sm"><i class="fas fa-check"></i></div>
-                    </div>
-                    <div class="stat-value" id="statConfirmed">0</div>
-                    <div class="stat-label">مؤكدة</div>
-                </div>
-                <div class="stat-card revenue">
-                    <div class="stat-header">
-                        <div class="stat-icon-sm"><i class="fas fa-money-bill-wave"></i></div>
-                    </div>
-                    <div class="stat-value" id="statRevenue">0</div>
-                    <div class="stat-label">إيرادات (ر.ع)</div>
-                </div>
-            </div>
-            
-            <div class="quick-actions">
-                <a href="booking.html" target="_blank" class="quick-action">
-                    <div class="quick-action-icon"><i class="fas fa-plus"></i></div>
-                    <div class="quick-action-label">حجز جديد</div>
-                </a>
-                <div class="quick-action" onclick="switchPage('blocked')">
-                    <div class="quick-action-icon"><i class="fas fa-ban"></i></div>
-                    <div class="quick-action-label">حجب تاريخ</div>
-                </div>
-                <div class="quick-action" onclick="switchPage('bookings')">
-                    <div class="quick-action-icon"><i class="fas fa-list"></i></div>
-                    <div class="quick-action-label">الحجوزات</div>
-                </div>
-                <div class="quick-action" onclick="switchPage('settings')">
-                    <div class="quick-action-icon"><i class="fas fa-cog"></i></div>
-                    <div class="quick-action-label">إعدادات</div>
-                </div>
-            </div>
-            
-            <h3 class="page-title" style="font-size: 1.1rem;">آخر الحجوزات</h3>
-            <div id="dashboardBookings"></div>
-        </div>
-        
-        <!-- ═══ Bookings ═══ -->
-        <div class="page" id="page-bookings">
-            <h1 class="page-title">الحجوزات</h1>
-            
-            <div class="filter-bar">
-                <select id="statusFilter">
-                    <option value="all">جميع الحالات</option>
-                    <option value="pending">بانتظار التأكيد</option>
-                    <option value="confirmed">مؤكدة</option>
-                    <option value="rejected">مرفوضة</option>
-                </select>
-                <input type="text" id="searchInput" placeholder="ابحث بالاسم، الجوال، رقم الحجز...">
-            </div>
-            
-            <div id="bookingsList"></div>
-        </div>
-        
-        <!-- ═══ Blocked ═══ -->
-        <div class="page" id="page-blocked">
-            <h1 class="page-title">حجب التواريخ</h1>
-            
-            <div class="block-section">
-                <h3><i class="fas fa-plus-circle"></i> إضافة تاريخ محجوب</h3>
-                <div class="block-form">
-                    <input type="date" id="blockDate">
-                    <select id="blockType">
-                        <option value="maintenance">صيانة</option>
-                        <option value="personal">شخصي (معرفة)</option>
-                        <option value="reserved">محجوز يدوياً</option>
-                        <option value="other">أخرى</option>
-                    </select>
-                    <input type="text" id="blockReason" placeholder="ملاحظة (اختياري)">
-                    <button onclick="addBlocked()"><i class="fas fa-plus"></i> إضافة</button>
-                </div>
-                <p style="color: var(--gray-600); font-size: 0.75rem;">
-                    💡 التواريخ المحجوبة <strong>لن تظهر</strong> للعملاء في صفحة الحجز
-                </p>
-            </div>
-            
-            <div class="block-section">
-                <h3><i class="fas fa-list"></i> التواريخ المحجوبة</h3>
-                <div class="blocked-list" id="blockedList"></div>
-            </div>
-        </div>
-        
-        <!-- ═══ Messages ═══ -->
-        <div class="page" id="page-messages">
-            <h1 class="page-title">تعديل الرسائل</h1>
-            
-            <div class="variables-hint">
-                <strong>💡 المتغيرات المتاحة:</strong><br>
-                <code>{{name}}</code> اسم العميل &nbsp;
-                <code>{{date}}</code> التاريخ &nbsp;
-                <code>{{bookingId}}</code> رقم الحجز<br>
-                <code>{{total}}</code> الإجمالي &nbsp;
-                <code>{{deposit}}</code> العربون &nbsp;
-                <code>{{remaining}}</code> الباقي<br>
-                <code>{{payNow}}</code> المطلوب الآن &nbsp;
-                <code>{{security}}</code> التأمين &nbsp;
-                <code>{{guests}}</code> الضيوف
-            </div>
-            
-            <div class="message-editor">
-                <div class="message-editor-header">
-                    <div class="message-editor-icon"><i class="fas fa-check-circle"></i></div>
-                    <div>
-                        <h3>رسالة التأكيد</h3>
-                        <p>تُرسل للعميل عند قبول الحجز</p>
-                    </div>
-                </div>
-                <textarea id="msgConfirm"></textarea>
-                <div class="message-editor-actions">
-                    <button class="btn-save" onclick="saveMessage('confirm')"><i class="fas fa-save"></i> حفظ</button>
-                    <button class="btn-reset" onclick="resetMessage('confirm')"><i class="fas fa-undo"></i> استرجاع</button>
-                </div>
-            </div>
-            
-            <div class="message-editor">
-                <div class="message-editor-header">
-                    <div class="message-editor-icon"><i class="fas fa-times-circle"></i></div>
-                    <div>
-                        <h3>رسالة الرفض</h3>
-                        <p>تُرسل للعميل عند رفض الحجز</p>
-                    </div>
-                </div>
-                <textarea id="msgReject"></textarea>
-                <div class="message-editor-actions">
-                    <button class="btn-save" onclick="saveMessage('reject')"><i class="fas fa-save"></i> حفظ</button>
-                    <button class="btn-reset" onclick="resetMessage('reject')"><i class="fas fa-undo"></i> استرجاع</button>
-                </div>
-            </div>
-            
-            <div class="message-editor">
-                <div class="message-editor-header">
-                    <div class="message-editor-icon"><i class="fas fa-bell"></i></div>
-                    <div>
-                        <h3>رسالة تذكير</h3>
-                        <p>تُرسل للعميل قبل الحجز بيوم</p>
-                    </div>
-                </div>
-                <textarea id="msgReminder"></textarea>
-                <div class="message-editor-actions">
-                    <button class="btn-save" onclick="saveMessage('reminder')"><i class="fas fa-save"></i> حفظ</button>
-                    <button class="btn-reset" onclick="resetMessage('reminder')"><i class="fas fa-undo"></i> استرجاع</button>
-                </div>
-            </div>
-        </div>
-        
-        <!-- ═══ Images ═══ -->
-        <div class="page" id="page-images">
-            <h1 class="page-title">إدارة الصور</h1>
-            
-            <div class="image-add-form">
-                <h3 style="color: var(--navy); font-size: 0.95rem; margin-bottom: 12px;">
-                    <i class="fas fa-plus-circle" style="color: var(--primary);"></i>
-                    إضافة صورة
-                </h3>
-                <input type="text" id="imgName" placeholder="اسم الصورة (مثال: المسبح الرئيسي)">
-                <input type="text" id="imgPath" placeholder="مسار الصورة (مثال: images/gallery/pool.jpg)">
-                <p style="font-size: 0.7rem; color: var(--gray-600); margin-bottom: 10px;">
-                    💡 ارفع الصور يدوياً إلى <code style="background: rgba(212,175,55,0.2); padding: 2px 5px; border-radius: 3px;">images/gallery/</code> في GitHub، ثم أضف المسار هنا.
-                </p>
-                <button onclick="addImage()"><i class="fas fa-plus"></i> إضافة الصورة</button>
-            </div>
-            
-            <div class="block-section">
-                <h3><i class="fas fa-images"></i> الصور الحالية</h3>
-                <div class="images-grid" id="imagesGrid"></div>
-            </div>
-        </div>
-        
-        <!-- ═══ Offers ═══ -->
-        <div class="page" id="page-offers">
-            <h1 class="page-title">العروض والخصومات</h1>
-            
-            <div class="offer-form">
-                <h3 style="color: var(--navy); font-size: 0.95rem; margin-bottom: 12px;">
-                    <i class="fas fa-plus-circle" style="color: var(--primary);"></i>
-                    إضافة عرض جديد
-                </h3>
-                <input type="text" id="offerTitle" placeholder="عنوان العرض (مثال: خصم الويكند)">
-                <textarea id="offerDesc" placeholder="وصف العرض (مثال: خصم 20% على جميع حجوزات الويكند)"></textarea>
-                <input type="date" id="offerStart" placeholder="تاريخ البداية">
-                <input type="date" id="offerEnd" placeholder="تاريخ النهاية">
-                <input type="number" id="offerDiscount" placeholder="نسبة الخصم % (اختياري)">
-                <button onclick="addOffer()"><i class="fas fa-plus"></i> إضافة العرض</button>
-            </div>
-            
-            <div class="block-section">
-                <h3><i class="fas fa-gift"></i> العروض الحالية</h3>
-                <div class="offers-list" id="offersList"></div>
-            </div>
-        </div>
-        
-        <!-- ═══ Prices ═══ -->
-        <div class="page" id="page-prices">
-            <h1 class="page-title">تعديل الأسعار</h1>
-            
-            <div class="price-form">
-                <h3><i class="fas fa-sun"></i> أيام الأسبوع (الأحد - الأربعاء)</h3>
-                <div class="price-row">
-                    <div class="price-field">
-                        <label>بدون مبيت (ر.ع)</label>
-                        <input type="number" id="weekdayWithoutStay" min="0">
-                    </div>
-                    <div class="price-field">
-                        <label>مع مبيت (ر.ع)</label>
-                        <input type="number" id="weekdayWithStay" min="0">
-                    </div>
-                </div>
-                <div class="price-row">
-                    <div class="price-field">
-                        <label>نصف يوم (ر.ع)</label>
-                        <input type="number" id="weekdayHalfDay" min="0">
-                    </div>
-                    <div class="price-field"></div>
-                </div>
-            </div>
-            
-            <div class="price-form">
-                <h3><i class="fas fa-star"></i> الويكند (الخميس - السبت)</h3>
-                <div class="price-row">
-                    <div class="price-field">
-                        <label>بدون مبيت (ر.ع)</label>
-                        <input type="number" id="weekendWithoutStay" min="0">
-                    </div>
-                    <div class="price-field">
-                        <label>مع مبيت (ر.ع)</label>
-                        <input type="number" id="weekendWithStay" min="0">
-                    </div>
-                </div>
-                <div class="price-row">
-                    <div class="price-field">
-                        <label>نصف يوم (ر.ع)</label>
-                        <input type="number" id="weekendHalfDay" min="0">
-                    </div>
-                    <div class="price-field"></div>
-                </div>
-            </div>
-            
-            <div class="price-form">
-                <h3><i class="fas fa-shield-alt"></i> التأمين</h3>
-                <div class="price-row">
-                    <div class="price-field">
-                        <label>مبلغ التأمين (ر.ع)</label>
-                        <input type="number" id="securityDeposit" min="0">
-                    </div>
-                    <div class="price-field"></div>
-                </div>
-            </div>
-            
-            <button class="btn-full" style="background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: var(--navy);" onclick="savePrices()">
-                <i class="fas fa-save"></i> حفظ الأسعار
-            </button>
-        </div>
-        
-        <!-- ═══ Settings ═══ -->
-        <div class="page" id="page-settings">
-            <h1 class="page-title">الإعدادات</h1>
-            
-            <div class="settings-card">
-                <h3><i class="fas fa-info-circle"></i> معلومات النظام</h3>
-                <p>البيانات محفوظة في <strong>localStorage</strong> (على هذا الجهاز).</p>
-            </div>
-            
-            <div class="settings-card">
-                <h3><i class="fas fa-key"></i> كلمة السر</h3>
-                <p>الحالية: <strong>wahaj2026</strong></p>
-                <p style="font-size: 0.75rem;">لتغييرها، عدّل ملف <code>admin.html</code></p>
-            </div>
-            
-            <div class="settings-card">
-                <h3><i class="fas fa-database"></i> البيانات</h3>
-                <p>عدد الحجوزات: <strong id="settingsBookingsCount">0</strong></p>
-                <p>عدد التواريخ المحجوبة: <strong id="settingsBlockedCount">0</strong></p>
-                <p>عدد العروض: <strong id="settingsOffersCount">0</strong></p>
-                <p>عدد الصور: <strong id="settingsImagesCount">0</strong></p>
-                <button class="btn-full btn-danger" onclick="clearAllData()" style="margin-top: 10px;">
-                    <i class="fas fa-trash"></i> مسح جميع البيانات
-                </button>
-            </div>
-        </div>
-        
-    </div>
-    
-    <!-- Bottom Nav -->
-    <nav class="admin-bottom-nav">
-        <button class="admin-nav-item active" data-page="dashboard" onclick="switchPage('dashboard')">
-            <i class="fas fa-home"></i>
-            <span>الرئيسية</span>
-        </button>
-        <button class="admin-nav-item" data-page="bookings" onclick="switchPage('bookings')">
-            <i class="fas fa-calendar-check"></i>
-            <span>الحجوزات</span>
-            <span class="badge" id="navBadge"></span>
-        </button>
-        <button class="admin-nav-item" data-page="blocked" onclick="switchPage('blocked')">
-            <i class="fas fa-ban"></i>
-            <span>حجب</span>
-        </button>
-        <button class="admin-nav-item" data-page="messages" onclick="switchPage('messages')">
-            <i class="fas fa-comment-dots"></i>
-            <span>الرسائل</span>
-        </button>
-        <button class="admin-nav-item" data-page="images" onclick="switchPage('images')">
-            <i class="fas fa-images"></i>
-            <span>الصور</span>
-        </button>
-        <button class="admin-nav-item" data-page="offers" onclick="switchPage('offers')">
-            <i class="fas fa-gift"></i>
-            <span>عروض</span>
-        </button>
-        <button class="admin-nav-item" data-page="prices" onclick="switchPage('prices')">
-            <i class="fas fa-money-bill"></i>
-            <span>أسعار</span>
-        </button>
-        <button class="admin-nav-item" data-page="settings" onclick="switchPage('settings')">
-            <i class="fas fa-cog"></i>
-            <span>إعدادات</span>
-        </button>
-    </nav>
-    
+<header class="admin-header">
+<div class="admin-logo">
+<div class="admin-logo-icon" id="headerLogoIcon"></div>
+<span>لوحة التحكم</span>
+</div>
+<div style="display:flex;gap:8px;">
+<button class="admin-header-btn" onclick="refreshData()"><i class="fas fa-sync-alt"></i></button>
+<button class="admin-header-btn" onclick="exportData()"><i class="fas fa-download"></i></button>
+<button class="admin-header-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i></button>
+</div>
+</header>
+
+<div class="admin-container">
+
+<div class="page active" id="page-dashboard">
+<h1 class="page-title">الرئيسية</h1>
+<div class="stats-grid">
+<div class="stat-card"><div class="stat-header"><div class="stat-icon-sm"><i class="fas fa-calendar-check"></i></div></div><div class="stat-value" id="statTotal">0</div><div class="stat-label">إجمالي الحجوزات</div></div>
+<div class="stat-card pending"><div class="stat-header"><div class="stat-icon-sm"><i class="fas fa-clock"></i></div></div><div class="stat-value" id="statPending">0</div><div class="stat-label">بانتظار التأكيد</div></div>
+<div class="stat-card confirmed"><div class="stat-header"><div class="stat-icon-sm"><i class="fas fa-check"></i></div></div><div class="stat-value" id="statConfirmed">0</div><div class="stat-label">مؤكدة</div></div>
+<div class="stat-card revenue"><div class="stat-header"><div class="stat-icon-sm"><i class="fas fa-money-bill-wave"></i></div></div><div class="stat-value" id="statRevenue">0</div><div class="stat-label">إيرادات (ر.ع)</div></div>
+</div>
+<div class="quick-actions">
+<a href="booking.html" target="_blank" class="quick-action"><div class="quick-action-icon"><i class="fas fa-plus"></i></div><div class="quick-action-label">حجز جديد</div></a>
+<div class="quick-action" onclick="switchPage('blocked')"><div class="quick-action-icon"><i class="fas fa-ban"></i></div><div class="quick-action-label">حجب تاريخ</div></div>
+<div class="quick-action" onclick="switchPage('bookings')"><div class="quick-action-icon"><i class="fas fa-list"></i></div><div class="quick-action-label">الحجوزات</div></div>
+<div class="quick-action" onclick="switchPage('settings')"><div class="quick-action-icon"><i class="fas fa-cog"></i></div><div class="quick-action-label">إعدادات</div></div>
+</div>
+<h3 class="page-title" style="font-size:1.1rem;">آخر الحجوزات</h3>
+<div id="dashboardBookings"></div>
+</div>
+
+<div class="page" id="page-bookings">
+<h1 class="page-title">الحجوزات</h1>
+<div class="filter-bar">
+<select id="statusFilter"><option value="all">جميع الحالات</option><option value="pending">بانتظار التأكيد</option><option value="confirmed">مؤكدة</option><option value="rejected">مرفوضة</option></select>
+<input type="text" id="searchInput" placeholder="ابحث بالاسم، الجوال، رقم الحجز...">
+</div>
+<div id="bookingsList"></div>
+</div>
+
+<div class="page" id="page-blocked">
+<h1 class="page-title">حجب التواريخ</h1>
+<div class="block-section">
+<h3><i class="fas fa-plus-circle"></i> إضافة تاريخ محجوب</h3>
+<div class="block-form">
+<input type="date" id="blockDate">
+<select id="blockType"><option value="maintenance">صيانة</option><option value="personal">شخصي (معرفة)</option><option value="reserved">محجوز يدوياً</option><option value="other">أخرى</option></select>
+<input type="text" id="blockReason" placeholder="ملاحظة (اختياري)">
+<button onclick="addBlocked()"><i class="fas fa-plus"></i> إضافة</button>
+</div>
+<p style="color:var(--gray-600);font-size:0.75rem;">💡 التواريخ المحجوبة <strong>لن تظهر</strong> للعملاء في صفحة الحجز</p>
+</div>
+<div class="block-section">
+<h3><i class="fas fa-list"></i> التواريخ المحجوبة</h3>
+<div class="blocked-list" id="blockedList"></div>
+</div>
+</div>
+
+<div class="page" id="page-messages">
+<h1 class="page-title">تعديل الرسائل</h1>
+<div class="variables-hint"><strong>💡 المتغيرات المتاحة:</strong><br><code>{{name}}</code> الاسم &nbsp;<code>{{date}}</code> التاريخ &nbsp;<code>{{bookingId}}</code> رقم الحجز<br><code>{{total}}</code> الإجمالي &nbsp;<code>{{deposit}}</code> العربون &nbsp;<code>{{remaining}}</code> الباقي<br><code>{{payNow}}</code> المطلوب الآن &nbsp;<code>{{security}}</code> التأمين &nbsp;<code>{{guests}}</code> الضيوف</div>
+<div class="message-editor">
+<div class="message-editor-header"><div class="message-editor-icon"><i class="fas fa-check-circle"></i></div><div><h3>رسالة التأكيد</h3><p>تُرسل للعميل عند قبول الحجز</p></div></div>
+<textarea id="msgConfirm"></textarea>
+<div class="message-editor-actions"><button class="btn-save" onclick="saveMessage('confirm')"><i class="fas fa-save"></i> حفظ</button><button class="btn-reset" onclick="resetMessage('confirm')"><i class="fas fa-undo"></i> استرجاع</button></div>
+</div>
+<div class="message-editor">
+<div class="message-editor-header"><div class="message-editor-icon"><i class="fas fa-times-circle"></i></div><div><h3>رسالة الرفض</h3><p>تُرسل للعميل عند رفض الحجز</p></div></div>
+<textarea id="msgReject"></textarea>
+<div class="message-editor-actions"><button class="btn-save" onclick="saveMessage('reject')"><i class="fas fa-save"></i> حفظ</button><button class="btn-reset" onclick="resetMessage('reject')"><i class="fas fa-undo"></i> استرجاع</button></div>
+</div>
+<div class="message-editor">
+<div class="message-editor-header"><div class="message-editor-icon"><i class="fas fa-bell"></i></div><div><h3>رسالة تذكير</h3><p>تُرسل للعميل قبل الحجز بيوم</p></div></div>
+<textarea id="msgReminder"></textarea>
+<div class="message-editor-actions"><button class="btn-save" onclick="saveMessage('reminder')"><i class="fas fa-save"></i> حفظ</button><button class="btn-reset" onclick="resetMessage('reminder')"><i class="fas fa-undo"></i> استرجاع</button></div>
+</div>
+</div>
+
+<div class="page" id="page-images">
+<h1 class="page-title">إدارة الصور</h1>
+<div class="image-add-form">
+<h3><i class="fas fa-plus-circle"></i> إضافة صورة</h3>
+<input type="text" id="imgName" placeholder="اسم الصورة (مثال: المسبح الرئيسي)">
+<input type="text" id="imgPath" placeholder="المسار (مثال: images/gallery/pool.jpg)">
+<p class="hint">💡 ارفع الصور يدوياً إلى <code>images/gallery/</code> في GitHub، ثم أضف المسار هنا.</p>
+<button onclick="addImage()"><i class="fas fa-plus"></i> إضافة الصورة</button>
+</div>
+<div class="block-section">
+<h3><i class="fas fa-images"></i> الصور الحالية</h3>
+<div class="images-grid" id="imagesGrid"></div>
+</div>
+</div>
+
+<div class="page" id="page-offers">
+<h1 class="page-title">العروض والخصومات</h1>
+<div class="offer-form">
+<h3><i class="fas fa-plus-circle"></i> إضافة عرض جديد</h3>
+<input type="text" id="offerTitle" placeholder="عنوان العرض (مثال: خصم الويكند)">
+<textarea id="offerDesc" placeholder="وصف العرض (مثال: خصم 20% على جميع حجوزات الويكند)"></textarea>
+<input type="date" id="offerStart">
+<input type="date" id="offerEnd">
+<input type="number" id="offerDiscount" placeholder="نسبة الخصم % (اختياري)">
+<button onclick="addOffer()"><i class="fas fa-plus"></i> إضافة العرض</button>
+</div>
+<div class="block-section">
+<h3><i class="fas fa-gift"></i> العروض الحالية</h3>
+<div class="offers-list" id="offersList"></div>
+</div>
+</div>
+
+<div class="page" id="page-prices">
+<h1 class="page-title">تعديل الأسعار</h1>
+<div class="price-form">
+<h3><i class="fas fa-sun"></i> أيام الأسبوع (الأحد - الأربعاء)</h3>
+<div class="price-row">
+<div class="price-field"><label>بدون مبيت (ر.ع)</label><input type="number" id="weekdayWithoutStay" min="0"></div>
+<div class="price-field"><label>مع مبيت (ر.ع)</label><input type="number" id="weekdayWithStay" min="0"></div>
+</div>
+<div class="price-row">
+<div class="price-field"><label>نصف يوم (ر.ع)</label><input type="number" id="weekdayHalfDay" min="0"></div>
+<div class="price-field"></div>
+</div>
+</div>
+<div class="price-form">
+<h3><i class="fas fa-star"></i> الويكند (الخميس - السبت)</h3>
+<div class="price-row">
+<div class="price-field"><label>بدون مبيت (ر.ع)</label><input type="number" id="weekendWithoutStay" min="0"></div>
+<div class="price-field"><label>مع مبيت (ر.ع)</label><input type="number" id="weekendWithStay" min="0"></div>
+</div>
+<div class="price-row">
+<div class="price-field"><label>نصف يوم (ر.ع)</label><input type="number" id="weekendHalfDay" min="0"></div>
+<div class="price-field"></div>
+</div>
+</div>
+<div class="price-form">
+<h3><i class="fas fa-shield-alt"></i> التأمين</h3>
+<div class="price-row">
+<div class="price-field"><label>مبلغ التأمين (ر.ع)</label><input type="number" id="securityDeposit" min="0"></div>
+<div class="price-field"></div>
+</div>
+</div>
+<button class="save-prices-btn" onclick="savePrices()"><i class="fas fa-save"></i> حفظ الأسعار</button>
+</div>
+
+<div class="page" id="page-settings">
+<h1 class="page-title">الإعدادات</h1>
+<div class="settings-card"><h3><i class="fas fa-info-circle"></i> معلومات النظام</h3><p>البيانات محفوظة في <strong>localStorage</strong> (على هذا الجهاز).</p></div>
+<div class="settings-card"><h3><i class="fas fa-key"></i> كلمة السر</h3><p>الحالية: <strong>wahaj2026</strong></p></div>
+<div class="settings-card">
+<h3><i class="fas fa-database"></i> البيانات</h3>
+<p>عدد الحجوزات: <strong id="settingsBookingsCount">0</strong></p>
+<p>عدد التواريخ المحجوبة: <strong id="settingsBlockedCount">0</strong></p>
+<p>عدد العروض: <strong id="settingsOffersCount">0</strong></p>
+<p>عدد الصور: <strong id="settingsImagesCount">0</strong></p>
+<button class="btn-full btn-danger" onclick="clearAllData()" style="margin-top:10px;"><i class="fas fa-trash"></i> مسح جميع البيانات</button>
+</div>
+</div>
+
+</div>
+
+<nav class="admin-bottom-nav">
+<button class="admin-nav-item active" data-page="dashboard" onclick="switchPage('dashboard')"><i class="fas fa-home"></i><span>الرئيسية</span></button>
+<button class="admin-nav-item" data-page="bookings" onclick="switchPage('bookings')"><i class="fas fa-calendar-check"></i><span>الحجوزات</span><span class="badge" id="navBadge"></span></button>
+<button class="admin-nav-item" data-page="blocked" onclick="switchPage('blocked')"><i class="fas fa-ban"></i><span>حجب</span></button>
+<button class="admin-nav-item" data-page="messages" onclick="switchPage('messages')"><i class="fas fa-comment-dots"></i><span>الرسائل</span></button>
+<button class="admin-nav-item" data-page="images" onclick="switchPage('images')"><i class="fas fa-images"></i><span>الصور</span></button>
+<button class="admin-nav-item" data-page="offers" onclick="switchPage('offers')"><i class="fas fa-gift"></i><span>عروض</span></button>
+<button class="admin-nav-item" data-page="prices" onclick="switchPage('prices')"><i class="fas fa-money-bill"></i><span>أسعار</span></button>
+<button class="admin-nav-item" data-page="settings" onclick="switchPage('settings')"><i class="fas fa-cog"></i><span>إعدادات</span></button>
+</nav>
 </div>
 
 <div class="modal" id="detailsModal" onclick="if(event.target===this) closeModal()">
-    <div class="modal-content" id="modalContent"></div>
+<div class="modal-content" id="modalContent"></div>
 </div>
 
 <div class="toast" id="toast"></div>
-<div id="printArea" style="display: none;"></div>
+<div id="printArea" style="display:none;"></div>
 
 <script src="js/admin.js"></script>
-
 </body>
 </html>
