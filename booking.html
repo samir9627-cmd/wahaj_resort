@@ -36,13 +36,63 @@
 .calendar-app-day{aspect-ratio:1;display:flex;align-items:center;justify-content:center;border-radius:10px;cursor:pointer;transition:transform 0.15s,background 0.15s,color 0.15s;font-weight:600;background:var(--white);color:var(--navy);font-size:0.85rem;border:2px solid transparent;user-select:none;-webkit-user-select:none;-webkit-tap-highlight-color:transparent;position:relative;z-index:10}
 .calendar-app-day:not(.empty):not(.disabled):active{transform:scale(0.85)}
 .calendar-app-day.empty{background:transparent;cursor:default;pointer-events:none}
-.calendar-app-day.disabled{background:#FFE5E5;color:#DC3545;cursor:not-allowed;text-decoration:line-through;pointer-events:none;font-weight:900}
 .calendar-app-day.weekend{background:rgba(212,175,55,0.15);color:var(--primary-dark)}
 .calendar-app-day.today{border-color:var(--navy);font-weight:900}
 .calendar-app-day.selected{background:linear-gradient(135deg,var(--primary),var(--primary-dark)) !important;color:var(--white) !important;box-shadow:0 4px 15px rgba(212,175,55,0.5);transform:scale(1.05);border-color:var(--primary) !important}
+
+/* ═══ التاريخ المحجوز - أحمر بارز ═══ */
+.calendar-app-day.blocked {
+    background: linear-gradient(135deg, #FFE5E5, #FFCCCC) !important;
+    color: #DC3545 !important;
+    border: 2px solid #DC3545 !important;
+    position: relative;
+    font-weight: 900;
+    cursor: not-allowed !important;
+    text-decoration: line-through;
+    opacity: 1 !important;
+}
+.calendar-app-day.blocked .blocked-mark {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: #DC3545;
+    color: white;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    font-size: 0.7rem;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(220, 53, 69, 0.5);
+    animation: blockedPulse 1.5s infinite;
+    z-index: 20;
+}
+@keyframes blockedPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+}
+.calendar-app-day.blocked::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(45deg, rgba(220, 53, 69, 0.08), rgba(220, 53, 69, 0.08) 5px, transparent 5px, transparent 10px);
+    border-radius: 8px;
+    pointer-events: none;
+}
+.calendar-app-day.past {
+    background: var(--gray-100) !important;
+    color: var(--gray-400) !important;
+    opacity: 0.5;
+    cursor: not-allowed !important;
+    text-decoration: line-through;
+}
+
 .calendar-app-legend{display:flex;gap:12px;justify-content:center;margin-top:15px;flex-wrap:wrap;font-size:0.7rem}
 .legend-dot{display:flex;align-items:center;gap:5px;color:var(--gray-600)}
 .legend-dot-color{width:12px;height:12px;border-radius:3px}
+
 .booking-type-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;position:relative;z-index:5}
 .booking-type-app{background:var(--gray-100);border:2px solid transparent;border-radius:var(--radius-sm);padding:15px 8px;text-align:center;cursor:pointer;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;gap:6px;user-select:none;position:relative;z-index:5}
 .booking-type-app:active{transform:scale(0.95)}
@@ -122,6 +172,12 @@
 .secure-note-app i{color:var(--success)}
 .warning-row{background:rgba(255,193,7,0.1);padding:10px 12px;margin-top:10px;border-radius:8px;border-right:3px solid var(--warning);display:flex;align-items:center;gap:8px;font-size:0.8rem;color:#856404}
 .warning-row i{color:var(--warning)}
+/* Blocked alert */
+.blocked-alert{background:linear-gradient(135deg,#FFE5E5,#FFCCCC);border:2px solid #DC3545;border-radius:var(--radius-sm);padding:15px;margin-bottom:15px;display:flex;align-items:center;gap:12px;animation:blockedShake 0.5s ease}
+.blocked-alert i{color:#DC3545;font-size:1.5rem;flex-shrink:0}
+.blocked-alert strong{color:#DC3545;display:block;font-size:0.95rem;margin-bottom:3px}
+.blocked-alert p{color:#721c24;font-size:0.8rem;margin:0}
+@keyframes blockedShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
 </style>
 </head>
 <body>
@@ -166,7 +222,7 @@
 <div class="legend-dot"><div class="legend-dot-color" style="background:#fff;border:1px solid #E9ECEF;"></div><span>متاح</span></div>
 <div class="legend-dot"><div class="legend-dot-color" style="background:rgba(212,175,55,0.3);"></div><span>ويكند</span></div>
 <div class="legend-dot"><div class="legend-dot-color" style="background:#D4AF37;"></div><span>مختار</span></div>
-<div class="legend-dot"><div class="legend-dot-color" style="background:#FFE5E5;border:1px solid #DC3545;"></div><span>محجوز</span></div>
+<div class="legend-dot"><div class="legend-dot-color" style="background:linear-gradient(135deg,#FFE5E5,#FFCCCC);border:2px solid #DC3545;"></div><span>محجوز ✕</span></div>
 </div>
 </div>
 </div>
@@ -318,12 +374,7 @@
         return new Date(date).toLocaleDateString('ar-OM', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
     }
     
-    // ═══════════════════════════════════════════════════════
-    // 🔥 تحميل الحجب من Firebase + localStorage
-    // ═══════════════════════════════════════════════════════
-    
     function loadBlocked() {
-        // 1. من localStorage (سريع)
         try {
             var localBlocked = JSON.parse(localStorage.getItem('wahaj_blocked_dates') || '[]');
             var localBookings = JSON.parse(localStorage.getItem('wahaj_bookings') || '[]');
@@ -333,48 +384,29 @@
         } catch(e) { blockedDates = []; }
         
         blockedDates = blockedDates.filter(function(v, i, self) { return self.indexOf(v) === i; });
-        console.log('📅 محلي:', blockedDates.length, 'تاريخ محجوب');
+        console.log('📅 محلي:', blockedDates.length);
         renderCalendar();
         
-        // 2. من Firebase (يحدث لاحقاً)
         if (window.WahajFirebase) {
             window.WahajFirebase.waitForFirebase(function(ready) {
-                if (!ready) {
-                    console.log('ℹ️ Firebase غير متصل');
-                    return;
-                }
-                
+                if (!ready) return;
                 firebaseLoaded = true;
                 
-                // الحجب
                 window.WahajFirebase.getAllBlockedDates().then(function(cloudBlocked) {
                     var cloudDates = cloudBlocked.map(function(i) { return i.date || i; });
-                    blockedDates = blockedDates.concat(cloudDates);
-                    blockedDates = blockedDates.filter(function(v, i, self) { return self.indexOf(v) === i; });
-                    console.log('☁️ تم تحميل', cloudDates.length, 'تاريخ محجوب من السحابة');
-                    console.log('📅 الإجمالي:', blockedDates.length);
+                    blockedDates = blockedDates.concat(cloudDates).filter(function(v, i, self) { return self.indexOf(v) === i; });
+                    console.log('☁️ محجوب من السحابة:', cloudDates.length, '| الإجمالي:', blockedDates.length);
                     renderCalendar();
                 });
                 
-                // الحجوزات المؤكدة (لحجب أيامها)
                 window.WahajFirebase.getAllBookings().then(function(cloudBookings) {
-                    var confirmedDates = cloudBookings
-                        .filter(function(b) { return b.status === 'confirmed'; })
-                        .map(function(b) { return b.date; });
-                    
-                    blockedDates = blockedDates.concat(confirmedDates);
-                    blockedDates = blockedDates.filter(function(v, i, self) { return self.indexOf(v) === i; });
-                    console.log('☁️ تم تحميل', confirmedDates.length, 'حجز مؤكد');
+                    var confirmedDates = cloudBookings.filter(function(b) { return b.status === 'confirmed'; }).map(function(b) { return b.date; });
+                    blockedDates = blockedDates.concat(confirmedDates).filter(function(v, i, self) { return self.indexOf(v) === i; });
                     renderCalendar();
                 });
-                
             }, 5000);
         }
     }
-    
-    // ═══════════════════════════════════════════════════════
-    // التقويم
-    // ═══════════════════════════════════════════════════════
     
     function renderCalendar() {
         var year = currentMonth.getFullYear();
@@ -410,12 +442,15 @@
             if (isSameDay(date, new Date())) dayEl.classList.add('today');
             if (isWeekend) dayEl.classList.add('weekend');
             
-            // ⚠️ التحقق من الحجب والماضي
-            if (isPast(date) || blockedDates.indexOf(dateStr) !== -1) {
-                dayEl.classList.add('disabled');
-                if (blockedDates.indexOf(dateStr) !== -1 && !isPast(date)) {
-                    dayEl.title = 'محجوز';
-                }
+            var isBlocked = blockedDates.indexOf(dateStr) !== -1;
+            var isPastDate = isPast(date);
+            
+            if (isPastDate) {
+                dayEl.classList.add('disabled', 'past');
+            } else if (isBlocked) {
+                dayEl.classList.add('disabled', 'blocked');
+                dayEl.innerHTML = day + '<span class="blocked-mark">✕</span>';
+                dayEl.title = '🚫 محجوز - غير متاح';
             } else {
                 (function(d, el) {
                     el.onclick = function(e) {
@@ -439,15 +474,9 @@
         
         var html = '';
         CONFIG.depositOptions.forEach(function(amount) {
-            html += '<div class="deposit-option" data-deposit="' + amount + '">' +
-                '<span class="deposit-option-amount">' + amount + '</span>' +
-                '<span class="deposit-option-label">ر.ع</span>' +
-            '</div>';
+            html += '<div class="deposit-option" data-deposit="' + amount + '"><span class="deposit-option-amount">' + amount + '</span><span class="deposit-option-label">ر.ع</span></div>';
         });
-        html += '<div class="deposit-option full" data-deposit="full">' +
-            '<span class="deposit-option-amount"><i class="fas fa-check-circle"></i> دفع كامل</span>' +
-            '<span class="deposit-option-label">ادفع المبلغ كاملاً الآن</span>' +
-        '</div>';
+        html += '<div class="deposit-option full" data-deposit="full"><span class="deposit-option-amount"><i class="fas fa-check-circle"></i> دفع كامل</span><span class="deposit-option-label">ادفع المبلغ كاملاً الآن</span></div>';
         
         grid.innerHTML = html;
         
@@ -513,16 +542,11 @@
         var dayTypeName = dayType === 'weekday' ? 'يوم عادي' : 'ويكند';
         var total = calculatePrice();
         
-        var typeName = selectedBookingType === 'without_stay' ? 'بدون مبيت' :
-                       selectedBookingType === 'with_stay' ? 'مع مبيت' : 'نصف يوم';
-        var typeIcon = selectedBookingType === 'without_stay' ? '☀️' :
-                       selectedBookingType === 'with_stay' ? '🌙' : '⏰';
-        var timeDesc = selectedBookingType === 'without_stay' ? '9ص - 10م' :
-                       selectedBookingType === 'with_stay' ? '9ص - 7ص' :
-                       (selectedHalfDayPeriod === 'morning' ? '9ص - 3م' : '4م - 10م');
+        var typeName = selectedBookingType === 'without_stay' ? 'بدون مبيت' : selectedBookingType === 'with_stay' ? 'مع مبيت' : 'نصف يوم';
+        var typeIcon = selectedBookingType === 'without_stay' ? '☀️' : selectedBookingType === 'with_stay' ? '🌙' : '⏰';
+        var timeDesc = selectedBookingType === 'without_stay' ? '9ص - 10م' : selectedBookingType === 'with_stay' ? '9ص - 7ص' : (selectedHalfDayPeriod === 'morning' ? '9ص - 3م' : '4م - 10م');
         
-        var html = 
-            '<div class="summary-app-row"><span>📅 التاريخ:</span><strong>' + formatArabicDate(selectedDate) + '</strong></div>' +
+        var html = '<div class="summary-app-row"><span>📅 التاريخ:</span><strong>' + formatArabicDate(selectedDate) + '</strong></div>' +
             '<div class="summary-app-row"><span>🏷️ نوع اليوم:</span><strong>' + dayTypeName + '</strong></div>' +
             '<div class="summary-app-row"><span>⏰ نوع الحجز:</span><strong>' + typeIcon + ' ' + typeName + '</strong></div>' +
             '<div class="summary-app-row"><span>🕐 التوقيت:</span><strong style="font-size:0.75rem;">' + timeDesc + '</strong></div>' +
@@ -542,29 +566,18 @@
         var payNow = deposit + security;
         var isFullPayment = (selectedDeposit === 'full');
         
-        html += '<div class="summary-section now">' +
-            '<div class="summary-section-title"><i class="fas fa-credit-card"></i> يُدفع الآن</div>' +
+        html += '<div class="summary-section now"><div class="summary-section-title"><i class="fas fa-credit-card"></i> يُدفع الآن</div>' +
             '<div class="summary-row"><span>💵 العربون' + (isFullPayment ? ' (دفع كامل)' : '') + ':</span><strong>' + deposit + ' ر.ع</strong></div>' +
             '<div class="summary-row"><span>🛡️ التأمين:</span><strong>' + security + ' ر.ع</strong></div>' +
-            '<div class="summary-row"><span>✅ الإجمالي:</span><strong>' + payNow + ' ر.ع</strong></div>' +
-        '</div>';
+            '<div class="summary-row"><span>✅ الإجمالي:</span><strong>' + payNow + ' ر.ع</strong></div></div>';
         
         if (remaining > 0) {
-            html += '<div class="summary-section later">' +
-                '<div class="summary-section-title"><i class="fas fa-calendar-check"></i> يُدفع عند الدخول</div>' +
-                '<div class="summary-row"><span>💳 الباقي:</span><strong>' + remaining + ' ر.ع</strong></div>' +
-            '</div>';
+            html += '<div class="summary-section later"><div class="summary-section-title"><i class="fas fa-calendar-check"></i> يُدفع عند الدخول</div><div class="summary-row"><span>💳 الباقي:</span><strong>' + remaining + ' ر.ع</strong></div></div>';
         } else {
-            html += '<div class="summary-section later">' +
-                '<div class="summary-section-title"><i class="fas fa-check-circle"></i> تم الدفع كاملاً</div>' +
-                '<div class="summary-row"><span>لا يوجد باقي ✅</span><strong>0 ر.ع</strong></div>' +
-            '</div>';
+            html += '<div class="summary-section later"><div class="summary-section-title"><i class="fas fa-check-circle"></i> تم الدفع كاملاً</div><div class="summary-row"><span>لا يوجد باقي ✅</span><strong>0 ر.ع</strong></div></div>';
         }
         
-        html += '<div class="summary-section refund">' +
-            '<div class="summary-section-title"><i class="fas fa-undo"></i> يُرد بعد الخروج</div>' +
-            '<div class="summary-row"><span>🛡️ التأمين:</span><strong>' + security + ' ر.ع</strong></div>' +
-        '</div>';
+        html += '<div class="summary-section refund"><div class="summary-section-title"><i class="fas fa-undo"></i> يُرد بعد الخروج</div><div class="summary-row"><span>🛡️ التأمين:</span><strong>' + security + ' ر.ع</strong></div></div>';
         
         content.innerHTML = html;
         if (transferEl) transferEl.textContent = payNow;
@@ -603,7 +616,6 @@
         if (selectedBookingType === 'half_day' && !selectedHalfDayPeriod) return showToast('⚠️ اختر الفترة', 'warning');
         if (selectedDeposit === null) return showToast('⚠️ اختر مبلغ العربون', 'warning');
         
-        // ⚠️ تحقق إضافي من الحجب
         var dateStr = formatDate(selectedDate);
         if (blockedDates.indexOf(dateStr) !== -1) {
             return showToast('⚠️ التاريخ محجوز - اختر تاريخاً آخر', 'error');
@@ -635,11 +647,8 @@
         var isFullPayment = (selectedDeposit === 'full');
         var bookingId = 'WHJ-' + Date.now().toString().slice(-6) + Math.floor(Math.random() * 1000).toString().padStart(3, '0');
         
-        var typeName = selectedBookingType === 'without_stay' ? 'بدون مبيت' :
-                       selectedBookingType === 'with_stay' ? 'مع مبيت' : 'نصف يوم';
-        var timeDesc = selectedBookingType === 'without_stay' ? '9ص-10م' :
-                       selectedBookingType === 'with_stay' ? '9ص-7ص' :
-                       (selectedHalfDayPeriod === 'morning' ? '9ص-3م' : '4م-10م');
+        var typeName = selectedBookingType === 'without_stay' ? 'بدون مبيت' : selectedBookingType === 'with_stay' ? 'مع مبيت' : 'نصف يوم';
+        var timeDesc = selectedBookingType === 'without_stay' ? '9ص-10م' : selectedBookingType === 'with_stay' ? '9ص-7ص' : (selectedHalfDayPeriod === 'morning' ? '9ص-3م' : '4م-10م');
         
         var data = {
             bookingId: bookingId, date: formatDate(selectedDate), dateFormatted: formatArabicDate(selectedDate),
@@ -650,7 +659,6 @@
             receiptFileName: receiptFile.name, status: 'pending', createdAt: new Date().toISOString()
         };
         
-        // حفظ محلي
         try {
             var bookings = JSON.parse(localStorage.getItem('wahaj_bookings') || '[]');
             bookings.push(data);
@@ -661,7 +669,6 @@
             }
         } catch(e) {}
         
-        // فتح واتساب فوراً
         var msg = '🌟 *طلب حجز جديد - استراحة وهج* 🌟\n\n' +
             '📋 *رقم:* ' + bookingId + '\n' +
             '📅 *التاريخ:* ' + data.dateFormatted + '\n' +
@@ -681,7 +688,6 @@
         window.open('https://wa.me/' + CONFIG.whatsapp + '?text=' + encodeURIComponent(msg), '_blank');
         showToast('✅ تم استلام الحجز!', 'success');
         
-        // حفظ سحابي في الخلفية
         saveToCloud(data);
         
         setTimeout(function() {
@@ -690,20 +696,11 @@
     }
     
     function saveToCloud(data) {
-        if (!window.WahajFirebase) {
-            console.log('ℹ️ Firebase غير متاح');
-            return;
-        }
-        
+        if (!window.WahajFirebase) return;
         window.WahajFirebase.waitForFirebase(function(ready) {
             if (!ready) return;
-            
             window.WahajFirebase.saveBooking(data).then(function(result) {
-                if (result.success) {
-                    console.log('☁️ تم الحفظ السحابي:', result.id);
-                } else {
-                    console.warn('⚠️ فشل السحابي:', result.error);
-                }
+                if (result.success) console.log('☁️ محفوظ سحابياً:', result.id);
             });
         }, 3000);
     }
@@ -779,7 +776,6 @@
             document.getElementById(id).oninput = updateSteps;
         });
         
-        // تحديث الحجب من Firebase كل 30 ثانية
         setInterval(function() {
             if (window.WahajFirebase && firebaseLoaded) {
                 window.WahajFirebase.getAllBlockedDates().then(function(cloudBlocked) {
@@ -793,7 +789,7 @@
             }
         }, 30000);
         
-        console.log('✅ صفحة الحجز جاهزة (Firebase)');
+        console.log('✅ صفحة الحجز جاهزة');
     }
     
     if (document.readyState === 'loading') {
