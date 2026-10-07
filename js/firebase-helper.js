@@ -1,20 +1,22 @@
 /* ═══════════════════════════════════════════════════════
    استراحة وهج - Firebase Helper
-   دوال التعامل مع Firestore و Storage
+   دوال التعامل مع Firestore (CRUD)
    ═══════════════════════════════════════════════════════ */
 
 (function() {
     'use strict';
     
-    const COLLECTIONS = {
+    // ─── Collections ───
+    var COL = {
         bookings: 'bookings',
         blockedDates: 'blockedDates',
-        settings: 'settings',
         offers: 'offers',
+        images: 'images',
+        settings: 'settings',
         messages: 'messages'
     };
     
-    // ─── الانتظار حتى تجهز Firebase ───
+    // ─── Wait for Firebase ───
     function waitForFirebase(callback, maxWait) {
         maxWait = maxWait || 10000;
         var start = Date.now();
@@ -33,237 +35,413 @@
     // 📅 BOOKINGS - الحجوزات
     // ═══════════════════════════════════════════════════════
     
-    async function saveBooking(bookingData) {
-        try {
-            var docRef = await window.db.collection(COLLECTIONS.bookings).add({
-                ...bookingData,
-                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-                syncedAt: new Date().toISOString()
-            });
-            console.log('✅ تم حفظ الحجز سحابياً:', docRef.id);
-            return { success: true, id: docRef.id };
-        } catch (error) {
-            console.error('❌ خطأ في حفظ الحجز:', error);
-            return { success: false, error: error.message };
-        }
-    }
-    
-    async function getAllBookings() {
-        try {
-            var snapshot = await window.db.collection(COLLECTIONS.bookings)
-                .orderBy('createdAt', 'desc')
-                .get();
-            
-            var bookings = [];
-            snapshot.forEach(function(doc) {
-                bookings.push({
-                    firestoreId: doc.id,
-                    ...doc.data()
+    function saveBooking(bookingData) {
+        return new Promise(function(resolve) {
+            waitForFirebase(function(ready) {
+                if (!ready) {
+                    resolve({ success: false, error: 'Firebase not ready' });
+                    return;
+                }
+                
+                window.db.collection(COL.bookings).doc(bookingData.bookingId).set(
+                    Object.assign({}, bookingData, {
+                        serverCreatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    })
+                ).then(function() {
+                    console.log('✅ حجز محفوظ سحابياً:', bookingData.bookingId);
+                    resolve({ success: true, id: bookingData.bookingId });
+                }).catch(function(error) {
+                    console.error('❌ فشل حفظ الحجز:', error);
+                    resolve({ success: false, error: error.message });
                 });
             });
-            return bookings;
-        } catch (error) {
-            console.error('❌ خطأ في قراءة الحجوزات:', error);
-            return [];
-        }
+        });
     }
     
-    async function updateBookingStatus(firestoreId, newStatus) {
-        try {
-            await window.db.collection(COLLECTIONS.bookings).doc(firestoreId).update({
-                status: newStatus,
-                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    function getAllBookings() {
+        return new Promise(function(resolve) {
+            waitForFirebase(function(ready) {
+                if (!ready) {
+                    resolve([]);
+                    return;
+                }
+                
+                window.db.collection(COL.bookings).get()
+                    .then(function(snapshot) {
+                        var bookings = [];
+                        snapshot.forEach(function(doc) {
+                            var data = doc.data();
+                            data.firestoreId = doc.id;
+                            data._source = 'cloud';
+                            bookings.push(data);
+                        });
+                        
+                        // ترتيب حسب التاريخ
+                        bookings.sort(function(a, b) {
+                            return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+                        });
+                        
+                        console.log('☁️ تم تحميل', bookings.length, 'حجز من السحابة');
+                        resolve(bookings);
+                    })
+                    .catch(function(error) {
+                        console.error('❌ فشل قراءة الحجوزات:', error);
+                        resolve([]);
+                    });
             });
-            return { success: true };
-        } catch (error) {
-            console.error('❌ خطأ في تحديث الحجز:', error);
-            return { success: false, error: error.message };
-        }
+        });
     }
     
-    async function deleteBookingCloud(firestoreId) {
-        try {
-            await window.db.collection(COLLECTIONS.bookings).doc(firestoreId).delete();
-            return { success: true };
-        } catch (error) {
-            console.error('❌ خطأ في حذف الحجز:', error);
-            return { success: false, error: error.message };
-        }
+    function updateBookingStatus(bookingId, newStatus) {
+        return new Promise(function(resolve) {
+            waitForFirebase(function(ready) {
+                if (!ready) {
+                    resolve({ success: false });
+                    return;
+                }
+                
+                window.db.collection(COL.bookings).doc(bookingId).update({
+                    status: newStatus,
+                    updatedAt: new Date().toISOString()
+                }).then(function() {
+                    console.log('✅ تم تحديث الحالة:', bookingId, '→', newStatus);
+                    resolve({ success: true });
+                }).catch(function(error) {
+                    console.error('❌ فشل التحديث:', error);
+                    resolve({ success: false, error: error.message });
+                });
+            });
+        });
+    }
+    
+    function deleteBooking(bookingId) {
+        return new Promise(function(resolve) {
+            waitForFirebase(function(ready) {
+                if (!ready) {
+                    resolve({ success: false });
+                    return;
+                }
+                
+                window.db.collection(COL.bookings).doc(bookingId).delete()
+                    .then(function() {
+                        resolve({ success: true });
+                    })
+                    .catch(function(error) {
+                        resolve({ success: false, error: error.message });
+                    });
+            });
+        });
     }
     
     // ═══════════════════════════════════════════════════════
     // 🚫 BLOCKED DATES - حجب التواريخ
     // ═══════════════════════════════════════════════════════
     
-    async function addBlockedDate(date, reason) {
-        try {
-            await window.db.collection(COLLECTIONS.blockedDates).doc(date).set({
-                date: date,
-                reason: reason || '',
-                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    function addBlockedDate(date, type, reason) {
+        return new Promise(function(resolve) {
+            waitForFirebase(function(ready) {
+                if (!ready) {
+                    resolve({ success: false });
+                    return;
+                }
+                
+                window.db.collection(COL.blockedDates).doc(date).set({
+                    date: date,
+                    type: type || 'other',
+                    reason: reason || '',
+                    createdAt: new Date().toISOString()
+                }).then(function() {
+                    console.log('✅ تم حجب:', date);
+                    resolve({ success: true });
+                }).catch(function(error) {
+                    resolve({ success: false, error: error.message });
+                });
             });
-            console.log('✅ تم حجب التاريخ:', date);
-            return { success: true };
-        } catch (error) {
-            console.error('❌ خطأ في الحجب:', error);
-            return { success: false, error: error.message };
-        }
+        });
     }
     
-    async function getAllBlockedDates() {
-        try {
-            var snapshot = await window.db.collection(COLLECTIONS.blockedDates).get();
-            var dates = [];
-            snapshot.forEach(function(doc) {
-                dates.push(doc.data());
+    function getAllBlockedDates() {
+        return new Promise(function(resolve) {
+            waitForFirebase(function(ready) {
+                if (!ready) {
+                    resolve([]);
+                    return;
+                }
+                
+                window.db.collection(COL.blockedDates).get()
+                    .then(function(snapshot) {
+                        var dates = [];
+                        snapshot.forEach(function(doc) {
+                            dates.push(doc.data());
+                        });
+                        resolve(dates);
+                    })
+                    .catch(function(error) {
+                        console.error('❌ فشل قراءة الحجب:', error);
+                        resolve([]);
+                    });
             });
-            return dates;
-        } catch (error) {
-            console.error('❌ خطأ:', error);
-            return [];
-        }
+        });
     }
     
-    async function removeBlockedDate(date) {
-        try {
-            await window.db.collection(COLLECTIONS.blockedDates).doc(date).delete();
-            return { success: true };
-        } catch (error) {
-            return { success: false, error: error.message };
-        }
-    }
-    
-    // ═══════════════════════════════════════════════════════
-    // ⚙️ SETTINGS - الإعدادات (أسعار، رسائل، إلخ)
-    // ═══════════════════════════════════════════════════════
-    
-    async function saveSetting(key, value) {
-        try {
-            await window.db.collection(COLLECTIONS.settings).doc(key).set({
-                value: value,
-                updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    function removeBlockedDate(date) {
+        return new Promise(function(resolve) {
+            waitForFirebase(function(ready) {
+                if (!ready) {
+                    resolve({ success: false });
+                    return;
+                }
+                
+                window.db.collection(COL.blockedDates).doc(date).delete()
+                    .then(function() {
+                        resolve({ success: true });
+                    })
+                    .catch(function(error) {
+                        resolve({ success: false, error: error.message });
+                    });
             });
-            return { success: true };
-        } catch (error) {
-            return { success: false, error: error.message };
-        }
-    }
-    
-    async function getSetting(key, defaultValue) {
-        try {
-            var doc = await window.db.collection(COLLECTIONS.settings).doc(key).get();
-            if (doc.exists) {
-                return doc.data().value;
-            }
-            return defaultValue;
-        } catch (error) {
-            return defaultValue;
-        }
+        });
     }
     
     // ═══════════════════════════════════════════════════════
     // 🎁 OFFERS - العروض
     // ═══════════════════════════════════════════════════════
     
-    async function addOffer(offerData) {
-        try {
-            var docRef = await window.db.collection(COLLECTIONS.offers).add({
-                ...offerData,
-                active: true,
-                createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    function addOffer(offerData) {
+        return new Promise(function(resolve) {
+            waitForFirebase(function(ready) {
+                if (!ready) {
+                    resolve({ success: false });
+                    return;
+                }
+                
+                var id = 'offer_' + Date.now();
+                window.db.collection(COL.offers).doc(id).set(
+                    Object.assign({}, offerData, {
+                        id: id,
+                        active: true,
+                        createdAt: new Date().toISOString()
+                    })
+                ).then(function() {
+                    resolve({ success: true, id: id });
+                }).catch(function(error) {
+                    resolve({ success: false, error: error.message });
+                });
             });
-            return { success: true, id: docRef.id };
-        } catch (error) {
-            return { success: false, error: error.message };
-        }
+        });
     }
     
-    async function getAllOffers() {
-        try {
-            var snapshot = await window.db.collection(COLLECTIONS.offers).get();
-            var offers = [];
-            snapshot.forEach(function(doc) {
-                offers.push({ id: doc.id, ...doc.data() });
+    function getAllOffers() {
+        return new Promise(function(resolve) {
+            waitForFirebase(function(ready) {
+                if (!ready) {
+                    resolve([]);
+                    return;
+                }
+                
+                window.db.collection(COL.offers).get()
+                    .then(function(snapshot) {
+                        var offers = [];
+                        snapshot.forEach(function(doc) {
+                            offers.push(doc.data());
+                        });
+                        resolve(offers);
+                    })
+                    .catch(function(error) {
+                        resolve([]);
+                    });
             });
-            return offers;
-        } catch (error) {
-            return [];
-        }
+        });
     }
     
-    async function deleteOffer(id) {
-        try {
-            await window.db.collection(COLLECTIONS.offers).doc(id).delete();
-            return { success: true };
-        } catch (error) {
-            return { success: false, error: error.message };
-        }
+    function updateOffer(id, updates) {
+        return new Promise(function(resolve) {
+            waitForFirebase(function(ready) {
+                if (!ready) {
+                    resolve({ success: false });
+                    return;
+                }
+                
+                window.db.collection(COL.offers).doc(id).update(updates)
+                    .then(function() {
+                        resolve({ success: true });
+                    })
+                    .catch(function(error) {
+                        resolve({ success: false, error: error.message });
+                    });
+            });
+        });
     }
     
-    // ═══════════════════════════════════════════════════════
-    // 📸 STORAGE - رفع الصور
-    // ═══════════════════════════════════════════════════════
-    
-    async function uploadImage(file, folder) {
-        try {
-            folder = folder || 'gallery';
-            var filename = Date.now() + '_' + file.name.replace(/[^a-zA-Z0-9.]/g, '_');
-            var path = folder + '/' + filename;
-            
-            var ref = window.storage.ref(path);
-            var snapshot = await ref.put(file);
-            var downloadURL = await snapshot.ref.getDownloadURL();
-            
-            console.log('✅ تم رفع الصورة:', downloadURL);
-            return { success: true, url: downloadURL, path: path };
-        } catch (error) {
-            console.error('❌ خطأ في رفع الصورة:', error);
-            return { success: false, error: error.message };
-        }
-    }
-    
-    async function deleteImage(path) {
-        try {
-            await window.storage.ref(path).delete();
-            return { success: true };
-        } catch (error) {
-            return { success: false, error: error.message };
-        }
+    function deleteOffer(id) {
+        return new Promise(function(resolve) {
+            waitForFirebase(function(ready) {
+                if (!ready) {
+                    resolve({ success: false });
+                    return;
+                }
+                
+                window.db.collection(COL.offers).doc(id).delete()
+                    .then(function() {
+                        resolve({ success: true });
+                    })
+                    .catch(function(error) {
+                        resolve({ success: false, error: error.message });
+                    });
+            });
+        });
     }
     
     // ═══════════════════════════════════════════════════════
-    // 🌐 PUBLIC API
+    // 🖼️ IMAGES - الصور
+    // ═══════════════════════════════════════════════════════
+    
+    function addImage(imageData) {
+        return new Promise(function(resolve) {
+            waitForFirebase(function(ready) {
+                if (!ready) {
+                    resolve({ success: false });
+                    return;
+                }
+                
+                var id = 'img_' + Date.now();
+                window.db.collection(COL.images).doc(id).set(
+                    Object.assign({}, imageData, {
+                        id: id,
+                        createdAt: new Date().toISOString()
+                    })
+                ).then(function() {
+                    resolve({ success: true, id: id });
+                }).catch(function(error) {
+                    resolve({ success: false, error: error.message });
+                });
+            });
+        });
+    }
+    
+    function getAllImages() {
+        return new Promise(function(resolve) {
+            waitForFirebase(function(ready) {
+                if (!ready) {
+                    resolve([]);
+                    return;
+                }
+                
+                window.db.collection(COL.images).get()
+                    .then(function(snapshot) {
+                        var images = [];
+                        snapshot.forEach(function(doc) {
+                            images.push(doc.data());
+                        });
+                        resolve(images);
+                    })
+                    .catch(function(error) {
+                        resolve([]);
+                    });
+            });
+        });
+    }
+    
+    function deleteImage(id) {
+        return new Promise(function(resolve) {
+            waitForFirebase(function(ready) {
+                if (!ready) {
+                    resolve({ success: false });
+                    return;
+                }
+                
+                window.db.collection(COL.images).doc(id).delete()
+                    .then(function() {
+                        resolve({ success: true });
+                    })
+                    .catch(function(error) {
+                        resolve({ success: false, error: error.message });
+                    });
+            });
+        });
+    }
+    
+    // ═══════════════════════════════════════════════════════
+    // ⚙️ SETTINGS - الأسعار والرسائل
+    // ═══════════════════════════════════════════════════════
+    
+    function saveSetting(key, value) {
+        return new Promise(function(resolve) {
+            waitForFirebase(function(ready) {
+                if (!ready) {
+                    resolve({ success: false });
+                    return;
+                }
+                
+                window.db.collection(COL.settings).doc(key).set({
+                    value: value,
+                    updatedAt: new Date().toISOString()
+                }).then(function() {
+                    resolve({ success: true });
+                }).catch(function(error) {
+                    resolve({ success: false, error: error.message });
+                });
+            });
+        });
+    }
+    
+    function getSetting(key, defaultValue) {
+        return new Promise(function(resolve) {
+            waitForFirebase(function(ready) {
+                if (!ready) {
+                    resolve(defaultValue);
+                    return;
+                }
+                
+                window.db.collection(COL.settings).doc(key).get()
+                    .then(function(doc) {
+                        if (doc.exists) {
+                            resolve(doc.data().value);
+                        } else {
+                            resolve(defaultValue);
+                        }
+                    })
+                    .catch(function(error) {
+                        resolve(defaultValue);
+                    });
+            });
+        });
+    }
+    
+    // ═══════════════════════════════════════════════════════
+    // 📤 PUBLIC API
     // ═══════════════════════════════════════════════════════
     
     window.WahajFirebase = {
-        // Utility
         waitForFirebase: waitForFirebase,
         
         // Bookings
         saveBooking: saveBooking,
         getAllBookings: getAllBookings,
         updateBookingStatus: updateBookingStatus,
-        deleteBooking: deleteBookingCloud,
+        deleteBooking: deleteBooking,
         
         // Blocked Dates
         addBlockedDate: addBlockedDate,
         getAllBlockedDates: getAllBlockedDates,
         removeBlockedDate: removeBlockedDate,
         
-        // Settings
-        saveSetting: saveSetting,
-        getSetting: getSetting,
-        
         // Offers
         addOffer: addOffer,
         getAllOffers: getAllOffers,
+        updateOffer: updateOffer,
         deleteOffer: deleteOffer,
         
-        // Storage
-        uploadImage: uploadImage,
-        deleteImage: deleteImage
+        // Images
+        addImage: addImage,
+        getAllImages: getAllImages,
+        deleteImage: deleteImage,
+        
+        // Settings
+        saveSetting: saveSetting,
+        getSetting: getSetting
     };
     
-    console.log('✅ Firebase Helper loaded');
+    console.log('✅ WahajFirebase Helper جاهز');
     
 })();
