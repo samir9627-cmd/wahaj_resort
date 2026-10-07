@@ -140,7 +140,6 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.2s;
             box-shadow: 0 2px 8px rgba(0,0,0,0.06);
             font-size: 1rem;
             position: relative;
@@ -814,9 +813,8 @@
         return new Date(date).toLocaleDateString('ar-OM', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
     }
     
-    // ─── تحميل المحجوزات من Firebase ───
-    async function loadBlocked() {
-        // أولاً من localStorage (سريع)
+    // ─── تحميل المحجوزات ───
+    function loadBlocked() {
         try {
             var localBlocked = JSON.parse(localStorage.getItem('wahaj_blocked_dates') || '[]');
             var localBookings = JSON.parse(localStorage.getItem('wahaj_bookings') || '[]');
@@ -825,28 +823,28 @@
             blockedDates = b1.concat(b2);
         } catch(e) { blockedDates = []; }
         
-        // ثم من Firebase (أحدث)
+        // محاولة سريعة من Firebase (بدون تعليق)
         if (window.WahajFirebase) {
-            window.WahajFirebase.waitForFirebase(async function(ready) {
-                if (!ready) return;
-                
-                try {
-                    var cloudBlocked = await window.WahajFirebase.getAllBlockedDates();
-                    var cloudBookings = await window.WahajFirebase.getAllBookings();
-                    
-                    var allBlocked = cloudBlocked.map(function(i){ return i.date; });
-                    var allConfirmed = cloudBookings.filter(function(b){ return b.status === 'confirmed'; }).map(function(b){ return b.date; });
-                    
-                    // دمج الكل
-                    blockedDates = blockedDates.concat(allBlocked, allConfirmed);
-                    blockedDates = blockedDates.filter(function(v, i, self){ return self.indexOf(v) === i; });
-                    
-                    renderCalendar();
-                    console.log('📅 تم تحميل التواريخ من Firebase');
-                } catch(e) {
-                    console.warn('⚠️ فشل تحميل Firebase:', e);
-                }
-            });
+            setTimeout(function() {
+                window.WahajFirebase.waitForFirebase(async function(ready) {
+                    if (!ready) return;
+                    try {
+                        var cloudBlocked = await window.WahajFirebase.getAllBlockedDates();
+                        var cloudBookings = await window.WahajFirebase.getAllBookings();
+                        
+                        var allBlocked = cloudBlocked.map(function(i){ return i.date; });
+                        var allConfirmed = cloudBookings.filter(function(b){ return b.status === 'confirmed'; }).map(function(b){ return b.date; });
+                        
+                        blockedDates = blockedDates.concat(allBlocked, allConfirmed);
+                        blockedDates = blockedDates.filter(function(v, i, self){ return self.indexOf(v) === i; });
+                        
+                        renderCalendar();
+                        console.log('📅 تم تحميل التواريخ من السحابة');
+                    } catch(e) {
+                        console.warn('⚠️ فشل تحميل السحابة:', e);
+                    }
+                }, 5000);
+            }, 1000);
         }
     }
     
@@ -996,7 +994,8 @@
         }, 2500);
     }
     
-    async function submitBooking() {
+    // ─── حفظ الحجز ───
+    function submitBooking() {
         if (!selectedDate) return showToast('⚠️ اختر التاريخ', 'warning');
         if (!selectedBookingType) return showToast('⚠️ اختر نوع الحجز', 'warning');
         if (selectedBookingType === 'half_day' && !selectedHalfDayPeriod) return showToast('⚠️ اختر الفترة', 'warning');
@@ -1049,51 +1048,21 @@
             createdAt: new Date().toISOString()
         };
         
-        // 1. حفظ في localStorage (فوري)
+        // ═══ 1. حفظ محلي (فوري - مضمون) ═══
         try {
             var bookings = JSON.parse(localStorage.getItem('wahaj_bookings') || '[]');
             bookings.push(data);
             localStorage.setItem('wahaj_bookings', JSON.stringify(bookings));
             localStorage.setItem('wahaj_last_booking', JSON.stringify(data));
             if (receiptDataUrl) {
-                sessionStorage.setItem('receipt_' + bookingId, receiptDataUrl);
+                try { sessionStorage.setItem('receipt_' + bookingId, receiptDataUrl); } catch(e) {}
             }
-        } catch(e) {}
-        
-        // 2. حفظ في Firebase (سحابي)
-        var cloudSaved = false;
-        if (window.WahajFirebase) {
-            try {
-                await new Promise(function(resolve) {
-                    window.WahajFirebase.waitForFirebase(async function(ready) {
-                        if (!ready) { resolve(false); return; }
-                        
-                        // رفع الإيصال أولاً
-                        var receiptURL = '';
-                        if (receiptFile) {
-                            try {
-                                var uploadResult = await window.WahajFirebase.uploadImage(receiptFile, 'receipts');
-                                if (uploadResult.success) {
-                                    receiptURL = uploadResult.url;
-                                }
-                            } catch(e) { console.warn('فشل رفع الإيصال:', e); }
-                        }
-                        
-                        // حفظ الحجز
-                        data.receiptURL = receiptURL;
-                        var result = await window.WahajFirebase.saveBooking(data);
-                        cloudSaved = result.success;
-                        resolve(result);
-                    });
-                });
-            } catch(e) {
-                console.warn('فشل الحفظ السحابي:', e);
-            }
+            console.log('💾 حفظ محلي: ✅');
+        } catch(e) {
+            console.warn('⚠️ فشل الحفظ المحلي:', e);
         }
         
-        console.log('💾 حفظ محلي: ✅ | سحابي: ' + (cloudSaved ? '✅' : '⚠️'));
-        
-        // 3. فتح واتساب
+        // ═══ 2. فتح واتساب فوراً ═══
         var msg = '🌟 *طلب حجز جديد - استراحة وهج*\n\n' +
             '📋 *رقم:* ' + bookingId + '\n' +
             '📅 *التاريخ:* ' + data.dateFormatted + '\n' +
@@ -1108,11 +1077,41 @@
         
         window.open('https://wa.me/' + CONFIG.whatsapp + '?text=' + encodeURIComponent(msg), '_blank');
         
-        showToast(cloudSaved ? '✅ تم الحجز والحفظ سحابياً' : '✅ تم الحجز (حفظ محلي)', 'success');
+        showToast('✅ تم استلام الحجز!', 'success');
         
+        // ═══ 3. محاولة حفظ سحابي في الخلفية (بدون انتظار) ═══
+        saveToCloudSilently(data);
+        
+        // ═══ 4. انتقال لصفحة التأكيد ═══
         setTimeout(function() {
             window.location.href = 'confirmation.html?id=' + bookingId;
-        }, 1500);
+        }, 1200);
+    }
+    
+    // ─── حفظ سحابي بدون تعليق ───
+    function saveToCloudSilently(data) {
+        if (!window.firebase || !window.WahajFirebase) {
+            console.log('ℹ️ Firebase غير متاح');
+            return;
+        }
+        
+        try {
+            window.WahajFirebase.waitForFirebase(function(ready) {
+                if (!ready) return;
+                
+                window.WahajFirebase.saveBooking(data).then(function(result) {
+                    if (result.success) {
+                        console.log('☁️ تم الحفظ السحابي:', result.id);
+                    } else {
+                        console.warn('⚠️ فشل الحفظ السحابي:', result.error);
+                    }
+                }).catch(function(err) {
+                    console.warn('⚠️ خطأ سحابي:', err);
+                });
+            }, 3000);
+        } catch(e) {
+            console.warn('⚠️ خطأ Firebase:', e);
+        }
     }
     
     // ─── التهيئة ───
@@ -1187,7 +1186,7 @@
             document.getElementById(id).oninput = updateSteps;
         });
         
-        console.log('✅ صفحة الحجز جاهزة (Firebase + localStorage)');
+        console.log('✅ صفحة الحجز جاهزة');
     }
     
     if (document.readyState === 'loading') {
