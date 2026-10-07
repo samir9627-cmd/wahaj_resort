@@ -11,6 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <link rel="icon" type="image/png" href="images/logo.jpeg">
+<link rel="stylesheet" href="css/admin-upgrades.css">
 <style>
 :root{--primary:#D4AF37;--primary-dark:#A88B2C;--primary-light:#F4D77E;--navy:#0A1F44;--navy-light:#1A3A6B;--navy-dark:#051530;--cream:#FBF8F1;--white:#FFFFFF;--gray-100:#F8F9FA;--gray-200:#E9ECEF;--gray-400:#ADB5BD;--gray-600:#6C757D;--success:#28A745;--danger:#DC3545;--warning:#FFC107;--info:#17A2B8;--radius-sm:12px;--radius:20px;--radius-lg:28px;--shadow-sm:0 2px 12px rgba(10,31,68,0.06);--shadow:0 8px 30px rgba(10,31,68,0.1);--shadow-lg:0 20px 60px rgba(10,31,68,0.15);--transition:0.3s cubic-bezier(0.4,0,0.2,1)}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -43,6 +44,9 @@ body{font-family:'Cairo',-apple-system,sans-serif;background:var(--cream);color:
 .stat-card.revenue::before{background:linear-gradient(180deg,var(--primary),var(--primary-dark))}
 .stat-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
 .stat-icon-sm{width:36px;height:36px;border-radius:50%;background:rgba(212,175,55,0.15);color:var(--primary-dark);display:flex;align-items:center;justify-content:center;font-size:1rem}
+.stat-card.pending .stat-icon-sm{background:rgba(255,193,7,0.15);color:#856404}
+.stat-card.confirmed .stat-icon-sm{background:rgba(40,167,69,0.15);color:var(--success)}
+.stat-card.rejected .stat-icon-sm{background:rgba(220,53,69,0.15);color:var(--danger)}
 .stat-value{font-size:1.8rem;font-weight:900;color:var(--navy);line-height:1}
 .stat-label{font-size:0.75rem;color:var(--gray-600);margin-top:5px;font-weight:600}
 .quick-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:25px}
@@ -160,7 +164,7 @@ body{font-family:'Cairo',-apple-system,sans-serif;background:var(--cream);color:
 .save-prices-btn{width:100%;padding:13px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:var(--navy);border:none;border-radius:50px;font-family:'Cairo',sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;box-shadow:0 6px 20px rgba(212,175,55,0.35)}
 .admin-bottom-nav{position:fixed;bottom:0;left:0;right:0;height:80px;background:rgba(255,255,255,0.98);backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);border-top:1px solid rgba(212,175,55,0.15);box-shadow:0 -8px 30px rgba(10,31,68,0.08);z-index:100;display:flex;align-items:center;padding:0 5px;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .admin-bottom-nav::-webkit-scrollbar{display:none}
-.admin-nav-item{flex:0 0 70px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--gray-600);text-decoration:none;font-size:0.55rem;font-weight:600;padding:8px 0;position:relative;cursor:pointer;border:none;background:transparent;font-family:'Cairo',sans-serif}
+.admin-nav-item{flex:0 0 65px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--gray-600);text-decoration:none;font-size:0.55rem;font-weight:600;padding:8px 0;position:relative;cursor:pointer;border:none;background:transparent;font-family:'Cairo',sans-serif}
 .admin-nav-item i{font-size:1.1rem;transition:var(--transition)}
 .admin-nav-item.active{color:var(--primary)}
 .admin-nav-item.active i{transform:translateY(-3px);filter:drop-shadow(0 4px 10px rgba(212,175,55,0.4))}
@@ -361,7 +365,7 @@ body{font-family:'Cairo',-apple-system,sans-serif;background:var(--cream);color:
 
 <div class="page" id="page-settings">
 <h1 class="page-title">الإعدادات</h1>
-<div class="settings-card"><h3><i class="fas fa-info-circle"></i> معلومات النظام</h3><p>البيانات محفوظة في <strong>localStorage</strong> (على هذا الجهاز).</p></div>
+<div class="settings-card"><h3><i class="fas fa-info-circle"></i> معلومات النظام</h3><p>البيانات محفوظة في <strong>localStorage + Firebase</strong>.</p></div>
 <div class="settings-card"><h3><i class="fas fa-key"></i> كلمة السر</h3><p>الحالية: <strong>wahaj2026</strong></p></div>
 <div class="settings-card">
 <h3><i class="fas fa-database"></i> البيانات</h3>
@@ -394,10 +398,9 @@ body{font-family:'Cairo',-apple-system,sans-serif;background:var(--cream);color:
 <div class="toast" id="toast"></div>
 <div id="printArea" style="display:none;"></div>
 
-<!-- ═══ Firebase ═══ -->
 <script src="js/firebase.js"></script>
 <script src="js/firebase-helper.js"></script>
 <script src="js/admin.js"></script>
-
+<script src="js/admin-upgrades.js"></script>
 </body>
 </html>
