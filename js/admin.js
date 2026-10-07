@@ -909,6 +909,427 @@
         showAdmin();
     }
     
-    console.log('✅ لوحة التحكم جاهزة (localStorage)');
+   console.log('✅ لوحة التحكم جاهزة (Firebase + localStorage)');
     
+    // ═══════════════════════════════════════════════════════
+    // 🔥 FIREBASE SYNC - المزامنة السحابية
+    // ═══════════════════════════════════════════════════════
+    
+    // ─── تحميل البيانات من Firebase ───
+    async function loadFromCloud() {
+        if (!window.WahajFirebase) {
+            console.warn('⚠️ Firebase Helper غير متاح');
+            return;
+        }
+        
+        window.WahajFirebase.waitForFirebase(async function(ready) {
+            if (!ready) {
+                console.warn('⚠️ Firebase غير متصل');
+                return;
+            }
+            
+            console.log('☁️ جاري تحميل البيانات من السحابة...');
+            
+            try {
+                // ─── الحجوزات ───
+                var cloudBookings = await window.WahajFirebase.getAllBookings();
+                
+                if (cloudBookings && cloudBookings.length > 0) {
+                    // دمج مع localStorage (السحابة تتفوق)
+                    var merged = {};
+                    
+                    // من localStorage
+                    allBookings.forEach(function(b) {
+                        merged[b.bookingId] = b;
+                    });
+                    
+                    // من السحابة (تفوق)
+                    cloudBookings.forEach(function(b) {
+                        merged[b.bookingId] = b;
+                    });
+                    
+                    allBookings = Object.values(merged);
+                    allBookings.sort(function(a, b) {
+                        return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+                    });
+                    
+                    console.log('✅ تم تحميل', cloudBookings.length, 'حجز من السحابة');
+                }
+                
+                // ─── حجب التواريخ ───
+                var cloudBlocked = await window.WahajFirebase.getAllBlockedDates();
+                if (cloudBlocked && cloudBlocked.length > 0) {
+                    blockedDates = cloudBlocked;
+                    console.log('✅ تم تحميل', cloudBlocked.length, 'تاريخ محجوب');
+                }
+                
+                // ─── العروض ───
+                var cloudOffers = await window.WahajFirebase.getAllOffers();
+                if (cloudOffers && cloudOffers.length > 0) {
+                    offers = cloudOffers;
+                    console.log('✅ تم تحميل', cloudOffers.length, 'عرض');
+                }
+                
+                // ─── الصور ───
+                var cloudImages = await window.WahajFirebase.getAllImages();
+                if (cloudImages && cloudImages.length > 0) {
+                    images = cloudImages;
+                    console.log('✅ تم تحميل', cloudImages.length, 'صورة');
+                }
+                
+                // ─── الأسعار ───
+                var cloudPrices = await window.WahajFirebase.getSetting('prices', null);
+                if (cloudPrices) {
+                    prices = Object.assign({}, DEFAULT_PRICES, cloudPrices);
+                }
+                
+                // ─── الرسائل ───
+                var cloudMessages = await window.WahajFirebase.getSetting('messages', null);
+                if (cloudMessages) {
+                    messages = Object.assign({}, DEFAULT_MESSAGES, cloudMessages);
+                }
+                
+                // إعادة الرسم
+                updateStats();
+                applyFilters();
+                renderBlockedList();
+                renderOffersList();
+                renderImagesGrid();
+                renderPricesForm();
+                renderMessagesForm();
+                updateSettingsCounts();
+                updateBadge();
+                
+                console.log('✅ تم المزامنة الكاملة');
+                
+            } catch(e) {
+                console.error('❌ فشل المزامنة:', e);
+            }
+        }, 8000);
+    }
+    
+    // ─── مزامنة عند التحميل ───
+    window.addEventListener('load', function() {
+        setTimeout(loadFromCloud, 1500);
+    });
+    
+    // ─── مزامنة دورية كل 30 ثانية ───
+    setInterval(function() {
+        if (sessionStorage.getItem('wahaj_admin') === '1') {
+            loadFromCloud();
+        }
+    }, 30000);
+    
+    // ─── حفظ سحابي عند التعديلات ───
+    
+    // تعديل دالة updateStatus
+    var originalUpdateStatus = updateStatus;
+    window.updateStatus = function(bookingId, newStatus) {
+        // حفظ محلي (فوري)
+        originalUpdateStatus(bookingId, newStatus);
+        
+        // حفظ سحابي (في الخلفية)
+        if (window.WahajFirebase) {
+            window.WahajFirebase.updateBookingStatus(bookingId, newStatus)
+                .then(function(result) {
+                    if (result.success) {
+                        console.log('☁️ تم تحديث الحالة سحابياً');
+                    }
+                });
+        }
+    };
+    
+    // ─── حفظ سحابي للحجب ───
+    var originalAddBlocked = window.addBlocked;
+    window.addBlocked = function() {
+        var date = document.getElementById('blockDate').value;
+        var type = document.getElementById('blockType').value;
+        var reason = document.getElementById('blockReason').value.trim();
+        
+        if (!date) {
+            showToast('اختر التاريخ', 'warning');
+            return;
+        }
+        
+        var exists = blockedDates.some(function(item) {
+            return (item.date || item) === date;
+        });
+        
+        if (exists) {
+            showToast('التاريخ محجوب مسبقاً', 'warning');
+            return;
+        }
+        
+        // حفظ محلي
+        blockedDates.push({ date: date, type: type, reason: reason });
+        localStorage.setItem('wahaj_blocked_dates', JSON.stringify(blockedDates));
+        
+        // حفظ سحابي
+        if (window.WahajFirebase) {
+            window.WahajFirebase.addBlockedDate(date, type, reason)
+                .then(function(result) {
+                    if (result.success) console.log('☁️ تم حجب التاريخ سحابياً');
+                });
+        }
+        
+        document.getElementById('blockDate').value = '';
+        document.getElementById('blockReason').value = '';
+        
+        renderBlockedList();
+        updateSettingsCounts();
+        showToast('✅ تم إضافة الحجب', 'success');
+    };
+    
+    // ─── حذف سحابي للحجب ───
+    var originalRemoveBlocked = window.removeBlocked;
+    window.removeBlocked = function(index) {
+        if (!confirm('إزالة الحجب؟')) return;
+        
+        var item = blockedDates[index];
+        var date = item.date || item;
+        
+        // حذف محلي
+        blockedDates.splice(index, 1);
+        localStorage.setItem('wahaj_blocked_dates', JSON.stringify(blockedDates));
+        
+        // حذف سحابي
+        if (window.WahajFirebase) {
+            window.WahajFirebase.removeBlockedDate(date)
+                .then(function(result) {
+                    if (result.success) console.log('☁️ تم حذف الحجب سحابياً');
+                });
+        }
+        
+        renderBlockedList();
+        updateSettingsCounts();
+        showToast('تم إزالة الحجب', 'success');
+    };
+    
+    // ─── حفظ سحابي للعروض ───
+    var originalAddOffer = window.addOffer;
+    window.addOffer = function() {
+        var title = document.getElementById('offerTitle').value.trim();
+        var desc = document.getElementById('offerDesc').value.trim();
+        var start = document.getElementById('offerStart').value;
+        var end = document.getElementById('offerEnd').value;
+        var discount = document.getElementById('offerDiscount').value;
+        
+        if (!title) {
+            showToast('أدخل عنوان العرض', 'warning');
+            return;
+        }
+        
+        var offerData = {
+            title: title,
+            desc: desc,
+            start: start,
+            end: end,
+            discount: discount
+        };
+        
+        // حفظ سحابي
+        if (window.WahajFirebase) {
+            window.WahajFirebase.addOffer(offerData)
+                .then(function(result) {
+                    if (result.success) {
+                        console.log('☁️ تم حفظ العرض سحابياً');
+                        loadFromCloud();
+                    }
+                });
+        } else {
+            // fallback محلي
+            originalAddOffer();
+        }
+        
+        document.getElementById('offerTitle').value = '';
+        document.getElementById('offerDesc').value = '';
+        document.getElementById('offerStart').value = '';
+        document.getElementById('offerEnd').value = '';
+        document.getElementById('offerDiscount').value = '';
+        
+        showToast('✅ تم إضافة العرض', 'success');
+    };
+    
+    // ─── حذف سحابي للعروض ───
+    var originalRemoveOffer = window.removeOffer;
+    window.removeOffer = function(index) {
+        if (!confirm('حذف العرض؟')) return;
+        
+        var offer = offers[index];
+        
+        if (offer.id && window.WahajFirebase) {
+            window.WahajFirebase.deleteOffer(offer.id)
+                .then(function() {
+                    offers.splice(index, 1);
+                    renderOffersList();
+                    updateSettingsCounts();
+                    showToast('تم الحذف', 'success');
+                });
+        } else {
+            originalRemoveOffer(index);
+        }
+    };
+    
+    // ─── حفظ سحابي للصور ───
+    var originalAddImage = window.addImage;
+    window.addImage = function() {
+        var name = document.getElementById('imgName').value.trim();
+        var path = document.getElementById('imgPath').value.trim();
+        
+        if (!name || !path) {
+            showToast('أدخل الاسم والمسار', 'warning');
+            return;
+        }
+        
+        var imageData = {
+            name: name,
+            path: path
+        };
+        
+        if (window.WahajFirebase) {
+            window.WahajFirebase.addImage(imageData)
+                .then(function(result) {
+                    if (result.success) {
+                        console.log('☁️ تم حفظ الصورة سحابياً');
+                        loadFromCloud();
+                    }
+                });
+        } else {
+            originalAddImage();
+        }
+        
+        document.getElementById('imgName').value = '';
+        document.getElementById('imgPath').value = '';
+        
+        showToast('✅ تم إضافة الصورة', 'success');
+    };
+    
+    // ─── حذف سحابي للصور ───
+    var originalRemoveImage = window.removeImage;
+    window.removeImage = function(index) {
+        if (!confirm('حذف الصورة؟')) return;
+        
+        var img = images[index];
+        
+        if (img.id && window.WahajFirebase) {
+            window.WahajFirebase.deleteImage(img.id)
+                .then(function() {
+                    images.splice(index, 1);
+                    renderImagesGrid();
+                    updateSettingsCounts();
+                    showToast('تم الحذف', 'success');
+                });
+        } else {
+            originalRemoveImage(index);
+        }
+    };
+    
+    // ─── حفظ سحابي للأسعار ───
+    var originalSavePrices = window.savePrices;
+    window.savePrices = function() {
+        prices = {
+            weekdayWithoutStay: parseInt(document.getElementById('weekdayWithoutStay').value) || 0,
+            weekdayWithStay: parseInt(document.getElementById('weekdayWithStay').value) || 0,
+            weekdayHalfDay: parseInt(document.getElementById('weekdayHalfDay').value) || 0,
+            weekendWithoutStay: parseInt(document.getElementById('weekendWithoutStay').value) || 0,
+            weekendWithStay: parseInt(document.getElementById('weekendWithStay').value) || 0,
+            weekendHalfDay: parseInt(document.getElementById('weekendHalfDay').value) || 0,
+            securityDeposit: parseInt(document.getElementById('securityDeposit').value) || 20
+        };
+        
+        localStorage.setItem('wahaj_prices', JSON.stringify(prices));
+        
+        if (window.WahajFirebase) {
+            window.WahajFirebase.saveSetting('prices', prices)
+                .then(function(result) {
+                    if (result.success) console.log('☁️ تم حفظ الأسعار سحابياً');
+                });
+        }
+        
+        showToast('✅ تم حفظ الأسعار', 'success');
+    };
+    
+    // ─── حفظ سحابي للرسائل ───
+    var originalSaveMessage = window.saveMessage;
+    window.saveMessage = function(type) {
+        var textarea = document.getElementById('msg' + type.charAt(0).toUpperCase() + type.slice(1));
+        if (!textarea) return;
+        
+        messages[type] = textarea.value;
+        localStorage.setItem('wahaj_messages', JSON.stringify(messages));
+        
+        if (window.WahajFirebase) {
+            window.WahajFirebase.saveSetting('messages', messages)
+                .then(function(result) {
+                    if (result.success) console.log('☁️ تم حفظ الرسائل سحابياً');
+                });
+        }
+        
+        showToast('✅ تم حفظ الرسالة', 'success');
+    };
+    
+    // ─── حفظ سحابي عند تأكيد الحجز ───
+    var originalConfirmBooking = window.confirmBooking;
+    window.confirmBooking = function(bookingId) {
+        originalConfirmBooking(bookingId);
+        
+        // حفظ سحابي في الخلفية
+        if (window.WahajFirebase) {
+            setTimeout(function() {
+                window.WahajFirebase.updateBookingStatus(bookingId, 'confirmed')
+                    .then(function(result) {
+                        if (result.success) console.log('☁️ تم تأكيد الحجز سحابياً');
+                    });
+            }, 500);
+        }
+    };
+    
+    // ─── حفظ سحابي عند رفض الحجز ───
+    var originalRejectBooking = window.rejectBooking;
+    window.rejectBooking = function(bookingId) {
+        originalRejectBooking(bookingId);
+        
+        setTimeout(function() {
+            if (window.WahajFirebase) {
+                window.WahajFirebase.updateBookingStatus(bookingId, 'rejected')
+                    .then(function(result) {
+                        if (result.success) console.log('☁️ تم رفض الحجز سحابياً');
+                    });
+            }
+        }, 500);
+    };
+    
+    // ─── حذف سحابي للحجز ───
+    var originalDeleteBooking = window.deleteBooking;
+    window.deleteBooking = function(bookingId) {
+        if (!confirm('حذف الحجز نهائياً؟')) return;
+        
+        // حذف محلي
+        originalDeleteBooking(bookingId);
+        
+        // حذف سحابي
+        if (window.WahajFirebase) {
+            window.WahajFirebase.deleteBooking(bookingId)
+                .then(function(result) {
+                    if (result.success) console.log('☁️ تم حذف الحجز سحابياً');
+                });
+        }
+    };
+    
+    // ─── مزامنة يدوية من زر التحديث ───
+    var originalRefreshData = window.refreshData;
+    window.refreshData = function() {
+        if (window.WahajFirebase) {
+            showToast('☁️ جاري المزامنة...', 'info');
+            loadFromCloud();
+            setTimeout(function() {
+                showToast('✅ تم التحديث', 'success');
+            }, 1500);
+        } else {
+            originalRefreshData();
+        }
+    };
+    
+    console.log('🔥 Firebase Sync جاهز');
+
 })();
