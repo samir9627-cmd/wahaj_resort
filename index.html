@@ -22,7 +22,7 @@
 <!-- HEADER -->
 <header class="app-header">
     <div class="app-header-logo">
-        <img src="images/logo.jpeg" alt="وهج" class="app-header-logo-svg" onerror="this.style.display='none'">
+        <div class="app-header-logo-svg"></div>
         <span class="app-header-title">استراحة <span>وهج</span></span>
     </div>
     <a href="https://wa.me/96895566332" target="_blank" class="app-header-action" aria-label="واتساب">
@@ -189,7 +189,7 @@
 
 <!-- FOOTER -->
 <footer class="app-footer">
-    <img src="images/logo.jpeg" alt="وهج" class="app-footer-logo" onerror="this.style.display='none'">
+    <div class="app-footer-logo"></div>
     <h3 class="app-footer-title">استراحة وهج</h3>
     <p class="app-footer-slogan">خصوصية .. راحة .. ذكريات لا تُنسى</p>
     <div class="app-footer-bottom">
@@ -238,18 +238,76 @@
     <i class="fab fa-whatsapp"></i>
 </a>
 
-<!-- سكربت بسيط -->
+<!-- ═══ Scripts ═══ -->
 <script>
 (function() {
-    // السنة الحالية
-    var year = new Date().getFullYear();
-    document.querySelectorAll('.current-year').forEach(function(el) {
-        el.textContent = year;
-    });
+    'use strict';
     
-    // Header scroll
-    var header = document.querySelector('.app-header');
-    if (header) {
+    // ─── الشعار SVG ───
+    var LOGO_SVG = '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">' +
+    '<defs>' +
+    '<linearGradient id="wGold" x1="0%" y1="0%" x2="100%" y2="100%">' +
+    '<stop offset="0%" stop-color="#F4D77E"/>' +
+    '<stop offset="50%" stop-color="#D4AF37"/>' +
+    '<stop offset="100%" stop-color="#A88B2C"/>' +
+    '</linearGradient>' +
+    '<radialGradient id="wCenter" cx="50%" cy="50%" r="50%">' +
+    '<stop offset="0%" stop-color="#8B6F1F"/>' +
+    '<stop offset="100%" stop-color="#5A4415"/>' +
+    '</radialGradient>' +
+    '</defs>' +
+    '<circle cx="100" cy="100" r="94" fill="none" stroke="url(#wGold)" stroke-width="2.5"/>' +
+    '<circle cx="100" cy="100" r="88" fill="none" stroke="url(#wGold)" stroke-width="0.8" opacity="0.5"/>' +
+    '<g transform="translate(100, 62)">' +
+    '<ellipse cx="0" cy="-26" rx="6" ry="14" fill="url(#wGold)"/>' +
+    '<ellipse cx="0" cy="-26" rx="6" ry="14" fill="url(#wGold)" transform="rotate(30)"/>' +
+    '<ellipse cx="0" cy="-26" rx="6" ry="14" fill="url(#wGold)" transform="rotate(60)"/>' +
+    '<ellipse cx="0" cy="-26" rx="6" ry="14" fill="url(#wGold)" transform="rotate(90)"/>' +
+    '<ellipse cx="0" cy="-26" rx="6" ry="14" fill="url(#wGold)" transform="rotate(120)"/>' +
+    '<ellipse cx="0" cy="-26" rx="6" ry="14" fill="url(#wGold)" transform="rotate(150)"/>' +
+    '<ellipse cx="0" cy="-26" rx="6" ry="14" fill="url(#wGold)" transform="rotate(180)"/>' +
+    '<ellipse cx="0" cy="-26" rx="6" ry="14" fill="url(#wGold)" transform="rotate(210)"/>' +
+    '<ellipse cx="0" cy="-26" rx="6" ry="14" fill="url(#wGold)" transform="rotate(240)"/>' +
+    '<ellipse cx="0" cy="-26" rx="6" ry="14" fill="url(#wGold)" transform="rotate(270)"/>' +
+    '<ellipse cx="0" cy="-26" rx="6" ry="14" fill="url(#wGold)" transform="rotate(300)"/>' +
+    '<ellipse cx="0" cy="-26" rx="6" ry="14" fill="url(#wGold)" transform="rotate(330)"/>' +
+    '<circle cx="0" cy="0" r="14" fill="#A88B2C"/>' +
+    '<circle cx="0" cy="0" r="10" fill="url(#wCenter)"/>' +
+    '<circle cx="0" cy="0" r="5" fill="#0A1F44"/>' +
+    '<path d="M 0 14 Q -4 30 0 48" stroke="url(#wGold)" stroke-width="2.5" fill="none" stroke-linecap="round"/>' +
+    '<ellipse cx="-9" cy="30" rx="8" ry="4" fill="url(#wGold)" transform="rotate(-35 -9 30)"/>' +
+    '<ellipse cx="9" cy="42" rx="8" ry="4" fill="url(#wGold)" transform="rotate(35 9 42)"/>' +
+    '</g>' +
+    '<text x="100" y="135" font-size="16" text-anchor="middle" fill="url(#wGold)" font-family="Amiri, serif" font-weight="bold" letter-spacing="1">استراحة وهج</text>' +
+    '<text x="100" y="160" font-size="20" text-anchor="middle" fill="url(#wGold)" font-family="Cairo, sans-serif" font-weight="900" letter-spacing="4">WAHAJ</text>' +
+    '<text x="100" y="178" font-size="10" text-anchor="middle" fill="url(#wGold)" font-family="Cairo, sans-serif" font-weight="600" letter-spacing="6">RESORT</text>' +
+    '<line x1="60" y1="140" x2="78" y2="140" stroke="url(#wGold)" stroke-width="1"/>' +
+    '<line x1="122" y1="140" x2="140" y2="140" stroke="url(#wGold)" stroke-width="1"/>' +
+    '<circle cx="55" cy="140" r="1.5" fill="url(#wGold)"/>' +
+    '<circle cx="145" cy="140" r="1.5" fill="url(#wGold)"/>' +
+    '</svg>';
+    
+    // ─── إضافة الشعار ───
+    function injectLogos() {
+        var headerLogo = document.querySelector('.app-header-logo-svg');
+        if (headerLogo) headerLogo.innerHTML = LOGO_SVG;
+        
+        var footerLogo = document.querySelector('.app-footer-logo');
+        if (footerLogo) footerLogo.innerHTML = LOGO_SVG;
+    }
+    
+    // ─── السنة ───
+    function updateYear() {
+        var year = new Date().getFullYear();
+        document.querySelectorAll('.current-year').forEach(function(el) {
+            el.textContent = year;
+        });
+    }
+    
+    // ─── Header Scroll ───
+    function initHeaderScroll() {
+        var header = document.querySelector('.app-header');
+        if (!header) return;
         window.addEventListener('scroll', function() {
             if (window.scrollY > 50) {
                 header.classList.add('scrolled');
@@ -259,26 +317,30 @@
         }, { passive: true });
     }
     
-    // Scroll reveal
-    var reveals = document.querySelectorAll('.reveal');
-    if (reveals.length && 'IntersectionObserver' in window) {
-        var observer = new IntersectionObserver(function(entries) {
-            entries.forEach(function(entry) {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.1 });
+    // ─── Scroll Reveal ───
+    function initReveal() {
+        var reveals = document.querySelectorAll('.reveal');
+        if (!reveals.length) return;
         
-        reveals.forEach(function(el) { observer.observe(el); });
-    } else {
-        reveals.forEach(function(el) { el.classList.add('visible'); });
+        if ('IntersectionObserver' in window) {
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            reveals.forEach(function(el) { observer.observe(el); });
+        } else {
+            reveals.forEach(function(el) { el.classList.add('visible'); });
+        }
     }
     
-    // Sticky booking
-    var sticky = document.querySelector('.sticky-booking');
-    if (sticky) {
+    // ─── Sticky Booking ───
+    function initSticky() {
+        var sticky = document.querySelector('.sticky-booking');
+        if (!sticky) return;
         window.addEventListener('scroll', function() {
             if (window.scrollY > 300) {
                 sticky.classList.add('show');
@@ -286,6 +348,22 @@
                 sticky.classList.remove('show');
             }
         }, { passive: true });
+    }
+    
+    // ─── Init ───
+    function init() {
+        injectLogos();
+        updateYear();
+        initHeaderScroll();
+        initReveal();
+        initSticky();
+        console.log('✅ وهج جاهز');
+    }
+    
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
     }
 })();
 </script>
