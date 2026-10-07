@@ -7,7 +7,6 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     
     <title>تفاصيل الاستراحة | استراحة وهج</title>
-    <meta name="description" content="كل تفاصيل استراحة وهج - الصور، المرافق، الأسعار، والموقع">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,9 +14,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <link rel="stylesheet" href="css/app.css">
+    <link rel="icon" type="image/jpeg" href="images/logo.jpeg">
     
     <style>
-        /* ─── Hero صفحة التفاصيل ─── */
         .page-hero-app {
             background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 60%, var(--navy-light) 100%);
             padding: 100px 20px 50px;
@@ -32,6 +31,7 @@
             position: absolute;
             inset: 0;
             background: radial-gradient(circle at 30% 40%, rgba(212, 175, 55, 0.2) 0%, transparent 50%);
+            pointer-events: none;
         }
         
         .page-hero-app-content {
@@ -52,7 +52,6 @@
             opacity: 0.9;
         }
         
-        /* ─── تبويبات الفلترة ─── */
         .filter-tabs-app {
             display: flex;
             gap: 8px;
@@ -79,10 +78,6 @@
             white-space: nowrap;
         }
         
-        .filter-tab-app:active {
-            transform: scale(0.95);
-        }
-        
         .filter-tab-app.active {
             background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: var(--white);
@@ -90,7 +85,6 @@
             box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
         }
         
-        /* ─── شبكة الصور ─── */
         .gallery-grid-app {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -108,10 +102,6 @@
             transition: var(--transition);
         }
         
-        .gallery-item-app:active {
-            transform: scale(0.97);
-        }
-        
         .gallery-item-app.large {
             grid-column: span 2;
             aspect-ratio: 16/10;
@@ -122,10 +112,6 @@
             height: 100%;
             object-fit: cover;
             transition: transform 0.5s ease;
-        }
-        
-        .gallery-item-app:active img {
-            transform: scale(1.05);
         }
         
         .gallery-item-app-label {
@@ -141,7 +127,6 @@
             font-weight: 700;
         }
         
-        /* ─── جدول الأسعار ─── */
         .pricing-table-app {
             background: var(--white);
             border-radius: var(--radius);
@@ -177,10 +162,6 @@
             border-bottom: none;
         }
         
-        .pricing-table-app tr:active td {
-            background: rgba(212, 175, 55, 0.05);
-        }
-        
         .pricing-table-app td:first-child {
             font-weight: 700;
             text-align: right;
@@ -193,7 +174,6 @@
             font-size: 0.95rem;
         }
         
-        /* ─── المرافق ─── */
         .amenities-list-app {
             display: grid;
             gap: 12px;
@@ -243,7 +223,6 @@
             font-size: 0.9rem;
         }
         
-        /* ─── معلومات إضافية ─── */
         .info-cards-app {
             display: grid;
             grid-template-columns: 1fr;
@@ -285,7 +264,6 @@
             opacity: 0.85;
         }
         
-        /* ─── Lightbox ─── */
         .lightbox-app {
             position: fixed;
             inset: 0;
@@ -332,54 +310,22 @@
             justify-content: center;
             box-shadow: 0 4px 20px rgba(212, 175, 55, 0.5);
         }
-        
-        .lightbox-app-close:active {
-            transform: scale(0.9);
-        }
     </style>
 </head>
 <body>
 
-<!-- ═══ SPLASH SCREEN ═══ -->
+<!-- SPLASH SCREEN -->
 <div class="splash-screen">
-    <svg class="splash-logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="100" cy="100" r="90" fill="none" stroke="#D4AF37" stroke-width="3"/>
-        <g transform="translate(100, 85)">
-            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37"/>
-            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37" transform="rotate(45)"/>
-            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37" transform="rotate(90)"/>
-            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37" transform="rotate(135)"/>
-            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37" transform="rotate(180)"/>
-            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37" transform="rotate(225)"/>
-            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37" transform="rotate(270)"/>
-            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37" transform="rotate(315)"/>
-            <circle cx="0" cy="0" r="14" fill="#A88B2C"/>
-            <circle cx="0" cy="0" r="8" fill="#0A1F44"/>
-        </g>
-        <text x="100" y="175" font-size="16" text-anchor="middle" fill="#D4AF37" font-family="Amiri, serif" font-weight="bold">استراحة وهج</text>
-    </svg>
+    <img src="images/logo.jpeg" alt="استراحة وهج" class="splash-logo">
     <h1 class="splash-title">وهج</h1>
     <p class="splash-subtitle">خصوصية .. راحة .. ذكريات لا تُنسى</p>
     <div class="splash-loader"><div class="splash-loader-bar"></div></div>
 </div>
 
-<!-- ═══ HEADER ═══ -->
+<!-- HEADER -->
 <header class="app-header">
     <div class="app-header-logo">
-        <svg class="app-header-logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="50" cy="50" r="45" fill="none" stroke="#D4AF37" stroke-width="2"/>
-            <g transform="translate(50, 42)">
-                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37"/>
-                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(45)"/>
-                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(90)"/>
-                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(135)"/>
-                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(180)"/>
-                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(225)"/>
-                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(270)"/>
-                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(315)"/>
-                <circle cx="0" cy="0" r="7" fill="#A88B2C"/>
-            </g>
-        </svg>
+        <img src="images/logo.jpeg" alt="وهج" class="app-header-logo-svg">
         <span class="app-header-title">استراحة <span>وهج</span></span>
     </div>
     <a href="booking.html" class="app-header-action" aria-label="احجز">
@@ -387,7 +333,7 @@
     </a>
 </header>
 
-<!-- ═══ HERO ═══ -->
+<!-- HERO -->
 <section class="page-hero-app">
     <div class="page-hero-app-content">
         <h1>تفاصيل الاستراحة</h1>
@@ -395,9 +341,9 @@
     </div>
 </section>
 
-<!-- ═══ المحتوى ═══ -->
+<!-- CONTENT -->
 <section class="app-section" style="padding-top: 20px;">
-    <div class="container" style="max-width: 600px; margin: 0 auto;">
+    <div style="max-width: 600px; margin: 0 auto;">
         
         <!-- المعرض -->
         <div class="app-section-header">
@@ -579,7 +525,7 @@
     </div>
 </section>
 
-<!-- ═══ Lightbox ═══ -->
+<!-- Lightbox -->
 <div class="lightbox-app" id="lightbox">
     <button class="lightbox-app-close" id="lightboxClose">
         <i class="fas fa-times"></i>
@@ -587,22 +533,9 @@
     <img id="lightboxImg" src="" alt="">
 </div>
 
-<!-- ═══ FOOTER ═══ -->
+<!-- FOOTER -->
 <footer class="app-footer">
-    <svg class="app-footer-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="50" cy="50" r="45" fill="none" stroke="#D4AF37" stroke-width="2"/>
-        <g transform="translate(50, 42)">
-            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37"/>
-            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(45)"/>
-            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(90)"/>
-            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(135)"/>
-            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(180)"/>
-            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(225)"/>
-            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(270)"/>
-            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(315)"/>
-            <circle cx="0" cy="0" r="7" fill="#A88B2C"/>
-        </g>
-    </svg>
+    <img src="images/logo.jpeg" alt="وهج" class="app-footer-logo">
     <h3 class="app-footer-title">استراحة وهج</h3>
     <p class="app-footer-slogan">خصوصية .. راحة .. ذكريات لا تُنسى</p>
     <div class="app-footer-bottom">
@@ -610,7 +543,7 @@
     </div>
 </footer>
 
-<!-- ═══ STICKY BOOKING ═══ -->
+<!-- STICKY BOOKING -->
 <a href="booking.html" class="sticky-booking">
     <div class="sticky-booking-info">
         <span class="sticky-booking-label">احجز الآن</span>
@@ -622,7 +555,7 @@
     </div>
 </a>
 
-<!-- ═══ BOTTOM NAV ═══ -->
+<!-- BOTTOM NAV -->
 <nav class="bottom-nav">
     <a href="index.html" class="bottom-nav-item">
         <i class="fas fa-home"></i>
@@ -633,9 +566,7 @@
         <span>المعرض</span>
     </a>
     <a href="booking.html" class="bottom-nav-item cta-item">
-        <div class="cta-circle">
-            <i class="fas fa-calendar-plus"></i>
-        </div>
+        <div class="cta-circle"><i class="fas fa-calendar-plus"></i></div>
         <span>احجز</span>
     </a>
     <a href="policies.html" class="bottom-nav-item">
@@ -648,17 +579,16 @@
     </a>
 </nav>
 
-<!-- ═══ Floating WhatsApp ═══ -->
 <a href="https://wa.me/96895566332?text=مرحباً" target="_blank" class="floating-whatsapp">
     <i class="fab fa-whatsapp"></i>
 </a>
 
-<!-- ═══ Scripts ═══ -->
+<!-- Scripts -->
 <script src="js/config.js"></script>
 <script src="js/app.js"></script>
+<script src="js/brand.js"></script>
 
 <script>
-// فلترة المعرض
 document.addEventListener('DOMContentLoaded', function() {
     const tabs = document.querySelectorAll('.filter-tab-app');
     const items = document.querySelectorAll('.gallery-item-app');
@@ -667,9 +597,7 @@ document.addEventListener('DOMContentLoaded', function() {
         tab.addEventListener('click', function() {
             tabs.forEach(t => t.classList.remove('active'));
             this.classList.add('active');
-            
             const filter = this.dataset.filter;
-            
             items.forEach(item => {
                 if (filter === 'all' || item.dataset.category === filter) {
                     item.style.display = '';
@@ -680,7 +608,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Lightbox
     const lightbox = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightboxImg');
     const lightboxClose = document.getElementById('lightboxClose');
