@@ -7,7 +7,6 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     
     <title>السياسات | استراحة وهج</title>
-    <meta name="description" content="شروط الاستئجار وسياسات الحجز في استراحة وهج">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,9 +14,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <link rel="stylesheet" href="css/app.css">
+    <link rel="icon" type="image/jpeg" href="images/logo.jpeg">
     
     <style>
-        /* ─── Hero ─── */
         .page-hero-app {
             background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 60%, var(--navy-light) 100%);
             padding: 100px 20px 50px;
@@ -32,6 +31,7 @@
             position: absolute;
             inset: 0;
             background: radial-gradient(circle at 30% 40%, rgba(212, 175, 55, 0.2) 0%, transparent 50%);
+            pointer-events: none;
         }
         
         .page-hero-app-content {
@@ -52,7 +52,6 @@
             opacity: 0.9;
         }
         
-        /* ─── مقدمة ─── */
         .intro-card-app {
             background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.03));
             border-right: 4px solid var(--primary);
@@ -81,7 +80,6 @@
             color: var(--primary-dark);
         }
         
-        /* ─── بطاقات السياسات ─── */
         .policy-card-app {
             background: var(--white);
             border-radius: var(--radius);
@@ -89,12 +87,6 @@
             margin-bottom: 15px;
             box-shadow: var(--shadow-sm);
             border-right: 4px solid var(--primary);
-            transition: var(--transition);
-        }
-        
-        .policy-card-app:active {
-            transform: translateX(-3px);
-            box-shadow: var(--shadow);
         }
         
         .policy-card-header-app {
@@ -158,7 +150,6 @@
             color: var(--primary-dark);
         }
         
-        /* ─── ملاحظات مهمة ─── */
         .important-app {
             background: linear-gradient(135deg, var(--navy), var(--navy-light));
             color: var(--white);
@@ -220,7 +211,6 @@
             display: block;
         }
         
-        /* ─── موافقة ─── */
         .agreement-app {
             background: var(--white);
             border-radius: var(--radius);
@@ -273,62 +263,26 @@
             box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
         }
         
-        .agreement-btn-app.primary:active {
-            transform: scale(0.97);
-        }
-        
         .agreement-btn-app.whatsapp {
             background: #25D366;
             color: var(--white);
-        }
-        
-        .agreement-btn-app.whatsapp:active {
-            transform: scale(0.97);
         }
     </style>
 </head>
 <body>
 
-<!-- ═══ SPLASH SCREEN ═══ -->
+<!-- SPLASH SCREEN -->
 <div class="splash-screen">
-    <svg class="splash-logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="100" cy="100" r="90" fill="none" stroke="#D4AF37" stroke-width="3"/>
-        <g transform="translate(100, 85)">
-            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37"/>
-            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37" transform="rotate(45)"/>
-            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37" transform="rotate(90)"/>
-            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37" transform="rotate(135)"/>
-            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37" transform="rotate(180)"/>
-            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37" transform="rotate(225)"/>
-            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37" transform="rotate(270)"/>
-            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37" transform="rotate(315)"/>
-            <circle cx="0" cy="0" r="14" fill="#A88B2C"/>
-            <circle cx="0" cy="0" r="8" fill="#0A1F44"/>
-        </g>
-        <text x="100" y="175" font-size="16" text-anchor="middle" fill="#D4AF37" font-family="Amiri, serif" font-weight="bold">استراحة وهج</text>
-    </svg>
+    <img src="images/logo.jpeg" alt="استراحة وهج" class="splash-logo">
     <h1 class="splash-title">وهج</h1>
     <p class="splash-subtitle">خصوصية .. راحة .. ذكريات لا تُنسى</p>
     <div class="splash-loader"><div class="splash-loader-bar"></div></div>
 </div>
 
-<!-- ═══ HEADER ═══ -->
+<!-- HEADER -->
 <header class="app-header">
     <div class="app-header-logo">
-        <svg class="app-header-logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="50" cy="50" r="45" fill="none" stroke="#D4AF37" stroke-width="2"/>
-            <g transform="translate(50, 42)">
-                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37"/>
-                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(45)"/>
-                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(90)"/>
-                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(135)"/>
-                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(180)"/>
-                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(225)"/>
-                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(270)"/>
-                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(315)"/>
-                <circle cx="0" cy="0" r="7" fill="#A88B2C"/>
-            </g>
-        </svg>
+        <img src="images/logo.jpeg" alt="وهج" class="app-header-logo-svg">
         <span class="app-header-title">استراحة <span>وهج</span></span>
     </div>
     <a href="booking.html" class="app-header-action" aria-label="احجز">
@@ -336,7 +290,7 @@
     </a>
 </header>
 
-<!-- ═══ HERO ═══ -->
+<!-- HERO -->
 <section class="page-hero-app">
     <div class="page-hero-app-content">
         <h1>سياسات الحجز</h1>
@@ -344,11 +298,10 @@
     </div>
 </section>
 
-<!-- ═══ المحتوى ═══ -->
+<!-- CONTENT -->
 <section class="app-section" style="padding-top: 20px;">
-    <div class="container" style="max-width: 600px; margin: 0 auto;">
+    <div style="max-width: 600px; margin: 0 auto;">
         
-        <!-- مقدمة -->
         <div class="intro-card-app reveal">
             <i class="fas fa-handshake"></i>
             <p>
@@ -357,7 +310,6 @@
             </p>
         </div>
         
-        <!-- الحجز والدفع -->
         <div class="policy-card-app reveal">
             <div class="policy-card-header-app">
                 <div class="policy-card-icon-app"><i class="fas fa-money-bill-wave"></i></div>
@@ -370,7 +322,6 @@
             </ul>
         </div>
         
-        <!-- الوقت -->
         <div class="policy-card-app reveal">
             <div class="policy-card-header-app">
                 <div class="policy-card-icon-app"><i class="fas fa-clock"></i></div>
@@ -384,7 +335,6 @@
             </ul>
         </div>
         
-        <!-- الاستخدام -->
         <div class="policy-card-app reveal">
             <div class="policy-card-header-app">
                 <div class="policy-card-icon-app"><i class="fas fa-swimming-pool"></i></div>
@@ -396,7 +346,6 @@
             </ul>
         </div>
         
-        <!-- الممتلكات -->
         <div class="policy-card-app reveal">
             <div class="policy-card-header-app">
                 <div class="policy-card-icon-app"><i class="fas fa-home"></i></div>
@@ -410,7 +359,6 @@
             </ul>
         </div>
         
-        <!-- السلامة -->
         <div class="policy-card-app reveal">
             <div class="policy-card-header-app">
                 <div class="policy-card-icon-app"><i class="fas fa-shield-alt"></i></div>
@@ -422,7 +370,6 @@
             </ul>
         </div>
         
-        <!-- المسؤولية -->
         <div class="policy-card-app reveal">
             <div class="policy-card-header-app">
                 <div class="policy-card-icon-app"><i class="fas fa-user-shield"></i></div>
@@ -434,7 +381,6 @@
             </ul>
         </div>
         
-        <!-- ملاحظات مهمة -->
         <div class="important-app reveal">
             <h3><i class="fas fa-exclamation-triangle"></i> ملاحظات مهمة</h3>
             <div class="important-grid-app">
@@ -461,7 +407,6 @@
             </div>
         </div>
         
-        <!-- الموافقة -->
         <div class="agreement-app reveal">
             <p>
                 <i class="fas fa-info-circle"></i>
@@ -484,22 +429,9 @@
     </div>
 </section>
 
-<!-- ═══ FOOTER ═══ -->
+<!-- FOOTER -->
 <footer class="app-footer">
-    <svg class="app-footer-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="50" cy="50" r="45" fill="none" stroke="#D4AF37" stroke-width="2"/>
-        <g transform="translate(50, 42)">
-            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37"/>
-            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(45)"/>
-            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(90)"/>
-            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(135)"/>
-            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(180)"/>
-            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(225)"/>
-            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(270)"/>
-            <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(315)"/>
-            <circle cx="0" cy="0" r="7" fill="#A88B2C"/>
-        </g>
-    </svg>
+    <img src="images/logo.jpeg" alt="وهج" class="app-footer-logo">
     <h3 class="app-footer-title">استراحة وهج</h3>
     <p class="app-footer-slogan">خصوصية .. راحة .. ذكريات لا تُنسى</p>
     <div class="app-footer-bottom">
@@ -507,7 +439,7 @@
     </div>
 </footer>
 
-<!-- ═══ STICKY BOOKING ═══ -->
+<!-- STICKY BOOKING -->
 <a href="booking.html" class="sticky-booking">
     <div class="sticky-booking-info">
         <span class="sticky-booking-label">احجز الآن</span>
@@ -519,7 +451,7 @@
     </div>
 </a>
 
-<!-- ═══ BOTTOM NAV ═══ -->
+<!-- BOTTOM NAV -->
 <nav class="bottom-nav">
     <a href="index.html" class="bottom-nav-item">
         <i class="fas fa-home"></i>
@@ -530,9 +462,7 @@
         <span>المعرض</span>
     </a>
     <a href="booking.html" class="bottom-nav-item cta-item">
-        <div class="cta-circle">
-            <i class="fas fa-calendar-plus"></i>
-        </div>
+        <div class="cta-circle"><i class="fas fa-calendar-plus"></i></div>
         <span>احجز</span>
     </a>
     <a href="policies.html" class="bottom-nav-item active">
@@ -545,14 +475,14 @@
     </a>
 </nav>
 
-<!-- ═══ Floating WhatsApp ═══ -->
 <a href="https://wa.me/96895566332?text=مرحباً" target="_blank" class="floating-whatsapp">
     <i class="fab fa-whatsapp"></i>
 </a>
 
-<!-- ═══ Scripts ═══ -->
+<!-- Scripts -->
 <script src="js/config.js"></script>
 <script src="js/app.js"></script>
+<script src="js/brand.js"></script>
 
 </body>
 </html>
