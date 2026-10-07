@@ -15,51 +15,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <link rel="stylesheet" href="css/app.css">
-    <link rel="icon" type="image/png" href="images/logo.png">
+    <link rel="icon" type="image/png" href="images/logo.jpeg">
 </head>
 <body>
-
-<!-- SPLASH SCREEN (يختفي سريعاً) -->
-<div class="splash-screen" id="splashScreen">
-    <img src="images/logo.png" alt="وهج" class="splash-logo" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 200 200%22%3E%3Ccircle cx=%22100%22 cy=%22100%22 r=%2290%22 fill=%22none%22 stroke=%22%23D4AF37%22 stroke-width=%223%22/%3E%3Ctext x=%22100%22 y=%22110%22 font-size=%2240%22 text-anchor=%22middle%22 fill=%22%23D4AF37%22 font-family=%22serif%22%3E%D9%88%D9%87%D8%AC%3C/text%3E%3C/svg%3E';">
-    <h1 class="splash-title">وهج</h1>
-    <p class="splash-subtitle">خصوصية .. راحة .. ذكريات لا تُنسى</p>
-    <div class="splash-loader"><div class="splash-loader-bar"></div></div>
-</div>
-
-<!-- سكربت إخفاء Splash - مضمون -->
-<script>
-(function() {
-    function hideSplash() {
-        var splash = document.getElementById('splashScreen');
-        if (splash) {
-            splash.classList.add('hide');
-            setTimeout(function() {
-                if (splash.parentNode) splash.style.display = 'none';
-            }, 700);
-        }
-    }
-    
-    // إخفاء بعد 1.5 ثانية
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(hideSplash, 1500);
-        });
-    } else {
-        setTimeout(hideSplash, 1500);
-    }
-    
-    // احتياطي 1
-    setTimeout(hideSplash, 2500);
-    // احتياطي 2
-    setTimeout(hideSplash, 4000);
-})();
-</script>
 
 <!-- HEADER -->
 <header class="app-header">
     <div class="app-header-logo">
-        <img src="images/logo.png" alt="وهج" class="app-header-logo-svg" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ccircle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22none%22 stroke=%22%23D4AF37%22 stroke-width=%222%22/%3E%3Ctext x=%2250%22 y=%2260%22 font-size=%2225%22 text-anchor=%22middle%22 fill=%22%23D4AF37%22 font-family=%22serif%22%3E%D9%88%D9%87%D8%AC%3C/text%3E%3C/svg%3E';">
+        <img src="images/logo.jpeg" alt="وهج" class="app-header-logo-svg" onerror="this.style.display='none'">
         <span class="app-header-title">استراحة <span>وهج</span></span>
     </div>
     <a href="https://wa.me/96895566332" target="_blank" class="app-header-action" aria-label="واتساب">
@@ -226,12 +189,11 @@
 
 <!-- FOOTER -->
 <footer class="app-footer">
-    <img src="images/logo.png" alt="وهج" class="app-footer-logo" onerror="this.style.display='none'">
+    <img src="images/logo.jpeg" alt="وهج" class="app-footer-logo" onerror="this.style.display='none'">
     <h3 class="app-footer-title">استراحة وهج</h3>
     <p class="app-footer-slogan">خصوصية .. راحة .. ذكريات لا تُنسى</p>
     <div class="app-footer-bottom">
-        <p>© <span class="current-year">2026</span> استراحة وهج - جميع الحقوق محفوظة</p>
-        <p style="margin-top: 5px;">صُنع بـ ❤️ في سلطنة عمان 🇴🇲</p>
+        <p>© <span class="current-year">2026</span> استراحة وهج</p>
     </div>
 </footer>
 
@@ -271,21 +233,60 @@
     </a>
 </nav>
 
-<a href="https://wa.me/96895566332?text=مرحباً" target="_blank" class="floating-whatsapp">
+<!-- Floating WhatsApp -->
+<a href="https://wa.me/96895566332" target="_blank" class="floating-whatsapp">
     <i class="fab fa-whatsapp"></i>
 </a>
 
-<!-- Scripts -->
-<script src="js/config.js"></script>
-<script src="js/app.js"></script>
-
+<!-- سكربت بسيط -->
 <script>
-// Footer Year
 (function() {
+    // السنة الحالية
     var year = new Date().getFullYear();
     document.querySelectorAll('.current-year').forEach(function(el) {
         el.textContent = year;
     });
+    
+    // Header scroll
+    var header = document.querySelector('.app-header');
+    if (header) {
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        }, { passive: true });
+    }
+    
+    // Scroll reveal
+    var reveals = document.querySelectorAll('.reveal');
+    if (reveals.length && 'IntersectionObserver' in window) {
+        var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        reveals.forEach(function(el) { observer.observe(el); });
+    } else {
+        reveals.forEach(function(el) { el.classList.add('visible'); });
+    }
+    
+    // Sticky booking
+    var sticky = document.querySelector('.sticky-booking');
+    if (sticky) {
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                sticky.classList.add('show');
+            } else {
+                sticky.classList.remove('show');
+            }
+        }, { passive: true });
+    }
 })();
 </script>
 
