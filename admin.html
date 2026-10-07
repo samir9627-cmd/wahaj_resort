@@ -54,7 +54,7 @@
             -webkit-font-smoothing: antialiased;
         }
         
-        /* ═══ شاشة الدخول ═══ */
+        /* ═══ Login ═══ */
         .login-screen {
             min-height: 100vh;
             background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 50%, var(--navy-light) 100%);
@@ -158,16 +158,16 @@
             display: inline-flex;
             align-items: center;
             gap: 5px;
-            background: rgba(212, 175, 55, 0.15);
-            color: var(--primary);
-            padding: 4px 10px;
+            background: rgba(255, 193, 7, 0.15);
+            color: var(--warning);
+            padding: 3px 8px;
             border-radius: 50px;
-            font-size: 0.7rem;
-            margin-left: 8px;
+            font-size: 0.65rem;
+            margin-top: 3px;
         }
         
-        .cloud-status i { font-size: 0.8rem; }
         .cloud-status.online { background: rgba(40, 167, 69, 0.15); color: var(--success); }
+        .cloud-status.local { background: rgba(108, 117, 125, 0.15); color: var(--gray-600); }
         
         .admin-header-btn {
             background: rgba(212, 175, 55, 0.15);
@@ -208,7 +208,7 @@
             border-radius: 5px;
         }
         
-        /* Stats */
+        /* ═══ Stats ═══ */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -261,7 +261,7 @@
         .stat-value { font-size: 1.8rem; font-weight: 900; color: var(--navy); line-height: 1; }
         .stat-label { font-size: 0.75rem; color: var(--gray-600); margin-top: 5px; font-weight: 600; }
         
-        /* Quick Actions */
+        /* ═══ Quick Actions ═══ */
         .quick-actions {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -299,7 +299,7 @@
         
         .quick-action-label { font-size: 0.7rem; font-weight: 700; }
         
-        /* Filter */
+        /* ═══ Filter ═══ */
         .filter-bar {
             background: var(--white);
             border-radius: var(--radius);
@@ -327,7 +327,7 @@
         .filter-bar select:focus,
         .filter-bar input:focus { outline: none; border-color: var(--primary); }
         
-        /* Booking Card */
+        /* ═══ Booking Card ═══ */
         .booking-card {
             background: var(--white);
             border-radius: var(--radius);
@@ -354,7 +354,7 @@
             font-family: 'Courier New', monospace;
             font-weight: 900;
             color: var(--primary-dark);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
         
         .booking-status {
@@ -421,7 +421,7 @@
         
         .no-bookings i { font-size: 3rem; color: var(--gray-200); margin-bottom: 15px; display: block; }
         
-        /* Block Section */
+        /* ═══ Block Section ═══ */
         .block-section {
             background: var(--white);
             border-radius: var(--radius);
@@ -492,48 +492,7 @@
         
         .no-blocked { text-align: center; color: var(--gray-600); padding: 20px; font-size: 0.85rem; }
         
-        /* Upload Section */
-        .upload-area-admin {
-            border: 2px dashed var(--gray-400);
-            border-radius: var(--radius);
-            padding: 30px 20px;
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
-            background: var(--gray-100);
-            position: relative;
-        }
-        
-        .upload-area-admin input[type="file"] {
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-            cursor: pointer;
-        }
-        
-        .upload-area-admin i { font-size: 2.5rem; color: var(--primary); margin-bottom: 10px; display: block; }
-        .upload-area-admin h4 { color: var(--navy); margin-bottom: 5px; }
-        .upload-area-admin p { color: var(--gray-600); font-size: 0.8rem; }
-        
-        .upload-progress {
-            margin-top: 15px;
-            height: 8px;
-            background: var(--gray-200);
-            border-radius: 50px;
-            overflow: hidden;
-            display: none;
-        }
-        
-        .upload-progress.show { display: block; }
-        
-        .upload-progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--primary-dark));
-            width: 0%;
-            transition: width 0.3s;
-        }
-        
-        /* Settings Card */
+        /* ═══ Settings Card ═══ */
         .settings-card {
             background: var(--white);
             border-radius: var(--radius);
@@ -571,9 +530,8 @@
         }
         
         .btn-danger { background: var(--danger); color: var(--white); }
-        .btn-primary-full { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: var(--navy); }
         
-        /* Bottom Nav */
+        /* ═══ Bottom Nav ═══ */
         .admin-bottom-nav {
             position: fixed;
             bottom: 0;
@@ -642,7 +600,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* Modal */
+        /* ═══ Modal ═══ */
         .modal {
             position: fixed;
             inset: 0;
@@ -707,7 +665,65 @@
         .modal-receipt { margin-top: 15px; text-align: center; }
         .modal-receipt img { max-width: 100%; max-height: 300px; border-radius: var(--radius-sm); border: 2px solid var(--primary); }
         
-        /* Toast */
+        /* ═══ Modal Payment Sections ═══ */
+        .modal-payment-section {
+            margin: 12px 0;
+            padding: 12px 14px;
+            border-radius: var(--radius-sm);
+        }
+        
+        .modal-payment-section-title {
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            text-transform: uppercase;
+        }
+        
+        .modal-payment-section.now {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(212, 175, 55, 0.05));
+            border: 2px solid var(--primary);
+        }
+        
+        .modal-payment-section.now .modal-payment-section-title { color: var(--primary-dark); }
+        
+        .modal-payment-section.later {
+            background: linear-gradient(135deg, rgba(10, 31, 68, 0.06), rgba(10, 31, 68, 0.02));
+            border: 2px solid rgba(10, 31, 68, 0.2);
+        }
+        
+        .modal-payment-section.later .modal-payment-section-title { color: var(--navy); }
+        
+        .modal-payment-section.refund {
+            background: linear-gradient(135deg, rgba(40, 167, 69, 0.1), rgba(40, 167, 69, 0.03));
+            border: 2px solid rgba(40, 167, 69, 0.3);
+        }
+        
+        .modal-payment-section.refund .modal-payment-section-title { color: var(--success); }
+        
+        .modal-payment-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 5px 0;
+            font-size: 0.8rem;
+        }
+        
+        .modal-payment-section.now .modal-payment-row:last-child {
+            border-top: 1px dashed var(--primary);
+            margin-top: 5px;
+            padding-top: 8px;
+            font-weight: 900;
+        }
+        
+        .modal-payment-section.now .modal-payment-row:last-child strong {
+            color: var(--primary-dark);
+        }
+        
+        .modal-payment-section.refund .modal-payment-row strong { color: var(--success); }
+        
+        /* ═══ Toast ═══ */
         .toast {
             position: fixed;
             top: 90px;
@@ -732,6 +748,7 @@
         .toast.error { background: var(--danger); }
         .toast.warning { background: var(--warning); color: var(--navy); }
         
+        /* ═══ Print ═══ */
         @media print {
             body * { visibility: hidden; }
             #printArea, #printArea * { visibility: visible; }
@@ -772,8 +789,8 @@
             <div class="admin-logo-icon" id="headerLogoIcon"></div>
             <div>
                 <div>لوحة التحكم</div>
-                <div class="cloud-status" id="cloudStatus">
-                    <i class="fas fa-cloud"></i> <span id="cloudStatusText">جاري الاتصال...</span>
+                <div class="cloud-status local" id="cloudStatus">
+                    <i class="fas fa-database"></i> <span id="cloudStatusText">محلي</span>
                 </div>
             </div>
         </div>
@@ -786,7 +803,7 @@
     
     <div class="admin-container">
         
-        <!-- Page: Dashboard -->
+        <!-- Dashboard -->
         <div class="page active" id="page-dashboard">
             <h1 class="page-title">الرئيسية</h1>
             
@@ -830,9 +847,9 @@
                     <div class="quick-action-icon"><i class="fas fa-ban"></i></div>
                     <div class="quick-action-label">حجب تاريخ</div>
                 </div>
-                <div class="quick-action" onclick="switchPage('upload')">
-                    <div class="quick-action-icon"><i class="fas fa-upload"></i></div>
-                    <div class="quick-action-label">رفع صورة</div>
+                <div class="quick-action" onclick="switchPage('bookings')">
+                    <div class="quick-action-icon"><i class="fas fa-list"></i></div>
+                    <div class="quick-action-label">كل الحجوزات</div>
                 </div>
                 <div class="quick-action" onclick="switchPage('settings')">
                     <div class="quick-action-icon"><i class="fas fa-cog"></i></div>
@@ -844,7 +861,7 @@
             <div id="dashboardBookings"></div>
         </div>
         
-        <!-- Page: Bookings -->
+        <!-- Bookings -->
         <div class="page" id="page-bookings">
             <h1 class="page-title">الحجوزات</h1>
             
@@ -861,7 +878,7 @@
             <div id="bookingsList"></div>
         </div>
         
-        <!-- Page: Blocked -->
+        <!-- Blocked -->
         <div class="page" id="page-blocked">
             <h1 class="page-title">حجب التواريخ</h1>
             
@@ -883,54 +900,13 @@
             </div>
         </div>
         
-        <!-- Page: Upload -->
-        <div class="page" id="page-upload">
-            <h1 class="page-title">رفع صورة</h1>
-            
-            <div class="block-section">
-                <h3><i class="fas fa-cloud-upload-alt"></i> رفع صورة إلى السحابة</h3>
-                <p style="color: var(--gray-600); font-size: 0.85rem; margin-bottom: 15px;">
-                    ارفع صور الاستراحة، وستُحفظ في Firebase Storage.
-                </p>
-                
-                <div class="upload-area-admin">
-                    <input type="file" id="imageUploadInput" accept="image/*" multiple>
-                    <i class="fas fa-cloud-upload-alt"></i>
-                    <h4>اضغط لاختيار الصور</h4>
-                    <p>PNG أو JPG - الحد الأقصى 5MB لكل صورة</p>
-                </div>
-                
-                <div class="upload-progress" id="uploadProgress">
-                    <div class="upload-progress-bar" id="uploadProgressBar"></div>
-                </div>
-            </div>
-            
-            <div class="block-section">
-                <h3><i class="fas fa-image"></i> الصور المرفوعة</h3>
-                <div id="uploadedImagesList" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
-                    <p style="color: var(--gray-600); font-size: 0.85rem; grid-column: span 2; text-align: center; padding: 20px;">
-                        لا توجد صور مرفوعة بعد
-                    </p>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Page: Settings -->
+        <!-- Settings -->
         <div class="page" id="page-settings">
             <h1 class="page-title">الإعدادات</h1>
             
             <div class="settings-card">
-                <h3><i class="fas fa-cloud"></i> حالة الاتصال</h3>
-                <p>Firebase: <strong id="settingsFirebaseStatus">جاري الفحص...</strong></p>
-                <p>Firestore: <strong id="settingsFirestoreStatus">جاري الفحص...</strong></p>
-                <p>Storage: <strong id="settingsStorageStatus">جاري الفحص...</strong></p>
-            </div>
-            
-            <div class="settings-card">
-                <h3><i class="fas fa-database"></i> البيانات</h3>
-                <p>عدد الحجوزات: <strong id="settingsBookingsCount">0</strong></p>
-                <p>عدد التواريخ المحجوبة: <strong id="settingsBlockedCount">0</strong></p>
-                <p>المصدر: <strong id="settingsDataSource">localStorage</strong></p>
+                <h3><i class="fas fa-info-circle"></i> معلومات النظام</h3>
+                <p>البيانات محفوظة في <strong>localStorage</strong> (على هذا الجهاز).</p>
             </div>
             
             <div class="settings-card">
@@ -940,13 +916,12 @@
             </div>
             
             <div class="settings-card">
-                <h3><i class="fas fa-trash"></i> مسح البيانات</h3>
-                <button class="btn-full btn-danger" onclick="clearAllData()">
-                    <i class="fas fa-trash"></i> مسح البيانات المحلية
+                <h3><i class="fas fa-database"></i> البيانات</h3>
+                <p>عدد الحجوزات: <strong id="settingsBookingsCount">0</strong></p>
+                <p>عدد التواريخ المحجوبة: <strong id="settingsBlockedCount">0</strong></p>
+                <button class="btn-full btn-danger" onclick="clearAllData()" style="margin-top: 10px;">
+                    <i class="fas fa-trash"></i> مسح جميع البيانات
                 </button>
-                <p style="font-size: 0.75rem; margin-top: 10px;">
-                    ⚠️ لن يمسح البيانات السحابية (Firebase)
-                </p>
             </div>
         </div>
         
@@ -967,10 +942,6 @@
             <i class="fas fa-ban"></i>
             <span>حجب</span>
         </button>
-        <button class="admin-nav-item" data-page="upload" onclick="switchPage('upload')">
-            <i class="fas fa-upload"></i>
-            <span>صور</span>
-        </button>
         <button class="admin-nav-item" data-page="settings" onclick="switchPage('settings')">
             <i class="fas fa-cog"></i>
             <span>إعدادات</span>
@@ -986,17 +957,12 @@
 <div class="toast" id="toast"></div>
 <div id="printArea" style="display: none;"></div>
 
-<script src="js/firebase.js"></script>
-<script src="js/firebase-helper.js"></script>
-
 <script>
 (function() {
     'use strict';
     
     var ADMIN_PASSWORD = 'wahaj2026';
-    var useFirebase = false;
     
-    // ─── الشعار SVG ───
     var LOGO_SVG = '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">' +
     '<defs><linearGradient id="wg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#F4D77E"/><stop offset="50%" stop-color="#D4AF37"/><stop offset="100%" stop-color="#A88B2C"/></linearGradient></defs>' +
     '<circle cx="100" cy="100" r="94" fill="none" stroke="url(#wg)" stroke-width="2.5"/>' +
@@ -1008,22 +974,21 @@
     '<ellipse cx="0" cy="-26" rx="6" ry="14" fill="url(#wg)" transform="rotate(240)"/>' +
     '<ellipse cx="0" cy="-26" rx="6" ry="14" fill="url(#wg)" transform="rotate(300)"/>' +
     '<circle cx="0" cy="0" r="14" fill="#A88B2C"/><circle cx="0" cy="0" r="7" fill="#0A1F44"/>' +
+    '<path d="M 0 14 Q -4 30 0 48" stroke="url(#wg)" stroke-width="2.5" fill="none"/>' +
     '</g>' +
     '<text x="100" y="135" font-size="16" text-anchor="middle" fill="url(#wg)" font-family="Amiri, serif" font-weight="bold">استراحة وهج</text>' +
     '<text x="100" y="160" font-size="20" text-anchor="middle" fill="url(#wg)" font-family="Cairo, sans-serif" font-weight="900" letter-spacing="4">WAHAJ</text>' +
+    '<text x="100" y="178" font-size="10" text-anchor="middle" fill="url(#wg)" font-family="Cairo, sans-serif" letter-spacing="6">RESORT</text>' +
     '</svg>';
     
     document.getElementById('headerLogoIcon').innerHTML = LOGO_SVG;
     
-    // ─── الحالة ───
     var allBookings = [];
     var filteredBookings = [];
     var blockedDates = [];
-    var uploadedImages = [];
     var currentFilter = 'all';
     var currentSearch = '';
     
-    // ─── Toast ───
     function showToast(msg, type) {
         var t = document.getElementById('toast');
         t.textContent = msg;
@@ -1031,7 +996,6 @@
         setTimeout(function() { t.classList.remove('show'); }, 2500);
     }
     
-    // ─── Login ───
     function handleLogin() {
         var pwd = document.getElementById('passwordInput').value;
         if (pwd === ADMIN_PASSWORD) {
@@ -1047,40 +1011,9 @@
     function showAdmin() {
         document.getElementById('loginScreen').style.display = 'none';
         document.getElementById('adminPanel').classList.add('show');
-        checkFirebaseStatus();
         loadData();
     }
     
-    // ─── Firebase Status ───
-    function checkFirebaseStatus() {
-        var statusEl = document.getElementById('cloudStatus');
-        var statusText = document.getElementById('cloudStatusText');
-        
-        if (window.WahajFirebase) {
-            window.WahajFirebase.waitForFirebase(function(ready) {
-                if (ready) {
-                    useFirebase = true;
-                    statusEl.classList.add('online');
-                    statusText.textContent = 'متصل سحابياً';
-                    document.getElementById('settingsFirebaseStatus').innerHTML = '✅ <span style="color: var(--success);">متصل</span>';
-                    document.getElementById('settingsFirestoreStatus').innerHTML = '✅ <span style="color: var(--success);">متصل</span>';
-                    document.getElementById('settingsStorageStatus').innerHTML = '✅ <span style="color: var(--success);">متصل</span>';
-                    document.getElementById('settingsDataSource').textContent = 'Firebase + localStorage';
-                    console.log('✅ Firebase متصل - استخدام السحابة');
-                } else {
-                    useFirebase = false;
-                    statusText.textContent = 'محلي فقط';
-                    document.getElementById('settingsFirebaseStatus').innerHTML = '❌ <span style="color: var(--danger);">غير متصل</span>';
-                    document.getElementById('settingsDataSource').textContent = 'localStorage';
-                    console.warn('⚠️ Firebase غير متاح - استخدام localStorage');
-                }
-            }, 8000);
-        } else {
-            statusText.textContent = 'محلي فقط';
-        }
-    }
-    
-    // ─── Page Switching ───
     window.switchPage = function(pageName) {
         document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
         document.querySelectorAll('.admin-nav-item').forEach(function(n) { n.classList.remove('active'); });
@@ -1094,9 +1027,7 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
     
-    // ─── Load Data ───
-    async function loadData() {
-        // 1. من localStorage أولاً
+    function loadData() {
         try {
             allBookings = JSON.parse(localStorage.getItem('wahaj_bookings') || '[]').reverse();
             blockedDates = JSON.parse(localStorage.getItem('wahaj_blocked_dates') || '[]');
@@ -1104,48 +1035,11 @@
             allBookings = [];
             blockedDates = [];
         }
-        
         updateStats();
         applyFilters();
         renderBlockedList();
         updateSettingsCounts();
         updateBadge();
-        
-        // 2. من Firebase (إذا متاح)
-        if (useFirebase && window.WahajFirebase) {
-            try {
-                var cloudBookings = await window.WahajFirebase.getAllBookings();
-                var cloudBlocked = await window.WahajFirebase.getAllBlockedDates();
-                
-                if (cloudBookings && cloudBookings.length > 0) {
-                    // دمج - الأحدث يفوز
-                    var merged = {};
-                    allBookings.forEach(function(b) { merged[b.bookingId] = b; });
-                    cloudBookings.forEach(function(b) {
-                        if (b.bookingId) {
-                            b._source = 'cloud';
-                            merged[b.bookingId] = b;
-                        }
-                    });
-                    allBookings = Object.values(merged).sort(function(a, b) {
-                        return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
-                    });
-                    console.log('☁️ تم تحميل', cloudBookings.length, 'حجز من السحابة');
-                }
-                
-                if (cloudBlocked && cloudBlocked.length > 0) {
-                    blockedDates = cloudBlocked;
-                }
-                
-                updateStats();
-                applyFilters();
-                renderBlockedList();
-                updateSettingsCounts();
-                updateBadge();
-            } catch(e) {
-                console.warn('فشل تحميل السحابة:', e);
-            }
-        }
     }
     
     function updateStats() {
@@ -1177,7 +1071,6 @@
         document.getElementById('settingsBlockedCount').textContent = blockedDates.length;
     }
     
-    // ─── Filters ───
     function applyFilters() {
         filteredBookings = allBookings.filter(function(b) {
             var status = b.status || 'pending';
@@ -1221,11 +1114,9 @@
         var statusText = status === 'pending' ? 'بانتظار' : status === 'confirmed' ? 'مؤكد' : 'مرفوض';
         var statusIcon = status === 'pending' ? 'fa-clock' : status === 'confirmed' ? 'fa-check' : 'fa-times';
         
-        var cloudIcon = b._source === 'cloud' ? ' <i class="fas fa-cloud" style="color: var(--primary); font-size: 0.7rem;"></i>' : '';
-        
         return '<div class="booking-card ' + status + '">' +
             '<div class="booking-head">' +
-                '<span class="booking-id">' + b.bookingId + cloudIcon + '</span>' +
+                '<span class="booking-id">' + b.bookingId + '</span>' +
                 '<span class="booking-status ' + status + '"><i class="fas ' + statusIcon + '"></i> ' + statusText + '</span>' +
             '</div>' +
             '<div class="booking-info-grid">' +
@@ -1234,7 +1125,7 @@
                 '<div class="booking-info-item"><span class="label">التاريخ</span><span class="value">' + (b.dateFormatted || b.date || '—') + '</span></div>' +
                 '<div class="booking-info-item"><span class="label">النوع</span><span class="value">' + (b.bookingType || '—') + '</span></div>' +
                 '<div class="booking-info-item"><span class="label">الضيوف</span><span class="value">' + (b.guests || '—') + '</span></div>' +
-                '<div class="booking-info-item"><span class="label">العربون</span><span class="value">' + (b.deposit || 0) + ' ر.ع</span></div>' +
+                '<div class="booking-info-item"><span class="label">المطلوب الآن</span><span class="value">' + (b.payNow || b.deposit || 0) + ' ر.ع</span></div>' +
             '</div>' +
             '<div class="booking-actions">' +
                 '<button class="action-btn view" onclick="viewBooking(\'' + b.bookingId + '\')"><i class="fas fa-eye"></i> تفاصيل</button>' +
@@ -1249,15 +1140,21 @@
         '</div>';
     }
     
-    // ─── View Booking ───
     window.viewBooking = function(bookingId) {
         var b = allBookings.find(function(x) { return x.bookingId === bookingId; });
         if (!b) return;
         
+        var total = b.total || 0;
+        var deposit = b.deposit || 0;
+        var security = b.security || 20;
+        var remaining = b.remaining !== undefined ? b.remaining : (total - deposit);
+        var payNow = b.payNow || (deposit + security);
+        var isFullPayment = b.isFullPayment || false;
+        
         var receiptImg = b.receiptURL || sessionStorage.getItem('receipt_' + bookingId);
         var receiptHtml = receiptImg ? '<div class="modal-receipt"><img src="' + receiptImg + '" alt="الإيصال"></div>' : '<p style="text-align:center;color:var(--gray-600);font-size:0.85rem;margin-top:15px;">لا يوجد إيصال</p>';
         
-        document.getElementById('modalContent').innerHTML = 
+        var html = 
             '<button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>' +
             '<h2>تفاصيل الحجز</h2>' +
             '<div class="modal-row"><span class="label">رقم الحجز:</span><span class="value">' + b.bookingId + '</span></div>' +
@@ -1268,12 +1165,40 @@
             '<div class="modal-row"><span class="label">نوع الحجز:</span><span class="value">' + b.bookingType + '</span></div>' +
             '<div class="modal-row"><span class="label">التوقيت:</span><span class="value">' + b.bookingTypeDesc + '</span></div>' +
             '<div class="modal-row"><span class="label">عدد الضيوف:</span><span class="value">' + b.guests + '</span></div>' +
-            '<div class="modal-row"><span class="label">الإجمالي:</span><span class="value">' + b.total + ' ر.ع</span></div>' +
-            '<div class="modal-row"><span class="label">العربون:</span><span class="value">' + b.deposit + ' ر.ع</span></div>' +
-            '<div class="modal-row"><span class="label">الباقي:</span><span class="value">' + b.remaining + ' ر.ع</span></div>' +
-            '<div class="modal-row"><span class="label">ملاحظات:</span><span class="value">' + (b.notes || 'لا يوجد') + '</span></div>' +
-            receiptHtml;
+            '<div class="modal-row"><span class="label">ملاحظات:</span><span class="value">' + (b.notes || 'لا يوجد') + '</span></div>';
         
+        // Payment sections
+        html += 
+            '<div class="modal-payment-section now">' +
+                '<div class="modal-payment-section-title"><i class="fas fa-credit-card"></i> يُدفع الآن</div>' +
+                '<div class="modal-payment-row"><span>💵 العربون' + (isFullPayment ? ' (دفع كامل)' : '') + '</span><strong>' + deposit + ' ر.ع</strong></div>' +
+                '<div class="modal-payment-row"><span>🛡️ التأمين (مسترد)</span><strong>' + security + ' ر.ع</strong></div>' +
+                '<div class="modal-payment-row"><span>✅ الإجمالي المطلوب</span><strong>' + payNow + ' ر.ع</strong></div>' +
+            '</div>';
+        
+        if (remaining > 0) {
+            html += 
+                '<div class="modal-payment-section later">' +
+                    '<div class="modal-payment-section-title"><i class="fas fa-calendar-check"></i> يُدفع عند الدخول</div>' +
+                    '<div class="modal-payment-row"><span>💳 الباقي</span><strong>' + remaining + ' ر.ع</strong></div>' +
+                '</div>';
+        } else {
+            html += 
+                '<div class="modal-payment-section later">' +
+                    '<div class="modal-payment-section-title"><i class="fas fa-check-circle"></i> تم الدفع كاملاً</div>' +
+                    '<div class="modal-payment-row"><span>لا يوجد باقي ✅</span><strong>0 ر.ع</strong></div>' +
+                '</div>';
+        }
+        
+        html += 
+            '<div class="modal-payment-section refund">' +
+                '<div class="modal-payment-section-title"><i class="fas fa-undo"></i> يُرد بعد الخروج</div>' +
+                '<div class="modal-payment-row"><span>🛡️ التأمين المسترد</span><strong>' + security + ' ر.ع</strong></div>' +
+            '</div>';
+        
+        html += receiptHtml;
+        
+        document.getElementById('modalContent').innerHTML = html;
         document.getElementById('detailsModal').classList.add('show');
     };
     
@@ -1281,13 +1206,19 @@
         document.getElementById('detailsModal').classList.remove('show');
     };
     
-    // ─── Confirm ───
-    window.confirmBooking = async function(bookingId) {
+    window.confirmBooking = function(bookingId) {
         var b = allBookings.find(function(x) { return x.bookingId === bookingId; });
         if (!b) return;
         if (!confirm('تأكيد الحجز؟ سيتم فتح واتساب للتواصل مع العميل')) return;
         
-        await updateStatus(bookingId, 'confirmed');
+        updateStatus(bookingId, 'confirmed');
+        
+        var total = b.total || 0;
+        var deposit = b.deposit || 0;
+        var security = b.security || 20;
+        var remaining = b.remaining !== undefined ? b.remaining : (total - deposit);
+        var payNow = b.payNow || (deposit + security);
+        var isFullPayment = b.isFullPayment || false;
         
         var msg = '✅ *تم تأكيد حجزك - استراحة وهج*\n\n' +
             'مرحباً ' + b.fullName + '،\n\n' +
@@ -1295,11 +1226,20 @@
             '📅 *التاريخ:* ' + b.dateFormatted + '\n' +
             '⏰ *التوقيت:* ' + b.bookingTypeDesc + '\n' +
             '👥 *الضيوف:* ' + b.guests + ' أشخاص\n\n' +
-            '💰 *تفاصيل الدفع:*\n' +
-            '• الإجمالي: ' + b.total + ' ر.ع\n' +
-            '• العربون المدفوع: ' + b.deposit + ' ر.ع\n' +
-            '• الباقي عند الدخول: ' + b.remaining + ' ر.ع\n' +
-            '• التأمين: ' + b.security + ' ر.ع (يُرد بعد الخروج)\n\n' +
+            '━━━━━━━━━━━━━━━\n' +
+            '💰 *تفاصيل الدفع*\n' +
+            '━━━━━━━━━━━━━━━\n\n' +
+            '💳 *يُدفع الآن (تحويل بنكي):*\n' +
+            '• العربون' + (isFullPayment ? ' (دفع كامل)' : '') + ': ' + deposit + ' ر.ع\n' +
+            '• التأمين المسترد: ' + security + ' ر.ع\n' +
+            '• *الإجمالي المطلوب: ' + payNow + ' ر.ع*\n\n' +
+            (remaining > 0 ?
+                '💵 *يُدفع عند الدخول:*\n' +
+                '• الباقي: ' + remaining + ' ر.ع\n\n'
+                : '✅ *لا يوجد باقي*\n\n'
+            ) +
+            '🛡️ *يُرد بعد الخروج:*\n' +
+            '• التأمين: ' + security + ' ر.ع\n\n' +
             '🔔 *تذكير مهم:*\n' +
             '⏰ موعد الحجز: ' + b.dateFormatted + '\n' +
             '📍 العنوان: ولاية بركاء - منطقة العقدة\n\n' +
@@ -1322,15 +1262,14 @@
         showToast('✅ تم تأكيد الحجز', 'success');
     };
     
-    // ─── Reject ───
-    window.rejectBooking = async function(bookingId) {
+    window.rejectBooking = function(bookingId) {
         var b = allBookings.find(function(x) { return x.bookingId === bookingId; });
         if (!b) return;
         
         var reason = prompt('سبب الرفض (اختياري):', '');
         if (reason === null) return;
         
-        await updateStatus(bookingId, 'rejected');
+        updateStatus(bookingId, 'rejected');
         
         var msg = 'عذراً ' + b.fullName + '،\n\n' +
             'نأسف لإبلاغك بأنه لم يتم تأكيد حجزك.\n\n' +
@@ -1350,9 +1289,7 @@
         showToast('تم رفض الحجز', 'warning');
     };
     
-    // ─── Update Status ───
-    async function updateStatus(bookingId, newStatus) {
-        // 1. local
+    function updateStatus(bookingId, newStatus) {
         try {
             var bookings = JSON.parse(localStorage.getItem('wahaj_bookings') || '[]');
             for (var i = 0; i < bookings.length; i++) {
@@ -1363,24 +1300,20 @@
                 }
             }
             localStorage.setItem('wahaj_bookings', JSON.stringify(bookings));
+            loadData();
         } catch(e) {}
-        
-        // 2. cloud
-        if (useFirebase && window.WahajFirebase) {
-            var b = allBookings.find(function(x) { return x.bookingId === bookingId; });
-            if (b && b.firestoreId) {
-                await window.WahajFirebase.updateBookingStatus(b.firestoreId, newStatus);
-                console.log('☁️ تم تحديث الحالة سحابياً');
-            }
-        }
-        
-        await loadData();
     }
     
-    // ─── Print ───
     window.printBooking = function(bookingId) {
         var b = allBookings.find(function(x) { return x.bookingId === bookingId; });
         if (!b) return;
+        
+        var total = b.total || 0;
+        var deposit = b.deposit || 0;
+        var security = b.security || 20;
+        var remaining = b.remaining !== undefined ? b.remaining : (total - deposit);
+        var payNow = b.payNow || (deposit + security);
+        var isFullPayment = b.isFullPayment || false;
         
         var content = 
             '<div style="font-family: Cairo, sans-serif; direction: rtl; padding: 30px; max-width: 700px; margin: 0 auto;">' +
@@ -1400,12 +1333,39 @@
             '<tr><td style="padding: 10px; border-bottom: 1px solid #E9ECEF; color: #6C757D;">نوع الحجز:</td><td style="padding: 10px; border-bottom: 1px solid #E9ECEF; font-weight: bold; text-align: left;">' + b.bookingType + ' (' + b.bookingTypeDesc + ')</td></tr>' +
             '<tr><td style="padding: 10px; border-bottom: 1px solid #E9ECEF; color: #6C757D;">عدد الضيوف:</td><td style="padding: 10px; border-bottom: 1px solid #E9ECEF; font-weight: bold; text-align: left;">' + b.guests + ' أشخاص</td></tr>' +
             '</table>' +
-            '<table style="width: 100%; border-collapse: collapse; background: #FBF8F1; border-radius: 12px; overflow: hidden;">' +
-            '<tr><td style="padding: 12px 15px; color: #6C757D;">السعر الإجمالي</td><td style="padding: 12px 15px; text-align: left; font-weight: bold;">' + b.total + ' ر.ع</td></tr>' +
-            '<tr><td style="padding: 12px 15px; color: #6C757D; border-top: 1px solid #E9ECEF;">العربون المدفوع</td><td style="padding: 12px 15px; text-align: left; font-weight: bold; color: #A88B2C; border-top: 1px solid #E9ECEF;">' + b.deposit + ' ر.ع</td></tr>' +
-            '<tr><td style="padding: 12px 15px; color: #6C757D; border-top: 1px solid #E9ECEF;">الباقي عند الدخول</td><td style="padding: 12px 15px; text-align: left; font-weight: bold; border-top: 1px solid #E9ECEF;">' + b.remaining + ' ر.ع</td></tr>' +
-            '<tr><td style="padding: 12px 15px; color: #6C757D; border-top: 1px solid #E9ECEF;">التأمين (مسترد)</td><td style="padding: 12px 15px; text-align: left; font-weight: bold; border-top: 1px solid #E9ECEF;">' + b.security + ' ر.ع</td></tr>' +
+            
+            '<div style="background: #FBF8F1; border: 2px solid #D4AF37; border-radius: 12px; padding: 15px; margin-bottom: 15px;">' +
+            '<div style="color: #A88B2C; font-weight: bold; margin-bottom: 10px; font-size: 14px;">💳 يُدفع الآن (تحويل بنكي)</div>' +
+            '<table style="width: 100%;">' +
+            '<tr><td style="padding: 5px 0;">💵 العربون' + (isFullPayment ? ' (دفع كامل)' : '') + '</td><td style="text-align: left; font-weight: bold;">' + deposit + ' ر.ع</td></tr>' +
+            '<tr><td style="padding: 5px 0;">🛡️ التأمين المسترد</td><td style="text-align: left; font-weight: bold;">' + security + ' ر.ع</td></tr>' +
+            '<tr style="border-top: 1px dashed #D4AF37;"><td style="padding: 10px 0 0;">✅ الإجمالي المطلوب</td><td style="text-align: left; font-weight: bold; color: #A88B2C; font-size: 18px;">' + payNow + ' ر.ع</td></tr>' +
             '</table>' +
+            '</div>';
+        
+        if (remaining > 0) {
+            content += 
+                '<div style="background: #F8F9FA; border: 2px solid rgba(10, 31, 68, 0.2); border-radius: 12px; padding: 15px; margin-bottom: 15px;">' +
+                '<div style="color: #0A1F44; font-weight: bold; margin-bottom: 10px; font-size: 14px;">📅 يُدفع عند الدخول</div>' +
+                '<table style="width: 100%;">' +
+                '<tr><td style="padding: 5px 0;">💳 الباقي</td><td style="text-align: left; font-weight: bold;">' + remaining + ' ر.ع</td></tr>' +
+                '</table>' +
+                '</div>';
+        } else {
+            content += 
+                '<div style="background: #F8F9FA; border: 2px solid rgba(40, 167, 69, 0.3); border-radius: 12px; padding: 15px; margin-bottom: 15px;">' +
+                '<div style="color: #28A745; font-weight: bold; font-size: 14px;">✅ تم الدفع كاملاً</div>' +
+                '</div>';
+        }
+        
+        content += 
+            '<div style="background: rgba(40, 167, 69, 0.08); border: 2px solid rgba(40, 167, 69, 0.3); border-radius: 12px; padding: 15px; margin-bottom: 15px;">' +
+            '<div style="color: #28A745; font-weight: bold; margin-bottom: 10px; font-size: 14px;">♻️ يُرد بعد الخروج</div>' +
+            '<table style="width: 100%;">' +
+            '<tr><td style="padding: 5px 0;">🛡️ التأمين المسترد</td><td style="text-align: left; font-weight: bold; color: #28A745;">' + security + ' ر.ع</td></tr>' +
+            '</table>' +
+            '</div>' +
+            
             '<div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #D4AF37; text-align: center; color: #6C757D; font-size: 12px;">' +
             '<p>📍 ولاية بركاء - منطقة العقدة - جنوب الباطنة</p>' +
             '<p>📞 +968 9556 6332</p>' +
@@ -1423,7 +1383,6 @@
         }, 200);
     };
     
-    // ─── Contact Customer ───
     window.contactCustomer = function(bookingId) {
         var b = allBookings.find(function(x) { return x.bookingId === bookingId; });
         if (!b) return;
@@ -1440,27 +1399,18 @@
         window.open('https://wa.me/' + phoneFull + '?text=' + encodeURIComponent(msg), '_blank');
     };
     
-    // ─── Delete ───
-    window.deleteBooking = async function(bookingId) {
+    window.deleteBooking = function(bookingId) {
         if (!confirm('حذف الحجز نهائياً؟')) return;
         
         try {
             var bookings = JSON.parse(localStorage.getItem('wahaj_bookings') || '[]');
-            var b = bookings.find(function(x) { return x.bookingId === bookingId; });
             bookings = bookings.filter(function(x) { return x.bookingId !== bookingId; });
             localStorage.setItem('wahaj_bookings', JSON.stringify(bookings));
-            
-            // من السحابة
-            if (useFirebase && b && b.firestoreId) {
-                await window.WahajFirebase.deleteBooking(b.firestoreId);
-            }
-            
-            await loadData();
+            loadData();
             showToast('تم حذف الحجز', 'success');
         } catch(e) {}
     };
     
-    // ─── Blocked Dates ───
     function renderBlockedList() {
         var list = document.getElementById('blockedList');
         
@@ -1477,29 +1427,21 @@
                     '<div class="date">📅 ' + date + '</div>' +
                     (reason ? '<div class="reason">📝 ' + reason + '</div>' : '') +
                 '</div>' +
-                '<button onclick="removeBlocked(\'' + date + '\', ' + index + ')"><i class="fas fa-times"></i></button>' +
+                '<button onclick="removeBlocked(' + index + ')"><i class="fas fa-times"></i></button>' +
             '</div>';
         }).join('');
     }
     
-    window.removeBlocked = async function(date, index) {
+    window.removeBlocked = function(index) {
         if (!confirm('إزالة الحجب؟')) return;
-        
-        blockedDates = blockedDates.filter(function(item) {
-            return (item.date || item) !== date;
-        });
+        blockedDates.splice(index, 1);
         localStorage.setItem('wahaj_blocked_dates', JSON.stringify(blockedDates));
-        
-        if (useFirebase && window.WahajFirebase) {
-            await window.WahajFirebase.removeBlockedDate(date);
-        }
-        
         renderBlockedList();
         updateSettingsCounts();
         showToast('تم إزالة الحجب', 'success');
     };
     
-    window.addBlocked = async function() {
+    window.addBlocked = function() {
         var date = document.getElementById('blockDate').value;
         var reason = document.getElementById('blockReason').value.trim();
         
@@ -1520,10 +1462,6 @@
         blockedDates.push({ date: date, reason: reason });
         localStorage.setItem('wahaj_blocked_dates', JSON.stringify(blockedDates));
         
-        if (useFirebase && window.WahajFirebase) {
-            await window.WahajFirebase.addBlockedDate(date, reason);
-        }
-        
         document.getElementById('blockDate').value = '';
         document.getElementById('blockReason').value = '';
         
@@ -1532,76 +1470,6 @@
         showToast('✅ تم إضافة الحجب', 'success');
     };
     
-    // ─── Upload Images ───
-    document.getElementById('imageUploadInput').onchange = async function(e) {
-        var files = Array.from(e.target.files);
-        if (files.length === 0) return;
-        
-        if (!useFirebase || !window.WahajFirebase) {
-            showToast('⚠️ Firebase غير متصل', 'warning');
-            return;
-        }
-        
-        var progress = document.getElementById('uploadProgress');
-        var progressBar = document.getElementById('uploadProgressBar');
-        progress.classList.add('show');
-        
-        for (var i = 0; i < files.length; i++) {
-            var file = files[i];
-            
-            if (file.size > 5 * 1024 * 1024) {
-                showToast('⚠️ ' + file.name + ' كبير جداً', 'warning');
-                continue;
-            }
-            
-            progressBar.style.width = ((i / files.length) * 100) + '%';
-            
-            var result = await window.WahajFirebase.uploadImage(file, 'gallery');
-            
-            if (result.success) {
-                uploadedImages.push(result);
-                showToast('✅ تم رفع ' + file.name, 'success');
-            } else {
-                showToast('❌ فشل رفع ' + file.name, 'error');
-            }
-        }
-        
-        progressBar.style.width = '100%';
-        setTimeout(function() {
-            progress.classList.remove('show');
-            progressBar.style.width = '0%';
-        }, 1000);
-        
-        renderUploadedImages();
-    };
-    
-    function renderUploadedImages() {
-        var list = document.getElementById('uploadedImagesList');
-        
-        if (uploadedImages.length === 0) {
-            list.innerHTML = '<p style="color: var(--gray-600); font-size: 0.85rem; grid-column: span 2; text-align: center; padding: 20px;">لا توجد صور مرفوعة بعد</p>';
-            return;
-        }
-        
-        list.innerHTML = uploadedImages.map(function(img, i) {
-            return '<div style="position: relative; aspect-ratio: 1; border-radius: var(--radius-sm); overflow: hidden; box-shadow: var(--shadow-sm);">' +
-                '<img src="' + img.url + '" style="width: 100%; height: 100%; object-fit: cover;">' +
-                '<button onclick="copyImageUrl(' + i + ')" style="position: absolute; bottom: 5px; right: 5px; background: rgba(212, 175, 55, 0.95); color: white; border: none; padding: 5px 10px; border-radius: 50px; font-size: 0.7rem; cursor: pointer;">' +
-                '<i class="fas fa-copy"></i> نسخ الرابط</button>' +
-            '</div>';
-        }).join('');
-    }
-    
-    window.copyImageUrl = function(i) {
-        var url = uploadedImages[i].url;
-        navigator.clipboard.writeText(url).then(function() {
-            showToast('✅ تم نسخ الرابط', 'success');
-        }).catch(function() {
-            prompt('انسخ الرابط:', url);
-        });
-    };
-    
-    // ─── Export ───
     window.exportData = function() {
         if (allBookings.length === 0) {
             showToast('لا توجد حجوزات', 'warning');
@@ -1609,17 +1477,26 @@
         }
         
         var csv = '\uFEFF';
-        csv += 'رقم الحجز,التاريخ,الاسم,الجوال,النوع,الضيوف,الإجمالي,العربون,الحالة\n';
+        csv += 'رقم الحجز,التاريخ,الاسم,الجوال,النوع,الضيوف,الإجمالي,العربون,التأمين,المطلوب الآن,الباقي,الحالة\n';
         
         allBookings.forEach(function(b) {
+            var total = b.total || 0;
+            var deposit = b.deposit || 0;
+            var security = b.security || 20;
+            var remaining = b.remaining !== undefined ? b.remaining : (total - deposit);
+            var payNow = b.payNow || (deposit + security);
+            
             csv += '"' + (b.bookingId || '') + '",' +
                    '"' + (b.dateFormatted || b.date || '') + '",' +
                    '"' + (b.fullName || '') + '",' +
                    '"' + (b.phone || '') + '",' +
                    '"' + (b.bookingType || '') + '",' +
                    '"' + (b.guests || '') + '",' +
-                   '"' + (b.total || 0) + '",' +
-                   '"' + (b.deposit || 0) + '",' +
+                   '"' + total + '",' +
+                   '"' + deposit + '",' +
+                   '"' + security + '",' +
+                   '"' + payNow + '",' +
+                   '"' + remaining + '",' +
                    '"' + (b.status === 'confirmed' ? 'مؤكد' : b.status === 'rejected' ? 'مرفوض' : 'بانتظار') + '"\n';
         });
         
@@ -1632,13 +1509,11 @@
         showToast('✅ تم التصدير', 'success');
     };
     
-    // ─── Refresh ───
-    window.refreshData = async function() {
-        await loadData();
+    window.refreshData = function() {
+        loadData();
         showToast('✅ تم التحديث', 'success');
     };
     
-    // ─── Logout ───
     window.logout = function() {
         if (confirm('تسجيل الخروج؟')) {
             sessionStorage.removeItem('wahaj_admin');
@@ -1646,19 +1521,17 @@
         }
     };
     
-    // ─── Clear All ───
     window.clearAllData = function() {
-        if (!confirm('⚠️ سيتم مسح البيانات المحلية!\n\nهل أنت متأكد؟')) return;
+        if (!confirm('⚠️ سيتم مسح جميع البيانات!\n\nهل أنت متأكد؟')) return;
         if (!confirm('تأكيد أخير')) return;
         
         localStorage.removeItem('wahaj_bookings');
         localStorage.removeItem('wahaj_blocked_dates');
         localStorage.removeItem('wahaj_last_booking');
         loadData();
-        showToast('✅ تم مسح البيانات المحلية', 'success');
+        showToast('✅ تم مسح البيانات', 'success');
     };
     
-    // ─── Events ───
     document.getElementById('loginBtn').onclick = handleLogin;
     document.getElementById('passwordInput').onkeypress = function(e) {
         if (e.key === 'Enter') handleLogin();
@@ -1674,12 +1547,11 @@
         applyFilters();
     };
     
-    // ─── Init ───
     if (sessionStorage.getItem('wahaj_admin') === '1') {
         showAdmin();
     }
     
-    console.log('✅ لوحة التحكم v3 (Firebase) جاهزة');
+    console.log('✅ لوحة التحكم جاهزة');
     
 })();
 </script>
