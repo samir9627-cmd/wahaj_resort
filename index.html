@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 <meta name="theme-color" content="#0A1F44">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<title>استراحة وهج | Wahaj Resort</title>
-<meta name="description" content="استراحة وهج - استراحة عائلية فاخرة في ولاية بركاء">
+<title>استراحة وهج | Wahaj Resort - بركاء</title>
+<meta name="description" content="استراحة وهج - استراحة عائلية فاخرة في ولاية بركاء. حوضان للسباحة، غرف نوم، صالات، مطابخ، منطقة أطفال.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
@@ -26,8 +26,6 @@ img{max-width:100%;height:auto;display:block}
 .gallery-scroll-label i{color:var(--primary)}
 .gallery-scroll-item.loading{background:linear-gradient(90deg,var(--gray-100) 25%,var(--gray-200) 50%,var(--gray-100) 75%);background-size:200% 100%;animation:skeleton 1.5s infinite}
 @keyframes skeleton{0%{background-position:200% 0}100%{background-position:-200% 0}}
-.gallery-item-app,.image-card,.offer-card-app{max-width:100%;overflow:hidden}
-.gallery-item-app img,.image-card img{width:100%;height:100%;object-fit:cover;display:block}
 
 /* ═══ قسم العروض الفاخر ═══ */
 .offers-section{background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy) 60%,var(--navy-light) 100%);padding:30px 20px;position:relative;overflow:hidden;margin:20px 0;border-radius:var(--radius-lg)}
@@ -54,8 +52,55 @@ img{max-width:100%;height:auto;display:block}
 @keyframes countdownPulse{0%,100%{opacity:1}50%{opacity:0.7}}
 .offer-last-chance{position:absolute;top:15px;left:15px;background:linear-gradient(135deg,#FFC107,#E0A800);color:var(--navy);padding:4px 10px;border-radius:50px;font-size:0.65rem;font-weight:900;box-shadow:0 4px 12px rgba(255,193,7,0.5);animation:lastChancePulse 0.8s infinite}
 @keyframes lastChancePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
-.offers-empty{text-align:center;padding:30px 20px;color:rgba(255,255,255,0.6);font-size:0.85rem;position:relative;z-index:2}
-.offers-empty i{font-size:2rem;display:block;margin-bottom:10px;color:rgba(212,175,55,0.5)}
+
+/* ═══ بطاقة الموقع ═══ */
+.location-card{background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);border:2px solid rgba(212,175,55,0.2)}
+.location-header{display:flex;align-items:center;gap:15px;padding:20px;background:linear-gradient(135deg,var(--navy),var(--navy-light));color:var(--white)}
+.location-icon{width:55px;height:55px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary-dark));display:flex;align-items:center;justify-content:center;color:var(--white);font-size:1.5rem;box-shadow:0 8px 20px rgba(212,175,55,0.4);flex-shrink:0;animation:locationPulse 2s infinite}
+@keyframes locationPulse{0%,100%{transform:scale(1);box-shadow:0 8px 20px rgba(212,175,55,0.4)}50%{transform:scale(1.08);box-shadow:0 12px 30px rgba(212,175,55,0.7)}}
+.location-info h3{color:var(--primary);font-size:1.1rem;margin-bottom:3px;font-family:'Amiri',serif}
+.location-info p{font-size:0.85rem;opacity:0.9;margin:0}
+.location-map{width:100%;height:250px;position:relative;background:var(--gray-100)}
+.location-map iframe{width:100%;height:100%;display:block;border:0;filter:grayscale(0.1) contrast(1.05)}
+.location-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:15px;background:var(--off-white)}
+.location-btn{padding:12px;border-radius:50px;font-weight:700;font-size:0.85rem;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:6px;transition:all 0.3s;font-family:'Cairo',sans-serif;border:2px solid transparent;cursor:pointer}
+.location-btn.primary{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:var(--navy);box-shadow:0 6px 20px rgba(212,175,55,0.35)}
+.location-btn.primary:active{transform:scale(0.96)}
+.location-btn.whatsapp{background:#25D366;color:var(--white);box-shadow:0 6px 20px rgba(37,211,102,0.35)}
+.location-btn.whatsapp:active{transform:scale(0.96)}
+
+/* ═══ معلومات الوصول ═══ */
+.access-info{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:15px}
+.access-card{background:var(--white);border-radius:var(--radius-sm);padding:15px;box-shadow:var(--shadow-sm);border-right:3px solid var(--primary);display:flex;align-items:center;gap:12px}
+.access-card-icon{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,rgba(212,175,55,0.15),rgba(212,175,55,0.05));color:var(--primary-dark);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.access-card-content h4{color:var(--navy);font-size:0.85rem;margin-bottom:2px}
+.access-card-content p{color:var(--gray-600);font-size:0.75rem;margin:0}
+
+/* ═══ ساعات العمل ═══ */
+.hours-card{background:var(--white);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm);margin-top:15px}
+.hours-card h3{color:var(--navy);font-size:1rem;margin-bottom:15px;display:flex;align-items:center;gap:8px;padding-bottom:12px;border-bottom:2px dashed var(--gray-200)}
+.hours-card h3 i{color:var(--primary)}
+.hours-list{display:grid;gap:8px}
+.hours-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--gray-100);font-size:0.85rem}
+.hours-row:last-child{border-bottom:none}
+.hours-row .day{color:var(--navy);font-weight:700;display:flex;align-items:center;gap:6px}
+.hours-row .day i{color:var(--primary);font-size:0.8rem}
+.hours-row .time{color:var(--primary-dark);font-weight:700;direction:ltr}
+.hours-row.closed .time{color:var(--danger)}
+
+/* ═══ معالم قريبة ═══ */
+.landmarks-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:15px}
+.landmark-card{background:var(--white);border-radius:var(--radius-sm);padding:12px;box-shadow:var(--shadow-sm);text-align:center;border:1px solid rgba(212,175,55,0.15)}
+.landmark-card i{color:var(--primary);font-size:1.3rem;margin-bottom:8px;display:block}
+.landmark-card h4{color:var(--navy);font-size:0.8rem;margin-bottom:3px;font-weight:700}
+.landmark-card p{color:var(--gray-600);font-size:0.7rem;margin:0}
+
+/* Responsive */
+@media (max-width: 480px){
+    .location-actions{grid-template-columns:1fr}
+    .access-info{grid-template-columns:1fr}
+    .landmarks-grid{grid-template-columns:1fr 1fr}
+}
 </style>
 </head>
 <body>
@@ -70,7 +115,7 @@ img{max-width:100%;height:auto;display:block}
 
 <section class="app-hero">
 <div class="hero-content">
-<div class="hero-badge-app"><i class="fas fa-map-marker-alt"></i><span>ولاية بركاء - منطقة العقدة</span></div>
+<div class="hero-badge-app"><i class="fas fa-map-marker-alt"></i><span>ولاية بركاء - منطقة الوهرة</span></div>
 <h1 class="hero-title-app">استراحة <span class="highlight">وهج</span></h1>
 <p class="hero-subtitle-app">خصوصية .. راحة .. ذكريات لا تُنسى<br>استمتع بأجواء عائلية فاخرة مع كل المرافق</p>
 <a href="booking.html" class="hero-cta-app"><i class="fas fa-calendar-check"></i><span>احجز الآن</span></a>
@@ -130,6 +175,134 @@ img{max-width:100%;height:auto;display:block}
 <div class="gallery-scroll-item loading"></div>
 <div class="gallery-scroll-item loading"></div>
 <div class="gallery-scroll-item loading"></div>
+</div>
+</section>
+
+<!-- ═══ موقع الاستراحة ═══ -->
+<section class="app-section">
+<div class="app-section-header"><h2 class="app-section-title">موقع الاستراحة</h2></div>
+
+<div class="location-card">
+<div class="location-header">
+<div class="location-icon"><i class="fas fa-map-marker-alt"></i></div>
+<div class="location-info">
+<h3>بركاء - منطقة الوهرة</h3>
+<p>جنوب الباطنة - سلطنة عمان</p>
+</div>
+</div>
+
+<div class="location-map">
+<iframe 
+src="https://www.google.com/maps?q=23.679305,57.771964&t=&z=16&ie=UTF8&iwloc=&output=embed"
+width="100%" 
+height="100%" 
+style="border:0;" 
+allowfullscreen="" 
+loading="lazy"
+referrerpolicy="no-referrer-when-downgrade">
+</iframe>
+</div>
+
+<div class="location-actions">
+<a href="https://www.google.com/maps/search/?api=1&query=23.679305,57.771964" 
+target="_blank" 
+class="location-btn primary">
+<i class="fas fa-directions"></i>
+الاتجاهات
+</a>
+<a href="https://wa.me/96895566332?text=أرغب%20في%20معرفة%20موقع%20الاستراحة%20بالضبط" 
+target="_blank" 
+class="location-btn whatsapp">
+<i class="fab fa-whatsapp"></i>
+اطلب الموقع
+</a>
+</div>
+</div>
+
+<!-- ═══ كيف تصل ═══ -->
+<div class="access-info">
+<div class="access-card">
+<div class="access-card-icon"><i class="fas fa-car"></i></div>
+<div class="access-card-content">
+<h4>من مسقط</h4>
+<p>45 دقيقة تقريباً</p>
+</div>
+</div>
+<div class="access-card">
+<div class="access-card-icon"><i class="fas fa-car"></i></div>
+<div class="access-card-content">
+<h4>من السيب</h4>
+<p>25 دقيقة تقريباً</p>
+</div>
+</div>
+<div class="access-card">
+<div class="access-card-icon"><i class="fas fa-car"></i></div>
+<div class="access-card-content">
+<h4>من بركاء</h4>
+<p>10 دقائق تقريباً</p>
+</div>
+</div>
+<div class="access-card">
+<div class="access-card-icon"><i class="fas fa-plane"></i></div>
+<div class="access-card-content">
+<h4>من المطار</h4>
+<p>50 دقيقة تقريباً</p>
+</div>
+</div>
+</div>
+
+<!-- ═══ ساعات العمل ═══ -->
+<div class="hours-card">
+<h3><i class="fas fa-clock"></i> أوقات العمل</h3>
+<div class="hours-list">
+<div class="hours-row">
+<div class="day"><i class="fas fa-sun"></i> الأحد - الأربعاء</div>
+<div class="time">9:00 ص - 10:00 م</div>
+</div>
+<div class="hours-row">
+<div class="day"><i class="fas fa-star"></i> الخميس - السبت</div>
+<div class="time">9:00 ص - 10:00 م</div>
+</div>
+<div class="hours-row">
+<div class="day"><i class="fas fa-moon"></i> مع مبيت</div>
+<div class="time">9:00 ص - 7:00 ص</div>
+</div>
+<div class="hours-row">
+<div class="day"><i class="fas fa-clock"></i> نصف يوم صباحي</div>
+<div class="time">9:00 ص - 3:00 م</div>
+</div>
+<div class="hours-row">
+<div class="day"><i class="fas fa-clock"></i> نصف يوم مسائي</div>
+<div class="time">4:00 م - 10:00 م</div>
+</div>
+</div>
+</div>
+
+<!-- ═══ معالم قريبة ═══ -->
+<div class="hours-card">
+<h3><i class="fas fa-map-signs"></i> معالم قريبة</h3>
+<div class="landmarks-grid">
+<div class="landmark-card">
+<i class="fas fa-mosque"></i>
+<h4>مسجد الوهرة</h4>
+<p>2 كم</p>
+</div>
+<div class="landmark-card">
+<i class="fas fa-shopping-cart"></i>
+<h4>سوق بركاء</h4>
+<p>5 كم</p>
+</div>
+<div class="landmark-card">
+<i class="fas fa-umbrella-beach"></i>
+<h4>شاطئ بركاء</h4>
+<p>7 كم</p>
+</div>
+<div class="landmark-card">
+<i class="fas fa-hospital"></i>
+<h4>مستشفى بركاء</h4>
+<p>6 كم</p>
+</div>
+</div>
 </div>
 </section>
 
@@ -206,19 +379,16 @@ img{max-width:100%;height:auto;display:block}
         el.textContent = new Date().getFullYear();
     });
     
-    // ═══ تحميل العروض ═══
+    // ═══ العروض ═══
     function loadOffers() {
         var localOffers = [];
-        try {
-            localOffers = JSON.parse(localStorage.getItem('wahaj_offers') || '[]');
-        } catch(e) {}
+        try { localOffers = JSON.parse(localStorage.getItem('wahaj_offers') || '[]'); } catch(e) {}
         
         if (window.WahajFirebase) {
             window.WahajFirebase.waitForFirebase(function(ready) {
                 if (!ready) { renderOffers(localOffers); return; }
                 window.WahajFirebase.getAllOffers().then(function(cloudOffers) {
-                    var all = cloudOffers.length > 0 ? cloudOffers : localOffers;
-                    renderOffers(all);
+                    renderOffers(cloudOffers.length > 0 ? cloudOffers : localOffers);
                 }).catch(function() { renderOffers(localOffers); });
             }, 5000);
         } else {
@@ -242,47 +412,35 @@ img{max-width:100%;height:auto;display:block}
         section.style.display = 'block';
         
         scroll.innerHTML = active.map(function(offer) {
-            // حساب الأيام المتبقية
             var daysLeft = null;
             if (offer.end) {
                 var endDate = new Date(offer.end);
-                var today = new Date();
-                today.setHours(0,0,0,0);
+                var today = new Date(); today.setHours(0,0,0,0);
                 daysLeft = Math.ceil((endDate - today) / (1000 * 60 * 60 * 24));
             }
             
-            // حساب التوفير (بناءً على أقل سعر)
             var savingsHtml = '';
             if (offer.discount && offer.discount > 0) {
-                var minPrice = 25; // أقل سعر (نصف يوم أيام الأسبوع)
-                var savings = Math.round(minPrice * offer.discount / 100);
+                var savings = Math.round(25 * offer.discount / 100);
                 savingsHtml = '<div class="offer-savings-app"><i class="fas fa-piggy-bank"></i> وفر حتى ' + savings + ' ر.ع</div>';
             }
             
-            // شارة "آخر فرصة"
             var lastChanceHtml = '';
             if (daysLeft !== null && daysLeft <= 3 && daysLeft >= 0) {
                 lastChanceHtml = '<div class="offer-last-chance">🔥 آخر فرصة</div>';
             }
             
-            // عدّاد تنازلي
             var countdownHtml = '';
             if (daysLeft !== null && daysLeft >= 0 && daysLeft <= 7) {
-                var dayText = daysLeft === 0 ? 'ينتهي اليوم' : 
-                             daysLeft === 1 ? 'ينتهي غداً' : 
-                             'ينتهي بعد ' + daysLeft + ' أيام';
+                var dayText = daysLeft === 0 ? 'ينتهي اليوم' : daysLeft === 1 ? 'ينتهي غداً' : 'ينتهي بعد ' + daysLeft + ' أيام';
                 countdownHtml = '<div class="offer-countdown"><i class="fas fa-hourglass-half"></i> ' + dayText + '</div>';
             }
             
-            // نصوص الخصم
-            var discountHtml = offer.discount ? 
-                '<div class="offer-discount-app"><i class="fas fa-percentage"></i> خصم ' + offer.discount + '%</div>' : '';
+            var discountHtml = offer.discount ? '<div class="offer-discount-app"><i class="fas fa-percentage"></i> خصم ' + offer.discount + '%</div>' : '';
             
             var dateHtml = '';
             if (offer.start || offer.end) {
-                dateHtml = '<div class="offer-date-app"><i class="fas fa-calendar-alt"></i><span>' +
-                    (offer.start || '') + (offer.end ? ' → ' + offer.end : '') +
-                '</span></div>';
+                dateHtml = '<div class="offer-date-app"><i class="fas fa-calendar-alt"></i><span>' + (offer.start || '') + (offer.end ? ' → ' + offer.end : '') + '</span></div>';
             }
             
             return '<div class="offer-card-app">' +
@@ -291,17 +449,12 @@ img{max-width:100%;height:auto;display:block}
                 '<div class="offer-icon-app"><i class="fas fa-gift"></i></div>' +
                 '<h3 class="offer-title-app">' + offer.title + '</h3>' +
                 (offer.desc ? '<p class="offer-desc-app">' + offer.desc + '</p>' : '') +
-                discountHtml +
-                savingsHtml +
-                countdownHtml +
-                dateHtml +
+                discountHtml + savingsHtml + countdownHtml + dateHtml +
             '</div>';
         }).join('');
-        
-        console.log('🎁 تم تحميل', active.length, 'عرض');
     }
     
-    // ═══ تحميل الصور للمعرض ═══
+    // ═══ المعرض ═══
     var DEFAULT_GALLERY = [
         { name: 'المسبح', path: 'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=600&h=750&fit=crop' },
         { name: 'المجلس', path: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=750&fit=crop' },
@@ -310,9 +463,7 @@ img{max-width:100%;height:auto;display:block}
     
     function loadGallery() {
         var localImages = [];
-        try {
-            localImages = JSON.parse(localStorage.getItem('wahaj_images') || '[]');
-        } catch(e) {}
+        try { localImages = JSON.parse(localStorage.getItem('wahaj_images') || '[]'); } catch(e) {}
         
         if (window.WahajFirebase) {
             window.WahajFirebase.waitForFirebase(function(ready) {
@@ -333,26 +484,18 @@ img{max-width:100%;height:auto;display:block}
     function renderGallery(images) {
         var scroll = document.getElementById('galleryScroll');
         if (!scroll) return;
-        
         if (!images || images.length === 0) images = DEFAULT_GALLERY;
         
         var limited = images.slice(0, 6);
-        
         scroll.innerHTML = limited.map(function(img) {
             return '<div class="gallery-scroll-item">' +
-                '<img src="' + img.path + '" alt="' + (img.name || '') + '" loading="lazy" ' +
-                'onerror="this.parentElement.style.display=\'none\'">' +
-                '<div class="gallery-scroll-label">' +
-                    '<span>' + (img.name || 'صورة') + '</span>' +
-                    '<i class="fas fa-camera"></i>' +
-                '</div>' +
+                '<img src="' + img.path + '" alt="' + (img.name || '') + '" loading="lazy" onerror="this.parentElement.style.display=\'none\'">' +
+                '<div class="gallery-scroll-label"><span>' + (img.name || 'صورة') + '</span><i class="fas fa-camera"></i></div>' +
             '</div>';
         }).join('');
-        
-        console.log('📸 تم تحميل', limited.length, 'صورة');
     }
     
-    // ═══ تحميل الأسعار ═══
+    // ═══ الأسعار ═══
     var DEFAULT_PRICES = {
         weekdayWithoutStay: 40, weekdayWithStay: 50, weekdayHalfDay: 25,
         weekendWithoutStay: 50, weekendWithStay: 65, weekendHalfDay: 30,
@@ -361,10 +504,7 @@ img{max-width:100%;height:auto;display:block}
     
     function loadPrices() {
         var localPrices = {};
-        try {
-            localPrices = JSON.parse(localStorage.getItem('wahaj_prices') || '{}');
-        } catch(e) {}
-        
+        try { localPrices = JSON.parse(localStorage.getItem('wahaj_prices') || '{}'); } catch(e) {}
         var prices = Object.assign({}, DEFAULT_PRICES, localPrices);
         renderPrices(prices);
         
@@ -372,27 +512,22 @@ img{max-width:100%;height:auto;display:block}
             window.WahajFirebase.waitForFirebase(function(ready) {
                 if (!ready) return;
                 window.WahajFirebase.getSetting('prices', null).then(function(cloudPrices) {
-                    if (cloudPrices) {
-                        var merged = Object.assign({}, DEFAULT_PRICES, cloudPrices);
-                        renderPrices(merged);
-                    }
+                    if (cloudPrices) renderPrices(Object.assign({}, DEFAULT_PRICES, cloudPrices));
                 });
             }, 5000);
         }
     }
     
     function renderPrices(p) {
-        var els = {
-            'p-wds': p.weekdayWithoutStay, 'p-wws': p.weekdayWithStay, 'p-whd': p.weekdayHalfDay,
-            'p-eds': p.weekendWithoutStay, 'p-ews': p.weekendWithStay, 'p-ehd': p.weekendHalfDay
-        };
+        var els = {'p-wds': p.weekdayWithoutStay, 'p-wws': p.weekdayWithStay, 'p-whd': p.weekdayHalfDay,
+            'p-eds': p.weekendWithoutStay, 'p-ews': p.weekendWithStay, 'p-ehd': p.weekendHalfDay};
         Object.keys(els).forEach(function(id) {
             var el = document.getElementById(id);
             if (el) el.textContent = els[id];
         });
     }
     
-    // ═══ Reveal Animation ═══
+    // ═══ Reveal ═══
     function initReveal() {
         var reveals = document.querySelectorAll('.reveal');
         if (!reveals.length) return;
