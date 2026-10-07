@@ -14,9 +14,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <link rel="stylesheet" href="css/app.css">
+    <link rel="icon" type="image/jpeg" href="images/logo.jpeg">
     
     <style>
-        /* ─── Hero ─── */
         .booking-header-hero {
             background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 60%, var(--navy-light) 100%);
             padding: 100px 20px 40px;
@@ -83,7 +83,6 @@
             box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
         }
         
-        /* ─── محتوى ─── */
         .booking-main {
             padding: 30px 20px 100px;
         }
@@ -123,14 +122,12 @@
             flex-shrink: 0;
         }
         
-        /* ─── التقويم ─── */
         .calendar-app {
             background: var(--gray-100);
             border-radius: var(--radius-sm);
             padding: 18px 15px;
             position: relative;
             z-index: 5;
-            pointer-events: auto;
         }
         
         .calendar-app-header {
@@ -156,7 +153,6 @@
             font-size: 1rem;
             position: relative;
             z-index: 10;
-            pointer-events: auto;
         }
         
         .calendar-app-nav:active {
@@ -212,17 +208,11 @@
             -webkit-tap-highlight-color: transparent;
             position: relative;
             z-index: 10;
-            pointer-events: auto;
             touch-action: manipulation;
         }
         
         .calendar-app-day:not(.empty):not(.disabled):active {
             transform: scale(0.85);
-        }
-        
-        .calendar-app-day:not(.empty):not(.disabled):hover {
-            background: rgba(212, 175, 55, 0.15);
-            border-color: var(--primary);
         }
         
         .calendar-app-day.empty {
@@ -279,7 +269,6 @@
             border-radius: 3px;
         }
         
-        /* ─── أنواع الحجز ─── */
         .booking-type-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -304,7 +293,6 @@
             -webkit-tap-highlight-color: transparent;
             position: relative;
             z-index: 5;
-            pointer-events: auto;
             touch-action: manipulation;
         }
         
@@ -340,14 +328,11 @@
             opacity: 0.95;
         }
         
-        /* ─── نصف يوم ─── */
         .half-day-app {
             margin-top: 12px;
             display: none;
             grid-template-columns: 1fr 1fr;
             gap: 8px;
-            position: relative;
-            z-index: 5;
         }
         
         .half-day-app.show {
@@ -364,14 +349,6 @@
             transition: all 0.2s;
             font-size: 0.8rem;
             user-select: none;
-            -webkit-tap-highlight-color: transparent;
-            position: relative;
-            z-index: 5;
-            pointer-events: auto;
-        }
-        
-        .half-day-option:active {
-            transform: scale(0.95);
         }
         
         .half-day-option.selected {
@@ -384,20 +361,15 @@
             color: var(--navy);
             margin-bottom: 3px;
             font-size: 0.85rem;
-            pointer-events: none;
         }
         
         .half-day-option span {
             color: var(--gray-600);
             font-size: 0.7rem;
-            pointer-events: none;
         }
         
-        /* ─── النموذج ─── */
         .form-field {
             margin-bottom: 15px;
-            position: relative;
-            z-index: 5;
         }
         
         .form-field label {
@@ -424,9 +396,6 @@
             color: var(--navy);
             background: var(--white);
             transition: all 0.2s;
-            position: relative;
-            z-index: 5;
-            pointer-events: auto;
         }
         
         .form-field input:focus,
@@ -442,7 +411,6 @@
             min-height: 80px;
         }
         
-        /* ─── رفع الإيصال ─── */
         .upload-app {
             border: 2px dashed var(--gray-400);
             border-radius: var(--radius-sm);
@@ -452,13 +420,6 @@
             transition: all 0.2s;
             background: var(--gray-100);
             position: relative;
-            z-index: 5;
-            pointer-events: auto;
-        }
-        
-        .upload-app:active {
-            border-color: var(--primary);
-            background: rgba(212, 175, 55, 0.05);
         }
         
         .upload-app input[type="file"] {
@@ -475,20 +436,17 @@
             font-size: 2.2rem;
             color: var(--primary);
             margin-bottom: 10px;
-            pointer-events: none;
         }
         
         .upload-app h4 {
             color: var(--navy);
             font-size: 0.95rem;
             margin-bottom: 5px;
-            pointer-events: none;
         }
         
         .upload-app p {
             color: var(--gray-600);
             font-size: 0.75rem;
-            pointer-events: none;
         }
         
         .upload-preview-app {
@@ -507,7 +465,6 @@
             margin: 0 auto;
         }
         
-        /* ─── البنك ─── */
         .bank-app {
             background: linear-gradient(135deg, var(--navy), var(--navy-light));
             color: var(--white);
@@ -515,8 +472,6 @@
             border-radius: var(--radius-sm);
             margin-bottom: 15px;
             border: 2px solid var(--primary);
-            position: relative;
-            z-index: 5;
         }
         
         .bank-app h4 {
@@ -549,7 +504,6 @@
             direction: ltr;
         }
         
-        /* ─── الملخص (ثابت - غير طافي) ─── */
         .summary-app {
             background: var(--white);
             border-radius: var(--radius);
@@ -634,9 +588,6 @@
             gap: 8px;
             margin-top: 15px;
             font-family: 'Cairo', sans-serif;
-            position: relative;
-            z-index: 5;
-            pointer-events: auto;
         }
         
         .confirm-btn-app:active:not(:disabled) {
@@ -663,37 +614,13 @@
         .secure-note-app i {
             color: var(--success);
         }
-        
-        /* ─── ضمانات إضافية ─── */
-        #calendarDays * {
-            pointer-events: auto;
-        }
-        
-        .booking-type-grid * {
-            pointer-events: auto;
-        }
     </style>
 </head>
 <body>
 
 <!-- SPLASH SCREEN -->
 <div class="splash-screen">
-    <svg class="splash-logo" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="100" cy="100" r="90" fill="none" stroke="#D4AF37" stroke-width="3"/>
-        <g transform="translate(100, 85)">
-            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37"/>
-            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37" transform="rotate(45)"/>
-            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37" transform="rotate(90)"/>
-            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37" transform="rotate(135)"/>
-            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37" transform="rotate(180)"/>
-            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37" transform="rotate(225)"/>
-            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37" transform="rotate(270)"/>
-            <ellipse cx="0" cy="-25" rx="8" ry="18" fill="#D4AF37" transform="rotate(315)"/>
-            <circle cx="0" cy="0" r="14" fill="#A88B2C"/>
-            <circle cx="0" cy="0" r="8" fill="#0A1F44"/>
-        </g>
-        <text x="100" y="175" font-size="16" text-anchor="middle" fill="#D4AF37" font-family="Amiri, serif" font-weight="bold">استراحة وهج</text>
-    </svg>
+    <img src="images/logo.jpeg" alt="استراحة وهج" class="splash-logo">
     <h1 class="splash-title">وهج</h1>
     <p class="splash-subtitle">خصوصية .. راحة .. ذكريات لا تُنسى</p>
     <div class="splash-loader"><div class="splash-loader-bar"></div></div>
@@ -702,20 +629,7 @@
 <!-- HEADER -->
 <header class="app-header">
     <div class="app-header-logo">
-        <svg class="app-header-logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="50" cy="50" r="45" fill="none" stroke="#D4AF37" stroke-width="2"/>
-            <g transform="translate(50, 42)">
-                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37"/>
-                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(45)"/>
-                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(90)"/>
-                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(135)"/>
-                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(180)"/>
-                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(225)"/>
-                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(270)"/>
-                <ellipse cx="0" cy="-12" rx="4" ry="9" fill="#D4AF37" transform="rotate(315)"/>
-                <circle cx="0" cy="0" r="7" fill="#A88B2C"/>
-            </g>
-        </svg>
+        <img src="images/logo.jpeg" alt="وهج" class="app-header-logo-svg">
         <span class="app-header-title">استراحة <span>وهج</span></span>
     </div>
     <a href="index.html" class="app-header-action" aria-label="الرئيسية">
@@ -941,6 +855,7 @@
 
 <!-- FOOTER -->
 <footer class="app-footer">
+    <img src="images/logo.jpeg" alt="وهج" class="app-footer-logo">
     <h3 class="app-footer-title">استراحة وهج</h3>
     <p class="app-footer-slogan">خصوصية .. راحة .. ذكريات لا تُنسى</p>
     <div class="app-footer-bottom">
@@ -959,9 +874,7 @@
         <span>المعرض</span>
     </a>
     <a href="booking.html" class="bottom-nav-item cta-item active">
-        <div class="cta-circle">
-            <i class="fas fa-calendar-plus"></i>
-        </div>
+        <div class="cta-circle"><i class="fas fa-calendar-plus"></i></div>
         <span>احجز</span>
     </a>
     <a href="policies.html" class="bottom-nav-item">
@@ -974,24 +887,21 @@
     </a>
 </nav>
 
-<!-- Floating WhatsApp -->
 <a href="https://wa.me/96895566332?text=مرحباً" target="_blank" class="floating-whatsapp">
     <i class="fab fa-whatsapp"></i>
 </a>
 
-<!-- ═══════════════════════════════════════════════════════ -->
-<!-- SCRIPTS -->
-<!-- ═══════════════════════════════════════════════════════ -->
+<!-- Scripts -->
 <script src="js/config.js"></script>
+<script src="js/brand.js"></script>
 
 <script>
 /* ═══════════════════════════════════════════════════════
-   نظام الحجز - كامل مدمج
+   نظام الحجز - كامل
    ═══════════════════════════════════════════════════════ */
 
 console.log('🚀 بدء نظام الحجز...');
 
-// ─── إعدادات احتياطية ───
 const CONFIG = (typeof WAHAJ_CONFIG !== 'undefined') ? WAHAJ_CONFIG : {
     contact: { whatsapp: '96895566332' },
     payment: { depositPercent: 50, securityDeposit: 20 },
@@ -1025,7 +935,6 @@ const CONFIG = (typeof WAHAJ_CONFIG !== 'undefined') ? WAHAJ_CONFIG : {
     }
 };
 
-// ─── الحالة ───
 let selectedDate = null;
 let selectedBookingType = null;
 let selectedHalfDayPeriod = null;
@@ -1033,7 +942,6 @@ let currentMonth = new Date();
 let receiptFile = null;
 let blockedDates = [];
 
-// ─── دوال التاريخ ───
 function formatDate(date) {
     const d = new Date(date);
     return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
@@ -1055,7 +963,6 @@ function formatArabicDate(date) {
     return new Date(date).toLocaleDateString('ar-OM', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
 }
 
-// ─── تحميل التواريخ المحجوزة ───
 function loadBlockedDates() {
     try {
         const blocked = JSON.parse(localStorage.getItem('wahaj_blocked_dates') || '[]');
@@ -1067,7 +974,6 @@ function loadBlockedDates() {
     } catch(e) { blockedDates = []; }
 }
 
-// ─── رسم التقويم ───
 function renderCalendar() {
     const year = currentMonth.getFullYear();
     const month = currentMonth.getMonth();
@@ -1106,7 +1012,6 @@ function renderCalendar() {
         if (isPast(date) || blockedDates.includes(dateStr)) {
             dayEl.classList.add('disabled');
         } else {
-            // حدث الضغط المباشر
             dayEl.onclick = (function(d, el) {
                 return function(e) {
                     if (e) e.preventDefault();
@@ -1121,28 +1026,22 @@ function renderCalendar() {
         
         daysEl.appendChild(dayEl);
     }
-    
-    console.log('✅ رسم ' + getMonthName(month) + ' ' + year);
 }
 
-// ─── اختيار تاريخ ───
 function selectDate(date, dayEl) {
     document.querySelectorAll('.calendar-app-day.selected').forEach(el => el.classList.remove('selected'));
     selectedDate = date;
     if (dayEl) dayEl.classList.add('selected');
     if (navigator.vibrate) navigator.vibrate(10);
-    console.log('📅 اخترت:', formatArabicDate(date));
     updateSummary();
     updateSteps();
 }
 
-// ─── حساب السعر ───
 function calculatePrice() {
     if (!selectedDate || !selectedBookingType) return 0;
     return CONFIG.getPrice(CONFIG.getDayType(selectedDate), selectedBookingType);
 }
 
-// ─── تحديث الملخص ───
 function updateSummary() {
     const content = document.getElementById('summaryContent');
     const confirmBtn = document.getElementById('confirmBooking');
@@ -1158,7 +1057,6 @@ function updateSummary() {
     const typeInfo = CONFIG.bookingTypes[selectedBookingType];
     const total = calculatePrice();
     const deposit = CONFIG.calculateDeposit(total);
-    const security = CONFIG.payment.securityDeposit;
     
     let timeDesc = typeInfo.description;
     if (selectedBookingType === 'half_day' && selectedHalfDayPeriod) {
@@ -1182,7 +1080,6 @@ function updateSummary() {
     if (confirmBtn) confirmBtn.disabled = false;
 }
 
-// ─── الخطوات ───
 function updateSteps() {
     const steps = document.querySelectorAll('.step-dot');
     steps.forEach(s => s.classList.remove('active'));
@@ -1194,7 +1091,6 @@ function updateSteps() {
     if (receiptFile) steps[3]?.classList.add('active');
 }
 
-// ─── Toast ───
 function showToast(message, type) {
     const colors = { success:'#28A745', error:'#DC3545', warning:'#FFC107', info:'#0A1F44' };
     const t = document.createElement('div');
@@ -1208,7 +1104,6 @@ function showToast(message, type) {
     }, 2500);
 }
 
-// ─── إرسال الحجز ───
 function submitBooking() {
     if (!selectedDate) return showToast('⚠️ اختر التاريخ', 'warning');
     if (!selectedBookingType) return showToast('⚠️ اختر نوع الحجز', 'warning');
@@ -1262,16 +1157,12 @@ function submitBooking() {
     setTimeout(() => { window.location.href = 'confirmation.html?id=' + bookingId; }, 1500);
 }
 
-// ═══════════════════════════════════════════════════════
-// التهيئة
-// ═══════════════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🔧 تهيئة...');
     
     loadBlockedDates();
     renderCalendar();
     
-    // أزرار التنقل
     document.getElementById('prevMonth').onclick = function() {
         currentMonth.setMonth(currentMonth.getMonth() - 1);
         renderCalendar();
@@ -1281,7 +1172,6 @@ document.addEventListener('DOMContentLoaded', function() {
         renderCalendar();
     };
     
-    // نوع الحجز
     document.querySelectorAll('.booking-type-app').forEach(el => {
         el.onclick = function() {
             document.querySelectorAll('.booking-type-app').forEach(x => x.classList.remove('selected'));
@@ -1301,11 +1191,9 @@ document.addEventListener('DOMContentLoaded', function() {
             
             updateSummary();
             updateSteps();
-            console.log('⏰ نوع:', selectedBookingType);
         };
     });
     
-    // فترات نصف اليوم
     document.querySelectorAll('.half-day-option').forEach(el => {
         el.onclick = function() {
             document.querySelectorAll('.half-day-option').forEach(x => x.classList.remove('selected'));
@@ -1317,7 +1205,6 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     });
     
-    // رفع الإيصال
     document.getElementById('receiptInput').onchange = function(e) {
         const file = e.target.files[0];
         if (!file) return;
@@ -1335,10 +1222,8 @@ document.addEventListener('DOMContentLoaded', function() {
         reader.readAsDataURL(file);
     };
     
-    // زر التأكيد
     document.getElementById('confirmBooking').onclick = submitBooking;
     
-    // مراقبة الحقول
     ['fullName', 'phone'].forEach(id => {
         document.getElementById(id).oninput = updateSteps;
     });
