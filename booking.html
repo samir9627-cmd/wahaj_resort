@@ -331,6 +331,90 @@
         
         .guests-hint i { color: var(--primary); }
         
+        /* ═══ العربون ═══ */
+        .deposit-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 5;
+        }
+        
+        .deposit-option {
+            background: var(--white);
+            border: 2px solid var(--gray-200);
+            border-radius: var(--radius-sm);
+            padding: 14px 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            user-select: none;
+            position: relative;
+        }
+        
+        .deposit-option:active { transform: scale(0.95); }
+        
+        .deposit-option.selected {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--white);
+            border-color: var(--primary);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+        }
+        
+        .deposit-option-amount {
+            font-size: 1.1rem;
+            font-weight: 900;
+            display: block;
+        }
+        
+        .deposit-option-label {
+            font-size: 0.7rem;
+            opacity: 0.8;
+            margin-top: 2px;
+            display: block;
+        }
+        
+        .deposit-option.selected .deposit-option-label {
+            opacity: 0.95;
+        }
+        
+        .deposit-option.full {
+            grid-column: span 3;
+            background: linear-gradient(135deg, rgba(40,167,69,0.1), rgba(40,167,69,0.05));
+            border-color: var(--success);
+        }
+        
+        .deposit-option.full .deposit-option-amount {
+            color: var(--success);
+        }
+        
+        .deposit-option.full.selected {
+            background: linear-gradient(135deg, var(--success), #218838);
+            color: var(--white);
+            border-color: var(--success);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+        }
+        
+        .deposit-option.full.selected .deposit-option-amount {
+            color: var(--white);
+        }
+        
+        .deposit-hint {
+            font-size: 0.75rem;
+            color: var(--gray-600);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 12px;
+            background: rgba(212, 175, 55, 0.08);
+            border-radius: var(--radius-sm);
+            border-right: 3px solid var(--primary);
+        }
+        
+        .deposit-hint i { color: var(--primary); }
+        
         .upload-app {
             border: 2px dashed var(--gray-400);
             border-radius: var(--radius-sm);
@@ -658,9 +742,17 @@
                     <span>الاسم:</span>
                     <strong>Samir Alowaisi</strong>
                 </div>
-                <div class="bank-app-row">
-                    <span>العربون:</span>
-                    <strong id="bankDepositAmount">0 ر.ع</strong>
+            </div>
+            
+            <!-- اختيار العربون -->
+            <div class="form-field">
+                <label>اختر مبلغ العربون <span class="req">*</span></label>
+                <div class="deposit-hint">
+                    <i class="fas fa-info-circle"></i>
+                    <span>الحد الأدنى 10 ر.ع - التأمين (20 ر.ع) يُضاف منفصل</span>
+                </div>
+                <div class="deposit-grid" id="depositGrid">
+                    <!-- يتم تعبئتها بالجافاسكربت -->
                 </div>
             </div>
             
@@ -745,14 +837,10 @@
 </a>
 
 <!-- ═══ Scripts ═══ -->
-<script src="js/firebase.js"></script>
-<script src="js/firebase-helper.js"></script>
-
 <script>
 (function() {
     'use strict';
     
-    // ─── الشعار SVG ───
     var LOGO_SVG = '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">' +
     '<defs><linearGradient id="wg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#F4D77E"/><stop offset="50%" stop-color="#D4AF37"/><stop offset="100%" stop-color="#A88B2C"/></linearGradient></defs>' +
     '<circle cx="100" cy="100" r="94" fill="none" stroke="url(#wg)" stroke-width="2.5"/>' +
@@ -774,28 +862,26 @@
     document.getElementById('headerLogo').innerHTML = LOGO_SVG;
     document.getElementById('footerLogo').innerHTML = LOGO_SVG;
     
-    // ─── الإعدادات ───
     var CONFIG = {
         whatsapp: '96895566332',
         pricing: {
             weekday: { withoutStay: 40, withStay: 50, halfDay: 25, days: [0,1,2,3] },
             weekend: { withoutStay: 50, withStay: 65, halfDay: 30, days: [4,5,6] }
         },
-        depositPercent: 50,
+        depositOptions: [10, 15, 20, 25, 30],
         securityDeposit: 20,
         maxGuests: 20
     };
     
-    // ─── الحالة ───
     var selectedDate = null;
     var selectedBookingType = null;
     var selectedHalfDayPeriod = null;
+    var selectedDeposit = null;
     var currentMonth = new Date();
     var receiptFile = null;
     var receiptDataUrl = null;
     var blockedDates = [];
     
-    // ─── أدوات ───
     function formatDate(date) {
         var d = new Date(date);
         return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
@@ -813,7 +899,6 @@
         return new Date(date).toLocaleDateString('ar-OM', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
     }
     
-    // ─── تحميل المحجوزات ───
     function loadBlocked() {
         try {
             var localBlocked = JSON.parse(localStorage.getItem('wahaj_blocked_dates') || '[]');
@@ -822,33 +907,8 @@
             var b2 = localBookings.filter(function(b){ return b.status === 'confirmed'; }).map(function(b){ return b.date; });
             blockedDates = b1.concat(b2);
         } catch(e) { blockedDates = []; }
-        
-        // محاولة سريعة من Firebase (بدون تعليق)
-        if (window.WahajFirebase) {
-            setTimeout(function() {
-                window.WahajFirebase.waitForFirebase(async function(ready) {
-                    if (!ready) return;
-                    try {
-                        var cloudBlocked = await window.WahajFirebase.getAllBlockedDates();
-                        var cloudBookings = await window.WahajFirebase.getAllBookings();
-                        
-                        var allBlocked = cloudBlocked.map(function(i){ return i.date; });
-                        var allConfirmed = cloudBookings.filter(function(b){ return b.status === 'confirmed'; }).map(function(b){ return b.date; });
-                        
-                        blockedDates = blockedDates.concat(allBlocked, allConfirmed);
-                        blockedDates = blockedDates.filter(function(v, i, self){ return self.indexOf(v) === i; });
-                        
-                        renderCalendar();
-                        console.log('📅 تم تحميل التواريخ من السحابة');
-                    } catch(e) {
-                        console.warn('⚠️ فشل تحميل السحابة:', e);
-                    }
-                }, 5000);
-            }, 1000);
-        }
     }
     
-    // ─── التقويم ───
     function renderCalendar() {
         var year = currentMonth.getFullYear();
         var month = currentMonth.getMonth();
@@ -902,6 +962,47 @@
         }
     }
     
+    // ─── رسم خيارات العربون ───
+    function renderDepositOptions() {
+        var grid = document.getElementById('depositGrid');
+        if (!grid) return;
+        
+        var html = '';
+        
+        // الخيارات الثابتة
+        CONFIG.depositOptions.forEach(function(amount) {
+            html += '<div class="deposit-option" data-deposit="' + amount + '">' +
+                '<span class="deposit-option-amount">' + amount + '</span>' +
+                '<span class="deposit-option-label">ر.ع</span>' +
+            '</div>';
+        });
+        
+        // خيار الدفع الكامل
+        html += '<div class="deposit-option full" data-deposit="full">' +
+            '<span class="deposit-option-amount"><i class="fas fa-check-circle"></i> دفع كامل</span>' +
+            '<span class="deposit-option-label">ادفع المبلغ كاملاً الآن</span>' +
+        '</div>';
+        
+        grid.innerHTML = html;
+        
+        // إضافة الأحداث
+        grid.querySelectorAll('.deposit-option').forEach(function(el) {
+            el.onclick = function() {
+                grid.querySelectorAll('.deposit-option').forEach(function(x) {
+                    x.classList.remove('selected');
+                });
+                this.classList.add('selected');
+                
+                var val = this.dataset.deposit;
+                selectedDeposit = val === 'full' ? 'full' : parseInt(val);
+                
+                if (navigator.vibrate) navigator.vibrate(10);
+                updateSummary();
+                updateSteps();
+            };
+        });
+    }
+    
     function selectDate(date, dayEl) {
         document.querySelectorAll('.calendar-app-day.selected').forEach(function(el) {
             el.classList.remove('selected');
@@ -930,6 +1031,13 @@
         return 0;
     }
     
+    function getDepositAmount() {
+        var total = calculatePrice();
+        if (selectedDeposit === 'full') return total;
+        if (typeof selectedDeposit === 'number') return selectedDeposit;
+        return 0;
+    }
+    
     function updateSummary() {
         var content = document.getElementById('summaryContent');
         var confirmBtn = document.getElementById('confirmBooking');
@@ -943,7 +1051,6 @@
         var dayType = getDayType(selectedDate);
         var dayTypeName = dayType === 'weekday' ? 'يوم عادي' : 'ويكند';
         var total = calculatePrice();
-        var deposit = Math.ceil(total * CONFIG.depositPercent / 100);
         
         var typeName = selectedBookingType === 'without_stay' ? 'بدون مبيت' :
                        selectedBookingType === 'with_stay' ? 'مع مبيت' : 'نصف يوم';
@@ -954,18 +1061,43 @@
                        selectedBookingType === 'with_stay' ? '9ص - 7ص' :
                        (selectedHalfDayPeriod === 'morning' ? '9ص - 3م' : '4م - 10م');
         
-        var bankDeposit = document.getElementById('bankDepositAmount');
-        if (bankDeposit) bankDeposit.textContent = deposit + ' ر.ع';
-        
-        content.innerHTML = 
+        // ملخص أساسي
+        var html = 
             '<div class="summary-app-row"><span>📅 التاريخ:</span><strong>' + formatArabicDate(selectedDate) + '</strong></div>' +
             '<div class="summary-app-row"><span>🏷️ نوع اليوم:</span><strong>' + dayTypeName + '</strong></div>' +
             '<div class="summary-app-row"><span>⏰ نوع الحجز:</span><strong>' + typeIcon + ' ' + typeName + '</strong></div>' +
             '<div class="summary-app-row"><span>🕐 التوقيت:</span><strong style="font-size:0.75rem;">' + timeDesc + '</strong></div>' +
-            '<div class="summary-app-row"><span>💰 الإجمالي:</span><strong>' + total + ' ر.ع</strong></div>' +
-            '<div class="summary-app-row"><span>💵 العربون (50%):</span><strong>' + deposit + ' ر.ع</strong></div>' +
-            '<div class="summary-app-row"><span>💳 الباقي:</span><strong>' + (total - deposit) + ' ر.ع</strong></div>' +
-            '<div class="summary-app-row total"><span>✅ المطلوب الآن:</span><strong>' + deposit + ' ر.ع</strong></div>';
+            '<div class="summary-app-row"><span>💰 الإجمالي:</span><strong>' + total + ' ر.ع</strong></div>';
+        
+        // إذا لم يُختر العربون
+        if (selectedDeposit === null) {
+            html += '<div class="summary-app-row" style="background: rgba(255,193,7,0.1); padding: 10px; margin-top: 10px; border-radius: 8px;">' +
+                '<span style="color: var(--warning);">⚠️ اختر مبلغ العربون</span>' +
+            '</div>';
+            
+            content.innerHTML = html;
+            if (confirmBtn) confirmBtn.disabled = true;
+            return;
+        }
+        
+        var deposit = getDepositAmount();
+        var security = CONFIG.securityDeposit;
+        var remaining = total - deposit;
+        var payNow = deposit + security;
+        var isFullPayment = (selectedDeposit === 'full');
+        
+        html += '<div class="summary-app-row"><span>💵 العربون' + (isFullPayment ? ' (دفع كامل)' : '') + ':</span><strong>' + deposit + ' ر.ع</strong></div>';
+        html += '<div class="summary-app-row"><span>🛡️ التأمين (مسترد):</span><strong>' + security + ' ر.ع</strong></div>';
+        
+        if (remaining > 0) {
+            html += '<div class="summary-app-row"><span>💳 الباقي عند الدخول:</span><strong>' + remaining + ' ر.ع</strong></div>';
+        } else {
+            html += '<div class="summary-app-row"><span style="color: var(--success);"><i class="fas fa-check-circle"></i> لا يوجد باقي</span><strong style="color: var(--success);">0 ر.ع</strong></div>';
+        }
+        
+        html += '<div class="summary-app-row total"><span>✅ المطلوب الآن:</span><strong>' + payNow + ' ر.ع</strong></div>';
+        
+        content.innerHTML = html;
         
         if (confirmBtn) confirmBtn.disabled = false;
     }
@@ -978,7 +1110,9 @@
         if (document.getElementById('fullName').value.trim() && document.getElementById('phone').value.trim()) {
             steps[2] && steps[2].classList.add('active');
         }
-        if (receiptFile) steps[3] && steps[3].classList.add('active');
+        if (receiptFile && selectedDeposit !== null) {
+            steps[3] && steps[3].classList.add('active');
+        }
     }
     
     function showToast(msg, type) {
@@ -994,11 +1128,11 @@
         }, 2500);
     }
     
-    // ─── حفظ الحجز ───
     function submitBooking() {
         if (!selectedDate) return showToast('⚠️ اختر التاريخ', 'warning');
         if (!selectedBookingType) return showToast('⚠️ اختر نوع الحجز', 'warning');
         if (selectedBookingType === 'half_day' && !selectedHalfDayPeriod) return showToast('⚠️ اختر الفترة', 'warning');
+        if (selectedDeposit === null) return showToast('⚠️ اختر مبلغ العربون', 'warning');
         
         var fullName = document.getElementById('fullName').value.trim();
         if (!fullName) return showToast('⚠️ أدخل الاسم', 'warning');
@@ -1019,7 +1153,11 @@
         var dayType = getDayType(selectedDate);
         var dayTypeName = dayType === 'weekday' ? 'يوم عادي' : 'ويكند';
         var total = calculatePrice();
-        var deposit = Math.ceil(total * CONFIG.depositPercent / 100);
+        var deposit = getDepositAmount();
+        var security = CONFIG.securityDeposit;
+        var remaining = total - deposit;
+        var payNow = deposit + security;
+        var isFullPayment = (selectedDeposit === 'full');
         var bookingId = 'WHJ-' + Date.now().toString().slice(-6) + Math.floor(Math.random() * 1000).toString().padStart(3, '0');
         
         var typeName = selectedBookingType === 'without_stay' ? 'بدون مبيت' :
@@ -1037,8 +1175,10 @@
             bookingTypeDesc: timeDesc,
             total: total,
             deposit: deposit,
-            security: CONFIG.securityDeposit,
-            remaining: total - deposit,
+            security: security,
+            remaining: remaining,
+            payNow: payNow,
+            isFullPayment: isFullPayment,
             fullName: fullName,
             phone: phone,
             guests: guestsCount,
@@ -1048,7 +1188,7 @@
             createdAt: new Date().toISOString()
         };
         
-        // ═══ 1. حفظ محلي (فوري - مضمون) ═══
+        // حفظ محلي
         try {
             var bookings = JSON.parse(localStorage.getItem('wahaj_bookings') || '[]');
             bookings.push(data);
@@ -1057,64 +1197,33 @@
             if (receiptDataUrl) {
                 try { sessionStorage.setItem('receipt_' + bookingId, receiptDataUrl); } catch(e) {}
             }
-            console.log('💾 حفظ محلي: ✅');
-        } catch(e) {
-            console.warn('⚠️ فشل الحفظ المحلي:', e);
-        }
+        } catch(e) { console.warn(e); }
         
-        // ═══ 2. فتح واتساب فوراً ═══
+        // واتساب
         var msg = '🌟 *طلب حجز جديد - استراحة وهج*\n\n' +
             '📋 *رقم:* ' + bookingId + '\n' +
             '📅 *التاريخ:* ' + data.dateFormatted + '\n' +
             '⏰ *النوع:* ' + typeName + ' (' + timeDesc + ')\n' +
             '👤 *الاسم:* ' + fullName + '\n' +
             '📞 *الجوال:* ' + phone + '\n' +
-            '👥 *الضيوف:* ' + guestsCount + '\n' +
-            '💰 *الإجمالي:* ' + total + ' ر.ع\n' +
-            '💵 *العربون:* ' + deposit + ' ر.ع\n' +
-            '💳 *الباقي:* ' + (total - deposit) + ' ر.ع\n\n' +
-            '⏳ بانتظار التأكيد\n---\nاستراحة وهج';
+            '👥 *الضيوف:* ' + guestsCount + '\n\n' +
+            '💰 *تفاصيل الدفع:*\n' +
+            '• الإجمالي: ' + total + ' ر.ع\n' +
+            '• العربون' + (isFullPayment ? ' (دفع كامل)' : '') + ': ' + deposit + ' ر.ع\n' +
+            '• التأمين: ' + security + ' ر.ع\n' +
+            '• *المطلوب الآن: ' + payNow + ' ر.ع*\n' +
+            (remaining > 0 ? '• الباقي عند الدخول: ' + remaining + ' ر.ع\n' : '') +
+            '\n⏳ بانتظار التأكيد\n---\nاستراحة وهج';
         
         window.open('https://wa.me/' + CONFIG.whatsapp + '?text=' + encodeURIComponent(msg), '_blank');
         
         showToast('✅ تم استلام الحجز!', 'success');
         
-        // ═══ 3. محاولة حفظ سحابي في الخلفية (بدون انتظار) ═══
-        saveToCloudSilently(data);
-        
-        // ═══ 4. انتقال لصفحة التأكيد ═══
         setTimeout(function() {
             window.location.href = 'confirmation.html?id=' + bookingId;
         }, 1200);
     }
     
-    // ─── حفظ سحابي بدون تعليق ───
-    function saveToCloudSilently(data) {
-        if (!window.firebase || !window.WahajFirebase) {
-            console.log('ℹ️ Firebase غير متاح');
-            return;
-        }
-        
-        try {
-            window.WahajFirebase.waitForFirebase(function(ready) {
-                if (!ready) return;
-                
-                window.WahajFirebase.saveBooking(data).then(function(result) {
-                    if (result.success) {
-                        console.log('☁️ تم الحفظ السحابي:', result.id);
-                    } else {
-                        console.warn('⚠️ فشل الحفظ السحابي:', result.error);
-                    }
-                }).catch(function(err) {
-                    console.warn('⚠️ خطأ سحابي:', err);
-                });
-            }, 3000);
-        } catch(e) {
-            console.warn('⚠️ خطأ Firebase:', e);
-        }
-    }
-    
-    // ─── التهيئة ───
     function init() {
         document.querySelectorAll('.current-year').forEach(function(el) {
             el.textContent = new Date().getFullYear();
@@ -1122,6 +1231,7 @@
         
         loadBlocked();
         renderCalendar();
+        renderDepositOptions();
         
         document.getElementById('prevMonth').onclick = function() {
             currentMonth.setMonth(currentMonth.getMonth() - 1);
@@ -1186,7 +1296,7 @@
             document.getElementById(id).oninput = updateSteps;
         });
         
-        console.log('✅ صفحة الحجز جاهزة');
+        console.log('✅ صفحة الحجز جاهزة (مع اختيار العربون)');
     }
     
     if (document.readyState === 'loading') {
