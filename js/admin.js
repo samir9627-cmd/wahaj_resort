@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════
    استراحة وهج - لوحة التحكم
-   محدّث: Firebase + الرسائل + الإيصال + الطباعة الجديدة
+   محدّث: Firebase + الرسائل + الإيصال + الطباعة + التذكيرات
    ═══════════════════════════════════════════════════════ */
 
 (function() {
@@ -146,6 +146,7 @@
         renderMessagesForm();
         updateSettingsCounts();
         updateBadge();
+        renderRemindersList();
     }
     
     function updateStats() {
@@ -155,10 +156,11 @@
         var revenue = allBookings.filter(function(b) { return b.status === 'confirmed'; })
             .reduce(function(sum, b) { return sum + (b.total || 0); }, 0);
         
-        document.getElementById('statTotal').textContent = total;
-        document.getElementById('statPending').textContent = pending;
-        document.getElementById('statConfirmed').textContent = confirmed;
-        document.getElementById('statRevenue').textContent = revenue;
+        var el;
+        el = document.getElementById('statTotal'); if (el) el.textContent = total;
+        el = document.getElementById('statPending'); if (el) el.textContent = pending;
+        el = document.getElementById('statConfirmed'); if (el) el.textContent = confirmed;
+        el = document.getElementById('statRevenue'); if (el) el.textContent = revenue;
     }
     
     function updateBadge() {
@@ -193,6 +195,10 @@
         var nav = document.querySelector('.admin-nav-item[data-page="' + pageName + '"]');
         if (nav) nav.classList.add('active');
         
+        if (pageName === 'reminders') {
+            setTimeout(renderRemindersList, 100);
+        }
+        
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
     
@@ -215,6 +221,7 @@
     // ═══ Render Bookings ═══
     function renderBookings() {
         var list = document.getElementById('bookingsList');
+        if (!list) return;
         
         if (filteredBookings.length === 0) {
             list.innerHTML = '<div class="no-bookings"><i class="fas fa-inbox"></i><h3>لا توجد حجوزات</h3><p>' + (allBookings.length === 0 ? 'لم يتم استلام أي حجز بعد' : 'لا توجد نتائج مطابقة') + '</p></div>';
@@ -226,6 +233,8 @@
     
     function renderDashboardBookings() {
         var list = document.getElementById('dashboardBookings');
+        if (!list) return;
+        
         var latest = allBookings.slice(0, 3);
         
         if (latest.length === 0) {
@@ -289,19 +298,12 @@
         var payNow = b.payNow || (deposit + security);
         var isFullPayment = b.isFullPayment || false;
         
-        // جلب الإيصال من localStorage أو sessionStorage أو Firebase
         var receiptImg = '';
-        try {
-            receiptImg = localStorage.getItem('wahaj_receipt_' + bookingId);
-        } catch(e) {}
-        
+        try { receiptImg = localStorage.getItem('wahaj_receipt_' + bookingId); } catch(e) {}
         if (!receiptImg) {
             try { receiptImg = sessionStorage.getItem('receipt_' + bookingId); } catch(e) {}
         }
-        
-        if (!receiptImg && b.receiptBase64) {
-            receiptImg = b.receiptBase64;
-        }
+        if (!receiptImg && b.receiptBase64) receiptImg = b.receiptBase64;
         
         var receiptHtml = '';
         if (receiptImg) {
@@ -332,7 +334,6 @@
             '<div class="modal-row"><span class="label">عدد الضيوف:</span><span class="value">' + (b.guests || '—') + '</span></div>' +
             '<div class="modal-row"><span class="label">ملاحظات:</span><span class="value">' + escapeHtml(b.notes || 'لا يوجد') + '</span></div>';
         
-        // قسم العرض إذا موجود
         if (b.hasOffer && b.discount > 0) {
             html += '<div class="modal-payment-section" style="background: linear-gradient(135deg, rgba(40,167,69,0.15), rgba(40,167,69,0.05)); border: 2px dashed var(--success);">' +
                 '<div class="modal-payment-section-title" style="color: var(--success);"><i class="fas fa-gift"></i> 🎁 ' + escapeHtml(b.offerTitle || 'عرض') + '</div>' +
@@ -399,7 +400,6 @@
         
         updateStatus(bookingId, 'confirmed');
         
-        // استخدام الرسالة المخصصة من localStorage/Firebase
         var template = messages.confirm || DEFAULT_MESSAGES.confirm;
         var msg = replaceVariables(template, b);
         
@@ -423,16 +423,11 @@
         
         updateStatus(bookingId, 'rejected');
         
-        // استخدام الرسالة المخصصة
         var template = messages.reject || DEFAULT_MESSAGES.reject;
         var msg = replaceVariables(template, b);
         
         if (reason) {
-            msg = msg.replace(/\{\{reason\}\}/g, reason);
-            // إضافة السبب قبل التوقيع
-            if (msg.indexOf('{{reason}}') === -1) {
-                msg = msg.replace('نرجو التواصل', '📝 *السبب:* ' + reason + '\n\nنرجو التواصل');
-            }
+            msg = msg.replace('نرجو التواصل', '📝 *السبب:* ' + reason + '\n\nنرجو التواصل');
         }
         
         var phone = b.phone.replace(/[^0-9]/g, '');
@@ -457,7 +452,6 @@
             }
             localStorage.setItem('wahaj_bookings', JSON.stringify(bookings));
             
-            // مزامنة سحابية
             if (window.WahajFirebase) {
                 window.WahajFirebase.updateBookingStatus(bookingId, newStatus).then(function(result) {
                     if (result.success) console.log('☁️ تم تحديث الحالة سحابياً');
@@ -468,7 +462,7 @@
         } catch(e) { console.warn(e); }
     }
     
-    // ═══ Print Booking (صفحة واحدة منظمة) ═══
+    // ═══ Print Booking ═══
     window.printBooking = function(bookingId) {
         var b = allBookings.find(function(x) { return x.bookingId === bookingId; });
         if (!b) return;
@@ -498,7 +492,7 @@
             '.booking-id-box .label { font-size: 8.5px; color: #6C757D; }' +
             '.booking-id-box .value { font-family: monospace; font-size: 14px; font-weight: 900; color: #A88B2C; letter-spacing: 1px; }' +
             '.section { margin-bottom: 6px; }' +
-            '.section-title { background: linear-gradient(135deg, #0A1F44, #1A3A6B); color: #D4AF37; padding: 4px 10px; font-size: 10px; font-weight: 700; border-radius: 4px; margin-bottom: 4px; display: flex; align-items: center; gap: 5px; }' +
+            '.section-title { background: linear-gradient(135deg, #0A1F44, #1A3A6B); color: #D4AF37; padding: 4px 10px; font-size: 10px; font-weight: 700; border-radius: 4px; margin-bottom: 4px; }' +
             'table { width: 100%; border-collapse: collapse; }' +
             'td { padding: 3.5px 8px; border-bottom: 0.5px solid #E9ECEF; font-size: 10px; vertical-align: middle; }' +
             'td.label { color: #6C757D; width: 35%; font-weight: 600; }' +
@@ -508,11 +502,10 @@
             '.payment-section.later { background: #F8F9FA; border: 1.5px solid #ADB5BD; }' +
             '.payment-section.refund { background: #F0FFF4; border: 1.5px solid #28A745; }' +
             '.payment-section.discount { background: #F0FFF4; border: 1.5px dashed #28A745; }' +
-            '.payment-title { font-size: 9px; font-weight: 900; margin-bottom: 3px; text-transform: uppercase; letter-spacing: 0.3px; }' +
+            '.payment-title { font-size: 9px; font-weight: 900; margin-bottom: 3px; text-transform: uppercase; }' +
             '.payment-section.now .payment-title { color: #A88B2C; }' +
             '.payment-section.later .payment-title { color: #0A1F44; }' +
             '.payment-section.refund .payment-title { color: #28A745; }' +
-            '.payment-section.discount .payment-title { color: #28A745; }' +
             '.payment-row { display: flex; justify-content: space-between; padding: 2px 0; font-size: 10px; }' +
             '.payment-row.total { border-top: 1px dashed #D4AF37; margin-top: 3px; padding-top: 4px; font-weight: 900; font-size: 11.5px; }' +
             '.payment-row.total span:last-child { color: #A88B2C; }' +
@@ -524,28 +517,23 @@
             '.policies li::before { content: "•"; color: #D4AF37; font-weight: 900; flex-shrink: 0; }' +
             '.footer { text-align: center; margin-top: 8px; padding-top: 5px; border-top: 2px solid #D4AF37; font-size: 8.5px; color: #6C757D; }' +
             '.footer .thanks { color: #A88B2C; font-weight: 700; font-size: 10px; margin-bottom: 2px; }' +
-            '.no-print { display: none; }' +
-            '@media print { .no-print { display: none !important; } }' +
             '</style>' +
             '</head>' +
             '<body>' +
             
-            // Header
             '<div class="header">' +
                 '<h1>🏠 استراحة وهج</h1>' +
                 '<div class="slogan">Wahaj Resort - خصوصية .. راحة .. ذكريات لا تُنسى</div>' +
                 '<div class="info">📍 ولاية بركاء - الوهرة | 📞 +968 9556 6332</div>' +
             '</div>' +
             
-            // Booking ID
             '<div class="booking-id-box">' +
                 '<div class="label">رقم الحجز</div>' +
                 '<div class="value">' + escapeHtml(b.bookingId) + '</div>' +
             '</div>' +
             
-            // Customer Info
             '<div class="section">' +
-                '<div class="section-title"><i>👤</i> بيانات العميل</div>' +
+                '<div class="section-title">👤 بيانات العميل</div>' +
                 '<table>' +
                     '<tr><td class="label">الاسم:</td><td class="value">' + escapeHtml(b.fullName) + '</td></tr>' +
                     '<tr><td class="label">الجوال:</td><td class="value">' + escapeHtml(b.phone) + '</td></tr>' +
@@ -554,9 +542,8 @@
                 '</table>' +
             '</div>' +
             
-            // Booking Details
             '<div class="section">' +
-                '<div class="section-title"><i>📅</i> تفاصيل الحجز</div>' +
+                '<div class="section-title">📅 تفاصيل الحجز</div>' +
                 '<table>' +
                     '<tr><td class="label">التاريخ:</td><td class="value">' + escapeHtml(b.dateFormatted) + '</td></tr>' +
                     '<tr><td class="label">نوع اليوم:</td><td class="value">' + escapeHtml(b.dayType) + '</td></tr>' +
@@ -565,7 +552,6 @@
                 '</table>' +
             '</div>';
         
-        // Discount section
         if (b.hasOffer && b.discount > 0) {
             content += 
                 '<div class="payment-section discount">' +
@@ -576,7 +562,6 @@
                 '</div>';
         }
         
-        // Payment NOW
         content += 
             '<div class="payment-section now">' +
                 '<div class="payment-title">💳 يُدفع الآن (تحويل بنكي)</div>' +
@@ -585,7 +570,6 @@
                 '<div class="payment-row total"><span>✅ الإجمالي المطلوب</span><span>' + payNow + ' ر.ع</span></div>' +
             '</div>';
         
-        // Payment LATER
         if (remaining > 0) {
             content += 
                 '<div class="payment-section later">' +
@@ -596,19 +580,15 @@
             content += 
                 '<div class="payment-section later" style="background: #F0FFF4; border-color: #28A745;">' +
                     '<div class="payment-title" style="color: #28A745;">✅ تم الدفع كاملاً</div>' +
-                    '<div class="payment-row"><span>لا يوجد باقي</span><span>0 ر.ع</span></div>' +
                 '</div>';
         }
         
-        // Refund section
         content += 
             '<div class="payment-section refund">' +
                 '<div class="payment-title">♻️ يُرد بعد الخروج</div>' +
                 '<div class="payment-row"><span>🛡️ التأمين المسترد</span><span>' + security + ' ر.ع</span></div>' +
-            '</div>';
-        
-        // Policies
-        content += 
+            '</div>' +
+            
             '<div class="policies">' +
                 '<h3>📋 سياسات مهمة</h3>' +
                 '<ul>' +
@@ -621,10 +601,8 @@
                     '<li>عدم ترك الأطفال بدون مراقبة</li>' +
                     '<li>إشعال النار في أماكن الشواء فقط</li>' +
                 '</ul>' +
-            '</div>';
-        
-        // Footer
-        content += 
+            '</div>' +
+            
             '<div class="footer">' +
                 '<div class="thanks">🌟 شكراً لثقتكم بنا</div>' +
                 '<div>© 2026 استراحة وهج - جميع الحقوق محفوظة</div>' +
@@ -633,7 +611,6 @@
             '</body>' +
             '</html>';
         
-        // فتح نافذة طباعة جديدة
         var printWindow = window.open('', '_blank');
         printWindow.document.write(content);
         printWindow.document.close();
@@ -673,11 +650,9 @@
             bookings = bookings.filter(function(x) { return x.bookingId !== bookingId; });
             localStorage.setItem('wahaj_bookings', JSON.stringify(bookings));
             
-            // حذف الإيصال
             try { localStorage.removeItem('wahaj_receipt_' + bookingId); } catch(e) {}
             try { sessionStorage.removeItem('receipt_' + bookingId); } catch(e) {}
             
-            // حذف سحابي
             if (window.WahajFirebase) {
                 window.WahajFirebase.deleteBooking(bookingId).then(function() {
                     console.log('☁️ تم الحذف سحابياً');
@@ -692,6 +667,7 @@
     // ═══ Blocked Dates ═══
     function renderBlockedList() {
         var list = document.getElementById('blockedList');
+        if (!list) return;
         
         if (blockedDates.length === 0) {
             list.innerHTML = '<div class="no-blocked"><i class="fas fa-check-circle" style="font-size: 2rem; color: #28A745; display: block; margin-bottom: 10px;"></i>لا توجد تواريخ محجوبة</div>';
@@ -904,6 +880,7 @@
     // ═══ Offers ═══
     function renderOffersList() {
         var list = document.getElementById('offersList');
+        if (!list) return;
         
         if (offers.length === 0) {
             list.innerHTML = '<div style="text-align: center; padding: 20px; color: var(--gray-600); font-size: 0.85rem;">لا توجد عروض حالياً</div>';
@@ -1042,6 +1019,110 @@
         showToast('✅ تم حفظ الأسعار', 'success');
     };
     
+    // ═══════════════════════════════════════════════════════
+    // ⏰ نظام التذكيرات
+    // ═══════════════════════════════════════════════════════
+    
+    function renderRemindersList() {
+        var container = document.getElementById('remindersList');
+        if (!container) return;
+        
+        var needReminder = allBookings.filter(function(b) {
+            return b.status === 'confirmed' && 
+                   (b.remaining || 0) > 0 && 
+                   !b.remainingPaid;
+        });
+        
+        if (needReminder.length === 0) {
+            container.innerHTML = '<div class="no-blocked"><i class="fas fa-check-circle" style="font-size: 2rem; color: #28A745; display: block; margin-bottom: 10px;"></i>لا توجد حجوزات تحتاج تذكير حالياً</div>';
+            return;
+        }
+        
+        container.innerHTML = needReminder.map(function(b) {
+            var daysUntil = 0;
+            try {
+                var bookingDate = new Date(b.date);
+                var today = new Date();
+                today.setHours(0,0,0,0);
+                bookingDate.setHours(0,0,0,0);
+                daysUntil = Math.ceil((bookingDate - today) / (1000 * 60 * 60 * 24));
+            } catch(e) {}
+            
+            var urgencyColor = daysUntil <= 1 ? '#DC3545' : daysUntil <= 3 ? '#FFC107' : '#17A2B8';
+            var urgencyText = daysUntil < 0 ? 'انتهى' : 
+                             daysUntil === 0 ? 'اليوم' : 
+                             daysUntil === 1 ? 'غداً' : 
+                             'بعد ' + daysUntil + ' يوم';
+            
+            return '<div class="booking-card confirmed" style="border-right-color: ' + urgencyColor + ';">' +
+                '<div class="booking-head">' +
+                    '<span class="booking-id">' + escapeHtml(b.bookingId) + '</span>' +
+                    '<span class="booking-status" style="background: rgba(220,53,69,0.2); color: #721c24;">' +
+                        '<i class="fas fa-clock"></i> ' + urgencyText +
+                    '</span>' +
+                '</div>' +
+                '<div class="booking-info-grid">' +
+                    '<div class="booking-info-item"><span class="label">الاسم</span><span class="value">' + escapeHtml(b.fullName) + '</span></div>' +
+                    '<div class="booking-info-item"><span class="label">الجوال</span><span class="value">' + escapeHtml(b.phone) + '</span></div>' +
+                    '<div class="booking-info-item"><span class="label">التاريخ</span><span class="value">' + escapeHtml(b.dateFormatted) + '</span></div>' +
+                    '<div class="booking-info-item"><span class="label">الباقي</span><span class="value" style="color: var(--danger);">' + (b.remaining || 0) + ' ر.ع</span></div>' +
+                '</div>' +
+                '<div class="booking-actions">' +
+                    '<button class="action-btn whatsapp" onclick="sendPaymentReminder(\'' + b.bookingId + '\')"><i class="fab fa-whatsapp"></i> إرسال تذكير</button>' +
+                    '<button class="action-btn view" onclick="viewBooking(\'' + b.bookingId + '\')"><i class="fas fa-eye"></i> تفاصيل</button>' +
+                '</div>' +
+            '</div>';
+        }).join('');
+    }
+    
+    window.sendPaymentReminder = function(bookingId) {
+        var b = allBookings.find(function(x) { return x.bookingId === bookingId; });
+        if (!b) return;
+        
+        var remaining = b.remaining || 0;
+        var bookingDate = new Date(b.date);
+        var today = new Date();
+        today.setHours(0,0,0,0);
+        bookingDate.setHours(0,0,0,0);
+        var daysUntil = Math.ceil((bookingDate - today) / (1000 * 60 * 60 * 24));
+        
+        var timeText = daysUntil < 0 ? 'موعد حجزك قد انتهى' :
+                      daysUntil === 0 ? 'موعد حجزك *اليوم*' :
+                      daysUntil === 1 ? 'موعد حجزك *غداً*' :
+                      'موعد حجزك بعد *' + daysUntil + ' أيام*';
+        
+        var msg = '🔔 *تذكير بدفع الباقي*\n\n' +
+            'مرحباً ' + b.fullName + '،\n\n' +
+            timeText + ':\n\n' +
+            '📋 *رقم الحجز:* ' + b.bookingId + '\n' +
+            '📅 *التاريخ:* ' + b.dateFormatted + '\n' +
+            '👥 *الضيوف:* ' + (b.guests || '—') + '\n\n' +
+            '━━━━━━━━━━━━━━━\n' +
+            '💰 *تفاصيل الدفع*\n' +
+            '━━━━━━━━━━━━━━━\n\n' +
+            '💳 *المبلغ المتبقي:* ' + remaining + ' ر.ع\n' +
+            '🛡️ *التأمين المسترد:* ' + (b.security || 20) + ' ر.ع\n\n' +
+            '━━━━━━━━━━━━━━━\n' +
+            '🏦 *بيانات التحويل*\n' +
+            '━━━━━━━━━━━━━━━\n\n' +
+            '• *البنك:* بنك مسقط\n' +
+            '• *رقم الحساب:* 99591653\n' +
+            '• *الاسم:* Samir Alowaisi\n' +
+            '• *المبلغ:* ' + remaining + ' ر.ع\n\n' +
+            '📎 بعد التحويل، يُرجى رفع الإيصال عبر:\n' +
+            '🌐 https://samir9627-cmd.github.io/wahaj_resort/track.html\n\n' +
+            'أو أرسل الإيصال على واتساب.\n\n' +
+            'شكراً لك 🌟\n' +
+            '---\n' +
+            'استراحة وهج';
+        
+        var phone = b.phone.replace(/[^0-9]/g, '');
+        var phoneFull = phone.indexOf('968') === 0 ? phone : '968' + phone;
+        
+        window.open('https://wa.me/' + phoneFull + '?text=' + encodeURIComponent(msg), '_blank');
+        showToast('✅ تم فتح واتساب مع التذكير', 'success');
+    };
+    
     // ═══ Export ═══
     window.exportData = function() {
         if (allBookings.length === 0) {
@@ -1109,7 +1190,6 @@
         localStorage.removeItem('wahaj_prices');
         localStorage.removeItem('wahaj_messages');
         
-        // مسح الإيصالات
         try {
             Object.keys(localStorage).forEach(function(key) {
                 if (key.indexOf('wahaj_receipt_') === 0) {
@@ -1149,7 +1229,7 @@
         showAdmin();
     }
     
-    console.log('✅ لوحة التحكم جاهزة (Firebase + Receipt + Print)');
+    console.log('✅ لوحة التحكم جاهزة (Firebase + Receipt + Print + Reminders)');
     
     // ═══ Load from Firebase ═══
     async function loadFromCloud() {
@@ -1211,6 +1291,7 @@
                 renderMessagesForm();
                 updateSettingsCounts();
                 updateBadge();
+                renderRemindersList();
                 
                 console.log('✅ تمت المزامنة');
                 
