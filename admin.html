@@ -259,6 +259,24 @@ body{font-family:'Cairo',-apple-system,sans-serif;background:var(--cream);color:
 <div id="bookingsList"></div>
 </div>
 
+<div class="page" id="page-reminders">
+<h1 class="page-title">التذكيرات</h1>
+
+<div class="block-section" style="background:linear-gradient(135deg,rgba(212,175,55,0.08),rgba(212,175,55,0.02));border-right:4px solid var(--primary);">
+<h3 style="color:var(--primary-dark);"><i class="fas fa-info-circle"></i> معلومات</h3>
+<p style="color:var(--navy);font-size:0.85rem;line-height:1.8;margin:0;">
+تذكيرات الدفع تُرسل للحجوزات المؤكدة التي لم يُدفع باقيها بعد.<br>
+<strong>الوقت المثالي:</strong> قبل موعد الدخول بيوم أو يومين.
+</p>
+</div>
+
+<div class="block-section">
+<h3><i class="fas fa-bell"></i> الحجوزات التي تحتاج تذكير</h3>
+<div id="remindersList"></div>
+</div>
+
+</div>
+
 <div class="page" id="page-blocked">
 <h1 class="page-title">حجب التواريخ</h1>
 <div class="block-section">
@@ -382,6 +400,7 @@ body{font-family:'Cairo',-apple-system,sans-serif;background:var(--cream);color:
 <nav class="admin-bottom-nav">
 <button class="admin-nav-item active" data-page="dashboard" onclick="switchPage('dashboard')"><i class="fas fa-home"></i><span>الرئيسية</span></button>
 <button class="admin-nav-item" data-page="bookings" onclick="switchPage('bookings')"><i class="fas fa-calendar-check"></i><span>الحجوزات</span><span class="badge" id="navBadge"></span></button>
+<button class="admin-nav-item" data-page="reminders" onclick="switchPage('reminders')"><i class="fas fa-bell"></i><span>تذكيرات</span></button>
 <button class="admin-nav-item" data-page="blocked" onclick="switchPage('blocked')"><i class="fas fa-ban"></i><span>حجب</span></button>
 <button class="admin-nav-item" data-page="messages" onclick="switchPage('messages')"><i class="fas fa-comment-dots"></i><span>الرسائل</span></button>
 <button class="admin-nav-item" data-page="images" onclick="switchPage('images')"><i class="fas fa-images"></i><span>الصور</span></button>
@@ -402,5 +421,145 @@ body{font-family:'Cairo',-apple-system,sans-serif;background:var(--cream);color:
 <script src="js/firebase-helper.js"></script>
 <script src="js/admin.js"></script>
 <script src="js/admin-upgrades.js"></script>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// ⏰ نظام التذكيرات (مباشر)
+// ═══════════════════════════════════════════════════════
+
+function renderRemindersList() {
+    var container = document.getElementById('remindersList');
+    if (!container) return;
+    
+    var allBookings = [];
+    try {
+        allBookings = JSON.parse(localStorage.getItem('wahaj_bookings') || '[]');
+    } catch(e) {}
+    
+    var needReminder = allBookings.filter(function(b) {
+        return b.status === 'confirmed' && 
+               (b.remaining || 0) > 0 && 
+               !b.remainingPaid;
+    });
+    
+    if (needReminder.length === 0) {
+        container.innerHTML = '<div class="no-blocked"><i class="fas fa-check-circle" style="font-size: 2rem; color: #28A745; display: block; margin-bottom: 10px;"></i>لا توجد حجوزات تحتاج تذكير حالياً</div>';
+        return;
+    }
+    
+    var html = '';
+    needReminder.forEach(function(b) {
+        var daysUntil = 0;
+        try {
+            var bookingDate = new Date(b.date);
+            var today = new Date();
+            today.setHours(0,0,0,0);
+            bookingDate.setHours(0,0,0,0);
+            daysUntil = Math.ceil((bookingDate - today) / (1000 * 60 * 60 * 24));
+        } catch(e) {}
+        
+        var urgencyColor = daysUntil <= 1 ? '#DC3545' : daysUntil <= 3 ? '#FFC107' : '#17A2B8';
+        var urgencyText = daysUntil < 0 ? 'انتهى' : 
+                         daysUntil === 0 ? 'اليوم' : 
+                         daysUntil === 1 ? 'غداً' : 
+                         'بعد ' + daysUntil + ' يوم';
+        
+        html += '<div class="booking-card confirmed" style="border-right-color: ' + urgencyColor + ';">' +
+            '<div class="booking-head">' +
+                '<span class="booking-id">' + (b.bookingId || '') + '</span>' +
+                '<span class="booking-status" style="background: rgba(220,53,69,0.2); color: #721c24;">' +
+                    '<i class="fas fa-clock"></i> ' + urgencyText +
+                '</span>' +
+            '</div>' +
+            '<div class="booking-info-grid">' +
+                '<div class="booking-info-item"><span class="label">الاسم</span><span class="value">' + (b.fullName || '') + '</span></div>' +
+                '<div class="booking-info-item"><span class="label">الجوال</span><span class="value">' + (b.phone || '') + '</span></div>' +
+                '<div class="booking-info-item"><span class="label">التاريخ</span><span class="value">' + (b.dateFormatted || b.date || '') + '</span></div>' +
+                '<div class="booking-info-item"><span class="label">الباقي</span><span class="value" style="color: var(--danger);">' + (b.remaining || 0) + ' ر.ع</span></div>' +
+            '</div>' +
+            '<div class="booking-actions">' +
+                '<button class="action-btn whatsapp" onclick="sendPaymentReminder(\'' + b.bookingId + '\')"><i class="fab fa-whatsapp"></i> إرسال تذكير</button>' +
+                '<button class="action-btn view" onclick="viewBooking(\'' + b.bookingId + '\')"><i class="fas fa-eye"></i> تفاصيل</button>' +
+            '</div>' +
+        '</div>';
+    });
+    
+    container.innerHTML = html;
+}
+
+function sendPaymentReminder(bookingId) {
+    var allBookings = [];
+    try {
+        allBookings = JSON.parse(localStorage.getItem('wahaj_bookings') || '[]');
+    } catch(e) {}
+    
+    var b = allBookings.find(function(x) { return x.bookingId === bookingId; });
+    if (!b) return;
+    
+    var remaining = b.remaining || 0;
+    var bookingDate = new Date(b.date);
+    var today = new Date();
+    today.setHours(0,0,0,0);
+    bookingDate.setHours(0,0,0,0);
+    var daysUntil = Math.ceil((bookingDate - today) / (1000 * 60 * 60 * 24));
+    
+    var timeText = daysUntil < 0 ? 'موعد حجزك قد انتهى' :
+                  daysUntil === 0 ? 'موعد حجزك *اليوم*' :
+                  daysUntil === 1 ? 'موعد حجزك *غداً*' :
+                  'موعد حجزك بعد *' + daysUntil + ' أيام*';
+    
+    var msg = '🔔 *تذكير بدفع الباقي*\n\n' +
+        'مرحباً ' + b.fullName + '،\n\n' +
+        timeText + ':\n\n' +
+        '📋 *رقم الحجز:* ' + b.bookingId + '\n' +
+        '📅 *التاريخ:* ' + b.dateFormatted + '\n' +
+        '👥 *الضيوف:* ' + (b.guests || '—') + '\n\n' +
+        '━━━━━━━━━━━━━━━\n' +
+        '💰 *تفاصيل الدفع*\n' +
+        '━━━━━━━━━━━━━━━\n\n' +
+        '💳 *المبلغ المتبقي:* ' + remaining + ' ر.ع\n' +
+        '🛡️ *التأمين المسترد:* ' + (b.security || 20) + ' ر.ع\n\n' +
+        '━━━━━━━━━━━━━━━\n' +
+        '🏦 *بيانات التحويل*\n' +
+        '━━━━━━━━━━━━━━━\n\n' +
+        '• *البنك:* بنك مسقط\n' +
+        '• *رقم الحساب:* 99591653\n' +
+        '• *الاسم:* Samir Alowaisi\n' +
+        '• *المبلغ:* ' + remaining + ' ر.ع\n\n' +
+        '📎 بعد التحويل، يُرجى رفع الإيصال عبر:\n' +
+        '🌐 https://samir9627-cmd.github.io/wahaj_resort/track.html\n\n' +
+        'أو أرسل الإيصال على واتساب.\n\n' +
+        'شكراً لك 🌟\n' +
+        '---\n' +
+        'استراحة وهج';
+    
+    var phone = (b.phone || '').replace(/[^0-9]/g, '');
+    var phoneFull = phone.indexOf('968') === 0 ? phone : '968' + phone;
+    
+    window.open('https://wa.me/' + phoneFull + '?text=' + encodeURIComponent(msg), '_blank');
+    
+    if (typeof showToast === 'function') {
+        showToast('✅ تم فتح واتساب مع التذكير', 'success');
+    }
+}
+
+// ═══ ربط زر التذكيرات بصفحة التذكيرات ═══
+document.addEventListener('DOMContentLoaded', function() {
+    // مراقبة فتح الصفحة
+    setTimeout(function() {
+        // عند الضغط على زر "تذكيرات"
+        var remindersBtn = document.querySelector('[data-page="reminders"]');
+        if (remindersBtn) {
+            remindersBtn.addEventListener('click', function() {
+                setTimeout(renderRemindersList, 100);
+            });
+        }
+    }, 500);
+});
+
+// تحديث عند التحميل
+setTimeout(renderRemindersList, 3000);
+</script>
+
 </body>
 </html>
