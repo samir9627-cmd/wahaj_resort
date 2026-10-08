@@ -18,6 +18,7 @@
 .page-hero-app-content{position:relative;z-index:2}
 .page-hero-app h1{font-family:'Amiri',serif;font-size:clamp(1.8rem,6vw,2.5rem);color:var(--primary);margin-bottom:10px;text-shadow:0 0 30px rgba(212,175,55,0.5)}
 .page-hero-app p{font-size:0.95rem;opacity:0.9}
+
 .gallery-grid-app{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:5px 0}
 .gallery-item-app{aspect-ratio:1;border-radius:var(--radius-sm);overflow:hidden;position:relative;cursor:pointer;box-shadow:var(--shadow-sm);transition:var(--transition);background:var(--gray-100)}
 .gallery-item-app.large{grid-column:span 2;aspect-ratio:16/10}
@@ -30,6 +31,7 @@
 .gallery-empty{grid-column:span 2;text-align:center;padding:40px 20px;color:var(--gray-600);font-size:0.85rem}
 .gallery-empty i{font-size:3rem;display:block;margin-bottom:15px;color:var(--gray-200)}
 .gallery-empty a{display:inline-block;margin-top:15px;padding:10px 20px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:var(--navy);border-radius:50px;text-decoration:none;font-weight:700;font-size:0.85rem}
+
 .pricing-table-app{background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);border:1px solid rgba(212,175,55,0.1);margin-top:15px}
 .pricing-table-app table{width:100%;border-collapse:collapse}
 .pricing-table-app th{background:linear-gradient(135deg,var(--navy),var(--navy-light));color:var(--primary);padding:15px 8px;font-size:0.8rem;font-weight:700;text-align:center}
@@ -37,6 +39,7 @@
 .pricing-table-app tr:last-child td{border-bottom:none}
 .pricing-table-app td:first-child{font-weight:700;text-align:right;padding-right:15px}
 .pricing-table-app td.price{color:var(--primary-dark);font-weight:900;font-size:0.95rem}
+
 .amenities-list-app{display:grid;gap:12px}
 .amenity-category-app{background:var(--white);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm);border-right:4px solid var(--primary)}
 .amenity-category-app h3{color:var(--navy);font-size:1rem;margin-bottom:15px;display:flex;align-items:center;gap:10px;padding-bottom:12px;border-bottom:1px dashed var(--gray-200)}
@@ -44,16 +47,19 @@
 .amenity-items-app{display:grid;grid-template-columns:1fr;gap:8px}
 .amenity-item-app{display:flex;align-items:center;gap:10px;padding:8px 0;font-size:0.85rem;color:var(--navy)}
 .amenity-item-app i{color:var(--success);font-size:0.9rem}
+
 .info-cards-app{display:grid;grid-template-columns:1fr;gap:12px;margin-top:15px}
 .info-card-app{background:linear-gradient(135deg,var(--navy),var(--navy-light));color:var(--white);padding:20px;border-radius:var(--radius);display:flex;align-items:center;gap:15px}
 .info-card-app-icon{width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary-dark));display:flex;align-items:center;justify-content:center;color:var(--white);font-size:1.3rem;flex-shrink:0}
 .info-card-app-content h4{color:var(--primary);font-size:0.95rem;margin-bottom:3px}
 .info-card-app-content p{font-size:0.8rem;opacity:0.85}
+
 .lightbox-app{position:fixed;inset:0;background:rgba(5,21,48,0.95);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px}
 .lightbox-app.show{display:flex;animation:fadeIn 0.3s ease}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 .lightbox-app img{max-width:100%;max-height:90vh;border-radius:var(--radius);box-shadow:0 20px 60px rgba(0,0,0,0.5);border:3px solid var(--primary)}
 .lightbox-app-close{position:absolute;top:20px;left:20px;width:45px;height:45px;border-radius:50%;background:var(--primary);color:var(--navy);border:none;font-size:1.5rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(212,175,55,0.5)}
+
 .refresh-float{position:fixed;bottom:90px;right:20px;width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:var(--white);border:none;font-size:1.3rem;cursor:pointer;box-shadow:0 8px 25px rgba(212,175,55,0.5);z-index:999;display:flex;align-items:center;justify-content:center;animation:refreshPulse 2s infinite}
 @keyframes refreshPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
 .refresh-float:active{transform:scale(0.9)}
@@ -268,50 +274,48 @@
     });
     
     // ═══════════════════════════════════════════════════════
-    // 📸 الصور الافتراضية (تظهر إذا لا يوجد في Firebase/localStorage)
+    // 📸 الصور الافتراضية (بالترتيب الصحيح)
     // ═══════════════════════════════════════════════════════
     
     var DEFAULT_GALLERY = [
-        { name: 'المجلس', path: 'images/gallery/IMG_2438.jpg' },
-        { name: 'منطقة الأطفال', path: 'images/gallery/IMG_2439.jpg' },
-        { name: 'الصالة', path: 'images/gallery/IMG_2440.jpg' },
-        { name: 'الواجهة الخارجية', path: 'images/gallery/IMG_2441.jpg' },
-        { name: 'المطبخ', path: 'images/gallery/IMG_2442.jpg' },
-        { name: 'المسبح ليلاً', path: 'images/gallery/IMG_2443.jpg' },
-        { name: 'المسبح نهاراً', path: 'images/gallery/IMG_2444.jpg' },
-        { name: 'الجلسة الخارجية', path: 'images/gallery/IMG_2445.jpg' },
-        { name: 'البلياردو', path: 'images/gallery/IMG_2446.jpg' },
-        { name: 'المجلس 2', path: 'images/gallery/IMG_2447.jpg' },
-        { name: 'المنظر الليلي', path: 'images/gallery/IMG_2448.jpg' },
-        { name: 'غرفة النوم', path: 'images/gallery/IMG_2449.jpg' },
-        { name: 'المسبح الرئيسي', path: 'images/gallery/IMG_2450.jpg' },
-        { name: 'الجلسة الخارجية 2', path: 'images/gallery/IMG_2451.jpg' }
+        { name: 'المسبح الرئيسي', path: 'images/gallery/13-pool-main.jpg' },
+        { name: 'المجلس', path: 'images/gallery/01-majlis.jpg' },
+        { name: 'منطقة الأطفال', path: 'images/gallery/02-kids.jpg' },
+        { name: 'الصالة', path: 'images/gallery/03-hall.jpg' },
+        { name: 'الواجهة الخارجية', path: 'images/gallery/04-facade.jpg' },
+        { name: 'المطبخ', path: 'images/gallery/05-kitchen.jpg' },
+        { name: 'المسبح ليلاً', path: 'images/gallery/06-pool-night.jpg' },
+        { name: 'المسبح نهاراً', path: 'images/gallery/07-pool-day.jpg' },
+        { name: 'الجلسة الخارجية', path: 'images/gallery/08-outdoor.jpg' },
+        { name: 'البلياردو', path: 'images/gallery/09-billiard.jpg' },
+        { name: 'المجلس 2', path: 'images/gallery/10-majlis2.jpg' },
+        { name: 'المنظر الليلي', path: 'images/gallery/11-night-view.jpg' },
+        { name: 'غرفة النوم', path: 'images/gallery/12-bedroom.jpg' },
+        { name: 'الجلسة الخارجية 2', path: 'images/gallery/14-outdoor2.jpg' }
     ];
-    
-    var currentImages = [];
     
     function loadGalleryImages() {
         console.log('🔄 تحميل الصور...');
         
-        // 1. من localStorage أولاً (سريع)
+        // 1. من localStorage
         var localImages = [];
         try {
             localImages = JSON.parse(localStorage.getItem('wahaj_images') || '[]');
-            console.log('📱 من localStorage:', localImages.length, 'صورة');
+            console.log('📱 localStorage:', localImages.length);
         } catch(e) {}
         
-        // 2. محاولة من Firebase
+        // 2. من Firebase
         if (window.WahajFirebase) {
             window.WahajFirebase.waitForFirebase(function(ready) {
                 if (!ready) {
-                    console.log('ℹ️ Firebase غير متصل - استخدام المحلي');
+                    console.log('ℹ️ Firebase غير متصل');
                     finishLoad(localImages);
                     return;
                 }
                 
-                console.log('☁️ Firebase متصل - تحميل...');
+                console.log('☁️ Firebase متصل');
                 window.WahajFirebase.getAllImages().then(function(cloudImages) {
-                    console.log('☁️ من Firebase:', cloudImages.length, 'صورة');
+                    console.log('☁️ Firebase:', cloudImages.length);
                     
                     var merged = {};
                     localImages.forEach(function(img) { merged[img.path] = img; });
@@ -320,26 +324,23 @@
                     var allImages = Object.values(merged);
                     finishLoad(allImages);
                 }).catch(function(e) {
-                    console.warn('⚠️ فشل تحميل Firebase:', e);
+                    console.warn('⚠️ Firebase فشل:', e);
                     finishLoad(localImages);
                 });
             }, 5000);
         } else {
-            console.log('ℹ️ Firebase Helper غير متاح');
             finishLoad(localImages);
         }
     }
     
     function finishLoad(images) {
-        console.log('📊 إجمالي الصور:', images.length);
-        
-        // إذا لا يوجد صور في Firebase/localStorage → استخدم الافتراضية
+        // إذا لا يوجد صور → استخدم الافتراضية
         if (!images || images.length === 0) {
-            console.log('ℹ️ لا توجد صور مخصصة - استخدام الصور الافتراضية');
+            console.log('ℹ️ استخدام الصور الافتراضية');
             images = DEFAULT_GALLERY;
         }
         
-        currentImages = images;
+        console.log('📸 إجمالي:', images.length);
         renderImages(images);
     }
     
@@ -352,7 +353,6 @@
                 '<div class="gallery-empty">' +
                     '<i class="fas fa-images"></i>' +
                     '<p>لا توجد صور حالياً</p>' +
-                    '<a href="admin.html">أضف الصور من لوحة التحكم</a>' +
                 '</div>';
             return;
         }
@@ -368,8 +368,6 @@
         });
         
         grid.innerHTML = html;
-        
-        // Lightbox
         initLightbox();
         
         console.log('✅ تم عرض', images.length, 'صورة');
@@ -413,18 +411,10 @@
                 document.body.style.overflow = '';
             }
         };
-        
-        // ESC للإغلاق
-        document.onkeydown = function(e) {
-            if (e.key === 'Escape' && lightbox.classList.contains('show')) {
-                lightbox.classList.remove('show');
-                document.body.style.overflow = '';
-            }
-        };
     }
     
     // ═══════════════════════════════════════════════════════
-    // 💰 تحميل الأسعار
+    // 💰 الأسعار
     // ═══════════════════════════════════════════════════════
     
     var DEFAULT_PRICES = {
@@ -445,12 +435,8 @@
         if (window.WahajFirebase) {
             window.WahajFirebase.waitForFirebase(function(ready) {
                 if (!ready) return;
-                
                 window.WahajFirebase.getSetting('prices', null).then(function(cloudPrices) {
-                    if (cloudPrices) {
-                        var merged = Object.assign({}, DEFAULT_PRICES, cloudPrices);
-                        renderPrices(merged);
-                    }
+                    if (cloudPrices) renderPrices(Object.assign({}, DEFAULT_PRICES, cloudPrices));
                 });
             }, 5000);
         }
@@ -476,7 +462,6 @@
         loadGalleryImages();
         loadPrices();
         
-        // تحديث كل 30 ثانية
         setInterval(loadGalleryImages, 30000);
     }
     
