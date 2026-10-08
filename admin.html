@@ -31,7 +31,10 @@ body{font-family:'Cairo',-apple-system,sans-serif;background:var(--cream);color:
 .admin-header{background:linear-gradient(135deg,var(--navy-dark),var(--navy));color:var(--white);padding:15px 20px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:var(--shadow)}
 .admin-logo{display:flex;align-items:center;gap:10px;color:var(--primary);font-weight:700;font-size:0.95rem}
 .admin-logo-icon{width:36px;height:36px}
-.admin-header-btn{background:rgba(212,175,55,0.15);color:var(--primary);border:1px solid rgba(212,175,55,0.4);padding:8px 12px;border-radius:50px;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:5px}
+.admin-header-btn{background:rgba(212,175,55,0.15);color:var(--primary);border:1px solid rgba(212,175,55,0.4);padding:8px 14px;border-radius:50px;font-family:'Cairo',sans-serif;font-size:0.8rem;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;transition:all 0.2s}
+.admin-header-btn:active{transform:scale(0.95)}
+.admin-header-btn.sync-btn{background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:var(--navy);font-weight:700;border:none}
+.admin-header-btn.sync-btn:disabled{opacity:0.7}
 .admin-container{max-width:900px;margin:0 auto;padding:20px 15px 40px}
 .page-title{font-family:'Amiri',serif;font-size:1.5rem;color:var(--navy);margin-bottom:20px;display:flex;align-items:center;gap:10px}
 .page-title::before{content:'';width:5px;height:26px;background:linear-gradient(180deg,var(--primary),var(--primary-dark));border-radius:5px}
@@ -223,10 +226,17 @@ body{font-family:'Cairo',-apple-system,sans-serif;background:var(--cream);color:
 <div class="admin-logo-icon" id="headerLogoIcon"></div>
 <span>لوحة التحكم</span>
 </div>
-<div style="display:flex;gap:8px;">
-<button class="admin-header-btn" onclick="refreshData()"><i class="fas fa-sync-alt"></i></button>
-<button class="admin-header-btn" onclick="exportData()"><i class="fas fa-download"></i></button>
-<button class="admin-header-btn" onclick="logout()"><i class="fas fa-sign-out-alt"></i></button>
+<div style="display:flex;gap:6px;align-items:center;">
+<button class="admin-header-btn sync-btn" id="syncBtn">
+<i class="fas fa-cloud-download-alt"></i>
+<span>مزامنة</span>
+</button>
+<button class="admin-header-btn" onclick="exportData()" title="تصدير">
+<i class="fas fa-download"></i>
+</button>
+<button class="admin-header-btn" onclick="logout()" title="خروج">
+<i class="fas fa-sign-out-alt"></i>
+</button>
 </div>
 </header>
 
@@ -261,20 +271,14 @@ body{font-family:'Cairo',-apple-system,sans-serif;background:var(--cream);color:
 
 <div class="page" id="page-reminders">
 <h1 class="page-title">التذكيرات</h1>
-
 <div class="block-section" style="background:linear-gradient(135deg,rgba(212,175,55,0.08),rgba(212,175,55,0.02));border-right:4px solid var(--primary);">
 <h3 style="color:var(--primary-dark);"><i class="fas fa-info-circle"></i> معلومات</h3>
-<p style="color:var(--navy);font-size:0.85rem;line-height:1.8;margin:0;">
-تذكيرات الدفع تُرسل للحجوزات المؤكدة التي لم يُدفع باقيها بعد.<br>
-<strong>الوقت المثالي:</strong> قبل موعد الدخول بيوم أو يومين.
-</p>
+<p style="color:var(--navy);font-size:0.85rem;line-height:1.8;margin:0;">تذكيرات الدفع تُرسل للحجوزات المؤكدة التي لم يُدفع باقيها بعد.<br><strong>الوقت المثالي:</strong> قبل موعد الدخول بيوم أو يومين.</p>
 </div>
-
 <div class="block-section">
 <h3><i class="fas fa-bell"></i> الحجوزات التي تحتاج تذكير</h3>
 <div id="remindersList"></div>
 </div>
-
 </div>
 
 <div class="page" id="page-blocked">
@@ -319,7 +323,7 @@ body{font-family:'Cairo',-apple-system,sans-serif;background:var(--cream);color:
 <h1 class="page-title">إدارة الصور</h1>
 <div class="image-add-form">
 <h3><i class="fas fa-plus-circle"></i> إضافة صورة</h3>
-<input type="text" id="imgName" placeholder="اسم الصورة (مثال: المسبح الرئيسي)">
+<input type="text" id="imgName" placeholder="اسم الصورة">
 <input type="text" id="imgPath" placeholder="المسار (مثال: images/gallery/pool.jpg)">
 <p class="hint">💡 ارفع الصور يدوياً إلى <code>images/gallery/</code> في GitHub، ثم أضف المسار هنا.</p>
 <button onclick="addImage()"><i class="fas fa-plus"></i> إضافة الصورة</button>
@@ -334,8 +338,8 @@ body{font-family:'Cairo',-apple-system,sans-serif;background:var(--cream);color:
 <h1 class="page-title">العروض والخصومات</h1>
 <div class="offer-form">
 <h3><i class="fas fa-plus-circle"></i> إضافة عرض جديد</h3>
-<input type="text" id="offerTitle" placeholder="عنوان العرض (مثال: خصم الويكند)">
-<textarea id="offerDesc" placeholder="وصف العرض (مثال: خصم 20% على جميع حجوزات الويكند)"></textarea>
+<input type="text" id="offerTitle" placeholder="عنوان العرض">
+<textarea id="offerDesc" placeholder="وصف العرض"></textarea>
 <input type="date" id="offerStart">
 <input type="date" id="offerEnd">
 <input type="number" id="offerDiscount" placeholder="نسبة الخصم % (اختياري)">
@@ -424,141 +428,103 @@ body{font-family:'Cairo',-apple-system,sans-serif;background:var(--cream);color:
 
 <script>
 // ═══════════════════════════════════════════════════════
-// ⏰ نظام التذكيرات (مباشر)
+// 🔄 مزامنة قوية عند فتح اللوحة
 // ═══════════════════════════════════════════════════════
 
-function renderRemindersList() {
-    var container = document.getElementById('remindersList');
-    if (!container) return;
+(function() {
+    'use strict';
     
-    var allBookings = [];
-    try {
-        allBookings = JSON.parse(localStorage.getItem('wahaj_bookings') || '[]');
-    } catch(e) {}
+    var syncBtn = document.getElementById('syncBtn');
     
-    var needReminder = allBookings.filter(function(b) {
-        return b.status === 'confirmed' && 
-               (b.remaining || 0) > 0 && 
-               !b.remainingPaid;
-    });
-    
-    if (needReminder.length === 0) {
-        container.innerHTML = '<div class="no-blocked"><i class="fas fa-check-circle" style="font-size: 2rem; color: #28A745; display: block; margin-bottom: 10px;"></i>لا توجد حجوزات تحتاج تذكير حالياً</div>';
-        return;
-    }
-    
-    var html = '';
-    needReminder.forEach(function(b) {
-        var daysUntil = 0;
-        try {
-            var bookingDate = new Date(b.date);
-            var today = new Date();
-            today.setHours(0,0,0,0);
-            bookingDate.setHours(0,0,0,0);
-            daysUntil = Math.ceil((bookingDate - today) / (1000 * 60 * 60 * 24));
-        } catch(e) {}
-        
-        var urgencyColor = daysUntil <= 1 ? '#DC3545' : daysUntil <= 3 ? '#FFC107' : '#17A2B8';
-        var urgencyText = daysUntil < 0 ? 'انتهى' : 
-                         daysUntil === 0 ? 'اليوم' : 
-                         daysUntil === 1 ? 'غداً' : 
-                         'بعد ' + daysUntil + ' يوم';
-        
-        html += '<div class="booking-card confirmed" style="border-right-color: ' + urgencyColor + ';">' +
-            '<div class="booking-head">' +
-                '<span class="booking-id">' + (b.bookingId || '') + '</span>' +
-                '<span class="booking-status" style="background: rgba(220,53,69,0.2); color: #721c24;">' +
-                    '<i class="fas fa-clock"></i> ' + urgencyText +
-                '</span>' +
-            '</div>' +
-            '<div class="booking-info-grid">' +
-                '<div class="booking-info-item"><span class="label">الاسم</span><span class="value">' + (b.fullName || '') + '</span></div>' +
-                '<div class="booking-info-item"><span class="label">الجوال</span><span class="value">' + (b.phone || '') + '</span></div>' +
-                '<div class="booking-info-item"><span class="label">التاريخ</span><span class="value">' + (b.dateFormatted || b.date || '') + '</span></div>' +
-                '<div class="booking-info-item"><span class="label">الباقي</span><span class="value" style="color: var(--danger);">' + (b.remaining || 0) + ' ر.ع</span></div>' +
-            '</div>' +
-            '<div class="booking-actions">' +
-                '<button class="action-btn whatsapp" onclick="sendPaymentReminder(\'' + b.bookingId + '\')"><i class="fab fa-whatsapp"></i> إرسال تذكير</button>' +
-                '<button class="action-btn view" onclick="viewBooking(\'' + b.bookingId + '\')"><i class="fas fa-eye"></i> تفاصيل</button>' +
-            '</div>' +
-        '</div>';
-    });
-    
-    container.innerHTML = html;
-}
-
-function sendPaymentReminder(bookingId) {
-    var allBookings = [];
-    try {
-        allBookings = JSON.parse(localStorage.getItem('wahaj_bookings') || '[]');
-    } catch(e) {}
-    
-    var b = allBookings.find(function(x) { return x.bookingId === bookingId; });
-    if (!b) return;
-    
-    var remaining = b.remaining || 0;
-    var bookingDate = new Date(b.date);
-    var today = new Date();
-    today.setHours(0,0,0,0);
-    bookingDate.setHours(0,0,0,0);
-    var daysUntil = Math.ceil((bookingDate - today) / (1000 * 60 * 60 * 24));
-    
-    var timeText = daysUntil < 0 ? 'موعد حجزك قد انتهى' :
-                  daysUntil === 0 ? 'موعد حجزك *اليوم*' :
-                  daysUntil === 1 ? 'موعد حجزك *غداً*' :
-                  'موعد حجزك بعد *' + daysUntil + ' أيام*';
-    
-    var msg = '🔔 *تذكير بدفع الباقي*\n\n' +
-        'مرحباً ' + b.fullName + '،\n\n' +
-        timeText + ':\n\n' +
-        '📋 *رقم الحجز:* ' + b.bookingId + '\n' +
-        '📅 *التاريخ:* ' + b.dateFormatted + '\n' +
-        '👥 *الضيوف:* ' + (b.guests || '—') + '\n\n' +
-        '━━━━━━━━━━━━━━━\n' +
-        '💰 *تفاصيل الدفع*\n' +
-        '━━━━━━━━━━━━━━━\n\n' +
-        '💳 *المبلغ المتبقي:* ' + remaining + ' ر.ع\n' +
-        '🛡️ *التأمين المسترد:* ' + (b.security || 20) + ' ر.ع\n\n' +
-        '━━━━━━━━━━━━━━━\n' +
-        '🏦 *بيانات التحويل*\n' +
-        '━━━━━━━━━━━━━━━\n\n' +
-        '• *البنك:* بنك مسقط\n' +
-        '• *رقم الحساب:* 99591653\n' +
-        '• *الاسم:* Samir Alowaisi\n' +
-        '• *المبلغ:* ' + remaining + ' ر.ع\n\n' +
-        '📎 بعد التحويل، يُرجى رفع الإيصال عبر:\n' +
-        '🌐 https://samir9627-cmd.github.io/wahaj_resort/track.html\n\n' +
-        'أو أرسل الإيصال على واتساب.\n\n' +
-        'شكراً لك 🌟\n' +
-        '---\n' +
-        'استراحة وهج';
-    
-    var phone = (b.phone || '').replace(/[^0-9]/g, '');
-    var phoneFull = phone.indexOf('968') === 0 ? phone : '968' + phone;
-    
-    window.open('https://wa.me/' + phoneFull + '?text=' + encodeURIComponent(msg), '_blank');
-    
-    if (typeof showToast === 'function') {
-        showToast('✅ تم فتح واتساب مع التذكير', 'success');
-    }
-}
-
-// ═══ ربط زر التذكيرات بصفحة التذكيرات ═══
-document.addEventListener('DOMContentLoaded', function() {
-    // مراقبة فتح الصفحة
-    setTimeout(function() {
-        // عند الضغط على زر "تذكيرات"
-        var remindersBtn = document.querySelector('[data-page="reminders"]');
-        if (remindersBtn) {
-            remindersBtn.addEventListener('click', function() {
-                setTimeout(renderRemindersList, 100);
-            });
+    // دالة المزامنة
+    window.syncAndRefresh = async function() {
+        if (syncBtn) {
+            syncBtn.disabled = true;
+            syncBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> <span>جاري...</span>';
         }
-    }, 500);
-});
-
-// تحديث عند التحميل
-setTimeout(renderRemindersList, 3000);
+        
+        console.log('🔄 بدء المزامنة...');
+        
+        try {
+            // 1. localStorage
+            var localBookings = JSON.parse(localStorage.getItem('wahaj_bookings') || '[]');
+            console.log('📱 محلي:', localBookings.length, 'حجز');
+            
+            // 2. Firebase
+            if (window.WahajFirebase) {
+                var cloudBookings = await window.WahajFirebase.getAllBookings();
+                console.log('☁️ سحابي:', cloudBookings.length, 'حجز');
+                
+                // دمج
+                var merged = {};
+                localBookings.forEach(function(b) {
+                    if (b.bookingId) merged[b.bookingId] = b;
+                });
+                cloudBookings.forEach(function(b) {
+                    if (b.bookingId) {
+                        b._source = 'cloud';
+                        merged[b.bookingId] = b;
+                    }
+                });
+                
+                var allBookings = Object.values(merged);
+                allBookings.sort(function(a, b) {
+                    return new Date(b.createdAt || 0) - new Date(a.createdAt || 0);
+                });
+                
+                localStorage.setItem('wahaj_bookings', JSON.stringify(allBookings));
+                console.log('✅ الإجمالي:', allBookings.length);
+            }
+            
+            // 3. إعادة تحميل اللوحة
+            if (typeof loadAllData === 'function') {
+                loadAllData();
+            } else {
+                location.reload();
+            }
+            
+            showSyncToast('✅ تمت المزامنة - ' + localBookings.length + ' حجز');
+            
+        } catch(e) {
+            console.error('❌ فشل:', e);
+            showSyncToast('❌ فشلت المزامنة', 'error');
+        }
+        
+        if (syncBtn) {
+            syncBtn.disabled = false;
+            syncBtn.innerHTML = '<i class="fas fa-cloud-download-alt"></i> <span>مزامنة</span>';
+        }
+    };
+    
+    // ربط الزر
+    if (syncBtn) {
+        syncBtn.onclick = window.syncAndRefresh;
+    }
+    
+    function showSyncToast(msg, type) {
+        var t = document.createElement('div');
+        t.style.cssText = 'position:fixed;top:100px;left:50%;transform:translateX(-50%) translateY(-100px);background:' + (type === 'error' ? '#DC3545' : '#28A745') + ';color:white;padding:16px 32px;border-radius:50px;font-weight:700;font-size:0.95rem;box-shadow:0 15px 40px rgba(0,0,0,0.3);z-index:10000;transition:transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);font-family:Cairo,sans-serif;max-width:90%;text-align:center;';
+        t.textContent = msg;
+        document.body.appendChild(t);
+        requestAnimationFrame(function() { t.style.transform = 'translateX(-50%) translateY(0)'; });
+        setTimeout(function() {
+            t.style.transform = 'translateX(-50%) translateY(-100px)';
+            setTimeout(function() { t.remove(); }, 400);
+        }, 3000);
+    }
+    
+    // مزامنة تلقائية عند فتح اللوحة
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            if (sessionStorage.getItem('wahaj_admin') === '1') {
+                console.log('🔄 مزامنة تلقائية...');
+                window.syncAndRefresh();
+            }
+        }, 1500);
+    });
+    
+    console.log('✅ نظام المزامنة جاهز');
+})();
 </script>
 
 </body>
