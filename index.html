@@ -27,7 +27,18 @@ img{max-width:100%;height:auto;display:block}
 .gallery-scroll-item.loading{background:linear-gradient(90deg,var(--gray-100) 25%,var(--gray-200) 50%,var(--gray-100) 75%);background-size:200% 100%;animation:skeleton 1.5s infinite}
 @keyframes skeleton{0%{background-position:200% 0}100%{background-position:-200% 0}}
 
-/* ═══ قسم العروض الفاخر ═══ */
+/* ═══ أزرار الـ Hero ═══ */
+.hero-buttons-app{display:flex;flex-direction:column;gap:10px;margin-top:20px;width:100%;max-width:320px;margin-left:auto;margin-right:auto}
+@media (min-width:480px){.hero-buttons-app{flex-direction:row;max-width:none;justify-content:center}}
+.hero-cta-secondary{background:rgba(255,255,255,0.15) !important;color:var(--white) !important;border:2px solid rgba(255,255,255,0.4) !important;box-shadow:0 8px 25px rgba(0,0,0,0.2) !important;backdrop-filter:blur(10px)}
+.hero-cta-secondary:active{transform:scale(0.96);background:rgba(255,255,255,0.25) !important}
+
+/* ═══ زر تتبع عائم ═══ */
+.track-float-btn{position:fixed;bottom:170px;right:20px;width:55px;height:55px;border-radius:50%;background:linear-gradient(135deg,#17A2B8,#138496);color:var(--white);border:none;font-size:1.4rem;cursor:pointer;box-shadow:0 10px 30px rgba(23,162,184,0.5);z-index:997;display:flex;align-items:center;justify-content:center;text-decoration:none;transition:all 0.3s;animation:trackFloatPulse 2s infinite}
+@keyframes trackFloatPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.track-float-btn:active{transform:scale(0.9)}
+
+/* ═══ قسم العروض ═══ */
 .offers-section{background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy) 60%,var(--navy-light) 100%);padding:30px 20px;position:relative;overflow:hidden;margin:20px 0;border-radius:var(--radius-lg)}
 .offers-section::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 20% 30%,rgba(212,175,55,0.15) 0%,transparent 50%),radial-gradient(circle at 80% 70%,rgba(212,175,55,0.1) 0%,transparent 50%);animation:offerPulse 6s ease-in-out infinite;pointer-events:none}
 @keyframes offerPulse{0%,100%{opacity:0.6}50%{opacity:1}}
@@ -86,7 +97,6 @@ img{max-width:100%;height:auto;display:block}
 .hours-row .day{color:var(--navy);font-weight:700;display:flex;align-items:center;gap:6px}
 .hours-row .day i{color:var(--primary);font-size:0.8rem}
 .hours-row .time{color:var(--primary-dark);font-weight:700;direction:ltr}
-.hours-row.closed .time{color:var(--danger)}
 
 /* ═══ معالم قريبة ═══ */
 .landmarks-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:15px}
@@ -100,6 +110,7 @@ img{max-width:100%;height:auto;display:block}
     .location-actions{grid-template-columns:1fr}
     .access-info{grid-template-columns:1fr}
     .landmarks-grid{grid-template-columns:1fr 1fr}
+    .track-float-btn{bottom:170px;right:15px;width:50px;height:50px;font-size:1.2rem}
 }
 </style>
 </head>
@@ -118,7 +129,12 @@ img{max-width:100%;height:auto;display:block}
 <div class="hero-badge-app"><i class="fas fa-map-marker-alt"></i><span>ولاية بركاء - منطقة الوهرة</span></div>
 <h1 class="hero-title-app">استراحة <span class="highlight">وهج</span></h1>
 <p class="hero-subtitle-app">خصوصية .. راحة .. ذكريات لا تُنسى<br>استمتع بأجواء عائلية فاخرة مع كل المرافق</p>
-<a href="booking.html" class="hero-cta-app"><i class="fas fa-calendar-check"></i><span>احجز الآن</span></a>
+
+<div class="hero-buttons-app">
+    <a href="booking.html" class="hero-cta-app"><i class="fas fa-calendar-check"></i><span>احجز الآن</span></a>
+    <a href="track.html" class="hero-cta-app hero-cta-secondary"><i class="fas fa-search-location"></i><span>تتبع حجزك</span></a>
+</div>
+
 <div class="hero-stats">
 <div class="hero-stat"><span class="hero-stat-value">+50</span><span class="hero-stat-label">حجز ناجح</span></div>
 <div class="hero-stat"><span class="hero-stat-value">4.9</span><span class="hero-stat-label">تقييم العملاء</span></div>
@@ -178,7 +194,6 @@ img{max-width:100%;height:auto;display:block}
 </div>
 </section>
 
-<!-- ═══ موقع الاستراحة ═══ -->
 <section class="app-section">
 <div class="app-section-header"><h2 class="app-section-title">موقع الاستراحة</h2></div>
 
@@ -192,116 +207,40 @@ img{max-width:100%;height:auto;display:block}
 </div>
 
 <div class="location-map">
-<iframe 
-src="https://www.google.com/maps?q=23.679305,57.771964&t=&z=16&ie=UTF8&iwloc=&output=embed"
-width="100%" 
-height="100%" 
-style="border:0;" 
-allowfullscreen="" 
-loading="lazy"
-referrerpolicy="no-referrer-when-downgrade">
-</iframe>
+<iframe src="https://www.google.com/maps?q=23.679305,57.771964&t=&z=16&ie=UTF8&iwloc=&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 </div>
 
 <div class="location-actions">
-<a href="https://www.google.com/maps/search/?api=1&query=23.679305,57.771964" 
-target="_blank" 
-class="location-btn primary">
-<i class="fas fa-directions"></i>
-الاتجاهات
-</a>
-<a href="https://wa.me/96895566332?text=أرغب%20في%20معرفة%20موقع%20الاستراحة%20بالضبط" 
-target="_blank" 
-class="location-btn whatsapp">
-<i class="fab fa-whatsapp"></i>
-اطلب الموقع
-</a>
+<a href="https://www.google.com/maps/search/?api=1&query=23.679305,57.771964" target="_blank" class="location-btn primary"><i class="fas fa-directions"></i> الاتجاهات</a>
+<a href="https://wa.me/96895566332?text=أرغب%20في%20معرفة%20موقع%20الاستراحة%20بالضبط" target="_blank" class="location-btn whatsapp"><i class="fab fa-whatsapp"></i> اطلب الموقع</a>
 </div>
 </div>
 
-<!-- ═══ كيف تصل ═══ -->
 <div class="access-info">
-<div class="access-card">
-<div class="access-card-icon"><i class="fas fa-car"></i></div>
-<div class="access-card-content">
-<h4>من مسقط</h4>
-<p>45 دقيقة تقريباً</p>
-</div>
-</div>
-<div class="access-card">
-<div class="access-card-icon"><i class="fas fa-car"></i></div>
-<div class="access-card-content">
-<h4>من السيب</h4>
-<p>25 دقيقة تقريباً</p>
-</div>
-</div>
-<div class="access-card">
-<div class="access-card-icon"><i class="fas fa-car"></i></div>
-<div class="access-card-content">
-<h4>من بركاء</h4>
-<p>10 دقائق تقريباً</p>
-</div>
-</div>
-<div class="access-card">
-<div class="access-card-icon"><i class="fas fa-plane"></i></div>
-<div class="access-card-content">
-<h4>من المطار</h4>
-<p>50 دقيقة تقريباً</p>
-</div>
-</div>
+<div class="access-card"><div class="access-card-icon"><i class="fas fa-car"></i></div><div class="access-card-content"><h4>من مسقط</h4><p>45 دقيقة تقريباً</p></div></div>
+<div class="access-card"><div class="access-card-icon"><i class="fas fa-car"></i></div><div class="access-card-content"><h4>من السيب</h4><p>25 دقيقة تقريباً</p></div></div>
+<div class="access-card"><div class="access-card-icon"><i class="fas fa-car"></i></div><div class="access-card-content"><h4>من بركاء</h4><p>10 دقائق تقريباً</p></div></div>
+<div class="access-card"><div class="access-card-icon"><i class="fas fa-plane"></i></div><div class="access-card-content"><h4>من المطار</h4><p>50 دقيقة تقريباً</p></div></div>
 </div>
 
-<!-- ═══ ساعات العمل ═══ -->
 <div class="hours-card">
 <h3><i class="fas fa-clock"></i> أوقات العمل</h3>
 <div class="hours-list">
-<div class="hours-row">
-<div class="day"><i class="fas fa-sun"></i> الأحد - الأربعاء</div>
-<div class="time">9:00 ص - 10:00 م</div>
-</div>
-<div class="hours-row">
-<div class="day"><i class="fas fa-star"></i> الخميس - السبت</div>
-<div class="time">9:00 ص - 10:00 م</div>
-</div>
-<div class="hours-row">
-<div class="day"><i class="fas fa-moon"></i> مع مبيت</div>
-<div class="time">9:00 ص - 7:00 ص</div>
-</div>
-<div class="hours-row">
-<div class="day"><i class="fas fa-clock"></i> نصف يوم صباحي</div>
-<div class="time">9:00 ص - 3:00 م</div>
-</div>
-<div class="hours-row">
-<div class="day"><i class="fas fa-clock"></i> نصف يوم مسائي</div>
-<div class="time">4:00 م - 10:00 م</div>
-</div>
+<div class="hours-row"><div class="day"><i class="fas fa-sun"></i> الأحد - الأربعاء</div><div class="time">9:00 ص - 10:00 م</div></div>
+<div class="hours-row"><div class="day"><i class="fas fa-star"></i> الخميس - السبت</div><div class="time">9:00 ص - 10:00 م</div></div>
+<div class="hours-row"><div class="day"><i class="fas fa-moon"></i> مع مبيت</div><div class="time">9:00 ص - 7:00 ص</div></div>
+<div class="hours-row"><div class="day"><i class="fas fa-clock"></i> نصف يوم صباحي</div><div class="time">9:00 ص - 3:00 م</div></div>
+<div class="hours-row"><div class="day"><i class="fas fa-clock"></i> نصف يوم مسائي</div><div class="time">4:00 م - 10:00 م</div></div>
 </div>
 </div>
 
-<!-- ═══ معالم قريبة ═══ -->
 <div class="hours-card">
 <h3><i class="fas fa-map-signs"></i> معالم قريبة</h3>
 <div class="landmarks-grid">
-<div class="landmark-card">
-<i class="fas fa-mosque"></i>
-<h4>مسجد الوهرة</h4>
-<p>2 كم</p>
-</div>
-<div class="landmark-card">
-<i class="fas fa-shopping-cart"></i>
-<h4>سوق بركاء</h4>
-<p>5 كم</p>
-</div>
-<div class="landmark-card">
-<i class="fas fa-umbrella-beach"></i>
-<h4>شاطئ بركاء</h4>
-<p>7 كم</p>
-</div>
-<div class="landmark-card">
-<i class="fas fa-hospital"></i>
-<h4>مستشفى بركاء</h4>
-<p>6 كم</p>
-</div>
+<div class="landmark-card"><i class="fas fa-mosque"></i><h4>مسجد الوهرة</h4><p>2 كم</p></div>
+<div class="landmark-card"><i class="fas fa-shopping-cart"></i><h4>سوق بركاء</h4><p>5 كم</p></div>
+<div class="landmark-card"><i class="fas fa-umbrella-beach"></i><h4>شاطئ بركاء</h4><p>7 كم</p></div>
+<div class="landmark-card"><i class="fas fa-hospital"></i><h4>مستشفى بركاء</h4><p>6 كم</p></div>
 </div>
 </div>
 </section>
@@ -341,9 +280,13 @@ class="location-btn whatsapp">
 <a href="index.html" class="bottom-nav-item active"><i class="fas fa-home"></i><span>الرئيسية</span></a>
 <a href="details.html" class="bottom-nav-item"><i class="fas fa-images"></i><span>المعرض</span></a>
 <a href="booking.html" class="bottom-nav-item cta-item"><div class="cta-circle"><i class="fas fa-calendar-plus"></i></div><span>احجز</span></a>
-<a href="policies.html" class="bottom-nav-item"><i class="fas fa-file-contract"></i><span>السياسات</span></a>
+<a href="track.html" class="bottom-nav-item"><i class="fas fa-search-location"></i><span>تتبع</span></a>
 <a href="https://wa.me/96895566332" target="_blank" class="bottom-nav-item"><i class="fab fa-whatsapp"></i><span>تواصل</span></a>
 </nav>
+
+<a href="track.html" class="track-float-btn" title="تتبع حجزك">
+<i class="fas fa-search-location"></i>
+</a>
 
 <a href="https://wa.me/96895566332?text=مرحباً" target="_blank" class="floating-whatsapp"><i class="fab fa-whatsapp"></i></a>
 
@@ -456,9 +399,12 @@ class="location-btn whatsapp">
     
     // ═══ المعرض ═══
     var DEFAULT_GALLERY = [
-        { name: 'المسبح', path: 'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=600&h=750&fit=crop' },
-        { name: 'المجلس', path: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600&h=750&fit=crop' },
-        { name: 'غرفة النوم', path: 'https://images.unsplash.com/photo-1540518614846-7eded433c457?w=600&h=750&fit=crop' }
+        { name: 'المجلس', path: 'images/gallery/IMG_2438.jpg' },
+        { name: 'منطقة الأطفال', path: 'images/gallery/IMG_2439.jpg' },
+        { name: 'الصالة', path: 'images/gallery/IMG_2440.jpg' },
+        { name: 'الواجهة', path: 'images/gallery/IMG_2441.jpg' },
+        { name: 'المطبخ', path: 'images/gallery/IMG_2442.jpg' },
+        { name: 'المسبح ليلاً', path: 'images/gallery/IMG_2443.jpg' }
     ];
     
     function loadGallery() {
@@ -585,7 +531,7 @@ class="location-btn whatsapp">
         init();
     }
     
-    console.log('✅ الرئيسية جاهزة');
+    console.log('✅ الرئيسية جاهزة (مع زر تتبع)');
 })();
 </script>
 
