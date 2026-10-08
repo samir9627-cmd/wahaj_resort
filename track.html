@@ -13,7 +13,6 @@
 <link rel="stylesheet" href="css/app.css">
 <link rel="icon" type="image/png" href="images/logo.jpeg">
 <style>
-/* ═══ Hero صفحة التتبع ═══ */
 .track-hero{background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy) 60%,var(--navy-light) 100%);padding:100px 20px 40px;color:var(--white);text-align:center;position:relative;overflow:hidden}
 .track-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 40%,rgba(212,175,55,0.2) 0%,transparent 50%);pointer-events:none}
 .track-hero-content{position:relative;z-index:2}
@@ -22,7 +21,6 @@
 .track-hero-icon{width:70px;height:70px;margin:0 auto 15px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--white);font-size:2rem;box-shadow:0 10px 30px rgba(212,175,55,0.5);animation:trackPulse 2s infinite}
 @keyframes trackPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
 
-/* ═══ قسم البحث ═══ */
 .track-main{padding:30px 20px 100px}
 .track-search-card{background:var(--white);border-radius:var(--radius);padding:25px 20px;box-shadow:var(--shadow-md);border-top:4px solid var(--primary);margin-bottom:20px}
 .track-search-title{font-family:'Amiri',serif;font-size:1.2rem;color:var(--navy);margin-bottom:15px;text-align:center;display:flex;align-items:center;justify-content:center;gap:8px}
@@ -38,14 +36,12 @@
 .track-note{text-align:center;margin-top:12px;font-size:0.75rem;color:var(--gray-600);line-height:1.6}
 .track-note i{color:var(--primary)}
 
-/* ═══ حالة الأخطاء ═══ */
 .track-error{background:linear-gradient(135deg,#FFE5E5,#FFCCCC);border:2px solid #DC3545;border-radius:var(--radius-sm);padding:20px;margin-bottom:15px;display:flex;align-items:center;gap:15px;animation:shakeError 0.5s ease}
 @keyframes shakeError{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
 .track-error-icon{width:50px;height:50px;border-radius:50%;background:#DC3545;color:white;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
 .track-error-content h4{color:#721c24;font-size:0.95rem;margin-bottom:3px}
 .track-error-content p{color:#721c24;font-size:0.8rem;margin:0;opacity:0.85}
 
-/* ═══ حالة النجاح - تفاصيل الحجز ═══ */
 .track-result{animation:fadeInUp 0.5s ease}
 @keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 
@@ -68,7 +64,6 @@
 .track-status-card.rejected h3{color:#721c24}
 .track-status-card p{font-size:0.85rem;opacity:0.85;margin:0}
 
-/* ═══ تفاصيل الحجز ═══ */
 .track-details-card{background:var(--white);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm);margin-bottom:15px}
 .track-details-title{font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:15px;padding-bottom:12px;border-bottom:2px dashed var(--gray-200);display:flex;align-items:center;gap:8px}
 .track-details-title i{color:var(--primary)}
@@ -82,7 +77,6 @@
 .track-row.paid .value{color:var(--success)}
 .track-row.remaining .value{color:var(--danger)}
 
-/* ═══ التقدم ═══ */
 .track-progress{background:var(--white);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm);margin-bottom:15px}
 .track-progress-title{font-size:0.95rem;font-weight:700;color:var(--navy);margin-bottom:15px;display:flex;align-items:center;gap:8px}
 .track-progress-title i{color:var(--primary)}
@@ -90,7 +84,6 @@
 .track-progress-fill{height:100%;background:linear-gradient(90deg,var(--success),#20C997);border-radius:50px;transition:width 0.5s ease}
 .track-progress-text{display:flex;justify-content:space-between;font-size:0.75rem;color:var(--gray-600)}
 
-/* ═══ التذكيرات ═══ */
 .track-reminder{background:linear-gradient(135deg,rgba(220,53,69,0.1),rgba(220,53,69,0.05));border:2px solid var(--danger);border-radius:var(--radius);padding:15px;margin-bottom:15px;display:flex;align-items:flex-start;gap:12px;animation:reminderPulse 2s infinite}
 @keyframes reminderPulse{0%,100%{box-shadow:0 0 0 rgba(220,53,69,0.3)}50%{box-shadow:0 0 20px rgba(220,53,69,0.5)}}
 .track-reminder-icon{width:45px;height:45px;border-radius:50%;background:var(--danger);color:white;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;animation:bellRing 1s infinite}
@@ -98,7 +91,6 @@
 .track-reminder-content h4{color:var(--danger);font-size:0.9rem;margin-bottom:4px;font-weight:900}
 .track-reminder-content p{color:#721c24;font-size:0.8rem;margin:0;line-height:1.6}
 
-/* ═══ رفع إيصال الباقي ═══ */
 .track-upload-section{background:var(--white);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm);margin-bottom:15px}
 .track-upload-title{font-size:0.95rem;font-weight:700;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;gap:8px}
 .track-upload-title i{color:var(--primary)}
@@ -115,16 +107,20 @@
 .track-upload-btn:disabled{opacity:0.5;cursor:not-allowed;box-shadow:none}
 .track-upload-btn:active:not(:disabled){transform:scale(0.97)}
 
-/* ═══ التواريخ ═══ */
 .track-dates-info{background:linear-gradient(135deg,rgba(10,31,68,0.05),rgba(10,31,68,0.02));border-right:4px solid var(--navy);border-radius:var(--radius-sm);padding:12px 15px;font-size:0.8rem;color:var(--navy);line-height:1.7;margin-top:12px}
 .track-dates-info strong{color:var(--primary-dark)}
 
-/* ═══ زر الإجراءات ═══ */
 .track-actions{display:grid;gap:10px;margin-top:15px}
 .track-action-btn{padding:13px;border-radius:50px;font-weight:700;font-size:0.9rem;cursor:pointer;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px;transition:all 0.2s;font-family:'Cairo',sans-serif;border:2px solid transparent}
 .track-action-btn.whatsapp{background:#25D366;color:white;box-shadow:0 6px 20px rgba(37,211,102,0.35)}
 .track-action-btn.print{background:var(--navy);color:white}
 .track-action-btn:active{transform:scale(0.97)}
+
+/* ═══ بيانات البنك ═══ */
+.track-bank-info{background:linear-gradient(135deg,rgba(10,31,68,0.05),rgba(10,31,68,0.02));border-radius:12px;padding:12px 15px;margin-bottom:12px;font-size:0.8rem}
+.track-bank-info .row{display:flex;justify-content:space-between;padding:4px 0}
+.track-bank-info .row span:first-child{color:var(--gray-600)}
+.track-bank-info .row strong{color:var(--navy)}
 </style>
 </head>
 <body>
@@ -148,7 +144,6 @@
 <section class="track-main">
 <div style="max-width:600px;margin:0 auto;">
 
-<!-- بحث -->
 <div class="track-search-card" id="searchCard">
 <div class="track-search-title">
 <i class="fas fa-search"></i>
@@ -165,7 +160,7 @@
 <input type="tel" id="phoneInput" placeholder="9xxxxxxx" inputmode="numeric" autocomplete="off">
 </div>
 
-<button class="track-search-btn" id="searchBtn">
+<button class="track-search-btn" id="searchBtn" type="button">
 <i class="fas fa-search"></i>
 ابحث عن الحجز
 </button>
@@ -176,10 +171,8 @@
 </div>
 </div>
 
-<!-- النتيجة -->
 <div id="resultContainer"></div>
 
-<!-- زر العودة -->
 <div id="backButton" style="display:none;margin-top:20px;">
 <button class="track-action-btn print" onclick="window.location.reload()" style="width:100%;">
 <i class="fas fa-arrow-right"></i>
@@ -209,7 +202,446 @@
 
 <script src="js/firebase.js"></script>
 <script src="js/firebase-helper.js"></script>
-<script src="js/track.js"></script>
+
+<script>
+(function() {
+    'use strict';
+    
+    // ═══ الشعار ═══
+    var LOGO_SVG = '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">' +
+    '<defs><linearGradient id="wg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#F4D77E"/><stop offset="50%" stop-color="#D4AF37"/><stop offset="100%" stop-color="#A88B2C"/></linearGradient></defs>' +
+    '<circle cx="100" cy="100" r="94" fill="none" stroke="url(#wg)" stroke-width="2.5"/>' +
+    '<g transform="translate(100, 62)">' +
+    '<ellipse cx="0" cy="-26" rx="6" ry="14" fill="url(#wg)"/>' +
+    '<ellipse cx="0" cy="-26" rx="6" ry="14" fill="url(#wg)" transform="rotate(60)"/>' +
+    '<ellipse cx="0" cy="-26" rx="6" ry="14" fill="url(#wg)" transform="rotate(120)"/>' +
+    '<ellipse cx="0" cy="-26" rx="6" ry="14" fill="url(#wg)" transform="rotate(180)"/>' +
+    '<ellipse cx="0" cy="-26" rx="6" ry="14" fill="url(#wg)" transform="rotate(240)"/>' +
+    '<ellipse cx="0" cy="-26" rx="6" ry="14" fill="url(#wg)" transform="rotate(300)"/>' +
+    '<circle cx="0" cy="0" r="14" fill="#A88B2C"/><circle cx="0" cy="0" r="7" fill="#0A1F44"/>' +
+    '<path d="M 0 14 Q -4 30 0 48" stroke="url(#wg)" stroke-width="2.5" fill="none"/>' +
+    '</g>' +
+    '<text x="100" y="135" font-size="16" text-anchor="middle" fill="url(#wg)" font-family="Amiri, serif" font-weight="bold">استراحة وهج</text>' +
+    '<text x="100" y="160" font-size="20" text-anchor="middle" fill="url(#wg)" font-family="Cairo, sans-serif" font-weight="900" letter-spacing="4">WAHAJ</text>' +
+    '<text x="100" y="178" font-size="10" text-anchor="middle" fill="url(#wg)" font-family="Cairo, sans-serif" letter-spacing="6">RESORT</text>' +
+    '</svg>';
+    
+    document.getElementById('headerLogo').innerHTML = LOGO_SVG;
+    document.getElementById('footerLogo').innerHTML = LOGO_SVG;
+    
+    document.querySelectorAll('.current-year').forEach(function(el) {
+        el.textContent = new Date().getFullYear();
+    });
+    
+    var currentBooking = null;
+    var receiptFile = null;
+    var receiptDataUrl = null;
+    
+    // ═══ Utilities ═══
+    function showToast(msg, type) {
+        var colors = { success:'#28A745', error:'#DC3545', warning:'#FFC107', info:'#0A1F44' };
+        var t = document.createElement('div');
+        t.style.cssText = 'position:fixed;top:90px;left:50%;transform:translateX(-50%) translateY(-100px);background:' + (colors[type]||colors.info) + ';color:white;padding:14px 28px;border-radius:50px;font-weight:600;font-size:0.9rem;box-shadow:0 10px 30px rgba(0,0,0,0.2);z-index:10000;transition:transform 0.3s;font-family:Cairo,sans-serif;max-width:90%;text-align:center;';
+        t.textContent = msg;
+        document.body.appendChild(t);
+        requestAnimationFrame(function() { t.style.transform = 'translateX(-50%) translateY(0)'; });
+        setTimeout(function() {
+            t.style.transform = 'translateX(-50%) translateY(-100px)';
+            setTimeout(function() { t.remove(); }, 300);
+        }, 2500);
+    }
+    
+    function escapeHtml(str) {
+        if (!str) return '';
+        return String(str).replace(/[&<>"']/g, function(m) {
+            return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m];
+        });
+    }
+    
+    // ═══ البحث ═══
+    function searchBooking() {
+        var bookingId = document.getElementById('bookingIdInput').value.trim().toUpperCase();
+        var phone = document.getElementById('phoneInput').value.trim().replace(/\s/g, '');
+        
+        console.log('🔍 البحث:', bookingId, phone);
+        
+        if (!bookingId) {
+            showToast('⚠️ أدخل رقم الحجز', 'warning');
+            return;
+        }
+        
+        if (!phone) {
+            showToast('⚠️ أدخل رقم الجوال', 'warning');
+            return;
+        }
+        
+        if (!/^[79]\d{7}$/.test(phone)) {
+            showToast('⚠️ رقم الجوال غير صحيح (8 أرقام)', 'warning');
+            return;
+        }
+        
+        var btn = document.getElementById('searchBtn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري البحث...';
+        
+        // 1. البحث المحلي
+        var localBooking = findInLocal(bookingId);
+        
+        if (localBooking) {
+            console.log('✅ وُجد محلياً');
+            verifyAndShow(localBooking, phone);
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-search"></i> ابحث عن الحجز';
+            return;
+        }
+        
+        // 2. البحث في Firebase
+        if (window.WahajFirebase) {
+            window.WahajFirebase.waitForFirebase(function(ready) {
+                if (!ready) {
+                    btn.disabled = false;
+                    btn.innerHTML = '<i class="fas fa-search"></i> ابحث عن الحجز';
+                    showError('لم يتم العثور على الحجز. تأكد من رقم الحجز ورقم الجوال.');
+                    return;
+                }
+                
+                window.db.collection('bookings').doc(bookingId).get()
+                    .then(function(doc) {
+                        btn.disabled = false;
+                        btn.innerHTML = '<i class="fas fa-search"></i> ابحث عن الحجز';
+                        
+                        if (doc.exists) {
+                            console.log('✅ وُجد في Firebase');
+                            verifyAndShow(doc.data(), phone);
+                        } else {
+                            showError('لم يتم العثور على الحجز. تأكد من رقم الحجز ورقم الجوال.');
+                        }
+                    })
+                    .catch(function(err) {
+                        btn.disabled = false;
+                        btn.innerHTML = '<i class="fas fa-search"></i> ابحث عن الحجز';
+                        console.error('خطأ Firebase:', err);
+                        showError('حدث خطأ. حاول مرة أخرى.');
+                    });
+            }, 5000);
+        } else {
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-search"></i> ابحث عن الحجز';
+            showError('لم يتم العثور على الحجز. تأكد من رقم الحجز ورقم الجوال.');
+        }
+    }
+    
+    function findInLocal(bookingId) {
+        try {
+            var bookings = JSON.parse(localStorage.getItem('wahaj_bookings') || '[]');
+            return bookings.find(function(b) {
+                return (b.bookingId || '').toUpperCase() === bookingId;
+            });
+        } catch(e) {
+            return null;
+        }
+    }
+    
+    function verifyAndShow(booking, phone) {
+        var bookingPhone = (booking.phone || '').replace(/[^0-9]/g, '');
+        var normalizedPhone = phone.replace(/^968/, '');
+        var normalizedBookingPhone = bookingPhone.replace(/^968/, '');
+        
+        console.log('📞 مقارنة:', normalizedPhone, 'مع', normalizedBookingPhone);
+        
+        if (normalizedPhone !== normalizedBookingPhone) {
+            showError('رقم الجوال غير مطابق لرقم الحجز.');
+            return;
+        }
+        
+        currentBooking = booking;
+        showResult(booking);
+    }
+    
+    function showError(msg) {
+        var container = document.getElementById('resultContainer');
+        container.innerHTML = 
+            '<div class="track-error">' +
+                '<div class="track-error-icon"><i class="fas fa-times"></i></div>' +
+                '<div class="track-error-content">' +
+                    '<h4>لم يتم العثور</h4>' +
+                    '<p>' + msg + '</p>' +
+                '</div>' +
+            '</div>';
+        
+        document.getElementById('backButton').style.display = 'block';
+    }
+    
+    function showResult(b) {
+        var container = document.getElementById('resultContainer');
+        var status = b.status || 'pending';
+        
+        var statusInfo = {
+            pending: { icon: 'fa-clock', title: '⏳ بانتظار التأكيد', desc: 'سيتم مراجعة حجزك والتواصل معك قريباً' },
+            confirmed: { icon: 'fa-check', title: '✅ حجزك مؤكد', desc: 'نرحب بك في استراحة وهج' },
+            rejected: { icon: 'fa-times', title: '❌ حجزك مرفوض', desc: 'يرجى التواصل معنا لمعرفة السبب' }
+        };
+        
+        var info = statusInfo[status] || statusInfo.pending;
+        
+        var total = b.total || 0;
+        var deposit = b.deposit || 0;
+        var security = b.security || 20;
+        var remaining = b.remaining !== undefined ? b.remaining : (total - deposit);
+        var payNow = b.payNow || (deposit + security);
+        var isFullPayment = b.isFullPayment || false;
+        
+        var paid = isFullPayment ? total : deposit;
+        var progressPercent = Math.min(100, Math.round((paid / total) * 100));
+        
+        var html = '<div class="track-result">';
+        
+        html += '<div class="track-status-card ' + status + '">' +
+            '<div class="track-status-icon"><i class="fas ' + info.icon + '"></i></div>' +
+            '<h3>' + info.title + '</h3>' +
+            '<p>' + info.desc + '</p>' +
+        '</div>';
+        
+        if (status === 'confirmed' && remaining > 0 && !b.remainingPaid) {
+            html += '<div class="track-reminder">' +
+                '<div class="track-reminder-icon"><i class="fas fa-bell"></i></div>' +
+                '<div class="track-reminder-content">' +
+                    '<h4>🔔 تذكير بدفع الباقي</h4>' +
+                    '<p>يرجى دفع المبلغ المتبقي <strong>' + remaining + ' ر.ع</strong> قبل موعد الدخول بيوم.</p>' +
+                '</div>' +
+            '</div>';
+        }
+        
+        html += '<div class="track-details-card">' +
+            '<div class="track-details-title"><i class="fas fa-receipt"></i> تفاصيل الحجز</div>' +
+            '<div class="track-row"><span class="label"><i class="fas fa-hashtag"></i> رقم الحجز</span><span class="value">' + escapeHtml(b.bookingId) + '</span></div>' +
+            '<div class="track-row"><span class="label"><i class="fas fa-user"></i> الاسم</span><span class="value">' + escapeHtml(b.fullName) + '</span></div>' +
+            '<div class="track-row"><span class="label"><i class="fas fa-calendar-day"></i> التاريخ</span><span class="value">' + escapeHtml(b.dateFormatted) + '</span></div>' +
+            '<div class="track-row"><span class="label"><i class="fas fa-tag"></i> نوع اليوم</span><span class="value">' + escapeHtml(b.dayType) + '</span></div>' +
+            '<div class="track-row"><span class="label"><i class="fas fa-clock"></i> نوع الحجز</span><span class="value">' + escapeHtml(b.bookingType) + '</span></div>' +
+            '<div class="track-row"><span class="label"><i class="fas fa-hourglass-half"></i> التوقيت</span><span class="value" style="font-size:0.8rem;">' + escapeHtml(b.bookingTypeDesc) + '</span></div>' +
+            '<div class="track-row"><span class="label"><i class="fas fa-users"></i> عدد الضيوف</span><span class="value">' + (b.guests || '—') + '</span></div>' +
+        '</div>';
+        
+        if (b.hasOffer && b.discount > 0) {
+            html += '<div class="track-details-card" style="background: linear-gradient(135deg, rgba(40,167,69,0.1), rgba(40,167,69,0.02)); border: 2px dashed var(--success);">' +
+                '<div class="track-details-title" style="color: var(--success); border-color: var(--success);"><i class="fas fa-gift"></i> 🎁 ' + escapeHtml(b.offerTitle || 'عرض') + '</div>' +
+                '<div class="track-row"><span class="label">السعر الأصلي</span><span class="value" style="text-decoration: line-through; opacity: 0.6;">' + b.originalPrice + ' ر.ع</span></div>' +
+                '<div class="track-row"><span class="label">الخصم (' + b.discountPercent + '%)</span><span class="value" style="color: var(--success);">- ' + b.discount + ' ر.ع</span></div>' +
+            '</div>';
+        }
+        
+        html += '<div class="track-details-card">' +
+            '<div class="track-details-title"><i class="fas fa-money-bill-wave"></i> تفاصيل الدفع</div>' +
+            '<div class="track-row"><span class="label">💰 الإجمالي</span><span class="value">' + total + ' ر.ع</span></div>' +
+            '<div class="track-row paid"><span class="label">✅ المدفوع' + (isFullPayment ? ' (دفع كامل)' : '') + '</span><span class="value">' + paid + ' ر.ع</span></div>' +
+            '<div class="track-row"><span class="label">🛡️ التأمين المسترد</span><span class="value">' + security + ' ر.ع</span></div>';
+        
+        if (remaining > 0) {
+            html += '<div class="track-row remaining"><span class="label">💳 المتبقي</span><span class="value">' + remaining + ' ر.ع</span></div>';
+        } else {
+            html += '<div class="track-row paid"><span class="label">🎉 لا يوجد باقي</span><span class="value">تم الدفع كاملاً</span></div>';
+        }
+        
+        html += '<div class="track-row total"><span class="label">📋 المطلوب الآن</span><span class="value">' + payNow + ' ر.ع</span></div>';
+        html += '</div>';
+        
+        html += '<div class="track-progress">' +
+            '<div class="track-progress-title"><i class="fas fa-chart-line"></i> نسبة الإنجاز</div>' +
+            '<div class="track-progress-bar">' +
+                '<div class="track-progress-fill" style="width:' + progressPercent + '%"></div>' +
+            '</div>' +
+            '<div class="track-progress-text">' +
+                '<span>مدفوع: ' + paid + ' ر.ع</span>' +
+                '<span>' + progressPercent + '%</span>' +
+            '</div>' +
+        '</div>';
+        
+        html += '<div class="track-dates-info">' +
+            '<strong>📌 معلومات مهمة:</strong><br>' +
+            '• <strong>موعد الدخول:</strong> ' + escapeHtml(b.dateFormatted) + '<br>' +
+            '• <strong>التوقيت:</strong> ' + escapeHtml(b.bookingTypeDesc) + '<br>' +
+            '• <strong>العنوان:</strong> ولاية بركاء - الوهرة<br>' +
+            '• <strong>للاستفسار:</strong> +968 9556 6332' +
+        '</div>';
+        
+        if (status === 'confirmed' && remaining > 0 && !b.remainingPaid) {
+            html += '<div class="track-upload-section">' +
+                '<div class="track-upload-title"><i class="fas fa-cloud-upload-alt"></i> رفع إيصال دفع الباقي</div>' +
+                '<p style="font-size:0.8rem;color:var(--gray-600);margin-bottom:12px;line-height:1.6;">' +
+                    'حوّل المبلغ المتبقي (<strong>' + remaining + ' ر.ع</strong>) إلى الحساب البنكي، ثم ارفع الإيصال هنا.' +
+                '</p>' +
+                
+                '<div class="track-bank-info">' +
+                    '<div style="color: var(--gray-600); margin-bottom: 6px; font-weight: 700;">بيانات التحويل:</div>' +
+                    '<div class="row"><span>البنك:</span><strong>بنك مسقط</strong></div>' +
+                    '<div class="row"><span>رقم الحساب:</span><strong style="direction:ltr;">99591653</strong></div>' +
+                    '<div class="row"><span>الاسم:</span><strong>Samir Alowaisi</strong></div>' +
+                    '<div class="row" style="border-top:1px dashed var(--gray-200);margin-top:6px;padding-top:8px;"><span>المبلغ:</span><strong style="color:var(--primary-dark);">' + remaining + ' ر.ع</strong></div>' +
+                '</div>' +
+                
+                '<div class="track-upload-area" id="trackUploadArea">' +
+                    '<input type="file" id="trackReceiptInput" accept="image/*">' +
+                    '<div class="track-upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>' +
+                    '<h4>اضغط لاختيار صورة الإيصال</h4>' +
+                    '<p>PNG أو JPG - حد أقصى 5MB</p>' +
+                '</div>' +
+                '<div class="track-upload-preview" id="trackUploadPreview">' +
+                    '<img id="trackPreviewImg" src="" alt="الإيصال">' +
+                '</div>' +
+                '<button class="track-upload-btn" id="trackUploadBtn" disabled>' +
+                    '<i class="fas fa-check-circle"></i>' +
+                    'إرسال الإيصال' +
+                '</button>' +
+            '</div>';
+        }
+        
+        if (b.remainingPaid) {
+            html += '<div class="track-details-card" style="background: linear-gradient(135deg, rgba(40,167,69,0.1), rgba(40,167,69,0.02)); border: 2px solid var(--success);">' +
+                '<div class="track-details-title" style="color: var(--success); border-color: var(--success);">' +
+                    '<i class="fas fa-check-circle"></i> ✅ تم دفع الباقي' +
+                '</div>' +
+                '<p style="font-size: 0.85rem; color: var(--success); margin: 0; line-height: 1.6;">' +
+                    'تم استلام إيصال دفع الباقي بنجاح. بانتظار تأكيد الإدارة.' +
+                '</p>' +
+            '</div>';
+        }
+        
+        html += '<div class="track-actions">' +
+            '<a href="https://wa.me/96895566332?text=' + encodeURIComponent('استفسار عن الحجز: ' + b.bookingId) + '" target="_blank" class="track-action-btn whatsapp">' +
+                '<i class="fab fa-whatsapp"></i>' +
+                'استفسار عبر واتساب' +
+            '</a>' +
+        '</div>';
+        
+        html += '</div>';
+        
+        container.innerHTML = html;
+        document.getElementById('backButton').style.display = 'block';
+        document.getElementById('searchCard').style.display = 'none';
+        
+        if (document.getElementById('trackReceiptInput')) {
+            setupReceiptUpload();
+        }
+        
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    function setupReceiptUpload() {
+        var input = document.getElementById('trackReceiptInput');
+        var preview = document.getElementById('trackUploadPreview');
+        var previewImg = document.getElementById('trackPreviewImg');
+        var uploadBtn = document.getElementById('trackUploadBtn');
+        
+        if (!input) return;
+        
+        input.onchange = function(e) {
+            var file = e.target.files[0];
+            if (!file) return;
+            
+            if (file.size > 5 * 1024 * 1024) {
+                showToast('⚠️ حجم الصورة كبير', 'warning');
+                return;
+            }
+            
+            if (!file.type.startsWith('image/')) {
+                showToast('⚠️ اختر صورة', 'warning');
+                return;
+            }
+            
+            receiptFile = file;
+            var reader = new FileReader();
+            reader.onload = function(ev) {
+                receiptDataUrl = ev.target.result;
+                previewImg.src = ev.target.result;
+                preview.classList.add('show');
+                uploadBtn.disabled = false;
+            };
+            reader.readAsDataURL(file);
+        };
+        
+        uploadBtn.onclick = submitRemainingReceipt;
+    }
+    
+    function submitRemainingReceipt() {
+        if (!currentBooking || !receiptDataUrl) {
+            showToast('⚠️ ارفع الإيصال أولاً', 'warning');
+            return;
+        }
+        
+        var btn = document.getElementById('trackUploadBtn');
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإرسال...';
+        
+        try {
+            var bookings = JSON.parse(localStorage.getItem('wahaj_bookings') || '[]');
+            for (var i = 0; i < bookings.length; i++) {
+                if (bookings[i].bookingId === currentBooking.bookingId) {
+                    bookings[i].remainingPaid = true;
+                    bookings[i].remainingReceiptDate = new Date().toISOString();
+                    bookings[i].remainingReceiptFileName = receiptFile.name;
+                    break;
+                }
+            }
+            localStorage.setItem('wahaj_bookings', JSON.stringify(bookings));
+            
+            try {
+                localStorage.setItem('wahaj_receipt_remaining_' + currentBooking.bookingId, receiptDataUrl);
+            } catch(e) {}
+            
+            if (window.WahajFirebase && window.db) {
+                try {
+                    window.db.collection('bookings').doc(currentBooking.bookingId).update({
+                        remainingPaid: true,
+                        remainingReceiptDate: new Date().toISOString(),
+                        remainingReceiptFileName: receiptFile.name
+                    });
+                } catch(e) {
+                    console.warn('Firebase update failed:', e);
+                }
+            }
+            
+            var msg = '💰 *إيصال دفع الباقي - استراحة وهج*\n\n' +
+                '📋 *رقم الحجز:* ' + currentBooking.bookingId + '\n' +
+                '👤 *الاسم:* ' + currentBooking.fullName + '\n' +
+                '💰 *المبلغ المدفوع:* ' + (currentBooking.remaining || 0) + ' ر.ع\n\n' +
+                '⏳ بانتظار تأكيد الإدارة';
+            
+            window.open('https://wa.me/96895566332?text=' + encodeURIComponent(msg), '_blank');
+            
+            showToast('✅ تم إرسال الإيصال بنجاح', 'success');
+            
+            setTimeout(function() {
+                window.location.reload();
+            }, 2000);
+            
+        } catch(e) {
+            console.error(e);
+            showToast('❌ فشل الإرسال', 'error');
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fas fa-check-circle"></i> إرسال الإيصال';
+        }
+    }
+    
+    // ═══ Events ═══
+    document.getElementById('searchBtn').onclick = searchBooking;
+    
+    document.getElementById('bookingIdInput').onkeypress = function(e) {
+        if (e.key === 'Enter') document.getElementById('phoneInput').focus();
+    };
+    
+    document.getElementById('phoneInput').onkeypress = function(e) {
+        if (e.key === 'Enter') searchBooking();
+    };
+    
+    document.getElementById('bookingIdInput').oninput = function() {
+        this.value = this.value.toUpperCase();
+    };
+    
+    console.log('✅ صفحة تتبع الحجز جاهزة');
+    
+})();
+</script>
 
 </body>
 </html>
