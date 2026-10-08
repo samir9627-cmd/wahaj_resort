@@ -1,455 +1,240 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <meta name="theme-color" content="#0A1F44">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    
-    <title>تفاصيل الاستراحة | استراحة وهج</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <link rel="stylesheet" href="css/app.css">
-    <link rel="icon" type="image/png" href="images/logo.jpeg">
-    
-    <style>
-        .page-hero-app {
-            background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 60%, var(--navy-light) 100%);
-            padding: 100px 20px 50px;
-            color: var(--white);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .page-hero-app::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at 30% 40%, rgba(212, 175, 55, 0.2) 0%, transparent 50%);
-            pointer-events: none;
-        }
-        
-        .page-hero-app-content { position: relative; z-index: 2; }
-        
-        .page-hero-app h1 {
-            font-family: 'Amiri', serif;
-            font-size: clamp(1.8rem, 6vw, 2.5rem);
-            color: var(--primary);
-            margin-bottom: 10px;
-            text-shadow: 0 0 30px rgba(212, 175, 55, 0.5);
-        }
-        
-        .page-hero-app p { font-size: 0.95rem; opacity: 0.9; }
-        
-        .gallery-grid-app {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            padding: 5px 0;
-        }
-        
-        .gallery-item-app {
-            aspect-ratio: 1;
-            border-radius: var(--radius-sm);
-            overflow: hidden;
-            position: relative;
-            cursor: pointer;
-            box-shadow: var(--shadow-sm);
-            transition: var(--transition);
-        }
-        
-        .gallery-item-app.large {
-            grid-column: span 2;
-            aspect-ratio: 16/10;
-        }
-        
-        .gallery-item-app img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-        
-        .gallery-item-app:active { transform: scale(0.97); }
-        .gallery-item-app:active img { transform: scale(1.05); }
-        
-        .gallery-item-app-label {
-            position: absolute;
-            bottom: 8px;
-            right: 8px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            color: var(--navy);
-            padding: 5px 12px;
-            border-radius: 50px;
-            font-size: 0.7rem;
-            font-weight: 700;
-        }
-        
-        .pricing-table-app {
-            background: var(--white);
-            border-radius: var(--radius);
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid rgba(212, 175, 55, 0.1);
-            margin-top: 15px;
-        }
-        
-        .pricing-table-app table { width: 100%; border-collapse: collapse; }
-        
-        .pricing-table-app th {
-            background: linear-gradient(135deg, var(--navy), var(--navy-light));
-            color: var(--primary);
-            padding: 15px 8px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-align: center;
-        }
-        
-        .pricing-table-app td {
-            padding: 14px 8px;
-            text-align: center;
-            border-bottom: 1px solid var(--gray-100);
-            font-size: 0.85rem;
-            color: var(--navy);
-        }
-        
-        .pricing-table-app tr:last-child td { border-bottom: none; }
-        .pricing-table-app td:first-child { font-weight: 700; text-align: right; padding-right: 15px; }
-        .pricing-table-app td.price { color: var(--primary-dark); font-weight: 900; font-size: 0.95rem; }
-        
-        .amenities-list-app { display: grid; gap: 12px; }
-        
-        .amenity-category-app {
-            background: var(--white);
-            border-radius: var(--radius);
-            padding: 20px;
-            box-shadow: var(--shadow-sm);
-            border-right: 4px solid var(--primary);
-        }
-        
-        .amenity-category-app h3 {
-            color: var(--navy);
-            font-size: 1rem;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding-bottom: 12px;
-            border-bottom: 1px dashed var(--gray-200);
-        }
-        
-        .amenity-category-app h3 i { color: var(--primary); font-size: 1.2rem; }
-        
-        .amenity-items-app { display: grid; grid-template-columns: 1fr; gap: 8px; }
-        
-        .amenity-item-app {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px 0;
-            font-size: 0.85rem;
-            color: var(--navy);
-        }
-        
-        .amenity-item-app i { color: var(--success); font-size: 0.9rem; }
-        
-        .info-cards-app {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-            margin-top: 15px;
-        }
-        
-        .info-card-app {
-            background: linear-gradient(135deg, var(--navy), var(--navy-light));
-            color: var(--white);
-            padding: 20px;
-            border-radius: var(--radius);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .info-card-app-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            font-size: 1.3rem;
-            flex-shrink: 0;
-        }
-        
-        .info-card-app-content h4 { color: var(--primary); font-size: 0.95rem; margin-bottom: 3px; }
-        .info-card-app-content p { font-size: 0.8rem; opacity: 0.85; }
-        
-        /* Lightbox */
-        .lightbox-app {
-            position: fixed;
-            inset: 0;
-            background: rgba(5, 21, 48, 0.95);
-            z-index: 9999;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-        
-        .lightbox-app.show { display: flex; animation: fadeIn 0.3s ease; }
-        
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        
-        .lightbox-app img {
-            max-width: 100%;
-            max-height: 90vh;
-            border-radius: var(--radius);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-            border: 3px solid var(--primary);
-        }
-        
-        .lightbox-app-close {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: var(--primary);
-            color: var(--navy);
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.5);
-        }
-        
-        .gallery-loading {
-            grid-column: span 2;
-            text-align: center;
-            padding: 40px 20px;
-            color: var(--gray-600);
-            font-size: 0.85rem;
-        }
-        
-        .gallery-loading i {
-            font-size: 2rem;
-            display: block;
-            margin-bottom: 10px;
-            opacity: 0.3;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="theme-color" content="#0A1F44">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>تفاصيل الاستراحة | استراحة وهج</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="css/app.css">
+<link rel="icon" type="image/png" href="images/logo.jpeg">
+<style>
+.page-hero-app{background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy) 60%,var(--navy-light) 100%);padding:100px 20px 50px;color:var(--white);text-align:center;position:relative;overflow:hidden}
+.page-hero-app::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 40%,rgba(212,175,55,0.2) 0%,transparent 50%);pointer-events:none}
+.page-hero-app-content{position:relative;z-index:2}
+.page-hero-app h1{font-family:'Amiri',serif;font-size:clamp(1.8rem,6vw,2.5rem);color:var(--primary);margin-bottom:10px;text-shadow:0 0 30px rgba(212,175,55,0.5)}
+.page-hero-app p{font-size:0.95rem;opacity:0.9}
+.gallery-grid-app{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;padding:5px 0}
+.gallery-item-app{aspect-ratio:1;border-radius:var(--radius-sm);overflow:hidden;position:relative;cursor:pointer;box-shadow:var(--shadow-sm);transition:var(--transition);background:var(--gray-100)}
+.gallery-item-app.large{grid-column:span 2;aspect-ratio:16/10}
+.gallery-item-app img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease;display:block}
+.gallery-item-app:active{transform:scale(0.97)}
+.gallery-item-app:active img{transform:scale(1.05)}
+.gallery-item-app-label{position:absolute;bottom:8px;right:8px;background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);color:var(--navy);padding:5px 12px;border-radius:50px;font-size:0.7rem;font-weight:700}
+.gallery-loading{grid-column:span 2;text-align:center;padding:40px 20px;color:var(--gray-600);font-size:0.85rem}
+.gallery-loading i{font-size:2rem;display:block;margin-bottom:10px;opacity:0.3}
+.gallery-empty{grid-column:span 2;text-align:center;padding:40px 20px;color:var(--gray-600);font-size:0.85rem}
+.gallery-empty i{font-size:3rem;display:block;margin-bottom:15px;color:var(--gray-200)}
+.gallery-empty a{display:inline-block;margin-top:15px;padding:10px 20px;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:var(--navy);border-radius:50px;text-decoration:none;font-weight:700;font-size:0.85rem}
+.pricing-table-app{background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);border:1px solid rgba(212,175,55,0.1);margin-top:15px}
+.pricing-table-app table{width:100%;border-collapse:collapse}
+.pricing-table-app th{background:linear-gradient(135deg,var(--navy),var(--navy-light));color:var(--primary);padding:15px 8px;font-size:0.8rem;font-weight:700;text-align:center}
+.pricing-table-app td{padding:14px 8px;text-align:center;border-bottom:1px solid var(--gray-100);font-size:0.85rem;color:var(--navy)}
+.pricing-table-app tr:last-child td{border-bottom:none}
+.pricing-table-app td:first-child{font-weight:700;text-align:right;padding-right:15px}
+.pricing-table-app td.price{color:var(--primary-dark);font-weight:900;font-size:0.95rem}
+.amenities-list-app{display:grid;gap:12px}
+.amenity-category-app{background:var(--white);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm);border-right:4px solid var(--primary)}
+.amenity-category-app h3{color:var(--navy);font-size:1rem;margin-bottom:15px;display:flex;align-items:center;gap:10px;padding-bottom:12px;border-bottom:1px dashed var(--gray-200)}
+.amenity-category-app h3 i{color:var(--primary);font-size:1.2rem}
+.amenity-items-app{display:grid;grid-template-columns:1fr;gap:8px}
+.amenity-item-app{display:flex;align-items:center;gap:10px;padding:8px 0;font-size:0.85rem;color:var(--navy)}
+.amenity-item-app i{color:var(--success);font-size:0.9rem}
+.info-cards-app{display:grid;grid-template-columns:1fr;gap:12px;margin-top:15px}
+.info-card-app{background:linear-gradient(135deg,var(--navy),var(--navy-light));color:var(--white);padding:20px;border-radius:var(--radius);display:flex;align-items:center;gap:15px}
+.info-card-app-icon{width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary-dark));display:flex;align-items:center;justify-content:center;color:var(--white);font-size:1.3rem;flex-shrink:0}
+.info-card-app-content h4{color:var(--primary);font-size:0.95rem;margin-bottom:3px}
+.info-card-app-content p{font-size:0.8rem;opacity:0.85}
+.lightbox-app{position:fixed;inset:0;background:rgba(5,21,48,0.95);z-index:9999;display:none;align-items:center;justify-content:center;padding:20px}
+.lightbox-app.show{display:flex;animation:fadeIn 0.3s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.lightbox-app img{max-width:100%;max-height:90vh;border-radius:var(--radius);box-shadow:0 20px 60px rgba(0,0,0,0.5);border:3px solid var(--primary)}
+.lightbox-app-close{position:absolute;top:20px;left:20px;width:45px;height:45px;border-radius:50%;background:var(--primary);color:var(--navy);border:none;font-size:1.5rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(212,175,55,0.5)}
+.refresh-float{position:fixed;bottom:90px;right:20px;width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--primary-dark));color:var(--white);border:none;font-size:1.3rem;cursor:pointer;box-shadow:0 8px 25px rgba(212,175,55,0.5);z-index:999;display:flex;align-items:center;justify-content:center;animation:refreshPulse 2s infinite}
+@keyframes refreshPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.refresh-float:active{transform:scale(0.9)}
+</style>
 </head>
 <body>
 
-<!-- HEADER -->
 <header class="app-header">
-    <div class="app-header-logo">
-        <div class="app-header-logo-svg" id="headerLogo"></div>
-        <span class="app-header-title">استراحة <span>وهج</span></span>
-    </div>
-    <a href="booking.html" class="app-header-action" aria-label="احجز">
-        <i class="fas fa-calendar-check"></i>
-    </a>
+<div class="app-header-logo">
+<div class="app-header-logo-svg" id="headerLogo"></div>
+<span class="app-header-title">استراحة <span>وهج</span></span>
+</div>
+<a href="booking.html" class="app-header-action" aria-label="احجز">
+<i class="fas fa-calendar-check"></i>
+</a>
 </header>
 
-<!-- HERO -->
 <section class="page-hero-app">
-    <div class="page-hero-app-content">
-        <h1>تفاصيل الاستراحة</h1>
-        <p>اكتشف كل ما تقدمه استراحة وهج</p>
-    </div>
+<div class="page-hero-app-content">
+<h1>تفاصيل الاستراحة</h1>
+<p>اكتشف كل ما تقدمه استراحة وهج</p>
+</div>
 </section>
 
-<!-- CONTENT -->
-<section class="app-section" style="padding-top: 20px;">
-    <div style="max-width: 600px; margin: 0 auto;">
-        
-        <!-- المعرض -->
-        <div class="app-section-header">
-            <h2 class="app-section-title">المعرض</h2>
-        </div>
-        
-        <div class="gallery-grid-app" id="galleryGrid">
-            <div class="gallery-loading">
-                <i class="fas fa-spinner fa-spin"></i>
-                جاري تحميل الصور...
-            </div>
-        </div>
-        
-        <!-- الأسعار -->
-        <div class="app-section-header" style="margin-top: 40px;">
-            <h2 class="app-section-title">الأسعار</h2>
-        </div>
-        
-        <div class="pricing-table-app reveal" id="pricingTable">
-            <table>
-                <thead>
-                    <tr>
-                        <th>اليوم</th>
-                        <th>بدون مبيت</th>
-                        <th>مع مبيت</th>
-                        <th>نصف يوم</th>
-                    </tr>
-                </thead>
-                <tbody id="pricingBody">
-                    <tr>
-                        <td>الأحد - الأربعاء</td>
-                        <td class="price" id="wds">40</td>
-                        <td class="price" id="wws">50</td>
-                        <td class="price" id="whd">25</td>
-                    </tr>
-                    <tr>
-                        <td>الخميس - السبت</td>
-                        <td class="price" id="eds">50</td>
-                        <td class="price" id="ews">65</td>
-                        <td class="price" id="ehd">30</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        
-        <div class="info-cards-app">
-            <div class="info-card-app reveal">
-                <div class="info-card-app-icon"><i class="fas fa-shield-alt"></i></div>
-                <div class="info-card-app-content">
-                    <h4>تأمين مسترد</h4>
-                    <p id="securityNote">20 ر.ع يُرد بعد الخروج</p>
-                </div>
-            </div>
-            
-            <div class="info-card-app reveal">
-                <div class="info-card-app-icon"><i class="fas fa-hand-holding-usd"></i></div>
-                <div class="info-card-app-content">
-                    <h4>العربون</h4>
-                    <p>مرن من 10 ر.ع - اختر ما يناسبك</p>
-                </div>
-            </div>
-            
-            <div class="info-card-app reveal">
-                <div class="info-card-app-icon"><i class="fas fa-clock"></i></div>
-                <div class="info-card-app-content">
-                    <h4>نصف يوم</h4>
-                    <p>9ص-3م أو 4م-10م</p>
-                </div>
-            </div>
-        </div>
-        
-        <!-- المرافق -->
-        <div class="app-section-header" style="margin-top: 40px;">
-            <h2 class="app-section-title">المرافق</h2>
-        </div>
-        
-        <div class="amenities-list-app">
-            <div class="amenity-category-app reveal">
-                <h3><i class="fas fa-swimming-pool"></i> المسابح</h3>
-                <div class="amenity-items-app">
-                    <div class="amenity-item-app"><i class="fas fa-check-circle"></i> حوض سباحة رجال</div>
-                    <div class="amenity-item-app"><i class="fas fa-check-circle"></i> حوض سباحة نساء وأطفال (مغطى)</div>
-                    <div class="amenity-item-app"><i class="fas fa-check-circle"></i> سلايد مائي للأطفال</div>
-                </div>
-            </div>
-            
-            <div class="amenity-category-app reveal">
-                <h3><i class="fas fa-bed"></i> الغرف والصالات</h3>
-                <div class="amenity-items-app">
-                    <div class="amenity-item-app"><i class="fas fa-check-circle"></i> غرفتا نوم مكيفتان</div>
-                    <div class="amenity-item-app"><i class="fas fa-check-circle"></i> صالة رجال واسعة</div>
-                    <div class="amenity-item-app"><i class="fas fa-check-circle"></i> صالة نساء واسعة</div>
-                    <div class="amenity-item-app"><i class="fas fa-check-circle"></i> 7 دورات مياه</div>
-                </div>
-            </div>
-            
-            <div class="amenity-category-app reveal">
-                <h3><i class="fas fa-utensils"></i> المطابخ</h3>
-                <div class="amenity-items-app">
-                    <div class="amenity-item-app"><i class="fas fa-check-circle"></i> مطبخ داخلي مجهز</div>
-                    <div class="amenity-item-app"><i class="fas fa-check-circle"></i> مطبخ خارجي</div>
-                    <div class="amenity-item-app"><i class="fas fa-check-circle"></i> منطقة شواء</div>
-                </div>
-            </div>
-            
-            <div class="amenity-category-app reveal">
-                <h3><i class="fas fa-gamepad"></i> الترفيه</h3>
-                <div class="amenity-items-app">
-                    <div class="amenity-item-app"><i class="fas fa-check-circle"></i> لعبة بلياردو</div>
-                    <div class="amenity-item-app"><i class="fas fa-check-circle"></i> تنس طاولة</div>
-                    <div class="amenity-item-app"><i class="fas fa-check-circle"></i> منطقة ألعاب أطفال</div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- الموقع -->
-        <div class="app-section-header" style="margin-top: 40px;">
-            <h2 class="app-section-title">الموقع</h2>
-        </div>
-        
-        <div class="info-card-app reveal" style="margin-bottom: 15px;">
-            <div class="info-card-app-icon"><i class="fas fa-map-marker-alt"></i></div>
-            <div class="info-card-app-content">
-                <h4>بركاء - العقدة</h4>
-                <p>جنوب الباطنة - سلطنة عمان</p>
-            </div>
-        </div>
-        
-        <!-- زر الحجز -->
-        <a href="booking.html" class="hero-cta-app" style="width: 100%; justify-content: center; margin-top: 30px; text-decoration: none;">
-            <i class="fas fa-calendar-check"></i>
-            <span>احجز الآن</span>
-        </a>
-        
-    </div>
-</section>
+<section class="app-section" style="padding-top:20px;">
+<div style="max-width:600px;margin:0 auto;">
 
-<!-- FOOTER -->
-<footer class="app-footer">
-    <div class="app-footer-logo" id="footerLogo"></div>
-    <h3 class="app-footer-title">استراحة وهج</h3>
-    <p class="app-footer-slogan">خصوصية .. راحة .. ذكريات لا تُنسى</p>
-    <div class="app-footer-bottom">
-        <p>© <span class="current-year">2026</span> استراحة وهج</p>
-    </div>
-</footer>
+<div class="app-section-header">
+<h2 class="app-section-title">المعرض</h2>
+</div>
 
-<!-- BOTTOM NAV -->
-<nav class="bottom-nav">
-    <a href="index.html" class="bottom-nav-item">
-        <i class="fas fa-home"></i>
-        <span>الرئيسية</span>
-    </a>
-    <a href="details.html" class="bottom-nav-item active">
-        <i class="fas fa-images"></i>
-        <span>المعرض</span>
-    </a>
-    <a href="booking.html" class="bottom-nav-item cta-item">
-        <div class="cta-circle"><i class="fas fa-calendar-plus"></i></div>
-        <span>احجز</span>
-    </a>
-    <a href="policies.html" class="bottom-nav-item">
-        <i class="fas fa-file-contract"></i>
-        <span>السياسات</span>
-    </a>
-    <a href="https://wa.me/96895566332" target="_blank" class="bottom-nav-item">
-        <i class="fab fa-whatsapp"></i>
-        <span>تواصل</span>
-    </a>
-</nav>
+<div class="gallery-grid-app" id="galleryGrid">
+<div class="gallery-loading">
+<i class="fas fa-spinner fa-spin"></i>
+جاري تحميل الصور...
+</div>
+</div>
 
-<a href="https://wa.me/96895566332?text=مرحباً" target="_blank" class="floating-whatsapp">
-    <i class="fab fa-whatsapp"></i>
+<div class="app-section-header" style="margin-top:40px;">
+<h2 class="app-section-title">الأسعار</h2>
+</div>
+
+<div class="pricing-table-app">
+<table>
+<thead>
+<tr>
+<th>اليوم</th>
+<th>بدون مبيت</th>
+<th>مع مبيت</th>
+<th>نصف يوم</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>الأحد - الأربعاء</td>
+<td class="price" id="wds">40</td>
+<td class="price" id="wws">50</td>
+<td class="price" id="whd">25</td>
+</tr>
+<tr>
+<td>الخميس - السبت</td>
+<td class="price" id="eds">50</td>
+<td class="price" id="ews">65</td>
+<td class="price" id="ehd">30</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="info-cards-app">
+<div class="info-card-app">
+<div class="info-card-app-icon"><i class="fas fa-shield-alt"></i></div>
+<div class="info-card-app-content">
+<h4>تأمين مسترد</h4>
+<p id="securityNote">20 ر.ع يُرد بعد الخروج</p>
+</div>
+</div>
+
+<div class="info-card-app">
+<div class="info-card-app-icon"><i class="fas fa-hand-holding-usd"></i></div>
+<div class="info-card-app-content">
+<h4>العربون</h4>
+<p>مرن من 10 ر.ع - اختر ما يناسبك</p>
+</div>
+</div>
+
+<div class="info-card-app">
+<div class="info-card-app-icon"><i class="fas fa-clock"></i></div>
+<div class="info-card-app-content">
+<h4>نصف يوم</h4>
+<p>9ص-3م أو 4م-10م</p>
+</div>
+</div>
+</div>
+
+<div class="app-section-header" style="margin-top:40px;">
+<h2 class="app-section-title">المرافق</h2>
+</div>
+
+<div class="amenities-list-app">
+<div class="amenity-category-app">
+<h3><i class="fas fa-swimming-pool"></i> المسابح</h3>
+<div class="amenity-items-app">
+<div class="amenity-item-app"><i class="fas fa-check-circle"></i> حوض سباحة رجال</div>
+<div class="amenity-item-app"><i class="fas fa-check-circle"></i> حوض سباحة نساء وأطفال (مغطى)</div>
+<div class="amenity-item-app"><i class="fas fa-check-circle"></i> سلايد مائي للأطفال</div>
+</div>
+</div>
+
+<div class="amenity-category-app">
+<h3><i class="fas fa-bed"></i> الغرف والصالات</h3>
+<div class="amenity-items-app">
+<div class="amenity-item-app"><i class="fas fa-check-circle"></i> غرفتا نوم مكيفتان</div>
+<div class="amenity-item-app"><i class="fas fa-check-circle"></i> صالة رجال واسعة</div>
+<div class="amenity-item-app"><i class="fas fa-check-circle"></i> صالة نساء واسعة</div>
+<div class="amenity-item-app"><i class="fas fa-check-circle"></i> 7 دورات مياه</div>
+</div>
+</div>
+
+<div class="amenity-category-app">
+<h3><i class="fas fa-utensils"></i> المطابخ</h3>
+<div class="amenity-items-app">
+<div class="amenity-item-app"><i class="fas fa-check-circle"></i> مطبخ داخلي مجهز</div>
+<div class="amenity-item-app"><i class="fas fa-check-circle"></i> مطبخ خارجي</div>
+<div class="amenity-item-app"><i class="fas fa-check-circle"></i> منطقة شواء</div>
+</div>
+</div>
+
+<div class="amenity-category-app">
+<h3><i class="fas fa-gamepad"></i> الترفيه</h3>
+<div class="amenity-items-app">
+<div class="amenity-item-app"><i class="fas fa-check-circle"></i> لعبة بلياردو</div>
+<div class="amenity-item-app"><i class="fas fa-check-circle"></i> تنس طاولة</div>
+<div class="amenity-item-app"><i class="fas fa-check-circle"></i> منطقة ألعاب أطفال</div>
+</div>
+</div>
+</div>
+
+<div class="app-section-header" style="margin-top:40px;">
+<h2 class="app-section-title">الموقع</h2>
+</div>
+
+<div class="info-card-app" style="margin-bottom:15px;">
+<div class="info-card-app-icon"><i class="fas fa-map-marker-alt"></i></div>
+<div class="info-card-app-content">
+<h4>بركاء - الوهرة</h4>
+<p>جنوب الباطنة - سلطنة عمان</p>
+</div>
+</div>
+
+<a href="booking.html" class="hero-cta-app" style="width:100%;justify-content:center;margin-top:30px;text-decoration:none;">
+<i class="fas fa-calendar-check"></i>
+<span>احجز الآن</span>
 </a>
 
-<!-- ═══ Firebase ═══ -->
+</div>
+</section>
+
+<footer class="app-footer">
+<div class="app-footer-logo" id="footerLogo"></div>
+<h3 class="app-footer-title">استراحة وهج</h3>
+<p class="app-footer-slogan">خصوصية .. راحة .. ذكريات لا تُنسى</p>
+<div class="app-footer-bottom">
+<p>© <span class="current-year">2026</span> استراحة وهج</p>
+</div>
+</footer>
+
+<nav class="bottom-nav">
+<a href="index.html" class="bottom-nav-item"><i class="fas fa-home"></i><span>الرئيسية</span></a>
+<a href="details.html" class="bottom-nav-item active"><i class="fas fa-images"></i><span>المعرض</span></a>
+<a href="booking.html" class="bottom-nav-item cta-item"><div class="cta-circle"><i class="fas fa-calendar-plus"></i></div><span>احجز</span></a>
+<a href="policies.html" class="bottom-nav-item"><i class="fas fa-file-contract"></i><span>السياسات</span></a>
+<a href="https://wa.me/96895566332" target="_blank" class="bottom-nav-item"><i class="fab fa-whatsapp"></i><span>تواصل</span></a>
+</nav>
+
+<a href="https://wa.me/96895566332?text=مرحباً" target="_blank" class="floating-whatsapp"><i class="fab fa-whatsapp"></i></a>
+
+<button class="refresh-float" onclick="location.reload(true)" title="تحديث الصور">
+<i class="fas fa-sync-alt"></i>
+</button>
+
 <script src="js/firebase.js"></script>
 <script src="js/firebase-helper.js"></script>
 
@@ -457,7 +242,6 @@
 (function() {
     'use strict';
     
-    // ─── الشعار SVG ───
     var LOGO_SVG = '<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">' +
     '<defs><linearGradient id="wg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#F4D77E"/><stop offset="50%" stop-color="#D4AF37"/><stop offset="100%" stop-color="#A88B2C"/></linearGradient></defs>' +
     '<circle cx="100" cy="100" r="94" fill="none" stroke="url(#wg)" stroke-width="2.5"/>' +
@@ -484,60 +268,78 @@
     });
     
     // ═══════════════════════════════════════════════════════
-    // 📸 تحميل الصور
+    // 📸 الصور الافتراضية (تظهر إذا لا يوجد في Firebase/localStorage)
     // ═══════════════════════════════════════════════════════
     
-    var DEFAULT_IMAGES = [
-        { name: 'المسبح ليلاً', path: 'https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=800' },
-        { name: 'المجلس', path: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600' },
-        { name: 'منطقة الأطفال', path: 'https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=600' },
-        { name: 'البلياردو', path: 'https://images.unsplash.com/photo-1611288058934-8eaadbf0d4d1?w=600' },
-        { name: 'غرفة النوم', path: 'https://images.unsplash.com/photo-1540518614846-7eded433c457?w=600' },
-        { name: 'المطبخ', path: 'https://images.unsplash.com/photo-1556909212-d5b604d0c90d?w=600' }
+    var DEFAULT_GALLERY = [
+        { name: 'المجلس', path: 'images/gallery/IMG_2438.jpg' },
+        { name: 'منطقة الأطفال', path: 'images/gallery/IMG_2439.jpg' },
+        { name: 'الصالة', path: 'images/gallery/IMG_2440.jpg' },
+        { name: 'الواجهة الخارجية', path: 'images/gallery/IMG_2441.jpg' },
+        { name: 'المطبخ', path: 'images/gallery/IMG_2442.jpg' },
+        { name: 'المسبح ليلاً', path: 'images/gallery/IMG_2443.jpg' },
+        { name: 'المسبح نهاراً', path: 'images/gallery/IMG_2444.jpg' },
+        { name: 'الجلسة الخارجية', path: 'images/gallery/IMG_2445.jpg' },
+        { name: 'البلياردو', path: 'images/gallery/IMG_2446.jpg' },
+        { name: 'المجلس 2', path: 'images/gallery/IMG_2447.jpg' },
+        { name: 'المنظر الليلي', path: 'images/gallery/IMG_2448.jpg' },
+        { name: 'غرفة النوم', path: 'images/gallery/IMG_2449.jpg' },
+        { name: 'المسبح الرئيسي', path: 'images/gallery/IMG_2450.jpg' },
+        { name: 'الجلسة الخارجية 2', path: 'images/gallery/IMG_2451.jpg' }
     ];
     
+    var currentImages = [];
+    
     function loadGalleryImages() {
-        var grid = document.getElementById('galleryGrid');
-        if (!grid) return;
+        console.log('🔄 تحميل الصور...');
         
-        // 1. من localStorage أولاً
+        // 1. من localStorage أولاً (سريع)
         var localImages = [];
         try {
             localImages = JSON.parse(localStorage.getItem('wahaj_images') || '[]');
+            console.log('📱 من localStorage:', localImages.length, 'صورة');
         } catch(e) {}
         
         // 2. محاولة من Firebase
         if (window.WahajFirebase) {
             window.WahajFirebase.waitForFirebase(function(ready) {
                 if (!ready) {
+                    console.log('ℹ️ Firebase غير متصل - استخدام المحلي');
                     finishLoad(localImages);
                     return;
                 }
                 
+                console.log('☁️ Firebase متصل - تحميل...');
                 window.WahajFirebase.getAllImages().then(function(cloudImages) {
+                    console.log('☁️ من Firebase:', cloudImages.length, 'صورة');
+                    
                     var merged = {};
                     localImages.forEach(function(img) { merged[img.path] = img; });
                     cloudImages.forEach(function(img) { merged[img.path] = img; });
                     
                     var allImages = Object.values(merged);
                     finishLoad(allImages);
-                }).catch(function() {
+                }).catch(function(e) {
+                    console.warn('⚠️ فشل تحميل Firebase:', e);
                     finishLoad(localImages);
                 });
             }, 5000);
         } else {
+            console.log('ℹ️ Firebase Helper غير متاح');
             finishLoad(localImages);
         }
     }
     
     function finishLoad(images) {
+        console.log('📊 إجمالي الصور:', images.length);
+        
+        // إذا لا يوجد صور في Firebase/localStorage → استخدم الافتراضية
         if (!images || images.length === 0) {
-            images = DEFAULT_IMAGES;
-            console.log('ℹ️ لا توجد صور في اللوحة — استخدام الصور الافتراضية');
-        } else {
-            console.log('✅ تم تحميل', images.length, 'صورة');
+            console.log('ℹ️ لا توجد صور مخصصة - استخدام الصور الافتراضية');
+            images = DEFAULT_GALLERY;
         }
         
+        currentImages = images;
         renderImages(images);
     }
     
@@ -545,18 +347,32 @@
         var grid = document.getElementById('galleryGrid');
         if (!grid) return;
         
+        if (!images || images.length === 0) {
+            grid.innerHTML = 
+                '<div class="gallery-empty">' +
+                    '<i class="fas fa-images"></i>' +
+                    '<p>لا توجد صور حالياً</p>' +
+                    '<a href="admin.html">أضف الصور من لوحة التحكم</a>' +
+                '</div>';
+            return;
+        }
+        
         var html = '';
         images.forEach(function(img, index) {
             var isLarge = (index === 0);
-            html += '<div class="gallery-item-app' + (isLarge ? ' large' : '') + '">' +
-                '<img src="' + img.path + '" alt="' + (img.name || '') + '" loading="lazy" ' +
+            html += '<div class="gallery-item-app' + (isLarge ? ' large' : '') + '" data-img="' + img.path + '">' +
+                '<img src="' + img.path + '" alt="' + (img.name || 'صورة') + '" loading="lazy" ' +
                 'onerror="this.style.background=\'#E9ECEF\';this.src=\'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext x=%2250%22 y=%2255%22 font-size=%2240%22 text-anchor=%22middle%22%3E%F0%9F%96%BC%EF%B8%8F%3C/text%3E%3C/svg%3E\';">' +
                 '<div class="gallery-item-app-label">' + (img.name || 'صورة') + '</div>' +
             '</div>';
         });
         
         grid.innerHTML = html;
+        
+        // Lightbox
         initLightbox();
+        
+        console.log('✅ تم عرض', images.length, 'صورة');
     }
     
     function initLightbox() {
@@ -597,6 +413,14 @@
                 document.body.style.overflow = '';
             }
         };
+        
+        // ESC للإغلاق
+        document.onkeydown = function(e) {
+            if (e.key === 'Escape' && lightbox.classList.contains('show')) {
+                lightbox.classList.remove('show');
+                document.body.style.overflow = '';
+            }
+        };
     }
     
     // ═══════════════════════════════════════════════════════
@@ -604,27 +428,20 @@
     // ═══════════════════════════════════════════════════════
     
     var DEFAULT_PRICES = {
-        weekdayWithoutStay: 40,
-        weekdayWithStay: 50,
-        weekdayHalfDay: 25,
-        weekendWithoutStay: 50,
-        weekendWithStay: 65,
-        weekendHalfDay: 30,
+        weekdayWithoutStay: 40, weekdayWithStay: 50, weekdayHalfDay: 25,
+        weekendWithoutStay: 50, weekendWithStay: 65, weekendHalfDay: 30,
         securityDeposit: 20
     };
     
     function loadPrices() {
-        // من localStorage
         var localPrices = {};
         try {
             localPrices = JSON.parse(localStorage.getItem('wahaj_prices') || '{}');
         } catch(e) {}
         
-        // دمج مع الافتراضي
         var prices = Object.assign({}, DEFAULT_PRICES, localPrices);
         renderPrices(prices);
         
-        // محاولة من Firebase
         if (window.WahajFirebase) {
             window.WahajFirebase.waitForFirebase(function(ready) {
                 if (!ready) return;
@@ -640,13 +457,15 @@
     }
     
     function renderPrices(p) {
-        document.getElementById('wds').textContent = p.weekdayWithoutStay;
-        document.getElementById('wws').textContent = p.weekdayWithStay;
-        document.getElementById('whd').textContent = p.weekdayHalfDay;
-        document.getElementById('eds').textContent = p.weekendWithoutStay;
-        document.getElementById('ews').textContent = p.weekendWithStay;
-        document.getElementById('ehd').textContent = p.weekendHalfDay;
-        document.getElementById('securityNote').textContent = p.securityDeposit + ' ر.ع يُرد بعد الخروج';
+        var el;
+        el = document.getElementById('wds'); if (el) el.textContent = p.weekdayWithoutStay;
+        el = document.getElementById('wws'); if (el) el.textContent = p.weekdayWithStay;
+        el = document.getElementById('whd'); if (el) el.textContent = p.weekdayHalfDay;
+        el = document.getElementById('eds'); if (el) el.textContent = p.weekendWithoutStay;
+        el = document.getElementById('ews'); if (el) el.textContent = p.weekendWithStay;
+        el = document.getElementById('ehd'); if (el) el.textContent = p.weekendHalfDay;
+        el = document.getElementById('securityNote'); 
+        if (el) el.textContent = p.securityDeposit + ' ر.ع يُرد بعد الخروج';
     }
     
     // ═══════════════════════════════════════════════════════
@@ -666,6 +485,8 @@
     } else {
         init();
     }
+    
+    console.log('✅ صفحة التفاصيل جاهزة');
     
 })();
 </script>
